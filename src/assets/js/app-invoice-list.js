@@ -2,46 +2,46 @@
  * App Invoice List (jquery)
  */
 
-"use strict";
+'use strict';
 
 $(function () {
 	// Variable declaration for table
-	var dt_invoice_table = $(".invoice-list-table");
+	var dt_invoice_table = $('.invoice-list-table');
 
 	// Invoice datatable
 	if (dt_invoice_table.length) {
 		var dt_invoice = dt_invoice_table.DataTable({
-			ajax: assetsPath + "json/invoice-list.json", // JSON file to add data
+			ajax: assetsPath + 'json/invoice-list.json', // JSON file to add data
 			columns: [
 				// columns according to JSON
-				{ data: "" },
-				{ data: "invoice_id" },
-				{ data: "invoice_status" },
-				{ data: "issued_date" },
-				{ data: "client_name" },
-				{ data: "total" },
-				{ data: "balance" },
-				{ data: "invoice_status" },
-				{ data: "action" }
+				{ data: '' },
+				{ data: 'invoice_id' },
+				{ data: 'invoice_status' },
+				{ data: 'issued_date' },
+				{ data: 'client_name' },
+				{ data: 'total' },
+				{ data: 'balance' },
+				{ data: 'invoice_status' },
+				{ data: 'action' }
 			],
 			columnDefs: [
 				{
 					// For Responsive
-					className: "control",
+					className: 'control',
 					responsivePriority: 2,
 					searchable: false,
 					targets: 0,
 					render: function (data, type, full, meta) {
-						return "";
+						return '';
 					}
 				},
 				{
 					// Invoice ID
 					targets: 1,
 					render: function (data, type, full, meta) {
-						var $invoice_id = full["invoice_id"];
+						var $invoice_id = full['invoice_id'];
 						// Creates full output for row
-						var $row_output = "<a href=\"app-invoice-preview.html\">#" + $invoice_id + "</a>";
+						var $row_output = '<a href="app-invoice-preview.html">#' + $invoice_id + '</a>';
 						return $row_output;
 					}
 				},
@@ -49,31 +49,31 @@ $(function () {
 					// Invoice status
 					targets: 2,
 					render: function (data, type, full, meta) {
-						var $invoice_status = full["invoice_status"],
-							$due_date = full["due_date"],
-							$balance = full["balance"];
+						var $invoice_status = full['invoice_status'],
+							$due_date = full['due_date'],
+							$balance = full['balance'];
 						var roleBadgeObj = {
-							Sent: "<span class=\"badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30\"><i class=\"ti ti-circle-check ti-sm\"></i></span>",
+							Sent: '<span class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30"><i class="ti ti-circle-check ti-sm"></i></span>',
 							Draft:
-                "<span class=\"badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30\"><i class=\"ti ti-device-floppy ti-sm\"></i></span>",
-							"Past Due":
-                "<span class=\"badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30\"><i class=\"ti ti-info-circle ti-sm\"></i></span>",
-							"Partial Payment":
-                "<span class=\"badge badge-center rounded-pill bg-label-success w-px-30 h-px-30\"><i class=\"ti ti-circle-half-2 ti-sm\"></i></span>",
-							Paid: "<span class=\"badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30\"><i class=\"ti ti-chart-pie ti-sm\"></i></span>",
+                '<span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30"><i class="ti ti-device-floppy ti-sm"></i></span>',
+							'Past Due':
+                '<span class="badge badge-center rounded-pill bg-label-danger w-px-30 h-px-30"><i class="ti ti-info-circle ti-sm"></i></span>',
+							'Partial Payment':
+                '<span class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30"><i class="ti ti-circle-half-2 ti-sm"></i></span>',
+							Paid: '<span class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30"><i class="ti ti-chart-pie ti-sm"></i></span>',
 							Downloaded:
-                "<span class=\"badge badge-center rounded-pill bg-label-info w-px-30 h-px-30\"><i class=\"ti ti-arrow-down-circle ti-sm\"></i></span>"
+                '<span class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30"><i class="ti ti-arrow-down-circle ti-sm"></i></span>'
 						};
 						return (
-							"<span data-bs-toggle='tooltip' data-bs-html='true' title='<span>" +
+							'<span data-bs-toggle=\'tooltip\' data-bs-html=\'true\' title=\'<span>' +
               $invoice_status +
-              "<br> <span class=\"fw-medium\">Balance:</span> " +
+              '<br> <span class="fw-medium">Balance:</span> ' +
               $balance +
-              "<br> <span class=\"fw-medium\">Due Date:</span> " +
+              '<br> <span class="fw-medium">Due Date:</span> ' +
               $due_date +
-              "</span>'>" +
+              '</span>\'>' +
               roleBadgeObj[$invoice_status] +
-              "</span>"
+              '</span>'
 						);
 					}
 				},
@@ -82,42 +82,42 @@ $(function () {
 					targets: 3,
 					responsivePriority: 4,
 					render: function (data, type, full, meta) {
-						var $name = full["client_name"],
-							$service = full["service"],
-							$image = full["avatar_image"],
+						var $name = full['client_name'],
+							$service = full['service'],
+							$image = full['avatar_image'],
 							$rand_num = Math.floor(Math.random() * 11) + 1,
-							$user_img = $rand_num + ".png";
+							$user_img = $rand_num + '.png';
 						if ($image === true) {
 							// For Avatar image
 							var $output =
-                "<img src=\"" + assetsPath + "img/avatars/" + $user_img + "\" alt=\"Avatar\" class=\"rounded-circle\">";
+                '<img src="' + assetsPath + 'img/avatars/' + $user_img + '" alt="Avatar" class="rounded-circle">';
 						} else {
 							// For Avatar badge
 							var stateNum = Math.floor(Math.random() * 6),
-								states = ["success", "danger", "warning", "info", "primary", "secondary"],
+								states = ['success', 'danger', 'warning', 'info', 'primary', 'secondary'],
 								$state = states[stateNum],
-								$name = full["client_name"],
+								$name = full['client_name'],
 								$initials = $name.match(/\b\w/g) || [];
-							$initials = (($initials.shift() || "") + ($initials.pop() || "")).toUpperCase();
-							$output = "<span class=\"avatar-initial rounded-circle bg-label-" + $state + "\">" + $initials + "</span>";
+							$initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+							$output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
 						}
 						// Creates full output for row
 						var $row_output =
-              "<div class=\"d-flex justify-content-start align-items-center\">" +
-              "<div class=\"avatar-wrapper\">" +
-              "<div class=\"avatar me-2\">" +
+              '<div class="d-flex justify-content-start align-items-center">' +
+              '<div class="avatar-wrapper">' +
+              '<div class="avatar me-2">' +
               $output +
-              "</div>" +
-              "</div>" +
-              "<div class=\"d-flex flex-column\">" +
-              "<a href=\"pages-profile-user.html\" class=\"text-body text-truncate\"><span class=\"fw-medium\">" +
+              '</div>' +
+              '</div>' +
+              '<div class="d-flex flex-column">' +
+              '<a href="pages-profile-user.html" class="text-body text-truncate"><span class="fw-medium">' +
               $name +
-              "</span></a>" +
-              "<small class=\"text-truncate text-muted\">" +
+              '</span></a>' +
+              '<small class="text-truncate text-muted">' +
               $service +
-              "</small>" +
-              "</div>" +
-              "</div>";
+              '</small>' +
+              '</div>' +
+              '</div>';
 						return $row_output;
 					}
 				},
@@ -125,21 +125,21 @@ $(function () {
 					// Total Invoice Amount
 					targets: 4,
 					render: function (data, type, full, meta) {
-						var $total = full["total"];
-						return "<span class=\"d-none\">" + $total + "</span>$" + $total;
+						var $total = full['total'];
+						return '<span class="d-none">' + $total + '</span>$' + $total;
 					}
 				},
 				{
 					// Due Date
 					targets: 5,
 					render: function (data, type, full, meta) {
-						var $due_date = new Date(full["due_date"]);
+						var $due_date = new Date(full['due_date']);
 						// Creates full output for row
 						var $row_output =
-              "<span class=\"d-none\">" +
-              moment($due_date).format("YYYYMMDD") +
-              "</span>" +
-              moment($due_date).format("DD MMM YYYY");
+              '<span class="d-none">' +
+              moment($due_date).format('YYYYMMDD') +
+              '</span>' +
+              moment($due_date).format('DD MMM YYYY');
 						$due_date;
 						return $row_output;
 					}
@@ -149,12 +149,12 @@ $(function () {
 					targets: 6,
 					orderable: false,
 					render: function (data, type, full, meta) {
-						var $balance = full["balance"];
+						var $balance = full['balance'];
 						if ($balance === 0) {
-							var $badge_class = "bg-label-success";
-							return "<span class=\"badge " + $badge_class + "\" text-capitalized> Paid </span>";
+							var $badge_class = 'bg-label-success';
+							return '<span class="badge ' + $badge_class + '" text-capitalized> Paid </span>';
 						} else {
-							return "<span class=\"d-none\">" + $balance + "</span>" + $balance;
+							return '<span class="d-none">' + $balance + '</span>' + $balance;
 						}
 					}
 				},
@@ -165,51 +165,51 @@ $(function () {
 				{
 					// Actions
 					targets: -1,
-					title: "Actions",
+					title: 'Actions',
 					searchable: false,
 					orderable: false,
 					render: function (data, type, full, meta) {
 						return (
-							"<div class=\"d-flex align-items-center\">" +
-              "<a href=\"javascript:;\" data-bs-toggle=\"tooltip\" class=\"text-body\" data-bs-placement=\"top\" title=\"Send Mail\"><i class=\"ti ti-mail mx-2 ti-sm\"></i></a>" +
-              "<a href=\"app-invoice-preview.html\" data-bs-toggle=\"tooltip\" class=\"text-body\" data-bs-placement=\"top\" title=\"Preview Invoice\"><i class=\"ti ti-eye mx-2 ti-sm\"></i></a>" +
-              "<div class=\"dropdown\">" +
-              "<a href=\"javascript:;\" class=\"btn dropdown-toggle hide-arrow text-body p-0\" data-bs-toggle=\"dropdown\"><i class=\"ti ti-dots-vertical ti-sm\"></i></a>" +
-              "<div class=\"dropdown-menu dropdown-menu-end\">" +
-              "<a href=\"javascript:;\" class=\"dropdown-item\">Download</a>" +
-              "<a href=\"app-invoice-edit.html\" class=\"dropdown-item\">Edit</a>" +
-              "<a href=\"javascript:;\" class=\"dropdown-item\">Duplicate</a>" +
-              "<div class=\"dropdown-divider\"></div>" +
-              "<a href=\"javascript:;\" class=\"dropdown-item delete-record text-danger\">Delete</a>" +
-              "</div>" +
-              "</div>" +
-              "</div>"
+							'<div class="d-flex align-items-center">' +
+              '<a href="javascript:;" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Send Mail"><i class="ti ti-mail mx-2 ti-sm"></i></a>' +
+              '<a href="app-invoice-preview.html" data-bs-toggle="tooltip" class="text-body" data-bs-placement="top" title="Preview Invoice"><i class="ti ti-eye mx-2 ti-sm"></i></a>' +
+              '<div class="dropdown">' +
+              '<a href="javascript:;" class="btn dropdown-toggle hide-arrow text-body p-0" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical ti-sm"></i></a>' +
+              '<div class="dropdown-menu dropdown-menu-end">' +
+              '<a href="javascript:;" class="dropdown-item">Download</a>' +
+              '<a href="app-invoice-edit.html" class="dropdown-item">Edit</a>' +
+              '<a href="javascript:;" class="dropdown-item">Duplicate</a>' +
+              '<div class="dropdown-divider"></div>' +
+              '<a href="javascript:;" class="dropdown-item delete-record text-danger">Delete</a>' +
+              '</div>' +
+              '</div>' +
+              '</div>'
 						);
 					}
 				}
 			],
-			order: [[1, "desc"]],
+			order: [[1, 'desc']],
 			dom:
-        "<\"row ms-2 me-3\"" +
-        "<\"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2\"l<\"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3\"B>>" +
-        "<\"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-2\"f<\"invoice_status mb-3 mb-md-0\">>" +
-        ">t" +
-        "<\"row mx-2\"" +
-        "<\"col-sm-12 col-md-6\"i>" +
-        "<\"col-sm-12 col-md-6\"p>" +
-        ">",
+        '<"row ms-2 me-3"' +
+        '<"col-12 col-md-6 d-flex align-items-center justify-content-center justify-content-md-start gap-2"l<"dt-action-buttons text-xl-end text-lg-start text-md-end text-start mt-md-0 mt-3"B>>' +
+        '<"col-12 col-md-6 d-flex align-items-center justify-content-end flex-column flex-md-row pe-3 gap-md-2"f<"invoice_status mb-3 mb-md-0">>' +
+        '>t' +
+        '<"row mx-2"' +
+        '<"col-sm-12 col-md-6"i>' +
+        '<"col-sm-12 col-md-6"p>' +
+        '>',
 			language: {
-				sLengthMenu: "Show _MENU_",
-				search: "",
-				searchPlaceholder: "Search Invoice"
+				sLengthMenu: 'Show _MENU_',
+				search: '',
+				searchPlaceholder: 'Search Invoice'
 			},
 			// Buttons with Dropdown
 			buttons: [
 				{
-					text: "<i class=\"ti ti-plus me-md-1\"></i><span class=\"d-md-inline-block d-none\">Create Invoice</span>",
-					className: "btn btn-primary",
+					text: '<i class="ti ti-plus me-md-1"></i><span class="d-md-inline-block d-none">Create Invoice</span>',
+					className: 'btn btn-primary',
 					action: function (e, dt, button, config) {
-						window.location = "app-invoice-add.html";
+						window.location = 'app-invoice-add.html';
 					}
 				}
 			],
@@ -219,30 +219,30 @@ $(function () {
 					display: $.fn.dataTable.Responsive.display.modal({
 						header: function (row) {
 							var data = row.data();
-							return "Details of " + data["full_name"];
+							return 'Details of ' + data['full_name'];
 						}
 					}),
-					type: "column",
+					type: 'column',
 					renderer: function (api, rowIdx, columns) {
 						var data = $.map(columns, function (col, i) {
-							return col.title !== "" // ? Do not show row in modal popup if title is blank (for check box)
-								? "<tr data-dt-row=\"" +
+							return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+								? '<tr data-dt-row="' +
                     col.rowIndex +
-                    "\" data-dt-column=\"" +
+                    '" data-dt-column="' +
                     col.columnIndex +
-                    "\">" +
-                    "<td>" +
+                    '">' +
+                    '<td>' +
                     col.title +
-                    ":" +
-                    "</td> " +
-                    "<td>" +
+                    ':' +
+                    '</td> ' +
+                    '<td>' +
                     col.data +
-                    "</td>" +
-                    "</tr>"
-								: "";
-						}).join("");
+                    '</td>' +
+                    '</tr>'
+								: '';
+						}).join('');
 
-						return data ? $("<table class=\"table\"/><tbody />").append(data) : false;
+						return data ? $('<table class="table"/><tbody />').append(data) : false;
 					}
 				}
 			},
@@ -253,12 +253,12 @@ $(function () {
 					.every(function () {
 						var column = this;
 						var select = $(
-							"<select id=\"UserRole\" class=\"form-select\"><option value=\"\"> Select Status </option></select>"
+							'<select id="UserRole" class="form-select"><option value=""> Select Status </option></select>'
 						)
-							.appendTo(".invoice_status")
-							.on("change", function () {
+							.appendTo('.invoice_status')
+							.on('change', function () {
 								var val = $.fn.dataTable.util.escapeRegex($(this).val());
-								column.search(val ? "^" + val + "$" : "", true, false).draw();
+								column.search(val ? '^' + val + '$' : '', true, false).draw();
 							});
 
 						column
@@ -266,7 +266,7 @@ $(function () {
 							.unique()
 							.sort()
 							.each(function (d, j) {
-								select.append("<option value=\"" + d + "\" class=\"text-capitalize\">" + d + "</option>");
+								select.append('<option value="' + d + '" class="text-capitalize">' + d + '</option>');
 							});
 					});
 			}
@@ -274,8 +274,8 @@ $(function () {
 	}
 
 	// On each datatable draw, initialize tooltip
-	dt_invoice_table.on("draw.dt", function () {
-		var tooltipTriggerList = [].slice.call(document.querySelectorAll("[data-bs-toggle=\"tooltip\"]"));
+	dt_invoice_table.on('draw.dt', function () {
+		var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 		var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 			return new bootstrap.Tooltip(tooltipTriggerEl, {
 				boundary: document.body
@@ -284,14 +284,14 @@ $(function () {
 	});
 
 	// Delete Record
-	$(".invoice-list-table tbody").on("click", ".delete-record", function () {
-		dt_invoice.row($(this).parents("tr")).remove().draw();
+	$('.invoice-list-table tbody').on('click', '.delete-record', function () {
+		dt_invoice.row($(this).parents('tr')).remove().draw();
 	});
 
 	// Filter form control to default size
 	// ? setTimeout used for multilingual table initialization
 	setTimeout(() => {
-		$(".dataTables_filter .form-control").removeClass("form-control-sm");
-		$(".dataTables_length .form-select").removeClass("form-select-sm");
+		$('.dataTables_filter .form-control').removeClass('form-control-sm');
+		$('.dataTables_length .form-select').removeClass('form-select-sm');
 	}, 300);
 });

@@ -2,24 +2,24 @@
  * Form Picker
  */
 
-"use strict";
+'use strict';
 
 (function () {
 	// Flat Picker
 	// --------------------------------------------------------------------
-	const flatpickrDate = document.querySelector("#flatpickr-date"),
-		flatpickrTime = document.querySelector("#flatpickr-time"),
-		flatpickrDateTime = document.querySelector("#flatpickr-datetime"),
-		flatpickrMulti = document.querySelector("#flatpickr-multi"),
-		flatpickrRange = document.querySelector("#flatpickr-range"),
-		flatpickrInline = document.querySelector("#flatpickr-inline"),
-		flatpickrFriendly = document.querySelector("#flatpickr-human-friendly"),
-		flatpickrDisabledRange = document.querySelector("#flatpickr-disabled-range");
+	const flatpickrDate = document.querySelector('#flatpickr-date'),
+		flatpickrTime = document.querySelector('#flatpickr-time'),
+		flatpickrDateTime = document.querySelector('#flatpickr-datetime'),
+		flatpickrMulti = document.querySelector('#flatpickr-multi'),
+		flatpickrRange = document.querySelector('#flatpickr-range'),
+		flatpickrInline = document.querySelector('#flatpickr-inline'),
+		flatpickrFriendly = document.querySelector('#flatpickr-human-friendly'),
+		flatpickrDisabledRange = document.querySelector('#flatpickr-disabled-range');
 
 	// Date
 	if (flatpickrDate) {
 		flatpickrDate.flatpickr({
-			monthSelectorType: "static"
+			monthSelectorType: 'static'
 		});
 	}
 
@@ -35,7 +35,7 @@
 	if (flatpickrDateTime) {
 		flatpickrDateTime.flatpickr({
 			enableTime: true,
-			dateFormat: "Y-m-d H:i"
+			dateFormat: 'Y-m-d H:i'
 		});
 	}
 
@@ -44,15 +44,15 @@
 		flatpickrMulti.flatpickr({
 			weekNumbers: true,
 			enableTime: true,
-			mode: "multiple",
-			minDate: "today"
+			mode: 'multiple',
+			minDate: 'today'
 		});
 	}
 
 	// Range
 	if (typeof flatpickrRange != undefined) {
 		flatpickrRange.flatpickr({
-			mode: "range"
+			mode: 'range'
 		});
 	}
 
@@ -61,7 +61,7 @@
 		flatpickrInline.flatpickr({
 			inline: true,
 			allowInput: false,
-			monthSelectorType: "static"
+			monthSelectorType: 'static'
 		});
 	}
 
@@ -69,8 +69,8 @@
 	if (flatpickrFriendly) {
 		flatpickrFriendly.flatpickr({
 			altInput: true,
-			altFormat: "F j, Y",
-			dateFormat: "Y-m-d"
+			altFormat: 'F j, Y',
+			dateFormat: 'Y-m-d'
 		});
 	}
 
@@ -80,11 +80,11 @@
 		const toDate = new Date(Date.now() + 3600 * 1000 * 48);
 
 		flatpickrDisabledRange.flatpickr({
-			dateFormat: "Y-m-d",
+			dateFormat: 'Y-m-d',
 			disable: [
 				{
-					from: fromDate.toISOString().split("T")[0],
-					to: toDate.toISOString().split("T")[0]
+					from: fromDate.toISOString().split('T')[0],
+					to: toDate.toISOString().split('T')[0]
 				}
 			]
 		});
@@ -95,20 +95,20 @@
 $(function () {
 	// Bootstrap Datepicker
 	// --------------------------------------------------------------------
-	var bsDatepickerBasic = $("#bs-datepicker-basic"),
-		bsDatepickerFormat = $("#bs-datepicker-format"),
-		bsDatepickerRange = $("#bs-datepicker-daterange"),
-		bsDatepickerDisabledDays = $("#bs-datepicker-disabled-days"),
-		bsDatepickerMultidate = $("#bs-datepicker-multidate"),
-		bsDatepickerOptions = $("#bs-datepicker-options"),
-		bsDatepickerAutoclose = $("#bs-datepicker-autoclose"),
-		bsDatepickerInlinedate = $("#bs-datepicker-inline");
+	var bsDatepickerBasic = $('#bs-datepicker-basic'),
+		bsDatepickerFormat = $('#bs-datepicker-format'),
+		bsDatepickerRange = $('#bs-datepicker-daterange'),
+		bsDatepickerDisabledDays = $('#bs-datepicker-disabled-days'),
+		bsDatepickerMultidate = $('#bs-datepicker-multidate'),
+		bsDatepickerOptions = $('#bs-datepicker-options'),
+		bsDatepickerAutoclose = $('#bs-datepicker-autoclose'),
+		bsDatepickerInlinedate = $('#bs-datepicker-inline');
 
 	// Basic
 	if (bsDatepickerBasic.length) {
 		bsDatepickerBasic.datepicker({
 			todayHighlight: true,
-			orientation: isRtl ? "auto right" : "auto left"
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -116,8 +116,8 @@ $(function () {
 	if (bsDatepickerFormat.length) {
 		bsDatepickerFormat.datepicker({
 			todayHighlight: true,
-			format: "dd/mm/yyyy",
-			orientation: isRtl ? "auto right" : "auto left"
+			format: 'dd/mm/yyyy',
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -125,7 +125,7 @@ $(function () {
 	if (bsDatepickerRange.length) {
 		bsDatepickerRange.datepicker({
 			todayHighlight: true,
-			orientation: isRtl ? "auto right" : "auto left"
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -134,7 +134,7 @@ $(function () {
 		bsDatepickerDisabledDays.datepicker({
 			todayHighlight: true,
 			daysOfWeekDisabled: [0, 6],
-			orientation: isRtl ? "auto right" : "auto left"
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -143,7 +143,7 @@ $(function () {
 		bsDatepickerMultidate.datepicker({
 			multidate: true,
 			todayHighlight: true,
-			orientation: isRtl ? "auto right" : "auto left"
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -153,7 +153,7 @@ $(function () {
 			calendarWeeks: true,
 			clearBtn: true,
 			todayHighlight: true,
-			orientation: isRtl ? "auto left" : "auto right"
+			orientation: isRtl ? 'auto left' : 'auto right'
 		});
 	}
 
@@ -162,7 +162,7 @@ $(function () {
 		bsDatepickerAutoclose.datepicker({
 			todayHighlight: true,
 			autoclose: true,
-			orientation: isRtl ? "auto right" : "auto left"
+			orientation: isRtl ? 'auto right' : 'auto left'
 		});
 	}
 
@@ -175,18 +175,18 @@ $(function () {
 
 	// Bootstrap Daterange Picker
 	// --------------------------------------------------------------------
-	var bsRangePickerBasic = $("#bs-rangepicker-basic"),
-		bsRangePickerSingle = $("#bs-rangepicker-single"),
-		bsRangePickerTime = $("#bs-rangepicker-time"),
-		bsRangePickerRange = $("#bs-rangepicker-range"),
-		bsRangePickerWeekNum = $("#bs-rangepicker-week-num"),
-		bsRangePickerDropdown = $("#bs-rangepicker-dropdown"),
-		bsRangePickerCancelBtn = document.getElementsByClassName("cancelBtn");
+	var bsRangePickerBasic = $('#bs-rangepicker-basic'),
+		bsRangePickerSingle = $('#bs-rangepicker-single'),
+		bsRangePickerTime = $('#bs-rangepicker-time'),
+		bsRangePickerRange = $('#bs-rangepicker-range'),
+		bsRangePickerWeekNum = $('#bs-rangepicker-week-num'),
+		bsRangePickerDropdown = $('#bs-rangepicker-dropdown'),
+		bsRangePickerCancelBtn = document.getElementsByClassName('cancelBtn');
 
 	// Basic
 	if (bsRangePickerBasic.length) {
 		bsRangePickerBasic.daterangepicker({
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 
@@ -194,7 +194,7 @@ $(function () {
 	if (bsRangePickerSingle.length) {
 		bsRangePickerSingle.daterangepicker({
 			singleDatePicker: true,
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 
@@ -204,9 +204,9 @@ $(function () {
 			timePicker: true,
 			timePickerIncrement: 30,
 			locale: {
-				format: "MM/DD/YYYY h:mm A"
+				format: 'MM/DD/YYYY h:mm A'
 			},
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 
@@ -214,13 +214,13 @@ $(function () {
 		bsRangePickerRange.daterangepicker({
 			ranges: {
 				Today: [moment(), moment()],
-				Yesterday: [moment().subtract(1, "days"), moment().subtract(1, "days")],
-				"Last 7 Days": [moment().subtract(6, "days"), moment()],
-				"Last 30 Days": [moment().subtract(29, "days"), moment()],
-				"This Month": [moment().startOf("month"), moment().endOf("month")],
-				"Last Month": [moment().subtract(1, "month").startOf("month"), moment().subtract(1, "month").endOf("month")]
+				Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+				'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+				'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+				'This Month': [moment().startOf('month'), moment().endOf('month')],
+				'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
 			},
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 
@@ -228,46 +228,46 @@ $(function () {
 	if (bsRangePickerWeekNum.length) {
 		bsRangePickerWeekNum.daterangepicker({
 			showWeekNumbers: true,
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 	// Dropdown
 	if (bsRangePickerDropdown.length) {
 		bsRangePickerDropdown.daterangepicker({
 			showDropdowns: true,
-			opens: isRtl ? "left" : "right"
+			opens: isRtl ? 'left' : 'right'
 		});
 	}
 
 	// Adding btn-label-secondary class in cancel btn
 	for (var i = 0; i < bsRangePickerCancelBtn.length; i++) {
-		bsRangePickerCancelBtn[i].classList.remove("btn-default");
-		bsRangePickerCancelBtn[i].classList.add("btn-label-primary");
+		bsRangePickerCancelBtn[i].classList.remove('btn-default');
+		bsRangePickerCancelBtn[i].classList.add('btn-label-primary');
 	}
 
 	// jQuery Timepicker
 	// --------------------------------------------------------------------
-	var basicTimepicker = $("#timepicker-basic"),
-		minMaxTimepicker = $("#timepicker-min-max"),
-		disabledTimepicker = $("#timepicker-disabled-times"),
-		formatTimepicker = $("#timepicker-format"),
-		stepTimepicker = $("#timepicker-step"),
-		altHourTimepicker = $("#timepicker-24hours");
+	var basicTimepicker = $('#timepicker-basic'),
+		minMaxTimepicker = $('#timepicker-min-max'),
+		disabledTimepicker = $('#timepicker-disabled-times'),
+		formatTimepicker = $('#timepicker-format'),
+		stepTimepicker = $('#timepicker-step'),
+		altHourTimepicker = $('#timepicker-24hours');
 
 	// Basic
 	if (basicTimepicker.length) {
 		basicTimepicker.timepicker({
-			orientation: isRtl ? "r" : "l"
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 
 	// Min & Max
 	if (minMaxTimepicker.length) {
 		minMaxTimepicker.timepicker({
-			minTime: "2:00pm",
-			maxTime: "7:00pm",
+			minTime: '2:00pm',
+			maxTime: '7:00pm',
 			showDuration: true,
-			orientation: isRtl ? "r" : "l"
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 
@@ -275,18 +275,18 @@ $(function () {
 	if (disabledTimepicker.length) {
 		disabledTimepicker.timepicker({
 			disableTimeRanges: [
-				["12am", "3am"],
-				["4am", "4:30am"]
+				['12am', '3am'],
+				['4am', '4:30am']
 			],
-			orientation: isRtl ? "r" : "l"
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 
 	// Format Picker
 	if (formatTimepicker.length) {
 		formatTimepicker.timepicker({
-			timeFormat: "H:i:s",
-			orientation: isRtl ? "r" : "l"
+			timeFormat: 'H:i:s',
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 
@@ -294,16 +294,16 @@ $(function () {
 	if (stepTimepicker.length) {
 		stepTimepicker.timepicker({
 			step: 15,
-			orientation: isRtl ? "r" : "l"
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 
 	// 24 Hours Format
 	if (altHourTimepicker.length) {
 		altHourTimepicker.timepicker({
-			show: "24:00",
-			timeFormat: "H:i:s",
-			orientation: isRtl ? "r" : "l"
+			show: '24:00',
+			timeFormat: 'H:i:s',
+			orientation: isRtl ? 'r' : 'l'
 		});
 	}
 });
@@ -311,22 +311,22 @@ $(function () {
 // color picker (pickr)
 // --------------------------------------------------------------------
 (function () {
-	const classicPicker = document.querySelector("#color-picker-classic"),
-		monolithPicker = document.querySelector("#color-picker-monolith"),
-		nanoPicker = document.querySelector("#color-picker-nano");
+	const classicPicker = document.querySelector('#color-picker-classic'),
+		monolithPicker = document.querySelector('#color-picker-monolith'),
+		nanoPicker = document.querySelector('#color-picker-nano');
 
 	// classic
 	if (classicPicker) {
 		pickr.create({
 			el: classicPicker,
-			theme: "classic",
-			default: "rgba(102, 108, 232, 1)",
+			theme: 'classic',
+			default: 'rgba(102, 108, 232, 1)',
 			swatches: [
-				"rgba(102, 108, 232, 1)",
-				"rgba(40, 208, 148, 1)",
-				"rgba(255, 73, 97, 1)",
-				"rgba(255, 145, 73, 1)",
-				"rgba(30, 159, 242, 1)"
+				'rgba(102, 108, 232, 1)',
+				'rgba(40, 208, 148, 1)',
+				'rgba(255, 73, 97, 1)',
+				'rgba(255, 145, 73, 1)',
+				'rgba(30, 159, 242, 1)'
 			],
 			components: {
 				// Main components
@@ -353,14 +353,14 @@ $(function () {
 	if (monolithPicker) {
 		pickr.create({
 			el: monolithPicker,
-			theme: "monolith",
-			default: "rgba(40, 208, 148, 1)",
+			theme: 'monolith',
+			default: 'rgba(40, 208, 148, 1)',
 			swatches: [
-				"rgba(102, 108, 232, 1)",
-				"rgba(40, 208, 148, 1)",
-				"rgba(255, 73, 97, 1)",
-				"rgba(255, 145, 73, 1)",
-				"rgba(30, 159, 242, 1)"
+				'rgba(102, 108, 232, 1)',
+				'rgba(40, 208, 148, 1)',
+				'rgba(255, 73, 97, 1)',
+				'rgba(255, 145, 73, 1)',
+				'rgba(30, 159, 242, 1)'
 			],
 			components: {
 				// Main components
@@ -387,14 +387,14 @@ $(function () {
 	if (nanoPicker) {
 		pickr.create({
 			el: nanoPicker,
-			theme: "nano",
-			default: "rgba(255, 73, 97, 1)",
+			theme: 'nano',
+			default: 'rgba(255, 73, 97, 1)',
 			swatches: [
-				"rgba(102, 108, 232, 1)",
-				"rgba(40, 208, 148, 1)",
-				"rgba(255, 73, 97, 1)",
-				"rgba(255, 145, 73, 1)",
-				"rgba(30, 159, 242, 1)"
+				'rgba(102, 108, 232, 1)',
+				'rgba(40, 208, 148, 1)',
+				'rgba(255, 73, 97, 1)',
+				'rgba(255, 145, 73, 1)',
+				'rgba(30, 159, 242, 1)'
 			],
 			components: {
 				// Main components

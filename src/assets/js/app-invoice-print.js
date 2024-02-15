@@ -2,7 +2,7 @@
  * Invoice Print
  */
 
-"use strict";
+'use strict';
 
 (function () {
 	window.print();

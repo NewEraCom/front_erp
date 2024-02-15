@@ -1,30 +1,30 @@
 /**
  * Main - Front Pages
  */
-"use strict";
+'use strict';
 
 (function () {
-	const nav = document.querySelector(".layout-navbar"),
-		heroAnimation = document.getElementById("hero-animation"),
-		animationImg = document.querySelectorAll(".hero-dashboard-img"),
-		animationElements = document.querySelectorAll(".hero-elements-img"),
-		swiperLogos = document.getElementById("swiper-clients-logos"),
-		swiperReviews = document.getElementById("swiper-reviews"),
-		ReviewsPreviousBtn = document.getElementById("reviews-previous-btn"),
-		ReviewsNextBtn = document.getElementById("reviews-next-btn"),
-		ReviewsSliderPrev = document.querySelector(".swiper-button-prev"),
-		ReviewsSliderNext = document.querySelector(".swiper-button-next"),
-		priceDurationToggler = document.querySelector(".price-duration-toggler"),
-		priceMonthlyList = [].slice.call(document.querySelectorAll(".price-monthly")),
-		priceYearlyList = [].slice.call(document.querySelectorAll(".price-yearly"));
+	const nav = document.querySelector('.layout-navbar'),
+		heroAnimation = document.getElementById('hero-animation'),
+		animationImg = document.querySelectorAll('.hero-dashboard-img'),
+		animationElements = document.querySelectorAll('.hero-elements-img'),
+		swiperLogos = document.getElementById('swiper-clients-logos'),
+		swiperReviews = document.getElementById('swiper-reviews'),
+		ReviewsPreviousBtn = document.getElementById('reviews-previous-btn'),
+		ReviewsNextBtn = document.getElementById('reviews-next-btn'),
+		ReviewsSliderPrev = document.querySelector('.swiper-button-prev'),
+		ReviewsSliderNext = document.querySelector('.swiper-button-next'),
+		priceDurationToggler = document.querySelector('.price-duration-toggler'),
+		priceMonthlyList = [].slice.call(document.querySelectorAll('.price-monthly')),
+		priceYearlyList = [].slice.call(document.querySelectorAll('.price-yearly'));
 
 	// Hero
-	const mediaQueryXL = "1200";
+	const mediaQueryXL = '1200';
 	const width = screen.width;
 	if (width >= mediaQueryXL && heroAnimation) {
-		heroAnimation.addEventListener("mousemove", function parallax(e) {
+		heroAnimation.addEventListener('mousemove', function parallax(e) {
 			animationElements.forEach(layer => {
-				layer.style.transform = "translateZ(1rem)";
+				layer.style.transform = 'translateZ(1rem)';
 			});
 			animationImg.forEach(layer => {
 				let x = (window.innerWidth - e.pageX * 2) / 100;
@@ -32,9 +32,9 @@
 				layer.style.transform = `perspective(1200px) rotateX(${y}deg) rotateY(${x}deg) scale3d(1, 1, 1)`;
 			});
 		});
-		nav.addEventListener("mousemove", function parallax(e) {
+		nav.addEventListener('mousemove', function parallax(e) {
 			animationElements.forEach(layer => {
-				layer.style.transform = "translateZ(1rem)";
+				layer.style.transform = 'translateZ(1rem)';
 			});
 			animationImg.forEach(layer => {
 				let x = (window.innerWidth - e.pageX * 2) / 100;
@@ -43,12 +43,12 @@
 			});
 		});
 
-		heroAnimation.addEventListener("mouseout", function () {
+		heroAnimation.addEventListener('mouseout', function () {
 			animationElements.forEach(layer => {
-				layer.style.transform = "translateZ(0)";
+				layer.style.transform = 'translateZ(0)';
 			});
 			animationImg.forEach(layer => {
-				layer.style.transform = "perspective(1200px) scale(1) rotateX(0) rotateY(0)";
+				layer.style.transform = 'perspective(1200px) scale(1) rotateX(0) rotateY(0)';
 			});
 		});
 	}
@@ -67,8 +67,8 @@
 			loop: true,
 			loopAdditionalSlides: 1,
 			navigation: {
-				nextEl: ".swiper-button-next",
-				prevEl: ".swiper-button-prev"
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev'
 			},
 			breakpoints: {
 				1200: {
@@ -86,10 +86,10 @@
 	// Reviews slider next and previous
 	// -----------------------------------
 	// Add click event listener to next button
-	ReviewsNextBtn.addEventListener("click", function () {
+	ReviewsNextBtn.addEventListener('click', function () {
 		ReviewsSliderNext.click();
 	});
-	ReviewsPreviousBtn.addEventListener("click", function () {
+	ReviewsPreviousBtn.addEventListener('click', function () {
 		ReviewsSliderPrev.click();
 	});
 
@@ -115,23 +115,23 @@
 
 	// Pricing Plans
 	// -----------------------------------
-	document.addEventListener("DOMContentLoaded", function (event) {
+	document.addEventListener('DOMContentLoaded', function (event) {
 		function togglePrice() {
 			if (priceDurationToggler.checked) {
 				// If checked
 				priceYearlyList.map(function (yearEl) {
-					yearEl.classList.remove("d-none");
+					yearEl.classList.remove('d-none');
 				});
 				priceMonthlyList.map(function (monthEl) {
-					monthEl.classList.add("d-none");
+					monthEl.classList.add('d-none');
 				});
 			} else {
 				// If not checked
 				priceYearlyList.map(function (yearEl) {
-					yearEl.classList.add("d-none");
+					yearEl.classList.add('d-none');
 				});
 				priceMonthlyList.map(function (monthEl) {
-					monthEl.classList.remove("d-none");
+					monthEl.classList.remove('d-none');
 				});
 			}
 		}

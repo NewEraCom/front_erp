@@ -2,12 +2,12 @@
  * Selects & Tags
  */
 
-"use strict";
+'use strict';
 
 $(function () {
-	const selectPicker = $(".selectpicker"),
-		select2 = $(".select2"),
-		select2Icons = $(".select2-icons");
+	const selectPicker = $('.selectpicker'),
+		select2 = $('.select2'),
+		select2Icons = $('.select2-icons');
 
 	// Bootstrap Select
 	// --------------------------------------------------------------------
@@ -22,8 +22,8 @@ $(function () {
 	if (select2.length) {
 		select2.each(function () {
 			var $this = $(this);
-			$this.wrap("<div class=\"position-relative\"></div>").select2({
-				placeholder: "Select value",
+			$this.wrap('<div class="position-relative"></div>').select2({
+				placeholder: 'Select value',
 				dropdownParent: $this.parent()
 			});
 		});
@@ -36,11 +36,11 @@ $(function () {
 			if (!option.id) {
 				return option.text;
 			}
-			var $icon = "<i class='" + $(option.element).data("icon") + " me-2'></i>" + option.text;
+			var $icon = '<i class=\'' + $(option.element).data('icon') + ' me-2\'></i>' + option.text;
 
 			return $icon;
 		}
-		select2Icons.wrap("<div class=\"position-relative\"></div>").select2({
+		select2Icons.wrap('<div class="position-relative"></div>').select2({
 			templateResult: renderIcons,
 			templateSelection: renderIcons,
 			escapeMarkup: function (es) {

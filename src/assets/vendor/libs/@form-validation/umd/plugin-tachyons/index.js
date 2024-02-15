@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory(require("@form-validation/core"), require("@form-validation/plugin-framework")) :
-		typeof define === "function" && define.amd ? define(["@form-validation/core", "@form-validation/plugin-framework"], factory) :
-			(global = typeof globalThis !== "undefined" ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Tachyons = factory(global.FormValidation, global.FormValidation.plugins)));
-})(this, (function (core, pluginFramework) { "use strict";
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@form-validation/core'), require('@form-validation/plugin-framework')) :
+		typeof define === 'function' && define.amd ? define(['@form-validation/core', '@form-validation/plugin-framework'], factory) :
+			(global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.Tachyons = factory(global.FormValidation, global.FormValidation.plugins)));
+})(this, (function (core, pluginFramework) { 'use strict';
 
 	/******************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -28,8 +28,8 @@
 	};
 
 	function __extends(d, b) {
-		if (typeof b !== "function" && b !== null)
-			throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+		if (typeof b !== 'function' && b !== null)
+			throw new TypeError('Class extends value ' + String(b) + ' is not a constructor or null');
 		extendStatics(d, b);
 		function __() { this.constructor = d; }
 		d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -45,22 +45,22 @@
 		__extends(Tachyons, _super);
 		function Tachyons(opts) {
 			return _super.call(this, Object.assign({}, {
-				formClass: "fv-plugins-tachyons",
-				messageClass: "small",
-				rowInvalidClass: "red",
+				formClass: 'fv-plugins-tachyons',
+				messageClass: 'small',
+				rowInvalidClass: 'red',
 				rowPattern: /^(.*)fl(.*)$/,
-				rowSelector: ".fl",
-				rowValidClass: "green",
+				rowSelector: '.fl',
+				rowValidClass: 'green',
 			}, opts)) || this;
 		}
 		Tachyons.prototype.onIconPlaced = function (e) {
-			var type = e.element.getAttribute("type");
+			var type = e.element.getAttribute('type');
 			var parent = e.element.parentElement;
-			if ("checkbox" === type || "radio" === type) {
+			if ('checkbox' === type || 'radio' === type) {
 				// Place it after the container of checkbox/radio
 				parent.parentElement.insertBefore(e.iconElement, parent.nextSibling);
 				classSet(e.iconElement, {
-					"fv-plugins-icon-check": true,
+					'fv-plugins-icon-check': true,
 				});
 			}
 		};

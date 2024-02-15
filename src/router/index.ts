@@ -1,15 +1,18 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory } from 'vue-router';
+import { landingRoutes } from './landing_routes';
+import { authRoutes } from './auth_routes';
 
 const router = createRouter({
-	history: createWebHistory(import.meta.env.BASE_URL),
+	history: createWebHistory(),
 	routes: [
-		{
-			path: "/",
-			name: "home",
-			component: () => import("../modules/Landing/HomePage.vue"),
-		},
-		
+		...landingRoutes,
+		...authRoutes
 	]
+});
+
+router.beforeEach((to, from, next) => {	
+	document.title = 'NewEraERP - '+to.meta.title || 'NewEraERP';
+	next();
 });
 
 export default router;

@@ -1,13 +1,13 @@
 /**
  * Perfect Scrollbar
  */
-"use strict";
+'use strict';
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener('DOMContentLoaded', function () {
 	(function () {
-		const verticalExample = document.getElementById("vertical-example"),
-			horizontalExample = document.getElementById("horizontal-example"),
-			horizVertExample = document.getElementById("both-scrollbars-example");
+		const verticalExample = document.getElementById('vertical-example'),
+			horizontalExample = document.getElementById('horizontal-example'),
+			horizVertExample = document.getElementById('both-scrollbars-example');
 
 		// Vertical Example
 		// --------------------------------------------------------------------

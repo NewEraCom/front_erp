@@ -2,34 +2,34 @@
  * Sweet Alerts
  */
 
-"use strict";
+'use strict';
 
 (function () {
-	const basicAlert = document.querySelector("#basic-alert"),
-		withTitle = document.querySelector("#with-title"),
-		footerAlert = document.querySelector("#footer-alert"),
-		htmlAlert = document.querySelector("#html-alert"),
-		positionTopStart = document.querySelector("#position-top-start"),
-		positionTopEnd = document.querySelector("#position-top-end"),
-		positionBottomStart = document.querySelector("#position-bottom-start"),
-		positionBottomEnd = document.querySelector("#position-bottom-end"),
-		bounceInAnimation = document.querySelector("#bounce-in-animation"),
-		fadeInAnimation = document.querySelector("#fade-in-animation"),
-		flipXAnimation = document.querySelector("#flip-x-animation"),
-		tadaAnimation = document.querySelector("#tada-animation"),
-		shakeAnimation = document.querySelector("#shake-animation"),
-		iconSuccess = document.querySelector("#type-success"),
-		iconInfo = document.querySelector("#type-info"),
-		iconWarning = document.querySelector("#type-warning"),
-		iconError = document.querySelector("#type-error"),
-		iconQuestion = document.querySelector("#type-question"),
-		customImage = document.querySelector("#custom-image"),
-		autoClose = document.querySelector("#auto-close"),
-		outsideClick = document.querySelector("#outside-click"),
-		progressSteps = document.querySelector("#progress-steps"),
-		ajaxRequest = document.querySelector("#ajax-request"),
-		confirmText = document.querySelector("#confirm-text"),
-		confirmColor = document.querySelector("#confirm-color");
+	const basicAlert = document.querySelector('#basic-alert'),
+		withTitle = document.querySelector('#with-title'),
+		footerAlert = document.querySelector('#footer-alert'),
+		htmlAlert = document.querySelector('#html-alert'),
+		positionTopStart = document.querySelector('#position-top-start'),
+		positionTopEnd = document.querySelector('#position-top-end'),
+		positionBottomStart = document.querySelector('#position-bottom-start'),
+		positionBottomEnd = document.querySelector('#position-bottom-end'),
+		bounceInAnimation = document.querySelector('#bounce-in-animation'),
+		fadeInAnimation = document.querySelector('#fade-in-animation'),
+		flipXAnimation = document.querySelector('#flip-x-animation'),
+		tadaAnimation = document.querySelector('#tada-animation'),
+		shakeAnimation = document.querySelector('#shake-animation'),
+		iconSuccess = document.querySelector('#type-success'),
+		iconInfo = document.querySelector('#type-info'),
+		iconWarning = document.querySelector('#type-warning'),
+		iconError = document.querySelector('#type-error'),
+		iconQuestion = document.querySelector('#type-question'),
+		customImage = document.querySelector('#custom-image'),
+		autoClose = document.querySelector('#auto-close'),
+		outsideClick = document.querySelector('#outside-click'),
+		progressSteps = document.querySelector('#progress-steps'),
+		ajaxRequest = document.querySelector('#ajax-request'),
+		confirmText = document.querySelector('#confirm-text'),
+		confirmColor = document.querySelector('#confirm-color');
 
 	// Basic Alerts
 	// --------------------------------------------------------------------
@@ -38,9 +38,9 @@
 	if (basicAlert) {
 		basicAlert.onclick = function () {
 			Swal.fire({
-				title: "Any fool can use a computer",
+				title: 'Any fool can use a computer',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -51,10 +51,10 @@
 	if (withTitle) {
 		withTitle.onclick = function () {
 			Swal.fire({
-				title: "The Internet?,",
-				text: "That thing is still around?",
+				title: 'The Internet?,',
+				text: 'That thing is still around?',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -65,12 +65,12 @@
 	if (footerAlert) {
 		footerAlert.onclick = function () {
 			Swal.fire({
-				icon: "error",
-				title: "Oops...",
-				text: "Something went wrong!",
-				footer: "<a href>Why do I have this issue?</a>",
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Something went wrong!',
+				footer: '<a href>Why do I have this issue?</a>',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -81,22 +81,22 @@
 	if (htmlAlert) {
 		htmlAlert.onclick = function () {
 			Swal.fire({
-				title: "<span class=\"fw-medium\">HTML <u>example</u></span>",
-				icon: "info",
+				title: '<span class="fw-medium">HTML <u>example</u></span>',
+				icon: 'info',
 				html:
-          "You can use <b>bold text</b>, " +
-          "<a href=\"https://pixinvent.com/\" target=\"_blank\">links</a> " +
-          "and other HTML tags",
+          'You can use <b>bold text</b>, ' +
+          '<a href="https://pixinvent.com/" target="_blank">links</a> ' +
+          'and other HTML tags',
 				showCloseButton: true,
 				showCancelButton: true,
 				focusConfirm: false,
-				confirmButtonText: "<i class=\"ti ti-thumb-up\"></i> Great!",
-				confirmButtonAriaLabel: "Thumbs up, great!",
-				cancelButtonText: "<i class=\"ti ti-thumb-down\"></i>",
-				cancelButtonAriaLabel: "Thumbs down",
+				confirmButtonText: '<i class="ti ti-thumb-up"></i> Great!',
+				confirmButtonAriaLabel: 'Thumbs up, great!',
+				cancelButtonText: '<i class="ti ti-thumb-down"></i>',
+				cancelButtonAriaLabel: 'Thumbs down',
 				customClass: {
-					confirmButton: "btn btn-primary me-3",
-					cancelButton: "btn btn-label-secondary"
+					confirmButton: 'btn btn-primary me-3',
+					cancelButton: 'btn btn-label-secondary'
 				},
 				buttonsStyling: false
 			});
@@ -110,13 +110,13 @@
 	if (positionTopStart) {
 		positionTopStart.onclick = function () {
 			Swal.fire({
-				position: "top-start",
-				icon: "success",
-				title: "Your work has been saved",
+				position: 'top-start',
+				icon: 'success',
+				title: 'Your work has been saved',
 				showConfirmButton: false,
 				timer: 1500,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -127,13 +127,13 @@
 	if (positionTopEnd) {
 		positionTopEnd.onclick = function () {
 			Swal.fire({
-				position: "top-end",
-				icon: "success",
-				title: "Your work has been saved",
+				position: 'top-end',
+				icon: 'success',
+				title: 'Your work has been saved',
 				showConfirmButton: false,
 				timer: 1500,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -144,13 +144,13 @@
 	if (positionBottomStart) {
 		positionBottomStart.onclick = function () {
 			Swal.fire({
-				position: "bottom-start",
-				icon: "success",
-				title: "Your work has been saved",
+				position: 'bottom-start',
+				icon: 'success',
+				title: 'Your work has been saved',
 				showConfirmButton: false,
 				timer: 1500,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -161,13 +161,13 @@
 	if (positionBottomEnd) {
 		positionBottomEnd.onclick = function () {
 			Swal.fire({
-				position: "bottom-end",
-				icon: "success",
-				title: "Your work has been saved",
+				position: 'bottom-end',
+				icon: 'success',
+				title: 'Your work has been saved',
 				showConfirmButton: false,
 				timer: 1500,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -181,12 +181,12 @@
 	if (bounceInAnimation) {
 		bounceInAnimation.onclick = function () {
 			Swal.fire({
-				title: "Bounce In Animation",
+				title: 'Bounce In Animation',
 				showClass: {
-					popup: "animate__animated animate__bounceIn"
+					popup: 'animate__animated animate__bounceIn'
 				},
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -197,12 +197,12 @@
 	if (fadeInAnimation) {
 		fadeInAnimation.onclick = function () {
 			Swal.fire({
-				title: "Fade In Animation",
+				title: 'Fade In Animation',
 				showClass: {
-					popup: "animate__animated animate__fadeIn"
+					popup: 'animate__animated animate__fadeIn'
 				},
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -213,12 +213,12 @@
 	if (flipXAnimation) {
 		flipXAnimation.onclick = function () {
 			Swal.fire({
-				title: "Flip In Animation",
+				title: 'Flip In Animation',
 				showClass: {
-					popup: "animate__animated animate__flipInX"
+					popup: 'animate__animated animate__flipInX'
 				},
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -229,12 +229,12 @@
 	if (tadaAnimation) {
 		tadaAnimation.onclick = function () {
 			Swal.fire({
-				title: "Tada Animation",
+				title: 'Tada Animation',
 				showClass: {
-					popup: "animate__animated animate__tada"
+					popup: 'animate__animated animate__tada'
 				},
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -245,12 +245,12 @@
 	if (shakeAnimation) {
 		shakeAnimation.onclick = function () {
 			Swal.fire({
-				title: "Shake Animation",
+				title: 'Shake Animation',
 				showClass: {
-					popup: "animate__animated animate__shakeX"
+					popup: 'animate__animated animate__shakeX'
 				},
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -264,11 +264,11 @@
 	if (iconSuccess) {
 		iconSuccess.onclick = function () {
 			Swal.fire({
-				title: "Good job!",
-				text: "You clicked the button!",
-				icon: "success",
+				title: 'Good job!',
+				text: 'You clicked the button!',
+				icon: 'success',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -279,11 +279,11 @@
 	if (iconInfo) {
 		iconInfo.onclick = function () {
 			Swal.fire({
-				title: "Info!",
-				text: "You clicked the button!",
-				icon: "info",
+				title: 'Info!',
+				text: 'You clicked the button!',
+				icon: 'info',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -294,11 +294,11 @@
 	if (iconWarning) {
 		iconWarning.onclick = function () {
 			Swal.fire({
-				title: "Warning!",
-				text: " You clicked the button!",
-				icon: "warning",
+				title: 'Warning!',
+				text: ' You clicked the button!',
+				icon: 'warning',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -309,11 +309,11 @@
 	if (iconError) {
 		iconError.onclick = function () {
 			Swal.fire({
-				title: "Error!",
-				text: " You clicked the button!",
-				icon: "error",
+				title: 'Error!',
+				text: ' You clicked the button!',
+				icon: 'error',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -324,11 +324,11 @@
 	if (iconQuestion) {
 		iconQuestion.onclick = function () {
 			Swal.fire({
-				title: "Question!",
-				text: " You clicked the button!",
-				icon: "question",
+				title: 'Question!',
+				text: ' You clicked the button!',
+				icon: 'question',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -342,13 +342,13 @@
 	if (customImage) {
 		customImage.onclick = function () {
 			Swal.fire({
-				title: "Sweet!",
-				text: "Modal with a custom image.",
-				imageUrl: assetsPath + "img/backgrounds/5.jpg",
+				title: 'Sweet!',
+				text: 'Modal with a custom image.',
+				imageUrl: assetsPath + 'img/backgrounds/5.jpg',
 				imageWidth: 400,
-				imageAlt: "Custom image",
+				imageAlt: 'Custom image',
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -360,17 +360,17 @@
 		autoClose.onclick = function () {
 			var timerInterval;
 			Swal.fire({
-				title: "Auto close alert!",
-				html: "I will close in <span class=\"fw-medium\"></span> seconds.",
+				title: 'Auto close alert!',
+				html: 'I will close in <span class="fw-medium"></span> seconds.',
 				timer: 2000,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false,
 				willOpen: function () {
 					Swal.showLoading();
 					timerInterval = setInterval(function () {
-						Swal.getHtmlContainer().querySelector("strong").textContent = Swal.getTimerLeft();
+						Swal.getHtmlContainer().querySelector('strong').textContent = Swal.getTimerLeft();
 					}, 100);
 				},
 				willClose: function () {
@@ -381,7 +381,7 @@
 				// Read more about handling dismissals
 					result.dismiss === Swal.DismissReason.timer
 				) {
-					console.log("I was closed by the timer");
+					console.log('I was closed by the timer');
 				}
 			});
 		};
@@ -391,12 +391,12 @@
 	if (outsideClick) {
 		outsideClick.onclick = function () {
 			Swal.fire({
-				title: "Click outside to close!",
-				text: "This is a cool message!",
+				title: 'Click outside to close!',
+				text: 'This is a cool message!',
 				backdrop: true,
 				allowOutsideClick: true,
 				customClass: {
-					confirmButton: "btn btn-primary"
+					confirmButton: 'btn btn-primary'
 				},
 				buttonsStyling: false
 			});
@@ -406,16 +406,16 @@
 	// Alert With Steps
 	if (progressSteps) {
 		progressSteps.onclick = function () {
-			const steps = ["1", "2", "3"];
+			const steps = ['1', '2', '3'];
 			const swalQueueStep = Swal.mixin({
-				confirmButtonText: "Forward",
-				cancelButtonText: "Back",
+				confirmButtonText: 'Forward',
+				cancelButtonText: 'Back',
 				progressSteps: steps,
-				input: "text",
+				input: 'text',
 				inputAttributes: {
 					required: true
 				},
-				validationMessage: "This field is required"
+				validationMessage: 'This field is required'
 			});
 
 			async function backAndForward() {
@@ -424,7 +424,7 @@
 
 				for (currentStep = 0; currentStep < steps.length; ) {
 					const result = await new swalQueueStep({
-						title: "Question " + steps[currentStep],
+						title: 'Question ' + steps[currentStep],
 						showCancelButton: currentStep > 0,
 						currentProgressStep: currentStep
 					});
@@ -432,7 +432,7 @@
 					if (result.value) {
 						values[currentStep] = result.value;
 						currentStep++;
-					} else if (result.dismiss === "cancel") {
+					} else if (result.dismiss === 'cancel') {
 						currentStep--;
 					}
 				}
@@ -448,20 +448,20 @@
 	if (ajaxRequest) {
 		ajaxRequest.onclick = function () {
 			Swal.fire({
-				title: "Submit your Github username",
-				input: "text",
+				title: 'Submit your Github username',
+				input: 'text',
 				inputAttributes: {
-					autocapitalize: "off"
+					autocapitalize: 'off'
 				},
 				showCancelButton: true,
-				confirmButtonText: "Look up",
+				confirmButtonText: 'Look up',
 				showLoaderOnConfirm: true,
 				customClass: {
-					confirmButton: "btn btn-primary me-3",
-					cancelButton: "btn btn-label-danger"
+					confirmButton: 'btn btn-primary me-3',
+					cancelButton: 'btn btn-label-danger'
 				},
 				preConfirm: login => {
-					return fetch("//api.github.com/users/" + login)
+					return fetch('//api.github.com/users/' + login)
 						.then(response => {
 							if (!response.ok) {
 								throw new Error(response.statusText);
@@ -469,7 +469,7 @@
 							return response.json();
 						})
 						.catch(error => {
-							Swal.showValidationMessage("Request failed:" + error);
+							Swal.showValidationMessage('Request failed:' + error);
 						});
 				},
 				backdrop: true,
@@ -477,11 +477,11 @@
 			}).then(result => {
 				if (result.isConfirmed) {
 					Swal.fire({
-						title: result.value.login + "'s avatar",
+						title: result.value.login + '\'s avatar',
 						imageUrl: result.value.avatar_url,
 						customClass: {
-							confirmButtonText: "Close me!",
-							confirmButton: "btn btn-primary"
+							confirmButtonText: 'Close me!',
+							confirmButton: 'btn btn-primary'
 						}
 					});
 				}
@@ -493,24 +493,24 @@
 	if (confirmText) {
 		confirmText.onclick = function () {
 			Swal.fire({
-				title: "Are you sure?",
-				text: "You won't be able to revert this!",
-				icon: "warning",
+				title: 'Are you sure?',
+				text: 'You won\'t be able to revert this!',
+				icon: 'warning',
 				showCancelButton: true,
-				confirmButtonText: "Yes, delete it!",
+				confirmButtonText: 'Yes, delete it!',
 				customClass: {
-					confirmButton: "btn btn-primary me-3",
-					cancelButton: "btn btn-label-secondary"
+					confirmButton: 'btn btn-primary me-3',
+					cancelButton: 'btn btn-label-secondary'
 				},
 				buttonsStyling: false
 			}).then(function (result) {
 				if (result.value) {
 					Swal.fire({
-						icon: "success",
-						title: "Deleted!",
-						text: "Your file has been deleted.",
+						icon: 'success',
+						title: 'Deleted!',
+						text: 'Your file has been deleted.',
 						customClass: {
-							confirmButton: "btn btn-success"
+							confirmButton: 'btn btn-success'
 						}
 					});
 				}
@@ -522,33 +522,33 @@
 	if (confirmColor) {
 		confirmColor.onclick = function () {
 			Swal.fire({
-				title: "Are you sure?",
-				text: "You won't be able to revert this!",
-				icon: "warning",
+				title: 'Are you sure?',
+				text: 'You won\'t be able to revert this!',
+				icon: 'warning',
 				showCancelButton: true,
-				confirmButtonText: "Yes, delete it!",
+				confirmButtonText: 'Yes, delete it!',
 				customClass: {
-					confirmButton: "btn btn-primary me-3",
-					cancelButton: "btn btn-label-secondary"
+					confirmButton: 'btn btn-primary me-3',
+					cancelButton: 'btn btn-label-secondary'
 				},
 				buttonsStyling: false
 			}).then(function (result) {
 				if (result.value) {
 					Swal.fire({
-						icon: "success",
-						title: "Deleted!",
-						text: "Your file has been deleted.",
+						icon: 'success',
+						title: 'Deleted!',
+						text: 'Your file has been deleted.',
 						customClass: {
-							confirmButton: "btn btn-success"
+							confirmButton: 'btn btn-success'
 						}
 					});
 				} else if (result.dismiss === Swal.DismissReason.cancel) {
 					Swal.fire({
-						title: "Cancelled",
-						text: "Your imaginary file is safe :)",
-						icon: "error",
+						title: 'Cancelled',
+						text: 'Your imaginary file is safe :)',
+						icon: 'error',
 						customClass: {
-							confirmButton: "btn btn-success"
+							confirmButton: 'btn btn-success'
 						}
 					});
 				}
