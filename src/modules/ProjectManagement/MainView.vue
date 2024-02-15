@@ -12,7 +12,7 @@
                     <ul class="menu_item ps-1">
                         <div class="menu_title flex">
                             <small class="title text-muted fw-normal">Menu</small>
-                            HR
+                            PM
                         </div>
                        
                     </ul>
