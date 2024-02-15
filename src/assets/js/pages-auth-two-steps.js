@@ -2,17 +2,17 @@
  *  Page auth two steps
  */
 
-"use strict";
+'use strict';
 
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener('DOMContentLoaded', function (e) {
 	(function () {
-		let maskWrapper = document.querySelector(".numeral-mask-wrapper");
+		let maskWrapper = document.querySelector('.numeral-mask-wrapper');
 
 		for (let pin of maskWrapper.children) {
 			pin.onkeyup = function (e) {
 				// While entering value, go to next
 				if (pin.nextElementSibling) {
-					if (this.value.length === parseInt(this.attributes["maxlength"].value)) {
+					if (this.value.length === parseInt(this.attributes['maxlength'].value)) {
 						pin.nextElementSibling.focus();
 					}
 				}
@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 			};
 		}
 
-		const twoStepsForm = document.querySelector("#twoStepsForm");
+		const twoStepsForm = document.querySelector('#twoStepsForm');
 
 		// Form validation for Add new record
 		if (twoStepsForm) {
@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					otp: {
 						validators: {
 							notEmpty: {
-								message: "Please enter otp"
+								message: 'Please enter otp'
 							}
 						}
 					}
@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
 					bootstrap5: new FormValidation.plugins.Bootstrap5({
-						eleValidClass: "",
-						rowSelector: ".mb-3"
+						eleValidClass: '',
+						rowSelector: '.mb-3'
 					}),
 					submitButton: new FormValidation.plugins.SubmitButton(),
 
@@ -54,23 +54,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
 				}
 			});
 
-			const numeralMaskList = twoStepsForm.querySelectorAll(".numeral-mask");
+			const numeralMaskList = twoStepsForm.querySelectorAll('.numeral-mask');
 			const keyupHandler = function () {
 				let otpFlag = true,
-					otpVal = "";
+					otpVal = '';
 				numeralMaskList.forEach(numeralMaskEl => {
-					if (numeralMaskEl.value === "") {
+					if (numeralMaskEl.value === '') {
 						otpFlag = false;
-						twoStepsForm.querySelector("[name=\"otp\"]").value = "";
+						twoStepsForm.querySelector('[name="otp"]').value = '';
 					}
 					otpVal = otpVal + numeralMaskEl.value;
 				});
 				if (otpFlag) {
-					twoStepsForm.querySelector("[name=\"otp\"]").value = otpVal;
+					twoStepsForm.querySelector('[name="otp"]').value = otpVal;
 				}
 			};
 			numeralMaskList.forEach(numeralMaskEle => {
-				numeralMaskEle.addEventListener("keyup", keyupHandler);
+				numeralMaskEle.addEventListener('keyup', keyupHandler);
 			});
 		}
 	})();

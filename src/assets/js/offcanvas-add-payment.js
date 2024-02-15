@@ -2,11 +2,11 @@
  * Add Payment Offcanvas
  */
 
-"use strict";
+'use strict';
 
 (function () {
 	// Invoice amount
-	const paymentAmount = document.querySelector(".invoice-amount");
+	const paymentAmount = document.querySelector('.invoice-amount');
 
 	// Prefix
 	if (paymentAmount) {
@@ -17,12 +17,12 @@
 
 	// Datepicker
 	const date = new Date(),
-		invoiceDateList = document.querySelectorAll(".invoice-date");
+		invoiceDateList = document.querySelectorAll('.invoice-date');
 
 	if (invoiceDateList) {
 		invoiceDateList.forEach(function (invoiceDateEl) {
 			invoiceDateEl.flatpickr({
-				monthSelectorType: "static",
+				monthSelectorType: 'static',
 				defaultDate: date
 			});
 		});

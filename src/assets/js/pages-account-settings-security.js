@@ -2,12 +2,12 @@
  * Account Settings - Security
  */
 
-"use strict";
+'use strict';
 
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener('DOMContentLoaded', function (e) {
 	(function () {
-		const formChangePass = document.querySelector("#formAccountSettings"),
-			formApiKey = document.querySelector("#formAccountSettingsApiKey");
+		const formChangePass = document.querySelector('#formAccountSettings'),
+			formApiKey = document.querySelector('#formAccountSettingsApiKey');
 
 		// Form validation for Change password
 		if (formChangePass) {
@@ -16,39 +16,39 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					currentPassword: {
 						validators: {
 							notEmpty: {
-								message: "Please current password"
+								message: 'Please current password'
 							},
 							stringLength: {
 								min: 8,
-								message: "Password must be more than 8 characters"
+								message: 'Password must be more than 8 characters'
 							}
 						}
 					},
 					newPassword: {
 						validators: {
 							notEmpty: {
-								message: "Please enter new password"
+								message: 'Please enter new password'
 							},
 							stringLength: {
 								min: 8,
-								message: "Password must be more than 8 characters"
+								message: 'Password must be more than 8 characters'
 							}
 						}
 					},
 					confirmPassword: {
 						validators: {
 							notEmpty: {
-								message: "Please confirm new password"
+								message: 'Please confirm new password'
 							},
 							identical: {
 								compare: function () {
-									return formChangePass.querySelector("[name=\"newPassword\"]").value;
+									return formChangePass.querySelector('[name="newPassword"]').value;
 								},
-								message: "The password and its confirm are not the same"
+								message: 'The password and its confirm are not the same'
 							},
 							stringLength: {
 								min: 8,
-								message: "Password must be more than 8 characters"
+								message: 'Password must be more than 8 characters'
 							}
 						}
 					}
@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
 					bootstrap5: new FormValidation.plugins.Bootstrap5({
-						eleValidClass: "",
-						rowSelector: ".col-md-6"
+						eleValidClass: '',
+						rowSelector: '.col-md-6'
 					}),
 					submitButton: new FormValidation.plugins.SubmitButton(),
 					// Submit the form when all fields are valid
@@ -65,9 +65,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					autoFocus: new FormValidation.plugins.AutoFocus()
 				},
 				init: instance => {
-					instance.on("plugins.message.placed", function (e) {
-						if (e.element.parentElement.classList.contains("input-group")) {
-							e.element.parentElement.insertAdjacentElement("afterend", e.messageElement);
+					instance.on('plugins.message.placed', function (e) {
+						if (e.element.parentElement.classList.contains('input-group')) {
+							e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
 						}
 					});
 				}
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					apiKey: {
 						validators: {
 							notEmpty: {
-								message: "Please enter API key name"
+								message: 'Please enter API key name'
 							}
 						}
 					}
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
 					bootstrap5: new FormValidation.plugins.Bootstrap5({
-						eleValidClass: ""
+						eleValidClass: ''
 					}),
 					submitButton: new FormValidation.plugins.SubmitButton(),
 					// Submit the form when all fields are valid
@@ -97,9 +97,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					autoFocus: new FormValidation.plugins.AutoFocus()
 				},
 				init: instance => {
-					instance.on("plugins.message.placed", function (e) {
-						if (e.element.parentElement.classList.contains("input-group")) {
-							e.element.parentElement.insertAdjacentElement("afterend", e.messageElement);
+					instance.on('plugins.message.placed', function (e) {
+						if (e.element.parentElement.classList.contains('input-group')) {
+							e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
 						}
 					});
 				}
@@ -110,13 +110,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
 // Select2 (jquery)
 $(function () {
-	var select2 = $(".select2");
+	var select2 = $('.select2');
 
 	// Select2 API Key
 	if (select2.length) {
 		select2.each(function () {
 			var $this = $(this);
-			$this.wrap("<div class=\"position-relative\"></div>");
+			$this.wrap('<div class="position-relative"></div>');
 			$this.select2({
 				dropdownParent: $this.parent()
 			});

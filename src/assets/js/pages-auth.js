@@ -2,10 +2,10 @@
  *  Pages Authentication
  */
 
-"use strict";
-const formAuthentication = document.querySelector("#formAuthentication");
+'use strict';
+const formAuthentication = document.querySelector('#formAuthentication');
 
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener('DOMContentLoaded', function (e) {
 	(function () {
 		// Form validation for Add new record
 		if (formAuthentication) {
@@ -14,67 +14,67 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					username: {
 						validators: {
 							notEmpty: {
-								message: "Please enter username"
+								message: 'Please enter username'
 							},
 							stringLength: {
 								min: 6,
-								message: "Username must be more than 6 characters"
+								message: 'Username must be more than 6 characters'
 							}
 						}
 					},
 					email: {
 						validators: {
 							notEmpty: {
-								message: "Please enter your email"
+								message: 'Please enter your email'
 							},
 							emailAddress: {
-								message: "Please enter valid email address"
+								message: 'Please enter valid email address'
 							}
 						}
 					},
-					"email-username": {
+					'email-username': {
 						validators: {
 							notEmpty: {
-								message: "Please enter email / username"
+								message: 'Please enter email / username'
 							},
 							stringLength: {
 								min: 6,
-								message: "Username must be more than 6 characters"
+								message: 'Username must be more than 6 characters'
 							}
 						}
 					},
 					password: {
 						validators: {
 							notEmpty: {
-								message: "Please enter your password"
+								message: 'Please enter your password'
 							},
 							stringLength: {
 								min: 6,
-								message: "Password must be more than 6 characters"
+								message: 'Password must be more than 6 characters'
 							}
 						}
 					},
-					"confirm-password": {
+					'confirm-password': {
 						validators: {
 							notEmpty: {
-								message: "Please confirm password"
+								message: 'Please confirm password'
 							},
 							identical: {
 								compare: function () {
-									return formAuthentication.querySelector("[name=\"password\"]").value;
+									return formAuthentication.querySelector('[name="password"]').value;
 								},
-								message: "The password and its confirm are not the same"
+								message: 'The password and its confirm are not the same'
 							},
 							stringLength: {
 								min: 6,
-								message: "Password must be more than 6 characters"
+								message: 'Password must be more than 6 characters'
 							}
 						}
 					},
 					terms: {
 						validators: {
 							notEmpty: {
-								message: "Please agree terms & conditions"
+								message: 'Please agree terms & conditions'
 							}
 						}
 					}
@@ -82,8 +82,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 				plugins: {
 					trigger: new FormValidation.plugins.Trigger(),
 					bootstrap5: new FormValidation.plugins.Bootstrap5({
-						eleValidClass: "",
-						rowSelector: ".mb-3"
+						eleValidClass: '',
+						rowSelector: '.mb-3'
 					}),
 					submitButton: new FormValidation.plugins.SubmitButton(),
 
@@ -91,9 +91,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 					autoFocus: new FormValidation.plugins.AutoFocus()
 				},
 				init: instance => {
-					instance.on("plugins.message.placed", function (e) {
-						if (e.element.parentElement.classList.contains("input-group")) {
-							e.element.parentElement.insertAdjacentElement("afterend", e.messageElement);
+					instance.on('plugins.message.placed', function (e) {
+						if (e.element.parentElement.classList.contains('input-group')) {
+							e.element.parentElement.insertAdjacentElement('afterend', e.messageElement);
 						}
 					});
 				}
@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 		}
 
 		//  Two Steps Verification
-		const numeralMask = document.querySelectorAll(".numeral-mask");
+		const numeralMask = document.querySelectorAll('.numeral-mask');
 
 		// Verification masking
 		if (numeralMask.length) {

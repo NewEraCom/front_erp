@@ -2,7 +2,7 @@
  * Timeline
  */
 
-"use strict";
+'use strict';
 
 (function () {
 	// Init Animation on scroll

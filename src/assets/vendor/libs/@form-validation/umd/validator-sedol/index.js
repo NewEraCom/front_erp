@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() :
-		typeof define === "function" && define.amd ? define(factory) :
-			(global = typeof globalThis !== "undefined" ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.validators = global.FormValidation.validators || {}, global.FormValidation.validators.sedol = factory()));
-})(this, (function () { "use strict";
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+		typeof define === 'function' && define.amd ? define(factory) :
+			(global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.validators = global.FormValidation.validators || {}, global.FormValidation.validators.sedol = factory()));
+})(this, (function () { 'use strict';
 
 	/**
      * FormValidation (https://formvalidation.io)
@@ -16,7 +16,7 @@
              * @see http://en.wikipedia.org/wiki/SEDOL
              */
 			validate: function (input) {
-				if (input.value === "") {
+				if (input.value === '') {
 					return { valid: true };
 				}
 				var v = input.value.toUpperCase();
@@ -30,7 +30,7 @@
 					sum += weight[i] * parseInt(v.charAt(i), 36);
 				}
 				sum = (10 - (sum % 10)) % 10;
-				return { valid: "".concat(sum) === v.charAt(length - 1) };
+				return { valid: ''.concat(sum) === v.charAt(length - 1) };
 			},
 		};
 	}

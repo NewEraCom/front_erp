@@ -2,7 +2,7 @@
  * Dashboard CRM
  */
 
-"use strict";
+'use strict';
 (function () {
 	let cardColor, labelColor, shadeColor, legendColor, borderColor;
 	if (isDarkStyle) {
@@ -10,22 +10,22 @@
 		labelColor = config.colors_dark.textMuted;
 		legendColor = config.colors_dark.bodyColor;
 		borderColor = config.colors_dark.borderColor;
-		shadeColor = "dark";
+		shadeColor = 'dark';
 	} else {
 		cardColor = config.colors.cardColor;
 		labelColor = config.colors.textMuted;
 		legendColor = config.colors.bodyColor;
 		borderColor = config.colors.borderColor;
-		shadeColor = "";
+		shadeColor = '';
 	}
 
 	// Sales last year Area Chart
 	// --------------------------------------------------------------------
-	const salesLastYearEl = document.querySelector("#salesLastYear"),
+	const salesLastYearEl = document.querySelector('#salesLastYear'),
 		salesLastYearConfig = {
 			chart: {
 				height: 78,
-				type: "area",
+				type: 'area',
 				parentHeightOffset: 0,
 				toolbar: {
 					show: false
@@ -35,15 +35,15 @@
 				}
 			},
 			markers: {
-				colors: "transparent",
-				strokeColors: "transparent"
+				colors: 'transparent',
+				strokeColors: 'transparent'
 			},
 			grid: {
 				show: false
 			},
 			colors: [config.colors.success],
 			fill: {
-				type: "gradient",
+				type: 'gradient',
 				gradient: {
 					shade: shadeColor,
 					shadeIntensity: 0.8,
@@ -56,7 +56,7 @@
 			},
 			stroke: {
 				width: 2,
-				curve: "smooth"
+				curve: 'smooth'
 			},
 			series: [
 				{
@@ -95,10 +95,10 @@
 
 	// Sessions Last Month - Staked Bar Chart
 	// --------------------------------------------------------------------
-	const sessionsLastMonthEl = document.querySelector("#sessionsLastMonth"),
+	const sessionsLastMonthEl = document.querySelector('#sessionsLastMonth'),
 		sessionsLastMonthConfig = {
 			chart: {
-				type: "bar",
+				type: 'bar',
 				height: 78,
 				parentHeightOffset: 0,
 				stacked: true,
@@ -108,22 +108,22 @@
 			},
 			series: [
 				{
-					name: "PRODUCT A",
+					name: 'PRODUCT A',
 					data: [4, 3, 6, 4, 3]
 				},
 				{
-					name: "PRODUCT B",
+					name: 'PRODUCT B',
 					data: [-3, -4, -3, -2, -3]
 				}
 			],
 			plotOptions: {
 				bar: {
 					horizontal: false,
-					columnWidth: "30%",
-					barHeight: "100%",
+					columnWidth: '30%',
+					barHeight: '100%',
 					borderRadius: 5,
-					startingShape: "rounded",
-					endingShape: "rounded"
+					startingShape: 'rounded',
+					endingShape: 'rounded'
 				}
 			},
 			dataLabels: {
@@ -133,9 +133,9 @@
 				enabled: false
 			},
 			stroke: {
-				curve: "smooth",
+				curve: 'smooth',
 				width: 1,
-				lineCap: "round",
+				lineCap: 'round',
 				colors: [cardColor]
 			},
 			legend: {
@@ -152,7 +152,7 @@
 				}
 			},
 			xaxis: {
-				categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+				categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
 				labels: {
 					show: false
 				},
@@ -172,7 +172,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "40%"
+								columnWidth: '40%'
 							}
 						}
 					}
@@ -182,7 +182,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "50%"
+								columnWidth: '50%'
 							}
 						}
 					}
@@ -193,7 +193,7 @@
 						plotOptions: {
 							bar: {
 								borderRadius: 6,
-								columnWidth: "20%"
+								columnWidth: '20%'
 							}
 						}
 					}
@@ -204,7 +204,7 @@
 						plotOptions: {
 							bar: {
 								borderRadius: 6,
-								columnWidth: "20%"
+								columnWidth: '20%'
 							}
 						},
 						chart: {
@@ -227,7 +227,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "30%"
+								columnWidth: '30%'
 							}
 						}
 					}
@@ -238,7 +238,7 @@
 						plotOptions: {
 							bar: {
 								borderRadius: 5,
-								columnWidth: "35%"
+								columnWidth: '35%'
 							}
 						},
 						chart: {
@@ -260,12 +260,12 @@
 			states: {
 				hover: {
 					filter: {
-						type: "none"
+						type: 'none'
 					}
 				},
 				active: {
 					filter: {
-						type: "none"
+						type: 'none'
 					}
 				}
 			}
@@ -277,11 +277,11 @@
 
 	// Revenue Growth Chart
 	// --------------------------------------------------------------------
-	const revenueGrowthEl = document.querySelector("#revenueGrowth"),
+	const revenueGrowthEl = document.querySelector('#revenueGrowth'),
 		revenueGrowthConfig = {
 			chart: {
 				height: 170,
-				type: "bar",
+				type: 'bar',
 				parentHeightOffset: 0,
 				toolbar: {
 					show: false
@@ -289,10 +289,10 @@
 			},
 			plotOptions: {
 				bar: {
-					barHeight: "80%",
-					columnWidth: "30%",
-					startingShape: "rounded",
-					endingShape: "rounded",
+					barHeight: '80%',
+					columnWidth: '30%',
+					startingShape: 'rounded',
+					endingShape: 'rounded',
 					borderRadius: 6,
 					distributed: true
 				}
@@ -330,7 +330,7 @@
 				show: false
 			},
 			xaxis: {
-				categories: ["M", "T", "W", "T", "F", "S", "S"],
+				categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
 				axisBorder: {
 					show: false
 				},
@@ -340,8 +340,8 @@
 				labels: {
 					style: {
 						colors: labelColor,
-						fontSize: "13px",
-						fontFamily: "Public Sans"
+						fontSize: '13px',
+						fontFamily: 'Public Sans'
 					}
 				}
 			},
@@ -353,7 +353,7 @@
 			states: {
 				hover: {
 					filter: {
-						type: "none"
+						type: 'none'
 					}
 				}
 			},
@@ -363,7 +363,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "50%"
+								columnWidth: '50%'
 							}
 						}
 					}
@@ -373,7 +373,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "57%"
+								columnWidth: '57%'
 							}
 						}
 					}
@@ -383,7 +383,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "60%"
+								columnWidth: '60%'
 							}
 						}
 					}
@@ -393,7 +393,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "40%",
+								columnWidth: '40%',
 								borderRadius: 8
 							}
 						}
@@ -404,7 +404,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "50%",
+								columnWidth: '50%',
 								borderRadius: 6
 							}
 						}
@@ -415,7 +415,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "40%"
+								columnWidth: '40%'
 							}
 						}
 					}
@@ -425,7 +425,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "45%"
+								columnWidth: '45%'
 							}
 						}
 					}
@@ -455,19 +455,19 @@
 			chart: {
 				height: 258,
 				parentHeightOffset: 0,
-				type: "bar",
+				type: 'bar',
 				toolbar: {
 					show: false
 				}
 			},
 			plotOptions: {
 				bar: {
-					columnWidth: "32%",
-					startingShape: "rounded",
+					columnWidth: '32%',
+					startingShape: 'rounded',
 					borderRadius: 7,
 					distributed: true,
 					dataLabels: {
-						position: "top"
+						position: 'top'
 					}
 				}
 			},
@@ -484,14 +484,14 @@
 			dataLabels: {
 				enabled: true,
 				formatter: function (val) {
-					return val + "k";
+					return val + 'k';
 				},
 				offsetY: -20,
 				style: {
-					fontSize: "15px",
+					fontSize: '15px',
 					colors: [legendColor],
-					fontWeight: "500",
-					fontFamily: "Public Sans"
+					fontWeight: '500',
+					fontFamily: 'Public Sans'
 				}
 			},
 			series: [
@@ -506,7 +506,7 @@
 				enabled: false
 			},
 			xaxis: {
-				categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
 				axisBorder: {
 					show: true,
 					color: borderColor
@@ -517,8 +517,8 @@
 				labels: {
 					style: {
 						colors: labelColor,
-						fontSize: "13px",
-						fontFamily: "Public Sans"
+						fontSize: '13px',
+						fontFamily: 'Public Sans'
 					}
 				}
 			},
@@ -526,12 +526,12 @@
 				labels: {
 					offsetX: -15,
 					formatter: function (val) {
-						return parseInt(val / 1) + "k";
+						return parseInt(val / 1) + 'k';
 					},
 					style: {
-						fontSize: "13px",
+						fontSize: '13px',
 						colors: labelColor,
-						fontFamily: "Public Sans"
+						fontFamily: 'Public Sans'
 					},
 					min: 0,
 					max: 60000,
@@ -544,7 +544,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "41%"
+								columnWidth: '41%'
 							}
 						}
 					}
@@ -554,7 +554,7 @@
 					options: {
 						plotOptions: {
 							bar: {
-								columnWidth: "61%",
+								columnWidth: '61%',
 								borderRadius: 5
 							}
 						},
@@ -571,8 +571,8 @@
 						},
 						dataLabels: {
 							style: {
-								fontSize: "12px",
-								fontWeight: "400"
+								fontSize: '12px',
+								fontWeight: '400'
 							}
 						}
 					}
@@ -581,20 +581,20 @@
 		};
 		return earningReportBarChartOpt;
 	}
-	var chartJson = "earning-reports-charts.json";
+	var chartJson = 'earning-reports-charts.json';
 	// Earning Chart JSON data
 	var earningReportsChart = $.ajax({
-		url: assetsPath + "json/" + chartJson, //? Use your own search api instead
-		dataType: "json",
+		url: assetsPath + 'json/' + chartJson, //? Use your own search api instead
+		dataType: 'json',
 		async: false
 	}).responseJSON;
 
 	// Earning Reports Tabs Orders
 	// --------------------------------------------------------------------
-	const earningReportsTabsOrdersEl = document.querySelector("#earningReportsTabsOrders"),
+	const earningReportsTabsOrdersEl = document.querySelector('#earningReportsTabsOrders'),
 		earningReportsTabsOrdersConfig = EarningReportsBarChart(
-			earningReportsChart["data"][0]["chart_data"],
-			earningReportsChart["data"][0]["active_option"]
+			earningReportsChart['data'][0]['chart_data'],
+			earningReportsChart['data'][0]['active_option']
 		);
 	if (typeof earningReportsTabsOrdersEl !== undefined && earningReportsTabsOrdersEl !== null) {
 		const earningReportsTabsOrders = new ApexCharts(earningReportsTabsOrdersEl, earningReportsTabsOrdersConfig);
@@ -602,10 +602,10 @@
 	}
 	// Earning Reports Tabs Sales
 	// --------------------------------------------------------------------
-	const earningReportsTabsSalesEl = document.querySelector("#earningReportsTabsSales"),
+	const earningReportsTabsSalesEl = document.querySelector('#earningReportsTabsSales'),
 		earningReportsTabsSalesConfig = EarningReportsBarChart(
-			earningReportsChart["data"][1]["chart_data"],
-			earningReportsChart["data"][1]["active_option"]
+			earningReportsChart['data'][1]['chart_data'],
+			earningReportsChart['data'][1]['active_option']
 		);
 	if (typeof earningReportsTabsSalesEl !== undefined && earningReportsTabsSalesEl !== null) {
 		const earningReportsTabsSales = new ApexCharts(earningReportsTabsSalesEl, earningReportsTabsSalesConfig);
@@ -613,10 +613,10 @@
 	}
 	// Earning Reports Tabs Profit
 	// --------------------------------------------------------------------
-	const earningReportsTabsProfitEl = document.querySelector("#earningReportsTabsProfit"),
+	const earningReportsTabsProfitEl = document.querySelector('#earningReportsTabsProfit'),
 		earningReportsTabsProfitConfig = EarningReportsBarChart(
-			earningReportsChart["data"][2]["chart_data"],
-			earningReportsChart["data"][2]["active_option"]
+			earningReportsChart['data'][2]['chart_data'],
+			earningReportsChart['data'][2]['active_option']
 		);
 	if (typeof earningReportsTabsProfitEl !== undefined && earningReportsTabsProfitEl !== null) {
 		const earningReportsTabsProfit = new ApexCharts(earningReportsTabsProfitEl, earningReportsTabsProfitConfig);
@@ -624,10 +624,10 @@
 	}
 	// Earning Reports Tabs Income
 	// --------------------------------------------------------------------
-	const earningReportsTabsIncomeEl = document.querySelector("#earningReportsTabsIncome"),
+	const earningReportsTabsIncomeEl = document.querySelector('#earningReportsTabsIncome'),
 		earningReportsTabsIncomeConfig = EarningReportsBarChart(
-			earningReportsChart["data"][3]["chart_data"],
-			earningReportsChart["data"][3]["active_option"]
+			earningReportsChart['data'][3]['chart_data'],
+			earningReportsChart['data'][3]['active_option']
 		);
 	if (typeof earningReportsTabsIncomeEl !== undefined && earningReportsTabsIncomeEl !== null) {
 		const earningReportsTabsIncome = new ApexCharts(earningReportsTabsIncomeEl, earningReportsTabsIncomeConfig);
@@ -636,21 +636,21 @@
 
 	// Sales Last 6 Months - Radar Chart
 	// --------------------------------------------------------------------
-	const salesLastMonthEl = document.querySelector("#salesLastMonth"),
+	const salesLastMonthEl = document.querySelector('#salesLastMonth'),
 		salesLastMonthConfig = {
 			series: [
 				{
-					name: "Sales",
+					name: 'Sales',
 					data: [32, 27, 27, 30, 25, 25]
 				},
 				{
-					name: "Visits",
+					name: 'Visits',
 					data: [25, 35, 20, 20, 20, 20]
 				}
 			],
 			chart: {
 				height: 340,
-				type: "radar",
+				type: 'radar',
 				toolbar: {
 					show: false
 				}
@@ -669,8 +669,8 @@
 			},
 			legend: {
 				show: true,
-				fontSize: "13px",
-				position: "bottom",
+				fontSize: '13px',
+				position: 'bottom',
 				labels: {
 					colors: legendColor,
 					useSeriesColors: false
@@ -702,13 +702,13 @@
 				}
 			},
 			xaxis: {
-				categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+				categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
 				labels: {
 					show: true,
 					style: {
 						colors: [labelColor, labelColor, labelColor, labelColor, labelColor, labelColor],
-						fontSize: "13px",
-						fontFamily: "Public Sans"
+						fontSize: '13px',
+						fontFamily: 'Public Sans'
 					}
 				}
 			},
@@ -742,12 +742,12 @@
 			chart: {
 				height: 53,
 				width: 43,
-				type: "radialBar"
+				type: 'radialBar'
 			},
 			plotOptions: {
 				radialBar: {
 					hollow: {
-						size: "33%"
+						size: '33%'
 					},
 					dataLabels: {
 						show: false
@@ -758,7 +758,7 @@
 				}
 			},
 			stroke: {
-				lineCap: "round"
+				lineCap: 'round'
 			},
 			colors: [color],
 			grid: {
@@ -770,12 +770,12 @@
 				}
 			},
 			series: [value],
-			labels: ["Progress"]
+			labels: ['Progress']
 		};
 		return radialBarChartOpt;
 	}
 	// All progress chart
-	const chartProgressList = document.querySelectorAll(".chart-progress");
+	const chartProgressList = document.querySelectorAll('.chart-progress');
 	if (chartProgressList) {
 		chartProgressList.forEach(function (chartProgressEl) {
 			const color = config.colors[chartProgressEl.dataset.color],
@@ -788,15 +788,15 @@
 
 	// Project Status - Line Chart
 	// --------------------------------------------------------------------
-	const projectStatusEl = document.querySelector("#projectStatusChart"),
+	const projectStatusEl = document.querySelector('#projectStatusChart'),
 		projectStatusConfig = {
 			chart: {
 				height: 240,
-				type: "area",
+				type: 'area',
 				toolbar: false
 			},
 			markers: {
-				strokeColor: "transparent"
+				strokeColor: 'transparent'
 			},
 			series: [
 				{
@@ -815,11 +815,11 @@
 			},
 			stroke: {
 				width: 3,
-				curve: "straight"
+				curve: 'straight'
 			},
 			colors: [config.colors.warning],
 			fill: {
-				type: "gradient",
+				type: 'gradient',
 				gradient: {
 					opacityFrom: 0.6,
 					opacityTo: 0.15,

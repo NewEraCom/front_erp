@@ -2,7 +2,7 @@
  * Academy Overview charts and datatable
  */
 
-"use strict";
+'use strict';
 
 // Hour pie chart
 
@@ -22,24 +22,24 @@
 	// Donut Chart Colors
 	const chartColors = {
 		donut: {
-			series1: "#22A95E",
-			series2: "#24B364",
+			series1: '#22A95E',
+			series2: '#24B364',
 			series3: config.colors.success,
-			series4: "#53D28C",
-			series5: "#7EDDA9",
-			series6: "#A9E9C5"
+			series4: '#53D28C',
+			series5: '#7EDDA9',
+			series6: '#A9E9C5'
 		}
 	};
 
-	const leadsReportChartEl = document.querySelector("#leadsReportChart"),
+	const leadsReportChartEl = document.querySelector('#leadsReportChart'),
 		leadsReportChartConfig = {
 			chart: {
 				height: 157,
 				width: 130,
 				parentHeightOffset: 0,
-				type: "donut"
+				type: 'donut'
 			},
-			labels: ["36h", "56h", "16h", "32h", "56h", "16h"],
+			labels: ['36h', '56h', '16h', '32h', '56h', '16h'],
 			series: [23, 35, 10, 20, 35, 23],
 			colors: [
 				chartColors.donut.series1,
@@ -55,7 +55,7 @@
 			dataLabels: {
 				enabled: false,
 				formatter: function (val, opt) {
-					return parseInt(val) + "%";
+					return parseInt(val) + '%';
 				}
 			},
 			legend: {
@@ -72,30 +72,30 @@
 			plotOptions: {
 				pie: {
 					donut: {
-						size: "75%",
+						size: '75%',
 						labels: {
 							show: true,
 							value: {
-								fontSize: "1.5rem",
-								fontFamily: "Public Sans",
+								fontSize: '1.5rem',
+								fontFamily: 'Public Sans',
 								color: headingColor,
 								fontWeight: 500,
 								offsetY: -15,
 								formatter: function (val) {
-									return parseInt(val) + "%";
+									return parseInt(val) + '%';
 								}
 							},
 							name: {
 								offsetY: 20,
-								fontFamily: "Public Sans"
+								fontFamily: 'Public Sans'
 							},
 							total: {
 								show: true,
-								fontSize: ".7rem",
-								label: "Total",
+								fontSize: '.7rem',
+								label: 'Total',
 								color: labelColor,
 								formatter: function (w) {
-									return "231h";
+									return '231h';
 								}
 							}
 						}
@@ -110,11 +110,11 @@
 
 	// datatbale bar chart
 
-	const horizontalBarChartEl = document.querySelector("#horizontalBarChart"),
+	const horizontalBarChartEl = document.querySelector('#horizontalBarChart'),
 		horizontalBarChartConfig = {
 			chart: {
 				height: 270,
-				type: "bar",
+				type: 'bar',
 				toolbar: {
 					show: false
 				}
@@ -122,9 +122,9 @@
 			plotOptions: {
 				bar: {
 					horizontal: true,
-					barHeight: "70%",
+					barHeight: '70%',
 					distributed: true,
-					startingShape: "rounded",
+					startingShape: 'rounded',
 					borderRadius: 7
 				}
 			},
@@ -158,10 +158,10 @@
 			dataLabels: {
 				enabled: true,
 				style: {
-					colors: ["#fff"],
+					colors: ['#fff'],
 					fontWeight: 200,
-					fontSize: "13px",
-					fontFamily: "Public Sans"
+					fontSize: '13px',
+					fontFamily: 'Public Sans'
 				},
 				formatter: function (val, opts) {
 					return horizontalBarChartConfig.labels[opts.dataPointIndex];
@@ -171,7 +171,7 @@
 					enabled: false
 				}
 			},
-			labels: ["UI Design", "UX Design", "Music", "Animation", "React", "SEO"],
+			labels: ['UI Design', 'UX Design', 'Music', 'Animation', 'React', 'SEO'],
 			series: [
 				{
 					data: [35, 20, 14, 12, 10, 9]
@@ -179,7 +179,7 @@
 			],
 
 			xaxis: {
-				categories: ["6", "5", "4", "3", "2", "1"],
+				categories: ['6', '5', '4', '3', '2', '1'],
 				axisBorder: {
 					show: false
 				},
@@ -189,7 +189,7 @@
 				labels: {
 					style: {
 						colors: labelColor,
-						fontSize: "13px"
+						fontSize: '13px'
 					},
 					formatter: function (val) {
 						return `${val}%`;
@@ -201,21 +201,21 @@
 				labels: {
 					style: {
 						colors: [labelColor],
-						fontFamily: "Public Sans",
-						fontSize: "13px"
+						fontFamily: 'Public Sans',
+						fontSize: '13px'
 					}
 				}
 			},
 			tooltip: {
 				enabled: true,
 				style: {
-					fontSize: "12px"
+					fontSize: '12px'
 				},
 				onDatasetHover: {
 					highlightDataSeries: false
 				},
 				custom: function ({ series, seriesIndex, dataPointIndex, w }) {
-					return "<div class=\"px-3 py-2\">" + "<span>" + series[seriesIndex][dataPointIndex] + "%</span>" + "</div>";
+					return '<div class="px-3 py-2">' + '<span>' + series[seriesIndex][dataPointIndex] + '%</span>' + '</div>';
 				}
 			},
 			legend: {
@@ -233,22 +233,22 @@
 	function radialBarChart(color, value, show) {
 		const radialBarChartOpt = {
 			chart: {
-				height: show == "true" ? 58 : 53,
-				width: show == "true" ? 58 : 43,
-				type: "radialBar"
+				height: show == 'true' ? 58 : 53,
+				width: show == 'true' ? 58 : 43,
+				type: 'radialBar'
 			},
 			plotOptions: {
 				radialBar: {
 					hollow: {
-						size: show == "true" ? "45%" : "33%"
+						size: show == 'true' ? '45%' : '33%'
 					},
 					dataLabels: {
-						show: show == "true" ? true : false,
+						show: show == 'true' ? true : false,
 						value: {
 							offsetY: -10,
-							fontSize: "15px",
+							fontSize: '15px',
 							fontWeight: 500,
-							fontFamily: "Public Sans",
+							fontFamily: 'Public Sans',
 							color: headingColor
 						}
 					},
@@ -258,24 +258,24 @@
 				}
 			},
 			stroke: {
-				lineCap: "round"
+				lineCap: 'round'
 			},
 			colors: [color],
 			grid: {
 				padding: {
-					top: show == "true" ? -12 : -15,
-					bottom: show == "true" ? -17 : -15,
-					left: show == "true" ? -17 : -5,
+					top: show == 'true' ? -12 : -15,
+					bottom: show == 'true' ? -17 : -15,
+					left: show == 'true' ? -17 : -5,
 					right: -15
 				}
 			},
 			series: [value],
-			labels: show == "true" ? [""] : ["Progress"]
+			labels: show == 'true' ? [''] : ['Progress']
 		};
 		return radialBarChartOpt;
 	}
 
-	const chartProgressList = document.querySelectorAll(".chart-progress");
+	const chartProgressList = document.querySelectorAll('.chart-progress');
 	if (chartProgressList) {
 		chartProgressList.forEach(function (chartProgressEl) {
 			const color = config.colors[chartProgressEl.dataset.color],
@@ -290,38 +290,38 @@
 	// datatable
 
 	// Variable declaration for table
-	var dt_academy_course = $(".datatables-academy-course"),
+	var dt_academy_course = $('.datatables-academy-course'),
 		logoObj = {
-			angular: "<span class=\"badge bg-label-danger p-2\"><i class=\"ti ti-brand-angular ti-md\"></i></span>",
-			figma: "<span class=\"badge bg-label-warning p-2\"><i class=\"ti ti-brand-figma ti-md\"></i></span>",
-			react: "<span class=\"badge bg-label-info p-2\"><i class=\"ti ti-brand-react-native ti-md\"></i></span>",
-			art: "<span class=\"badge bg-label-success p-2\"><i class=\"ti ti-color-swatch ti-md\"></i></span>",
-			fundamentals: "<span class=\"badge bg-label-primary p-2\"><i class=\"ti ti-diamond ti-md\"></i></span>"
+			angular: '<span class="badge bg-label-danger p-2"><i class="ti ti-brand-angular ti-md"></i></span>',
+			figma: '<span class="badge bg-label-warning p-2"><i class="ti ti-brand-figma ti-md"></i></span>',
+			react: '<span class="badge bg-label-info p-2"><i class="ti ti-brand-react-native ti-md"></i></span>',
+			art: '<span class="badge bg-label-success p-2"><i class="ti ti-color-swatch ti-md"></i></span>',
+			fundamentals: '<span class="badge bg-label-primary p-2"><i class="ti ti-diamond ti-md"></i></span>'
 		};
 
 	// orders datatable
 	if (dt_academy_course.length) {
 		var dt_course = dt_academy_course.DataTable({
-			ajax: assetsPath + "json/app-academy-overview.json", // JSON file to add data
+			ajax: assetsPath + 'json/app-academy-overview.json', // JSON file to add data
 			columns: [
 				// columns according to JSON
-				{ data: "" },
-				{ data: "id" },
-				{ data: "course name" },
-				{ data: "time" },
-				{ data: "progress" },
-				{ data: "status" }
+				{ data: '' },
+				{ data: 'id' },
+				{ data: 'course name' },
+				{ data: 'time' },
+				{ data: 'progress' },
+				{ data: 'status' }
 			],
 			columnDefs: [
 				{
 					// For Responsive
-					className: "control",
+					className: 'control',
 					searchable: false,
 					orderable: false,
 					responsivePriority: 2,
 					targets: 0,
 					render: function (data, type, full, meta) {
-						return "";
+						return '';
 					}
 				},
 				{
@@ -331,10 +331,10 @@
 					searchable: false,
 					checkboxes: true,
 					render: function () {
-						return "<input type=\"checkbox\" class=\"dt-checkboxes form-check-input\">";
+						return '<input type="checkbox" class="dt-checkboxes form-check-input">';
 					},
 					checkboxes: {
-						selectAllRender: "<input type=\"checkbox\" class=\"form-check-input\">"
+						selectAllRender: '<input type="checkbox" class="form-check-input">'
 					}
 				},
 				{
@@ -342,46 +342,46 @@
 					targets: 2,
 					responsivePriority: 2,
 					render: function (data, type, full, meta) {
-						var $logo = full["logo"];
-						var $course = full["course"];
-						var $user = full["user"];
-						var $image = full["image"];
+						var $logo = full['logo'];
+						var $course = full['course'];
+						var $user = full['user'];
+						var $image = full['image'];
 						if ($image) {
 							// For Avatar image
 							var $output =
-                "<img src=\"" + assetsPath + "img/avatars/" + $image + "\" alt=\"Avatar\" class=\"rounded-circle\">";
+                '<img src="' + assetsPath + 'img/avatars/' + $image + '" alt="Avatar" class="rounded-circle">';
 						} else {
 							// For Avatar badge
 							var stateNum = Math.floor(Math.random() * 6);
-							var states = ["success", "danger", "warning", "info", "dark", "primary", "secondary"];
+							var states = ['success', 'danger', 'warning', 'info', 'dark', 'primary', 'secondary'];
 							var $state = states[stateNum],
-								$name = full["user"],
+								$name = full['user'],
 								$initials = $name.match(/\b\w/g) || [];
-							$initials = (($initials.shift() || "") + ($initials.pop() || "")).toUpperCase();
-							$output = "<span class=\"avatar-initial rounded-circle bg-label-" + $state + "\">" + $initials + "</span>";
+							$initials = (($initials.shift() || '') + ($initials.pop() || '')).toUpperCase();
+							$output = '<span class="avatar-initial rounded-circle bg-label-' + $state + '">' + $initials + '</span>';
 						}
 						// Creates full output for row
 						var $row_output =
-              "<div class=\"d-flex align-items-center\">" +
-              "<span class=\"me-3\">" +
+              '<div class="d-flex align-items-center">' +
+              '<span class="me-3">' +
               logoObj[$logo] +
-              "</span>" +
-              "<div>" +
-              "<a class=\"text-body text-truncate fw-medium mb-2 text-wrap\" href=\"app-academy-course-details.html\">" +
+              '</span>' +
+              '<div>' +
+              '<a class="text-body text-truncate fw-medium mb-2 text-wrap" href="app-academy-course-details.html">' +
               $course +
-              "</a>" +
-              "<div class=\"d-flex align-items-center mt-1\">" +
-              "<div class=\"avatar-wrapper me-2\">" +
-              "<div class=\"avatar avatar-xs\">" +
+              '</a>' +
+              '<div class="d-flex align-items-center mt-1">' +
+              '<div class="avatar-wrapper me-2">' +
+              '<div class="avatar avatar-xs">' +
               $output +
-              "</div>" +
-              "</div>" +
-              "<span class=\"text-nowrap\">" +
+              '</div>' +
+              '</div>' +
+              '<span class="text-nowrap">' +
               $user +
-              "</span>" +
-              "</div>" +
-              "</div>" +
-              "</div>";
+              '</span>' +
+              '</div>' +
+              '</div>' +
+              '</div>';
 						return $row_output;
 					}
 				},
@@ -392,32 +392,32 @@
 						var duration = moment.duration(data);
 						var Hs = Math.floor(duration.asHours());
 						var minutes = Math.floor(duration.asMinutes()) - Hs * 60;
-						var formattedTime = Hs + "h " + minutes + "m";
-						return "<span class=\"h6 mb-0 text-nowrap\">" + formattedTime + "</span>";
+						var formattedTime = Hs + 'h ' + minutes + 'm';
+						return '<span class="h6 mb-0 text-nowrap">' + formattedTime + '</span>';
 					}
 				},
 				{
 					// progress
 					targets: 4,
 					render: function (data, type, full, meta) {
-						var $status_number = full["status"];
-						var $average_number = full["number"];
+						var $status_number = full['status'];
+						var $average_number = full['number'];
 
 						return (
-							"<div class=\"d-flex align-items-center gap-3\">" +
-              "<p class=\"h6 mb-0\">" +
+							'<div class="d-flex align-items-center gap-3">' +
+              '<p class="h6 mb-0">' +
               $status_number +
-              "</p>" +
-              "<div class=\"progress w-100\" style=\"height: 8px;\">" +
-              "<div class=\"progress-bar\" style=\"width: " +
+              '</p>' +
+              '<div class="progress w-100" style="height: 8px;">' +
+              '<div class="progress-bar" style="width: ' +
               $status_number +
-              "\" aria-valuenow=\"" +
+              '" aria-valuenow="' +
               $status_number +
-              "\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>" +
-              "</div>" +
-              "<small class=\"text-muted\">" +
+              '" aria-valuemin="0" aria-valuemax="100"></div>' +
+              '</div>' +
+              '<small class="text-muted">' +
               $average_number +
-              "</small></div>"
+              '</small></div>'
 						);
 					}
 				},
@@ -425,42 +425,42 @@
 					// status
 					targets: 5,
 					render: function (data, type, full, meta) {
-						var $user_number = full["user_number"];
-						var $note = full["note"];
-						var $view = full["view"];
+						var $user_number = full['user_number'];
+						var $note = full['note'];
+						var $view = full['view'];
 
 						return (
-							"<div class=\"d-flex align-items-center justify-content-between\">" +
-              "<div class=\"w-px-50 d-flex align-items-center\">" +
-              "<i class=\"ti ti-users ti-sm me-2 text-primary\"></i>" +
+							'<div class="d-flex align-items-center justify-content-between">' +
+              '<div class="w-px-50 d-flex align-items-center">' +
+              '<i class="ti ti-users ti-sm me-2 text-primary"></i>' +
               $user_number +
-              "</div>" +
-              "<div class=\"w-px-50 d-flex align-items-center\">" +
-              "<i class=\"ti ti-book ti-sm me-2 text-info\"></i>" +
+              '</div>' +
+              '<div class="w-px-50 d-flex align-items-center">' +
+              '<i class="ti ti-book ti-sm me-2 text-info"></i>' +
               $note +
-              "</div>" +
-              "<div class=\"w-px-50 d-flex align-items-center\">" +
-              "<i class=\"ti ti-video ti-sm me-2 text-danger\" ></i>" +
+              '</div>' +
+              '<div class="w-px-50 d-flex align-items-center">' +
+              '<i class="ti ti-video ti-sm me-2 text-danger" ></i>' +
               $view +
-              "</div>" +
-              "</div>"
+              '</div>' +
+              '</div>'
 						);
 					}
 				}
 			],
-			order: [[2, "desc"]],
+			order: [[2, 'desc']],
 			dom:
-        "<\"card-header py-sm-0\"<\"head-label text-center\">f" +
-        ">t" +
-        "<\"row mx-4\"" +
-        "<\"col-sm-6 col-12 text-center text-xl-start pb-2 pb-xl-0 px-0\"i>" +
-        "<\"col-sm-6 col-12 d-flex justify-content-center justify-content-xl-end px-0\"p>" +
-        ">",
+        '<"card-header py-sm-0"<"head-label text-center">f' +
+        '>t' +
+        '<"row mx-4"' +
+        '<"col-sm-6 col-12 text-center text-xl-start pb-2 pb-xl-0 px-0"i>' +
+        '<"col-sm-6 col-12 d-flex justify-content-center justify-content-xl-end px-0"p>' +
+        '>',
 			lengthMenu: [5],
 			language: {
-				sLengthMenu: "_MENU_",
-				search: "",
-				searchPlaceholder: "Course Name"
+				sLengthMenu: '_MENU_',
+				search: '',
+				searchPlaceholder: 'Course Name'
 			},
 			// Buttons with Dropdown
 
@@ -470,46 +470,46 @@
 					display: $.fn.dataTable.Responsive.display.modal({
 						header: function (row) {
 							var data = row.data();
-							return "Details of " + data["order"];
+							return 'Details of ' + data['order'];
 						}
 					}),
-					type: "column",
+					type: 'column',
 					renderer: function (api, rowIdx, columns) {
 						var data = $.map(columns, function (col, i) {
-							return col.title !== "" // ? Do not show row in modal popup if title is blank (for check box)
-								? "<tr data-dt-row=\"" +
+							return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+								? '<tr data-dt-row="' +
                     col.rowIndex +
-                    "\" data-dt-column=\"" +
+                    '" data-dt-column="' +
                     col.columnIndex +
-                    "\">" +
-                    "<td>" +
+                    '">' +
+                    '<td>' +
                     col.title +
-                    ":" +
-                    "</td> " +
-                    "<td>" +
+                    ':' +
+                    '</td> ' +
+                    '<td>' +
                     col.data +
-                    "</td>" +
-                    "</tr>"
-								: "";
-						}).join("");
+                    '</td>' +
+                    '</tr>'
+								: '';
+						}).join('');
 
-						return data ? $("<table class=\"table\"/><tbody />").append(data) : false;
+						return data ? $('<table class="table"/><tbody />').append(data) : false;
 					}
 				}
 			}
 		});
-		$("div.head-label").html("<h5 class=\"card-title mb-0 text-nowrap\">Course you are taking</h5>");
+		$('div.head-label').html('<h5 class="card-title mb-0 text-nowrap">Course you are taking</h5>');
 	}
 
 	// Delete Record
-	$(".datatables-orders tbody").on("click", ".delete-record", function () {
-		dt_course.row($(this).parents("tr")).remove().draw();
+	$('.datatables-orders tbody').on('click', '.delete-record', function () {
+		dt_course.row($(this).parents('tr')).remove().draw();
 	});
 
 	// Filter form control to default size
 	// ? setTimeout used for multilingual table initialization
 	setTimeout(() => {
-		$(".dataTables_filter .form-control").removeClass("form-control-sm");
-		$(".dataTables_length .form-select").removeClass("form-select-sm");
+		$('.dataTables_filter .form-control').removeClass('form-control-sm');
+		$('.dataTables_length .form-select').removeClass('form-select-sm');
 	}, 300);
 })();

@@ -2,44 +2,44 @@
  * Page Detail overview
  */
 
-"use strict";
+'use strict';
 
 // Datatable (jquery)
 $(function () {
 	// Variable declaration for table
-	var dt_customer_order = $(".datatables-customer-order"),
-		customer_order = "app-ecommerce-customer-details-overview.html",
+	var dt_customer_order = $('.datatables-customer-order'),
+		customer_order = 'app-ecommerce-customer-details-overview.html',
 		statusObj = {
-			1: { title: "Ready to  Pickup", class: "bg-label-info" },
-			2: { title: "Dispatched", class: "bg-label-warning" },
-			3: { title: "Delivered", class: "bg-label-success" },
-			4: { title: "Out for delivery", class: "bg-label-primary" }
+			1: { title: 'Ready to  Pickup', class: 'bg-label-info' },
+			2: { title: 'Dispatched', class: 'bg-label-warning' },
+			3: { title: 'Delivered', class: 'bg-label-success' },
+			4: { title: 'Out for delivery', class: 'bg-label-primary' }
 		};
 
 	// orders datatable
 	if (dt_customer_order.length) {
 		var dt_order = dt_customer_order.DataTable({
-			ajax: assetsPath + "json/ecommerce-customer-order.json", // JSON file to add data
+			ajax: assetsPath + 'json/ecommerce-customer-order.json', // JSON file to add data
 			columns: [
 				// columns according to JSON
-				{ data: "" },
-				{ data: "id" },
-				{ data: "order" },
-				{ data: "date" },
-				{ data: "status" },
-				{ data: "spent" },
-				{ data: " " }
+				{ data: '' },
+				{ data: 'id' },
+				{ data: 'order' },
+				{ data: 'date' },
+				{ data: 'status' },
+				{ data: 'spent' },
+				{ data: ' ' }
 			],
 			columnDefs: [
 				{
 					// For Responsive
-					className: "control",
+					className: 'control',
 					searchable: false,
 					orderable: false,
 					responsivePriority: 2,
 					targets: 0,
 					render: function (data, type, full, meta) {
-						return "";
+						return '';
 					}
 				},
 				{
@@ -50,10 +50,10 @@ $(function () {
 					responsivePriority: 3,
 					checkboxes: true,
 					render: function () {
-						return "<input type=\"checkbox\" class=\"dt-checkboxes form-check-input\">";
+						return '<input type="checkbox" class="dt-checkboxes form-check-input">';
 					},
 					checkboxes: {
-						selectAllRender: "<input type=\"checkbox\" class=\"form-check-input\">"
+						selectAllRender: '<input type="checkbox" class="form-check-input">'
 					}
 				},
 				{
@@ -61,9 +61,9 @@ $(function () {
 					targets: 2,
 					responsivePriority: 4,
 					render: function (data, type, full, meta) {
-						var $id = full["order"];
+						var $id = full['order'];
 
-						return "<a class='fw-medium' href='app-ecommerce-order-details.html'>#" + $id + "</a>";
+						return '<a class=\'fw-medium\' href=\'app-ecommerce-order-details.html\'>#' + $id + '</a>';
 					}
 				},
 				{
@@ -71,22 +71,22 @@ $(function () {
 					targets: 3,
 					render: function (data, type, full, meta) {
 						var date = new Date(full.date); // convert the date string to a Date object
-						var formattedDate = date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-						return "<span class=\"text-nowrap\">" + formattedDate + "</span > ";
+						var formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+						return '<span class="text-nowrap">' + formattedDate + '</span > ';
 					}
 				},
 				{
 					// status
 					targets: 4,
 					render: function (data, type, full, meta) {
-						var $status = full["status"];
+						var $status = full['status'];
 
 						return (
-							"<span class=\"badge " +
+							'<span class="badge ' +
               statusObj[$status].class +
-              "\" text-capitalized>" +
+              '" text-capitalized>' +
               statusObj[$status].title +
-              "</span>"
+              '</span>'
 						);
 					}
 				},
@@ -94,45 +94,45 @@ $(function () {
 					// spent
 					targets: 5,
 					render: function (data, type, full, meta) {
-						var $spent = full["spent"];
+						var $spent = full['spent'];
 
-						return "<span >" + $spent + "</span>";
+						return '<span >' + $spent + '</span>';
 					}
 				},
 				{
 					// Actions
 					targets: -1,
-					title: "Actions",
+					title: 'Actions',
 					searchable: false,
 					orderable: false,
 					render: function (data, type, full, meta) {
 						return (
-							"<div class=\"text-xxl-center\">" +
-              "<button class=\"btn btn-sm btn-icon dropdown-toggle hide-arrow\" data-bs-toggle=\"dropdown\"><i class=\"ti ti-dots-vertical\"></i></button>" +
-              "<div class=\"dropdown-menu dropdown-menu-end m-0\">" +
-              "<a href=\"" +
+							'<div class="text-xxl-center">' +
+              '<button class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>' +
+              '<div class="dropdown-menu dropdown-menu-end m-0">' +
+              '<a href="' +
               customer_order +
-              "\" class=\"dropdown-item\">View</a>" +
-              "<a href=\"javascript:;\" class=\"dropdown-item  delete-record\">Delete</a>" +
-              "</div>" +
-              "</div>"
+              '" class="dropdown-item">View</a>' +
+              '<a href="javascript:;" class="dropdown-item  delete-record">Delete</a>' +
+              '</div>' +
+              '</div>'
 						);
 					}
 				}
 			],
-			order: [[2, "desc"]],
+			order: [[2, 'desc']],
 			dom:
-        "<\"card-header flex-column flex-md-row py-2\"<\"head-label text-center pt-2 pt-md-0\">f" +
-        ">t" +
-        "<\"row mx-4\"" +
-        "<\"col-md-12 col-xl-6 text-center text-xl-start pb-2 pb-lg-0 pe-0\"i>" +
-        "<\"col-md-12 col-xl-6 d-flex justify-content-center justify-content-xl-end\"p>" +
-        ">",
+        '<"card-header flex-column flex-md-row py-2"<"head-label text-center pt-2 pt-md-0">f' +
+        '>t' +
+        '<"row mx-4"' +
+        '<"col-md-12 col-xl-6 text-center text-xl-start pb-2 pb-lg-0 pe-0"i>' +
+        '<"col-md-12 col-xl-6 d-flex justify-content-center justify-content-xl-end"p>' +
+        '>',
 			lengthMenu: [6, 30, 50, 70, 100],
 			language: {
-				sLengthMenu: "_MENU_",
-				search: "",
-				searchPlaceholder: "Search order"
+				sLengthMenu: '_MENU_',
+				search: '',
+				searchPlaceholder: 'Search order'
 			},
 			// Buttons with Dropdown
 
@@ -142,47 +142,47 @@ $(function () {
 					display: $.fn.dataTable.Responsive.display.modal({
 						header: function (row) {
 							var data = row.data();
-							return "Details of " + data["order"];
+							return 'Details of ' + data['order'];
 						}
 					}),
-					type: "column",
+					type: 'column',
 					renderer: function (api, rowIdx, columns) {
 						var data = $.map(columns, function (col, i) {
-							return col.title !== "" // ? Do not show row in modal popup if title is blank (for check box)
-								? "<tr data-dt-row=\"" +
+							return col.title !== '' // ? Do not show row in modal popup if title is blank (for check box)
+								? '<tr data-dt-row="' +
                     col.rowIndex +
-                    "\" data-dt-column=\"" +
+                    '" data-dt-column="' +
                     col.columnIndex +
-                    "\">" +
-                    "<td>" +
+                    '">' +
+                    '<td>' +
                     col.title +
-                    ":" +
-                    "</td> " +
-                    "<td>" +
+                    ':' +
+                    '</td> ' +
+                    '<td>' +
                     col.data +
-                    "</td>" +
-                    "</tr>"
-								: "";
-						}).join("");
+                    '</td>' +
+                    '</tr>'
+								: '';
+						}).join('');
 
-						return data ? $("<table class=\"table\"/><tbody />").append(data) : false;
+						return data ? $('<table class="table"/><tbody />').append(data) : false;
 					}
 				}
 			}
 		});
-		$("div.head-label").html("<h5 class=\"card-title mb-0 text-nowrap\">Orders placed</h5>");
+		$('div.head-label').html('<h5 class="card-title mb-0 text-nowrap">Orders placed</h5>');
 	}
 
 	// Delete Record
-	$(".datatables-orders tbody").on("click", ".delete-record", function () {
-		dt_order.row($(this).parents("tr")).remove().draw();
+	$('.datatables-orders tbody').on('click', '.delete-record', function () {
+		dt_order.row($(this).parents('tr')).remove().draw();
 	});
 
 	// Filter form control to default size
 	// ? setTimeout used for multilingual table initialization
 	setTimeout(() => {
-		$(".dataTables_filter .form-control").removeClass("form-control-sm");
-		$(".dataTables_length .form-select").removeClass("form-select-sm");
+		$('.dataTables_filter .form-control').removeClass('form-control-sm');
+		$('.dataTables_length .form-select').removeClass('form-select-sm');
 	}, 300);
 });
 

@@ -1,8 +1,8 @@
 (function (global, factory) {
-	typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory(require("@form-validation/core")) :
-		typeof define === "function" && define.amd ? define(["@form-validation/core"], factory) :
-			(global = typeof globalThis !== "undefined" ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.DefaultSubmit = factory(global.FormValidation)));
-})(this, (function (core) { "use strict";
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('@form-validation/core')) :
+		typeof define === 'function' && define.amd ? define(['@form-validation/core'], factory) :
+			(global = typeof globalThis !== 'undefined' ? globalThis : global || self, (global.FormValidation = global.FormValidation || {}, global.FormValidation.plugins = global.FormValidation.plugins || {}, global.FormValidation.plugins.DefaultSubmit = factory(global.FormValidation)));
+})(this, (function (core) { 'use strict';
 
 	/******************************************************************************
     Copyright (c) Microsoft Corporation.
@@ -28,8 +28,8 @@
 	};
 
 	function __extends(d, b) {
-		if (typeof b !== "function" && b !== null)
-			throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+		if (typeof b !== 'function' && b !== null)
+			throw new TypeError('Class extends value ' + String(b) + ' is not a constructor or null');
 		extendStatics(d, b);
 		function __() { this.constructor = d; }
 		d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
@@ -52,13 +52,13 @@
 		}
 		DefaultSubmit.prototype.install = function () {
 			var form = this.core.getFormElement();
-			if (form.querySelectorAll("[type=\"submit\"][name=\"submit\"]").length) {
-				throw new Error("Do not use `submit` for the name attribute of submit button");
+			if (form.querySelectorAll('[type="submit"][name="submit"]').length) {
+				throw new Error('Do not use `submit` for the name attribute of submit button');
 			}
-			this.core.on("core.form.valid", this.onValidHandler);
+			this.core.on('core.form.valid', this.onValidHandler);
 		};
 		DefaultSubmit.prototype.uninstall = function () {
-			this.core.off("core.form.valid", this.onValidHandler);
+			this.core.off('core.form.valid', this.onValidHandler);
 		};
 		DefaultSubmit.prototype.onFormValid = function () {
 			var form = this.core.getFormElement();

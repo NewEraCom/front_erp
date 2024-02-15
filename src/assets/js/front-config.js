@@ -5,10 +5,10 @@
  * ! To clear local storage: (https://www.leadshook.com/help/how-to-clear-local-storage-in-google-chrome-browser/).
  */
 
-"use strict";
+'use strict';
 
-let assetsPath = document.documentElement.getAttribute("data-assets-path"),
-	templateName = document.documentElement.getAttribute("data-template"),
+let assetsPath = document.documentElement.getAttribute('data-assets-path'),
+	templateName = document.documentElement.getAttribute('data-template'),
 	rtlSupport = true; // set true for rtl support (rtl + ltr), false for ltr only.
 
 /**
@@ -23,13 +23,13 @@ let assetsPath = document.documentElement.getAttribute("data-assets-path"),
  * defaultTextDir: 'ltr', 'rtl' (rtlSupport must be true for rtl mode)
  */
 
-if (typeof TemplateCustomizer !== "undefined") {
+if (typeof TemplateCustomizer !== 'undefined') {
 	window.templateCustomizer = new TemplateCustomizer({
-		cssPath: assetsPath + "vendor/css" + (rtlSupport ? "/rtl" : "") + "/",
-		themesPath: assetsPath + "vendor/css" + (rtlSupport ? "/rtl" : "") + "/",
+		cssPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
+		themesPath: assetsPath + 'vendor/css' + (rtlSupport ? '/rtl' : '') + '/',
 		displayCustomizer: true,
 		// defaultTextDir: 'rtl'
 		// defaultStyle: 'dark',
-		controls: ["rtl", "style"]
+		controls: ['rtl', 'style']
 	});
 }
