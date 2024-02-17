@@ -1,4 +1,5 @@
 import router from '../router';
+import { sideBar } from './sidebar_items';
 
 const isActiveRoute = (to: string, path: string): string | undefined => {
 	if (path === to) {
@@ -13,7 +14,7 @@ const togglePassword = (value: string[]): string[] => {
 };
 
 const setSavedUser = (user: unknown): void => {
-	localStorage.setItem('user', JSON.stringify(user));
+	localStorage.setItem('user', JSON.stringify(user.user));
 };
 
 const setUserOnline = (): void => {
@@ -28,13 +29,13 @@ const redirectBasedOnRole = (role: string): void => {
 	setRole(role);
 	switch (role) {
 		case roles.RH:
-			return router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role)});
 			break;
 		case roles.CF:
-			return router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role)});
 			break;
 		default:
-			return router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role)});
 	}
 };
 
@@ -55,17 +56,37 @@ const roles = {
 const initialDashboard = (role: string): string => {
 	switch (role) {
 		case roles.RH:
-			console.log('RH');
 			return 'DashboardRH';
 			break;
 		case roles.CF:
 			console.log('CF');
 			return 'DashboardPM';
 			break;
+		case roles.DG:
+			return 'DashboardPM';
+			break;
 		default:
 			return '404';
 	}
 };
+
+const returnSideBarItems = (): string[] => {
+	const role = localStorage.getItem('role');
+	switch(role){
+		case roles.DG:			
+			return sideBar.DGMenu;
+			break;
+		case roles.RH:			
+			return sideBar.RHMenu;
+			break;
+		case roles.CF:
+			return sideBar.CFMenu;
+			break;
+		default:
+			return [];
+	}
+};
+	
 
 export const helpers = {
 	isActiveRoute,
@@ -75,5 +96,6 @@ export const helpers = {
 	roles,
 	initialDashboard,
 	setUserOnline,
-	setRole
+	setRole,
+	returnSideBarItems
 };

@@ -2,7 +2,7 @@ export const landingRoutes = [
 	{
 		path: '/',
 		name: 'home',
-		component: () => import('@/modules/Landing/HomeView.vue'),
+		component: () => import('@/views/Landing/HomeView.vue'),
 		meta: {
 			title: 'Accueil',
 			requiresAuth: false
@@ -11,7 +11,7 @@ export const landingRoutes = [
 	{
 		path: '/demande-conge',
 		name: 'LeaveRequest',
-		component: () => import('@/modules/Landing/LeaveRequestView.vue'),
+		component: () => import('@/views/Landing/LeaveRequestView.vue'),
 		meta: {
 			title: 'Demande de congé',
 			requiresAuth: false
@@ -20,7 +20,7 @@ export const landingRoutes = [
 	{
 		path: '/demande-document',
 		name: 'DocumentRequest',
-		component: () => import('@/modules/Landing/DocumentRequestView.vue'),
+		component: () => import('@/views/Landing/DocumentRequestView.vue'),
 		meta: {
 			title: 'Demande de document administratif',
 			requiresAuth: false
