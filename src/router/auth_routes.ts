@@ -2,7 +2,7 @@ export const authRoutes = [
 	{
 		path: '/login',
 		name: 'Login',
-		component: () => import('@/modules/Authentication/LoginView.vue'),
+		component: () => import('@/views/Authentication/LoginView.vue'),
 		meta: {
 			title: 'Se connecter',
 			requiresAuth: false
@@ -11,7 +11,7 @@ export const authRoutes = [
 	{
 		path: '/forgot-password',
 		name: 'ForgotPassword',
-		component: () => import('@/modules/Authentication/ForgotPasswordView.vue'),
+		component: () => import('@/views/Authentication/ForgotPasswordView.vue'),
 		meta: {
 			title: 'Mot de passe oublié',
 			requiresAuth: false
@@ -20,7 +20,7 @@ export const authRoutes = [
 	{
 		path: '/recover-account',
 		name: 'RecoverAccount',
-		component: () => import('@/modules/Authentication/RecoverAccountView.vue'),
+		component: () => import('@/views/Authentication/RecoverAccountView.vue'),
 		meta: {
 			title: 'Récupérer le compte',
 			requiresAuth: false
