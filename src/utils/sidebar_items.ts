@@ -96,8 +96,7 @@ const RHMenu = [
         route: '/calendar',
         icon: 'ti ti-calendar',
         path: 'Calendar'
-    },
-    
+    },    
     {
         id:12,
         name: 'Salle de réunion',
@@ -105,6 +104,13 @@ const RHMenu = [
         icon: 'ti ti-calendar-time',
         path: 'MeetingRoom'
     },
+    {
+        id:13,
+        name: 'Coursier',
+        route: '/company-courier',
+        icon: 'ti ti-car',
+        path: 'CompanyCourier'
+    }
 ];
 
 export const sideBar = { DGMenu,CFMenu,RHMenu };

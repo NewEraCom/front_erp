@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
-import { TheSideBar,TheTopBar,LogoutModal } from '@/components';
+import { TheSideBar, TheTopBar, LogoutModal } from '@/ui';
 </script>
 
 <template>
@@ -37,8 +37,10 @@ import { TheSideBar,TheTopBar,LogoutModal } from '@/components';
 
 @media (max-width: 1458px) {
     .sidebar {
-        display: none; /* Hide the sidebar */
+        display: none;
+        /* Hide the sidebar */
     }
+
     .layout-page {
         margin-left: 75px;
     }

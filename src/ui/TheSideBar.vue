@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import {helpers } from '@/utils';
+import { helpers } from '@/utils';
 
 const route = useRoute();
 
 const itemsMenu = ref([]);
 
-const isActiveRoute = (routePath:any) => {
+const isActiveRoute = (routePath: any) => {
     return route.path.includes(routePath);
 };
 
@@ -29,35 +29,26 @@ onMounted(() => {
                     <ul class="menu_item ps-1">
                         <div class="menu_title flex">
                             <small class="title text-muted fw-normal">Menu</small>
-                        </div>    
-                        <li
-                            v-for="item in itemsMenu"
-                            :key="item.id"
-                            class="item"
-                            :class="{ active: isActiveRoute(item.route) }"
-                        >
+                        </div>
+                        <li v-for="item in itemsMenu" :key="item.id" class="item"
+                            :class="{ active: isActiveRoute(item.route) }">
                             <router-link :to="item.route" class="link flex">
                                 <i class="ti" :class="item.icon" />
                                 <span>{{ item.name }}</span>
                             </router-link>
-                        </li>                    
+                        </li>
                     </ul>
                 </div>
             </div>
         </aside>
         <aside class="sidebar-small locked">
             <div class="logo_items text-center mt-2 pt-2">
-                <img
-                    src="/src/assets/img/Logo_white_bg_small.png"
-                    alt="logo"
-                    class="logo_small"
-                    srcset=""
-                />
+                <img src="/src/assets/img/Logo_white_bg_small.png" alt="logo" class="logo_small" srcset="" />
             </div>
 
             <div class="menu_container mt-4 ps-0">
                 <div class="menu_items">
-                    
+
                 </div>
             </div>
         </aside>
@@ -89,7 +80,7 @@ onMounted(() => {
     border-radius: 8px;
 }
 
-.active > .link {
+.active>.link {
     color: #0f0f0f;
     background-color: #fdfdfd;
 }
@@ -299,52 +290,75 @@ onMounted(() => {
     margin-left: 20px;
 }
 
-.data_text > h6,
-.data_text > small {
+.data_text>h6,
+.data_text>small {
     color: #fdfdfd !important;
 }
 
 @media (max-width: 1459px) {
     .sidebar {
-        display: none; /* Hide the sidebar */
+        display: none;
+        /* Hide the sidebar */
     }
+
     .sidebar-small {
-        display: block; /* Hide the sidebar */
+        display: block;
+        /* Hide the sidebar */
     }
+
     .sidebar-small .item:hover .link span {
-        display: inline-block; /* Show the text */
-        white-space: nowrap; /* Keep it on one line */
-        background-color: #fdfdfd; /* Light background for the tooltip */
-        color: #2a3042; /* Dark text for readability */
-        padding: 5px 10px; /* Padding around the text */
-        border-radius: 4px; /* Rounded corners for the tooltip */
-        position: absolute; /* Position it relative to the hovered item */
-        left: 100%; /* Move it to the right of the item */
-        top: 50%; /* Align it vertically centered */
-        transform: translateY(-50%); /* Adjust vertical position */
-        margin-left: 10px; /* Space between icon and tooltip */
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Slight shadow for depth */
-        z-index: 100; /* Ensure it's above other content */
-        font-size: 14px; /* Suitable font size */
+        display: inline-block;
+        /* Show the text */
+        white-space: nowrap;
+        /* Keep it on one line */
+        background-color: #fdfdfd;
+        /* Light background for the tooltip */
+        color: #2a3042;
+        /* Dark text for readability */
+        padding: 5px 10px;
+        /* Padding around the text */
+        border-radius: 4px;
+        /* Rounded corners for the tooltip */
+        position: absolute;
+        /* Position it relative to the hovered item */
+        left: 100%;
+        /* Move it to the right of the item */
+        top: 50%;
+        /* Align it vertically centered */
+        transform: translateY(-50%);
+        /* Adjust vertical position */
+        margin-left: 10px;
+        /* Space between icon and tooltip */
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+        /* Slight shadow for depth */
+        z-index: 100;
+        /* Ensure it's above other content */
+        font-size: 14px;
+        /* Suitable font size */
     }
 
     .sidebar-small .item {
-        position: relative; /* Needed for absolute positioning of the child */
+        position: relative;
+        /* Needed for absolute positioning of the child */
     }
 }
 
 @media (min-width: 1459px) {
     .sidebar {
-        display: block; /* Hide the sidebar */
+        display: block;
+        /* Hide the sidebar */
     }
+
     .sidebar-small {
-        display: none; /* Hide the sidebar */
+        display: none;
+        /* Hide the sidebar */
     }
 }
 
 .logo {
     width: 86%;
 }
+
 .logo_small {
     width: 100%;
 }

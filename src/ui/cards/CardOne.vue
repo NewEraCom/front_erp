@@ -2,7 +2,7 @@
 
 defineProps({
     title: String,
-    count: Number,
+    count: String,
     color: String,
     icon: String,
     cardColor: String,

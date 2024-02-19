@@ -1,10 +1,24 @@
 <script setup lang="ts">
-import { TopBar,MassSalarialChart,EmployeePerMonth } from './components';
+import { ref, computed, onMounted } from 'vue';
+
+import { RHStatsCard, MassSalarialChart, EmployeePerMonth } from './components';
+
+import { rhService } from '@/services';
+import { useRhStore } from '@/store';
+
+const stats = ref(computed(() => RhStore.stats));
+
+const RhStore = useRhStore();
+
+onMounted(async () => {
+  await rhService.getEmployees();
+});
+
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
     <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
-    <TopBar />
+    <RHStatsCard v-if="stats" :stats="stats" />
     <div class="row mt-4">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
         <MassSalarialChart />
