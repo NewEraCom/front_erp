@@ -51,14 +51,10 @@ myItems.sort((a, b) => a.name.localeCompare(b.name));
         <div class="card">
           <div class="card card-border-shadow-primary">
             <div class="card-header">
-              <h5 class="fw-bold mb-1">Employés CDD</h5>
-              <small class="fw-bold mb-1 text-muted">0 employées expirés ce mois</small>
+              <h5 class="fw-bold mb-1">Liste des contrats</h5>
+              <small class="fw-bold mb-1 text-muted">Liste des contrats</small>
             </div>
             <div class="card-body border-top pt-4">
-              <DataTable :items="myItems" :pageSize="10" :actionsConfig="[
-                { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item) => editItem(item) },
-                { icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item) => deleteItem(item) }
-              ]" />
             </div>
           </div>
         </div>

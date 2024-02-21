@@ -15,7 +15,7 @@ onMounted(() => {
     class="layout-navbar navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
     <div id="navbar-collapse" class="navbar-nav-right d-flex align-items-center">
       <p class="text-dark m-0 ms-2">
-        Bienvenue {{ user.employee.first_name + ' ' + user.employee.last_name }} sur NewEraERP 👋
+        Bienvenue {{ user.employee.first_name }} sur NewEraERP 👋
       </p>
       <ul class="navbar-nav flex-row align-items-center ms-auto">
         <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">

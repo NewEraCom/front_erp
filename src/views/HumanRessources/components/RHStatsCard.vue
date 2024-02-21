@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CardOne } from '@/ui';
 import { CardStats } from '.';
-import { helpers } from '@/utils';
+import { formater } from '@/utils';
 
 defineProps({
   stats: {
@@ -18,7 +18,7 @@ defineProps({
       <CardStats :male=stats.male :female=stats.female card-color="card-border-shadow-primary" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-      <CardOne title="Mass Salarial" :count="helpers.formatNumber(stats.salaryMass) + ' MAD'" color=" bg-label-warning"
+      <CardOne title="Mass Salarial" :count="formater.number(stats.salaryMass) + ' MAD'" color=" bg-label-warning"
         icon="ti-coins" card-color="card-border-shadow-warning" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">

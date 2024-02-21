@@ -16,6 +16,23 @@ export const useRhStore = defineStore('RhStore', {
         recrutement: {
             data: null,
             stats: null,
+        },
+        demandeRh: {
+            data: null,
+            stats: null,
+        },
+        salaryAdvances: {
+            data: null,
+            stats: null,
+        },
+        pointages: null,
+        paies: {
+            data: null,
+            stats: null,
+        },
+        workers: {
+            data: null,
+            stats: null,
         }
     }),
     actions: {
@@ -63,6 +80,52 @@ export const useRhStore = defineStore('RhStore', {
                 pending: data.filter((e: any) => e.status === 'pending').length,
                 accepted: data.filter((e: any) => e.status === 'accepted').length,
             };
+        },
+        setDemandeRh(data: any) {
+            this.demandeRh.data = data;
+            this.demandeRh.stats = {
+                total: data.length,
+                pending: data.filter((e: any) => e.status === 'pending').length,
+                done: data.filter((e: any) => e.status === 'done').length,
+                delivered: data.filter((e: any) => e.status === 'delivered').length,
+            };
+        },
+        setSalaryAdvances(data: any) {
+            this.salaryAdvances.data = data;
+            this.salaryAdvances.stats = {
+                total: data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.avance);
+                    }
+                    return total;
+                }, 0),
+                remaining: data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.restant);
+                    }
+                    return total;
+                }, 0),
+            };
+        },
+        setPointages(data: any) {
+            this.pointages = data;
+        },
+        setPaies(data: any) {
+            this.paies.data = data;
+            this.paies.stats = data
+                .filter(e => e.status === 'closed')
+                .sort((a, b) => b.id - a.id)[0];
+        },
+        setWorkers(data: any) {
+            this.workers.data = data;
+            this.workers.stats = {
+                actif: data.filter((e: any) => e.status === 1).length,
+                inactif: data.filter((e: any) => e.status === 0).length,
+                totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
+            };
         }
+
     }
 });

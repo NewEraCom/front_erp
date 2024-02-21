@@ -1,27 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import { helpers } from '@/utils';
-import { landingRoutes,authRoutes,hrRoutes,projectManagerRoutes,sharedRoutes } from './export';
+import { landingRoutes, authRoutes, hrRoutes, projectManagerRoutes, sharedRoutes } from './export';
 
 const router = createRouter({
-	history: createWebHistory(),
-	routes: [
-		...landingRoutes,
-		...authRoutes,
-		{
+    history: createWebHistory(),
+    routes: [
+        ...landingRoutes,
+        ...authRoutes,
+        {
             path: '/layouts',
             name: 'layouts',
             component: () => import('@/views/LayoutView.vue'),
             meta: {
                 requiresAuth: true
             },
-            children: [    
-                ...sharedRoutes,                
-				...hrRoutes,
+            children: [
+                ...sharedRoutes,
+                ...hrRoutes,
                 ...projectManagerRoutes,
             ]
         },
-	]
+    ]
 });
 
 router.beforeEach((to, from, next) => {

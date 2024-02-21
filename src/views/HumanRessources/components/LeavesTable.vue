@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable } from '@/ui';
-
+import { DataTable, Modal } from '@/ui';
+import { formater } from '@/utils';
 const props = defineProps({
     leaves: {
         type: Array,
@@ -12,19 +12,20 @@ const props = defineProps({
 const headers = [
     { text: 'Employe', value: 'employee', isComplex: true, type: 'leave' },
     { text: 'Type', value: 'type', type: 'badge' },
-    { text: 'Durée', value: 'duree', attr: 'days' },
-    { text: 'Date de début', value: 'date_start' },
-    { text: 'Date de fin', value: 'date_end' },
+    { text: 'Durée', value: 'duree', type: 'days' },
+    { text: 'Date de début', value: 'date_start', type: 'date' },
+    { text: 'Date de fin', value: 'date_end', type: 'date' },
+    { text: 'Date de demande', value: 'created_at', type: 'datetime' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => editItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-const editItem = (item: any) => {
-    console.log('Edit item', item);
+const detailsItem = (item: any) => {
+    console.log(item);
 };
 
 const deleteItem = (item: any) => {
@@ -35,6 +36,8 @@ const filteredData = ref(props.leaves);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
+const startQuery = ref();
+const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
@@ -42,7 +45,8 @@ const filter = () => {
         const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value);
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
 
 };
@@ -63,6 +67,15 @@ const filter = () => {
                             <option value="0">Non Actif</option>
                         </select>
                     </div>
+                    <div class="d-flex align-items-center ms-2">
+                        <label for="start">De</label>
+                        <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
+                            @change="filter" />
+                    </div>
+                    <div class="d-flex align-items-center ms-0">
+                        <label for="end">à</label>
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                    </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
@@ -81,6 +94,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
+        </Modal>
     </div>
 </template>
 <style>

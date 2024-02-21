@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 
@@ -18,6 +18,17 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
         }
         return config;
     });
+
+    instance.interceptors.response.use(
+        (response) => response,
+        (error: AxiosError) => {
+            if (error.response) {
+                const { data } = error.response;
+                return Promise.reject(data);
+            }
+            return Promise.reject(error);
+        }
+    );
 
     return instance;
 };

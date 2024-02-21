@@ -28,84 +28,98 @@ const RHMenu = [
         path: 'DashboardRH'
     },
     {
-        id:2,
+        id: 2,
         name: 'Employés',
         route: '/employees',
         icon: 'ti ti-users',
         path: 'Employees'
     },
     {
-        id:3,
+        id: 3,
+        name: 'Pointage',
+        route: '/pointage',
+        icon: 'ti ti-clock-up',
+        path: 'Pointage'
+    },
+    {
+        id: 4,
         name: 'Stagiaires',
         route: '/interns',
         icon: 'ti ti-users-group',
         path: 'Interns'
     },
     {
-        id:4,
+        id: 5,
+        name: 'Soustraitant',
+        route: '/soustraitant',
+        icon: 'ti ti-settings',
+        path: 'Soustraitant'
+    },
+    {
+        id: 6,
         name: 'Congés',
         route: '/leaves',
         icon: 'ti ti-plane-inflight',
         path: 'Leaves'
     },
     {
-        id:5,
+        id: 7,
         name: 'Documents',
         route: '/documents',
         icon: 'ti ti-files',
         path: 'DocumentsRH'
     },
     {
-        id:6,
+        id: 8,
         name: 'Recrutements',
         route: '/recruitments',
         icon: 'ti ti-search',
         path: 'Recruitments'
     },
     {
-        id:7,
+        id: 9,
         name: 'Demandes RH',
         route: '/demandes-rh',
         icon: 'ti ti-file-export',
         path: 'DemandesRH'
     },
     {
-        id:8,
+        id: 10,
         name: 'Contrats',
         route: '/contracts',
         icon: 'ti ti-file-stack',
         path: 'Contracts'
     },
     {
-        id:9,
+        id: 11,
         name: 'Paie',
         route: '/paie',
         icon: 'ti ti-businessplan',
         path: 'Paie'
     },
     {
-        id:12,
+        id: 12,
         name: 'Avance sur salaire',
         route: '/salary-advance',
         icon: 'ti ti-building-bank',
         path: 'SalaryAdvance'
     },
     {
-        id:11,
+        id: 13,
         name: 'Calendrier',
         route: '/calendar',
         icon: 'ti ti-calendar',
         path: 'Calendar'
-    },    
+    },
     {
-        id:12,
+        id: 14,
         name: 'Salle de réunion',
         route: '/meeting-room',
         icon: 'ti ti-calendar-time',
         path: 'MeetingRoom'
     },
     {
-        id:13,
+        id: 15,
         name: 'Coursier',
         route: '/company-courier',
         icon: 'ti ti-car',
@@ -113,4 +127,4 @@ const RHMenu = [
     }
 ];
 
-export const sideBar = { DGMenu,CFMenu,RHMenu };
+export const sideBar = { DGMenu, CFMenu, RHMenu };

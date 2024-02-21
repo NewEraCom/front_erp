@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { formater } from '@/utils';
-
 defineProps({
     itemOne: {
+        type: Array,
+        required: true,
+    },
+    itemTwo: {
+        type: Array,
+        required: true,
+    },
+    itemThree: {
         type: Array,
         required: true,
     },
@@ -17,71 +23,55 @@ defineProps({
                 <div class="card-widget-separator-wrapper">
                     <div class="card-body card-widget-separator">
                         <div class="row gy-4 gy-sm-1">
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div
                                     class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h6 class="fw-bold mb-2">Mois</h6>
-                                        <h5 class="fw-bold mb-2">
-                                            {{ itemOne[0] }}
-                                        </h5>
-                                    </div>
-                                    <span class="avatar me-sm-4">
-                                        <span class="avatar-initial bg-label-primary rounded">
-                                            <i class="ti ti-md ti-calendar"></i>
-                                        </span>
-                                    </span>
-                                </div>
-                                <hr class="d-none d-sm-block d-lg-none me-4">
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div
-                                    class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
-                                    <div>
-                                        <h6 class="fw-bold mb-2">Total Employee</h6>
+                                        <h6 class="fw-bold mb-2">{{ itemOne[0] }}</h6>
                                         <h5 class="fw-bold mb-2">
                                             {{ itemOne[1] }}
+                                            <small v-if="itemOne[2] === 'currency'" class="fw-bold">MAD</small>
                                         </h5>
                                     </div>
                                     <span class="avatar me-sm-4">
-                                        <span class="avatar-initial bg-label-warning rounded">
-                                            <i class="ti ti-md ti-users-group"></i>
+                                        <span class="avatar-initial rounded" :class="itemOne[4]">
+                                            <i class="ti-md" :class="itemOne[3]"></i>
                                         </span>
                                     </span>
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </div>
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div
                                     class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h6 class="fw-bold mb-2">Total Salaire</h6>
+                                        <h6 class="fw-bold mb-2">{{ itemTwo[0] }}</h6>
                                         <h5 class="fw-bold mb-2">
-                                            {{ formater.number(itemOne[2] as number) }}
-                                            <small class="fw-bold">MAD</small>
+                                            {{ itemTwo[1] }}
+                                            <small v-if="itemTwo[2] === 'currency'" class="fw-bold">MAD</small>
                                         </h5>
                                     </div>
                                     <span class="avatar me-sm-4">
-                                        <span class="avatar-initial bg-label-danger rounded">
-                                            <i class="ti ti-md ti-coins"></i>
+                                        <span class="avatar-initial rounded" :class="itemTwo[4]">
+                                            <i class="ti-md" :class="itemTwo[3]"></i>
                                         </span>
                                     </span>
                                 </div>
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </div>
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div
                                     class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                                     <div>
-                                        <h6 class="fw-bold mb-2">Total Prime</h6>
+                                        <h6 class="fw-bold mb-2">{{ itemThree[0] }}</h6>
                                         <h5 class="fw-bold mb-2">
-                                            {{ formater.number(itemOne[3] as number) }}
-                                            <small class="fw-bold">MAD</small>
+                                            {{ itemThree[1] }}
+                                            <small v-if="itemThree[2] === 'currency'" class="fw-bold">MAD</small>
                                         </h5>
                                     </div>
                                     <span class="avatar me-sm-4">
-                                        <span class="avatar-initial bg-label-success rounded">
-                                            <i class="ti ti-md ti-coins"></i>
+                                        <span class="avatar-initial rounded" :class="itemThree[4]">
+                                            <i class="ti-md" :class="itemThree[3]"></i>
                                         </span>
                                     </span>
                                 </div>

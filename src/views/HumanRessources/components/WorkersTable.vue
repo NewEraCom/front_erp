@@ -1,47 +1,51 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable } from '@/ui';
-
+import { DataTable, Modal } from '@/ui';
+import { formater } from '@/utils';
 const props = defineProps({
-    interns: {
+    workers: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Stagiaires', value: 'nom', isComplex: true, type: 'fullname' },
-    { text: 'Numéro de téléphone', value: 'tel', type: 'phone' },
+    { text: 'Employe', value: 'fullname', isComplex: true, type: 'workers' },
+    { text: 'Soustraitant', value: 'soustraitant', type: 'soustraitant' },
+    { text: 'Projet', value: 'project', type: 'project' },
     { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Diplome', value: 'diplome', type: 'text' },
     { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Date de creation', value: 'created_at', type: 'date' },
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => editItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-const editItem = (item: any) => {
-    console.log('Edit item', item);
+const detailsItem = (item: any) => {
+    console.log(item);
 };
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
 };
 
-const filteredData = ref(props.interns);
+const filteredData = ref(props.workers);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
+const startQuery = ref();
+const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.interns.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+    filteredData.value = props.workers.filter((item: any) => {
+        const combinedFields = `${item.first_name} ${item.last_name} ${item.project.code} ${item.soustraitant.raison_social} ${item.poste}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value);
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
 
 };
@@ -62,6 +66,15 @@ const filter = () => {
                             <option value="0">Non Actif</option>
                         </select>
                     </div>
+                    <div class="d-flex align-items-center ms-2">
+                        <label for="start">De</label>
+                        <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
+                            @change="filter" />
+                    </div>
+                    <div class="d-flex align-items-center ms-0">
+                        <label for="end">à</label>
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                    </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
@@ -80,6 +93,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
+        </Modal>
     </div>
 </template>
 <style>

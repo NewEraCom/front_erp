@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { helpers } from '@/utils';
+import { formater, helpers } from '@/utils';
 
 type Item = {
     [key: string]: any; // This allows any number of properties with any type
@@ -84,6 +84,8 @@ const visiblePageNumbers = computed(() => {
 
     return pages;
 });
+
+
 </script>
 
 <template>
@@ -101,11 +103,11 @@ const visiblePageNumbers = computed(() => {
                 </tr>
             </thead>
             <tbody v-if="paginatedItems.length > 0">
-                <tr v-for="item in paginatedItems" :key="item.id">
-                    <template v-for="(header, index) in headers" :key="header.value">
+                <tr v-for="item in  paginatedItems " :key="item.id">
+                    <template v-for="(header, index) in  headers " :key="header.value">
                         <td v-if="header.isComplex && header.type === 'employee'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'ProfileEmployee', params: { id: item.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.first_name + ' ' + item.last_name }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>
@@ -116,6 +118,13 @@ const visiblePageNumbers = computed(() => {
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.prenom + ' ' + item.nom }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Email : {{ item.email }}</small>
+                        </td>
+                        <td v-if="header.isComplex && header.type === 'workers'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <router-link to="/">
+                                <h6 class="mb-1 fw-bold text-primary">{{ item.first_name + ' ' + item.last_name }}</h6>
+                            </router-link>
+                            <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'project'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
@@ -129,7 +138,7 @@ const visiblePageNumbers = computed(() => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'leave'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
                                     item.employe.last_name
                                 }}</h6>
@@ -144,27 +153,52 @@ const visiblePageNumbers = computed(() => {
                         </td>
                         <td v-if="!header.isComplex" :class="index == 0 ? 'text-start' : 'text-center'">
                             <span v-if="header.type == 'badge'">
-                                <small class="fw-bold" :class="helpers.returnBadge(item[header.value])[0]">{{
-                                    helpers.returnBadge(item[header.value])[1] }}
+                                <small class="fw-bold" :class="helpers.returnBadge(String(item[header.value]))[0]">{{
+                                    helpers.returnBadge(String(item[header.value]))[1] }}
                                 </small>
                             </span>
                             <small v-else>
                                 <span v-if="header.type === 'datetime'">
-                                    {{ helpers.formattedDateTime(item[header.value]) }}
+                                    {{ formater.dateTime(item[header.value]) }}
                                 </span>
-                                <span v-if="header.type !== 'datetime'">
+                                <span v-if="header.type === 'date'">
+                                    {{ formater.date(item[header.value]) }}
+                                </span>
+                                <span v-if="header.type === 'text'">
                                     {{ item[header.value] }}
                                 </span>
-                                <span v-if="header.attr === 'days'">
-                                    {{ item[header.value] > 1 ? ' Jours' : ' Jour' }}
+                                <span v-if="header.type === 'project'">
+                                    {{ item.project.code }}
+                                </span>
+                                <span v-if="header.type === 'currency'">
+                                    {{ formater.number(item[header.value]) }} MAD
+                                </span>
+                                <span v-if="header.type === 'days'">
+                                    {{ item[header.value] > 1 ? item[header.value] + ' Jours' : item[header.value] + ' Jour'
+                                    }}
+                                </span>
+                                <span v-if="header.type === 'time'">
+                                    {{ formater.time(String(item[header.value])) }}
+                                </span>
+                                <span v-if="header.type === 'phone'">
+                                    {{ formater.phoneNumber(item[header.value]) }}
+                                </span>
+                                <span v-if="header.type === 'soustraitant'">
+                                    {{ formater.phoneNumber(item.soustraitant.raison_social) }}
+                                </span>
+                                <span v-if="header.type === 'workingHour'">
+                                    <span class="fw-bold"
+                                        :class="helpers.calculateDifference(item, item.employe.working_hours)[2]">
+                                        {{ helpers.calculateDifference(item, item.employe.working_hours)[0] }}
+                                    </span>
                                 </span>
                             </small>
                         </td>
                     </template>
                     <td class="text-center">
                         <!-- Render action buttons based on actionsConfig -->
-                        <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2" :class="action.class"
-                            @click="action.onClick(item)">
+                        <button v-for=" action  in  actionsConfig " :key="action.icon" class="btn me-2"
+                            :class="action.class" @click="action.onClick(item)">
                             <i :class="action.icon"></i>
                         </button>
                     </td>
@@ -172,7 +206,8 @@ const visiblePageNumbers = computed(() => {
             </tbody>
             <tbody v-else>
                 <tr>
-                    <td :colspan="headers.length + 1" class="text-center">Aucun enregistrements correspondants trouvés</td>
+                    <td :colspan="headers.length + 1" class="text-center">Aucun enregistrements correspondants trouvés
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -183,7 +218,7 @@ const visiblePageNumbers = computed(() => {
                         <i class="ti ti-chevrons-left"></i>
                     </a>
                 </li>
-                <li class="page-item" v-for="page in visiblePageNumbers" :key="page"
+                <li class="page-item" v-for=" page in visiblePageNumbers " :key="page"
                     :class="{ active: page === currentPage }">
                     <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                 </li>

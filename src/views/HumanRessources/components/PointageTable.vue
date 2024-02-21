@@ -1,54 +1,52 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable } from '@/ui';
-import { helpers } from '@/utils';
-import router from '@/router';
+import { DataTable, Modal } from '@/ui';
 
 const props = defineProps({
-    employees: {
+    pointages: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Employe', value: 'first_name', isComplex: true, type: 'employee' },
-    { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Departement', value: 'departement', type: 'text' },
-    { text: 'Contrat', value: 'type_contrat', type: 'badge' },
-    { text: 'Date d\'embauche', value: 'date_embauche', type: 'date' },
-    { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
+    { text: 'Date de pointage', value: 'date_pointage', type: 'date' },
+    { text: 'Heure d\'entrée', value: 'clock_in', type: 'time' },
+    { text: 'Heure de sortie', value: 'clock_out', type: 'time' },
+    { text: 'Break in', value: 'break_start', type: 'time' },
+    { text: 'Break out', value: 'break_end', type: 'time' },
+    { text: 'Heure de travail', value: 'workingHour', type: 'workingHour' },
 ];
 
 const actionsConfig = [
-    {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: () => {
-            router.push({ name: 'ProfileEmployee', params: { id: '123' } });
-        }
-    },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
+const detailsItem = (item: any) => {
+    console.log(item);
+};
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
 };
 
-const filteredData = ref(props.employees);
+const filteredData = ref(props.pointages);
 
 const searchQuery = ref('');
-const statusQuery = ref('-');
 const startQuery = ref();
 const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.employees.filter((item: any) => {
-        const combinedFields = `${item.first_name} ${item.last_name} ${item.matricule} ${item.departement} ${item.poste} ${item.type_contrat}`.toLowerCase();
+    filteredData.value = props.pointages.filter((item: any) => {
+        const combinedFields = `${item.employe.first_name} ${item.employe.last_name}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.date_embauche) >= helpers.startOfDay(startQuery.value)) &&
-            (!endQuery.value || helpers.startOfDay(item.date_embauche) <= helpers.startOfDay(endQuery.value));
+            (!startQuery.value || new Date(item.date_pointage) >= new Date(startQuery.value)) &&
+            (!endQuery.value || new Date(item.date_pointage) <= new Date(endQuery.value));
     });
 };
 
@@ -60,6 +58,7 @@ const filter = () => {
                 <div class="d-flex align-items-center">
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
                         @input="filter" />
+
                     <div class="d-flex align-items-center ms-2">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
@@ -69,16 +68,9 @@ const filter = () => {
                         <label for="end">à</label>
                         <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
                     </div>
-                    <div class="d-flex align-items-center ms-0">
-                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
-                            <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Non Actif</option>
-                        </select>
-                    </div>
                     <div class="d-flex align-items-center ms-auto">
+                        <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
-                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
@@ -93,6 +85,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
+        </Modal>
     </div>
 </template>
 <style>

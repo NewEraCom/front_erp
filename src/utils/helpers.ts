@@ -92,64 +92,61 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
+			
 		case 'Conge Maladie':
 			return ['badge bg-label-warning', 'Congé Maladie'];
 		case 'Congé':
 			return ['badge bg-label-success', 'Congé'];
 		case 'pending':
 			return ['badge bg-label-warning', 'En attente'];
+		case 'done':
+			return ['badge bg-label-success', 'Traitée'];
+		case 'delivered':
+			return ['badge bg-label-info', 'Livré'];
 		case 'approved':
 			return ['badge bg-label-success', 'Approuvé'];
 		case 'dissaproved':
-			return ['badge bg-label--danger', 'Désapprouvé'];
+			return ['badge bg-label-danger', 'Désapprouvé'];
+		case 'closed':
+			return ['badge bg-label-success', 'Fermé'];
+		case 'open':
+			return ['badge bg-label-warning', 'Ouvert'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
 };
 
-function formatNumber(value: number | undefined | null): string {
-	if (!value) return '-';
 
-	const roundedValue = Math.round(value * 100) / 100;
+function calculateDifference(item: any, workingHours: number) {
 
-	const formattedValue = roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-	return formattedValue;
+	// Parse the times for clock in/out and break start/end
+	const [startHour, startMinute] = item.clock_in.split(':').map(Number);
+	const [endHour, endMinute] = item.clock_out.split(':').map(Number);
+	const [breakStartHour, breakStartMinute] = item.break_start.split(':').map(Number);
+	const [breakEndHour, breakEndMinute] = item.break_end.split(':').map(Number);
+
+	// Calculate total shift and break durations in milliseconds
+	const totalShiftDuration = (endHour - startHour) * 60 * 60 * 1000 + (endMinute - startMinute) * 60 * 1000;
+	const totalBreakDuration = (breakEndHour - breakStartHour) * 60 * 60 * 1000 + (breakEndMinute - breakStartMinute) * 60 * 1000;
+
+	// Calculate working hours by subtracting break duration from shift duration
+	const workingDuration = totalShiftDuration - totalBreakDuration;
+
+	const hours = Math.floor(workingDuration / (60 * 60 * 1000));
+	const minutes = Math.floor((workingDuration % (60 * 60 * 1000)) / (60 * 1000));
+
+	if (hours === workingHours && minutes === 0) {
+		return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-success'];
+	} else if (hours < workingHours) {
+		return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-danger'];
+	} else if (hours >= workingHours) {
+		if (minutes > 0) {
+			return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-info'];
+		} else {
+			return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-success'];
+		}
+	}
 }
-
-function formattedDate(props: string | null): string {
-	if (props === null) return 'Aucune date.';
-	const date = new Date(props);
-	const day = String(date.getDate()).padStart(2, '0');
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const year = date.getFullYear();
-	return `${day}-${month}-${year}`;
-}
-
-function formattedMonth(props: string | null): string {
-	if (props === null) return 'Aucune date.';
-	const date = new Date(props);
-	const month = String(date.getMonth() + 1).padStart(2, '0');
-	const year = date.getFullYear();
-	return `${month}-${year}`;
-}
-
-function formattedDateTime(props: string | null): string {
-	if (props === null) return 'Aucune date.';
-
-	// Create a Date object from the input string
-	const inputDate = new Date(props);
-
-	// Extract year, month, day, hours, and minutes from the Date object
-	const year = inputDate.getFullYear();
-	const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-	const day = String(inputDate.getDate()).padStart(2, '0');
-	const hours = String(inputDate.getHours()).padStart(2, '0');
-	const minutes = String(inputDate.getMinutes()).padStart(2, '0');
-
-	// Construct the formatted date string
-	return `${day}-${month}-${year} ${hours}:${minutes}`;
-}
-
 
 
 export const helpers = {
@@ -161,8 +158,5 @@ export const helpers = {
 	initialDashboard,
 	returnSideBarItems,
 	returnBadge,
-	formatNumber,
-	formattedDate,
-	formattedMonth,
-	formattedDateTime
+	calculateDifference
 };

@@ -1,40 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable } from '@/ui';
-import { helpers } from '@/utils';
-import router from '@/router';
+import { DataTable, Modal } from '@/ui';
+import { formater, exportToExcel } from '@/utils';
 
 const props = defineProps({
-    employees: {
+    demandes: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Employe', value: 'first_name', isComplex: true, type: 'employee' },
-    { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Departement', value: 'departement', type: 'text' },
-    { text: 'Contrat', value: 'type_contrat', type: 'badge' },
-    { text: 'Date d\'embauche', value: 'date_embauche', type: 'date' },
+    { text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
+    { text: 'Titre', value: 'titre', type: 'text' },
+    { text: 'Date de demande', value: 'created_at', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-    {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: () => {
-            router.push({ name: 'ProfileEmployee', params: { id: '123' } });
-        }
-    },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
+const detailsItem = (item: any) => {
+    console.log(item);
+};
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
 };
 
-const filteredData = ref(props.employees);
+const filteredData = ref(props.demandes);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -43,13 +39,19 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.employees.filter((item: any) => {
-        const combinedFields = `${item.first_name} ${item.last_name} ${item.matricule} ${item.departement} ${item.poste} ${item.type_contrat}`.toLowerCase();
+    filteredData.value = props.demandes.filter((item: any) => {
+        const combinedFields = `${item.employe.first_name} ${item.employe.last_name} ${item.post_name} ${item.diploma} ${item.experience}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.date_embauche) >= helpers.startOfDay(startQuery.value)) &&
-            (!endQuery.value || helpers.startOfDay(item.date_embauche) <= helpers.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) &&
+            (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
+
+};
+
+const exportData = () => {
+    exportToExcel(filteredData.value);
 };
 
 </script>
@@ -60,6 +62,15 @@ const filter = () => {
                 <div class="d-flex align-items-center">
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
                         @input="filter" />
+
+                    <div class="d-flex align-items-center ms-0">
+                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
+                            <option value="-">Tout</option>
+                            <option value="pending">En attente</option>
+                            <option value="done">Traité</option>
+                            <option value="delivered">Livré</option>
+                        </select>
+                    </div>
                     <div class="d-flex align-items-center ms-2">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
@@ -69,23 +80,16 @@ const filter = () => {
                         <label for="end">à</label>
                         <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
                     </div>
-                    <div class="d-flex align-items-center ms-0">
-                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
-                            <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Non Actif</option>
-                        </select>
-                    </div>
                     <div class="d-flex align-items-center ms-auto">
+                        <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
-                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="exportData">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -93,6 +97,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
+        </Modal>
     </div>
 </template>
 <style>

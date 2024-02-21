@@ -1,47 +1,52 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable } from '@/ui';
+import { DataTable, Modal } from '@/ui';
+import { helpers } from '@/utils';
 
 const props = defineProps({
-    interns: {
+    salaryAdvances: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Stagiaires', value: 'nom', isComplex: true, type: 'fullname' },
-    { text: 'Numéro de téléphone', value: 'tel', type: 'phone' },
-    { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Diplome', value: 'diplome', type: 'text' },
+    { text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
+    { text: 'Montant avance', value: 'avance', type: 'currency' },
+    { text: 'Montant restant', value: 'restant', type: 'currency' },
     { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Date de debut', value: 'start_payment', type: 'date' },
+    { text: 'Date de fin', value: 'end_payment', type: 'date' },
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => editItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-const editItem = (item: any) => {
-    console.log('Edit item', item);
+const detailsItem = (item: any) => {
+    console.log(item);
 };
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
 };
 
-const filteredData = ref(props.interns);
+const filteredData = ref(props.salaryAdvances);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
+const startQuery = ref();
+const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.interns.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+    filteredData.value = props.salaryAdvances.filter((item: any) => {
+        const combinedFields = `${item.employe.last_name} ${item.employe.first_name}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value);
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.start_payment) >= helpers.startOfDay(startQuery.value)) &&
+            (!endQuery.value || helpers.startOfDay(item.end_payment) <= helpers.startOfDay(endQuery.value));
     });
 
 };
@@ -58,14 +63,23 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Non Actif</option>
+                            <option value="pending">En attente</option>
+                            <option value="approved">Approuvé</option>
+                            <option value="dissaproved">Désapprouvé</option>
                         </select>
+                    </div>
+                    <div class="d-flex align-items-center ms-2">
+                        <label for="start">De</label>
+                        <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
+                            @change="filter" />
+                    </div>
+                    <div class="d-flex align-items-center ms-0">
+                        <label for="end">à</label>
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
-                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
@@ -80,6 +94,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
+        </Modal>
     </div>
 </template>
 <style>
