@@ -5,6 +5,7 @@ export const useRhStore = defineStore('RhStore', {
         stats: null,
         contractsExpiredThisMonth: null,
         employees: null,
+        employee: null,
         interns: {
             data: null,
             stats: null,
@@ -56,6 +57,12 @@ export const useRhStore = defineStore('RhStore', {
                 employee_per_month: data.employee_per_month,
                 mass_salariale_per_month: data.mass_salarial
             };
+        },
+        setEmployeeId(data: any) {
+            this.employee = data;
+        },
+        clearEmployee() {
+            this.employee = null;
         },
         setInterns(data: any) {
             this.interns.data = data;
