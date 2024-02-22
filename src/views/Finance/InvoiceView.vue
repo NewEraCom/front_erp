@@ -1,0 +1,63 @@
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import { CardOne } from '@/ui';
+import {useFactureStore} from '@/store';
+import { factureService } from '@/services';
+import  {FactureTable}  from './components';
+
+
+const Prevmodal = "preview-facture"
+const FactureStore = useFactureStore();
+const stats = ref(true)
+
+const facture = ref(computed(() => FactureStore.facture));
+
+onMounted(async () => {
+    await factureService.get();    
+});
+
+</script>
+
+<template>
+    <div class="flex-grow-1 container-fluid mt-3">
+      <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Facture</span> </h5>
+      <div v-if="stats" class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+          <CardOne title="Employés CDI" :count="String(10)" color="bg-label-warning" icon="ti-bolt"
+            card-color="card-border-shadow-warning" />
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+          <CardOne title="Employés CDD" :count="String(10)" color="bg-label-success" icon="ti-bolt"
+            card-color="card-border-shadow-success" />
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
+          <CardOne title="Employés Chantier" :count="String(10)" color="bg-label-info" icon="ti-bolt"
+            card-color="card-border-shadow-info" />
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
+          <CardOne title="Employés Contrat Commercial" :count="String(10)" color="bg-label-danger"
+            icon="ti-bolt" card-color="card-border-shadow-danger" />
+        </div>
+      </div>
+      <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card card-border-shadow-primary">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h5 class="fw-bold mb-1">Facture</h5>
+                  <small class="fw-bold mb-1 text-muted">Liste des Facture de l'entreprise</small>
+                </div>
+               
+              </div>
+            </div>
+            <div v-if="facture != null" class="card-body border-top pt-4">
+              <FactureTable :factures="facture" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </template>

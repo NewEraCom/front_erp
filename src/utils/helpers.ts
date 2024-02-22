@@ -1,5 +1,6 @@
 import router from '../router';
 import { sideBar } from './sidebar_items';
+import { env } from './env';
 
 const isActiveRoute = (to: string, path: string): string | undefined => {
 	if (path === to) {
@@ -152,6 +153,9 @@ function calculateDifference(item: any, workingHours: number) {
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
+ function baseUrl() {
+    return env.VITE_UPLOADS_URL;
+}
 
 
 export const helpers = {
@@ -164,5 +168,6 @@ export const helpers = {
 	returnSideBarItems,
 	returnBadge,
 	calculateDifference,
-	setDeleteId
+	setDeleteId,
+	baseUrl
 };
