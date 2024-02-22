@@ -25,5 +25,14 @@ export const sharedRoutes = [
             title: 'Salle de réunion',
             requiresAuth: true
         },
+    },
+    {
+        path: '/company-courier',
+        name: 'CompanyCourier',
+        component: () => import('@/views/Shared/CompanyCourierView.vue'),
+        meta: {
+            title: 'Coursier',
+            requiresAuth: true
+        },
     }
 ];

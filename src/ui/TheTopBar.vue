@@ -11,52 +11,33 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav
-    v-if="user != null"
-    id="layout-navbar"
-    class="layout-navbar navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
-  >
+  <nav v-if="user != null" id="layout-navbar"
+    class="layout-navbar navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme">
     <div id="navbar-collapse" class="navbar-nav-right d-flex align-items-center">
       <p class="text-dark m-0 ms-2">
-        Bienvenue {{ user.employee.first_name + ' ' + user.employee.last_name }} sur NewEraERP 👋
+        Bienvenue {{ user.employee.first_name }} sur NewEraERP 👋
       </p>
       <ul class="navbar-nav flex-row align-items-center ms-auto">
         <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-1">
-          <a
-            class="nav-link dropdown-toggle hide-arrow"
-            href="javascript:void(0);"
-            data-bs-toggle="dropdown"
-            data-bs-auto-close="outside"
-            aria-expanded="false"
-          >
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"
+            data-bs-auto-close="outside" aria-expanded="false">
             <i class="ti ti-bell ti-md"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-end py-0">
             <li class="dropdown-menu-header border-bottom">
               <div class="dropdown-header d-flex align-items-center py-3">
                 <h5 class="text-body mb-0 me-auto">Notification</h5>
-                <a
-                  href="javascript:void(0)"
-                  class="dropdown-notifications-all text-body"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Mark all as read"
-                  ><i class="ti ti-bell fs-4"></i
-                ></a>
+                <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip"
+                  data-bs-placement="top" title="Mark all as read"><i class="ti ti-bell fs-4"></i></a>
               </div>
             </li>
           </ul>
         </li>
         <li class="nav-item navbar-dropdown dropdown-user dropdown">
-          <a
-            class="nav-link dropdown-toggle hide-arrow"
-            href="javascript:void(0);"
-            data-bs-toggle="dropdown"
-          >
+          <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
             <div class="avatar avatar-online">
-              <img 
-              :src="env +'assets/img/' + user.profile_picture"
-              class="rounded-circle" style="object-fit: fill; height: 100%" />
+              <img :src="env + 'assets/img/' + user.profile_picture" class="rounded-circle"
+                style="object-fit: fill; height: 100%" />
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -65,9 +46,8 @@ onMounted(() => {
                 <div class="d-flex">
                   <div class="flex-shrink-0 me-3">
                     <div class="avatar avatar-online">
-                      <img 
-                      :src="env +'assets/img/' + user.profile_picture"
-                      class="rounded-circle" style="object-fit: fill; height: 100%" />
+                      <img :src="env + 'assets/img/' + user.profile_picture" class="rounded-circle"
+                        style="object-fit: fill; height: 100%" />
                     </div>
                   </div>
                   <div class="flex-grow-1">
@@ -92,11 +72,7 @@ onMounted(() => {
             </li>
 
             <li>
-              <button
-                data-bs-toggle="modal"
-                data-bs-target="#logout-modal"
-                class="dropdown-item text-danger"
-              >
+              <button data-bs-toggle="modal" data-bs-target="#logout-modal" class="dropdown-item text-danger">
                 <i class="ti ti-logout me-2 ti-sm"></i>
                 <span class="align-middle fw-bold">Se deconnecter</span>
               </button>
@@ -107,12 +83,8 @@ onMounted(() => {
     </div>
 
     <div class="navbar-search-wrapper search-input-wrapper d-none">
-      <input
-        type="text"
-        class="form-control search-input container-xxl border-0"
-        placeholder="Search..."
-        aria-label="Search..."
-      />
+      <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..."
+        aria-label="Search..." />
       <i class="ti ti-x ti-sm search-toggler cursor-pointer"></i>
     </div>
   </nav>

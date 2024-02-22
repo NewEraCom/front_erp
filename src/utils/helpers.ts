@@ -13,29 +13,25 @@ const togglePassword = (value: string[]): string[] => {
 		: ['ti-eye', 'password'];
 };
 
-const setSavedUser = (user: unknown): void => {
-	localStorage.setItem('user', JSON.stringify(user.user));
-};
-
-const setUserOnline = (): void => {
+const setSavedUser = (res: unknown): void => {
+	localStorage.setItem('user', JSON.stringify(res.user));
 	localStorage.setItem('isOnline', 'true');
+	localStorage.setItem('role', res.user.roles[0].name);
+	localStorage.setItem('token', res.token);
+
 };
 
-const setRole = (role: string): void => {
-	localStorage.setItem('role', role);
-};
 
 const redirectBasedOnRole = (role: string): void => {
-	setRole(role);
 	switch (role) {
 		case roles.RH:
-			router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role) });
 			break;
 		case roles.CF:
-			router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role) });
 			break;
 		default:
-			router.push({ name: initialDashboard(role)});
+			router.push({ name: initialDashboard(role) });
 	}
 };
 
@@ -57,36 +53,106 @@ const initialDashboard = (role: string): string => {
 	switch (role) {
 		case roles.RH:
 			return 'DashboardRH';
-			break;
 		case roles.CF:
 			console.log('CF');
 			return 'DashboardPM';
-			break;
 		case roles.DG:
 			return 'DashboardPM';
-			break;
 		default:
 			return '404';
 	}
 };
 
-const returnSideBarItems = (): string[] => {
+const returnSideBarItems = (): any => {
 	const role = localStorage.getItem('role');
-	switch(role){
-		case roles.DG:			
+	switch (role) {
+		case roles.DG:
 			return sideBar.DGMenu;
-			break;
-		case roles.RH:			
+		case roles.RH:
 			return sideBar.RHMenu;
-			break;
 		case roles.CF:
 			return sideBar.CFMenu;
-			break;
 		default:
 			return [];
 	}
 };
-	
+
+
+const returnBadge = (item: string): string[] => {
+	switch (item) {
+		case 'CDD':
+			return ['badge bg-warning', 'CDD'];
+		case 'CDI':
+			return ['badge bg-success', 'CDI'];
+		case 'Chantier':
+			return ['badge bg-info', 'Chantier'];
+		case 'COMMERCIALE':
+			return ['badge bg-danger', 'Commerciale'];
+		case '1':
+			return ['badge bg-label-success', 'Actif'];
+		case '0':
+			return ['badge bg-label-warning', 'Inactif'];
+
+		case 'Conge Maladie':
+			return ['badge bg-label-warning', 'Congé Maladie'];
+		case 'Congé':
+			return ['badge bg-label-success', 'Congé'];
+		case 'pending':
+			return ['badge bg-label-warning', 'En attente'];
+		case 'done':
+			return ['badge bg-label-success', 'Traitée'];
+		case 'delivered':
+			return ['badge bg-label-info', 'Livré'];
+		case 'approved':
+			return ['badge bg-label-success', 'Approuvé'];
+		case 'dissaproved':
+			return ['badge bg-label-danger', 'Désapprouvé'];
+		case 'closed':
+			return ['badge bg-label-success', 'Fermé'];
+		case 'open':
+			return ['badge bg-label-warning', 'Ouvert'];
+		default:
+			return ['badge bg-secondary', 'Autre'];
+	}
+};
+
+
+function calculateDifference(item: any, workingHours: number) {
+
+	// Parse the times for clock in/out and break start/end
+	const [startHour, startMinute] = item.clock_in.split(':').map(Number);
+	const [endHour, endMinute] = item.clock_out.split(':').map(Number);
+	const [breakStartHour, breakStartMinute] = item.break_start.split(':').map(Number);
+	const [breakEndHour, breakEndMinute] = item.break_end.split(':').map(Number);
+
+	// Calculate total shift and break durations in milliseconds
+	const totalShiftDuration = (endHour - startHour) * 60 * 60 * 1000 + (endMinute - startMinute) * 60 * 1000;
+	const totalBreakDuration = (breakEndHour - breakStartHour) * 60 * 60 * 1000 + (breakEndMinute - breakStartMinute) * 60 * 1000;
+
+	// Calculate working hours by subtracting break duration from shift duration
+	const workingDuration = totalShiftDuration - totalBreakDuration;
+
+	const hours = Math.floor(workingDuration / (60 * 60 * 1000));
+	const minutes = Math.floor((workingDuration % (60 * 60 * 1000)) / (60 * 1000));
+
+	if (hours === workingHours && minutes === 0) {
+		return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-success'];
+	} else if (hours < workingHours) {
+		return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-danger'];
+	} else if (hours >= workingHours) {
+		if (minutes > 0) {
+			return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-info'];
+		} else {
+			return [`${hours}h ${minutes}m`, workingHours, 'badge bg-label-success'];
+		}
+	}
+}
+
+
+function setDeleteId(id: string) {
+	$('#deleteId').val(id);
+}
+
 
 export const helpers = {
 	isActiveRoute,
@@ -95,7 +161,8 @@ export const helpers = {
 	redirectBasedOnRole,
 	roles,
 	initialDashboard,
-	setUserOnline,
-	setRole,
-	returnSideBarItems
+	returnSideBarItems,
+	returnBadge,
+	calculateDifference,
+	setDeleteId
 };
