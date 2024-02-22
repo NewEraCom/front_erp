@@ -6,6 +6,7 @@ import AddNewLeaveModal from './AddNewLeaveModal.vue';
 import AddNewRecruitmentModal from './AddNewRecruitmentModal.vue';
 import AddDemandeRhModal from './AddDemandeRhModal.vue';
 import AddPaieModal from './AddPaieModal.vue';
+import AddSalaryAdvanceModal from './AddSalaryAdvanceModal.vue';
 
 export {
     AddNewEmployeeModal,
@@ -15,5 +16,6 @@ export {
     AddNewLeaveModal,
     AddNewRecruitmentModal,
     AddDemandeRhModal,
-    AddPaieModal
+    AddPaieModal,
+    AddSalaryAdvanceModal
 };

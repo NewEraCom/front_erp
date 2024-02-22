@@ -16,6 +16,21 @@ const getEmployees = async () => {
     }
 };
 
+const getEmployeeById = async (id: number) => {
+    try {
+        const response = await api().get('/rh/get/' + id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.setEmployeeId(response.data.employee);
+            return;
+        }
+        throw new Error('Get employees failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 const getInterns = async () => {
     try {
         const response = await api().get('/stg/get');
@@ -168,5 +183,6 @@ export default {
     getPaies,
     getWorkers,
     deleteEmployee,
-    addPointage
+    addPointage,
+    getEmployeeById
 };
