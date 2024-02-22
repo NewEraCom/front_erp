@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { helpers, formater } from '@/utils';
+import { PointageTable } from './components';
 
 const props = defineProps({
     id: {
@@ -53,7 +54,7 @@ onUnmounted(() => {
                                 <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../assets/img/avatars/user_avatar.png"
                                     height="100" width="100" alt="User avatar">
                                 <div class="user-info text-center">
-                                    <h4 class="mb-2">{{ employee.first_name + ' ' + employee.first_name }}</h4>
+                                    <h4 class="mb-2">{{ employee.first_name + ' ' + employee.last_name }}</h4>
                                     <span class="badge mt-1" :class="helpers.returnBadge(employee.status)[0]">{{
                                         helpers.returnBadge(employee.status)[1]
                                     }}</span>
@@ -65,7 +66,7 @@ onUnmounted(() => {
                             <ul class="list-unstyled">
                                 <li class="mb-2">
                                     <span class="fw-medium me-1">Nom complet:</span>
-                                    <span>{{ employee.first_name + ' ' + employee.first_name }}</span>
+                                    <span>{{ employee.first_name + ' ' + employee.last_name }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
                                     <span class="fw-medium me-1">Date de naissance:</span>
@@ -258,7 +259,7 @@ onUnmounted(() => {
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-2 pb-1">
                                             <div class="me-2">
-                                                <img :src="helpers.bankName(employee.bank_name)[0]" height="92px"
+                                                <img :src="helpers.bankName(String(employee.bank_name))[0]" height="110px"
                                                     width="100px" style="object-fit: contain" />
                                             </div>
                                             <button class="ms-auto btn btn-sm btn-primary" data-bs-toggle="modal"
@@ -280,7 +281,13 @@ onUnmounted(() => {
                                                 </h6>
                                             </div>
                                             <div v-if="employee.copie_rib">
-
+                                                <a :href="'/uploads/employee/' +
+                                                    employee.dossier +
+                                                    '/' +
+                                                    employee.copie_rib
+                                                    " target="_blank">
+                                                    <i class="ti ti-file-download bg-label-info p-3 rounded"></i>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -304,7 +311,20 @@ onUnmounted(() => {
                                         </h6>
                                         <div v-if="employee.copie_cnss != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
-
+                                                <div class="card-body p-2">
+                                                    <a :href="'/uploads/employee/' +
+                                                        employee.dossier +
+                                                        '/' +
+                                                        employee.copie_cnss
+                                                        " target="_blank" class="d-flex align-items-center">
+                                                        <div class="p-1 rounded bg-label-info">
+                                                            <i class="ti ti-file-download text-info ps-3 pe-3"></i>
+                                                        </div>
+                                                        <small class="ms-3">
+                                                            Télécharger la carte CNSS
+                                                        </small>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                         <div v-else class="card mt-4 border shadow-none">
@@ -387,6 +407,77 @@ onUnmounted(() => {
                                         </button>
                                     </div>
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div v-if="employee.copie_cin != null" class="col-6 mb-3">
+                                                <div class="card shadow-none border">
+                                                    <div class="card-body d-flex">
+                                                        <div class="bg-label-primary p-3 rounded">
+                                                            <i class="ti ti-file-filled"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-2">
+                                                                {{
+                                                                    formater.limitedTextWithValue(
+                                                                        employee.copie_cin,
+                                                                        45
+                                                                    )
+                                                                }}
+                                                            </h6>
+                                                            <small class="mt-auto">Créé le
+                                                                {{
+                                                                    formater.date(
+                                                                        employee.created_at
+                                                                    )
+                                                                }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="employee.documents.length != 0" class="row">
+                                            <div v-for="item in employee.documents" :key="item" class="col-6 mb-3">
+                                                <div class="card shadow-none border">
+                                                    <div class="card-body d-flex align-items-center">
+                                                        <div class="bg-label-primary p-3 rounded">
+                                                            <i class="ti ti-file-filled"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-2">
+                                                                {{
+                                                                    formater.limitedTextWithValue(
+                                                                        item.title,
+                                                                        55
+                                                                    )
+                                                                }}
+                                                            </h6>
+                                                            <small class="mt-auto">Créé le
+                                                                {{
+                                                                    formater.date(
+                                                                        item.created_at
+                                                                    )
+                                                                }}</small>
+                                                        </div>
+                                                        <button class="ms-auto btn btn-danger btn-sm m-0"
+                                                            data-bs-toggle="modal" data-bs-target="#delete-doc">
+                                                            <i class="ti ti-trash-filled"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="row mb-4">
+                                            <div class="col-12 text-center">
+                                                <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt=""
+                                                    height="180px" width="180px" style="object-fit: contain" />
+                                                <h6 class="text-center mt-3 fw-bold">
+                                                    Aucun document trouvé
+                                                </h6>
+                                                <p class="text-center">
+                                                    Il n'y a pas encore de documents pour cet
+                                                    employé
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -394,7 +485,6 @@ onUnmounted(() => {
                     </div>
                     <div id="pointage" class="tab-pane fade" role="tabpanel">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-12"></div>
                             <div class="col-lg-12 col-xl-12">
                                 <div class="card card-border-shadow-primary card-action mb-4">
                                     <div class="card-header align-items-center">
@@ -404,6 +494,9 @@ onUnmounted(() => {
                                             <i class="ti ti-square-rounded-plus-filled me-2"></i>
                                             Nouveau enregistrement
                                         </button>
+                                    </div>
+                                    <div v-if="employee.pointages" class="card-body border-top pt-4">
+                                        <PointageTable :pointages="employee.pointages" :custom="false" />
                                     </div>
                                 </div>
                             </div>

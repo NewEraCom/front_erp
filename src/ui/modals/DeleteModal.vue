@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps({
+defineProps({
     id: String,
     title: String,
     text: String,
@@ -12,7 +12,7 @@ const props = defineProps({
 const isLoading = ref(false);
 
 const handleSubmit = async () => {
-    props.action;
+
 };
 </script>
 

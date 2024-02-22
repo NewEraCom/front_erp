@@ -63,7 +63,7 @@ onMounted(async () => {
     </div>
     <AddNewEmployeeModal />
     <DeleteModal id="deleteEmployee" title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?"
-      textButton="Supprimer" :action="rhService.deleteEmployee()" />
+      textButton="Supprimer" />
   </div>
 </template>
 

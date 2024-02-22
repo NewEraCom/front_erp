@@ -43,7 +43,7 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.leaves.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+        const combinedFields = `${item.employe.first_name} ${item.employe.last_name}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&

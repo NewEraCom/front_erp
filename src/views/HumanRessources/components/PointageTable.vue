@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const headers = [
-    { text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
+    { text: 'Employe', value: 'employee', isComplex: true, type: 'leave' },
     { text: 'Date de pointage', value: 'date_pointage', type: 'date' },
     { text: 'Heure d\'entrée', value: 'clock_in', type: 'time' },
     { text: 'Heure de sortie', value: 'clock_out', type: 'time' },

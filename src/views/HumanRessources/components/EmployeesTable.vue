@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater, helpers } from '@/utils';
+import { formater } from '@/utils';
 import router from '@/router';
 
 const props = defineProps({
@@ -31,7 +31,6 @@ const actionsConfig = [
 
 
 const deleteItem = (item: any) => {
-    helpers.setDeleteId(item.id);
     $('#deleteEmployee').modal('show');
 };
 
@@ -52,6 +51,7 @@ const filter = () => {
             (!endQuery.value || formater.startOfDay(item.date_embauche) <= formater.startOfDay(endQuery.value));
     });
 };
+
 
 </script>
 <template>

@@ -89,6 +89,14 @@ const formatRIB = (number: string | undefined | null) => {
     );
 };
 
+function limitedTextWithValue(props: string, value: number): string {
+    if (props === null) return '-';
+
+    if (props.length > value) {
+        return props.substring(0, value) + '...';
+    }
+    return props;
+}
 
 export const formater = {
     number,
@@ -98,5 +106,6 @@ export const formater = {
     dateTime,
     phoneNumber,
     startOfDay,
-    formatRIB
+    formatRIB,
+    limitedTextWithValue
 };
