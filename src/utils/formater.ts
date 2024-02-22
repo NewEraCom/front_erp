@@ -55,7 +55,9 @@ function dateTime(props: string | null): string {
     return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
 
-function phoneNumber(phoneNumber) {
+function phoneNumber(phoneNumber: string | undefined | null) {
+
+    if (!phoneNumber) return 'N/A';
     // Remove non-numeric characters from the phone number
     const cleanedNumber = phoneNumber?.replace(/\D/g, '');
 
@@ -73,6 +75,20 @@ function phoneNumber(phoneNumber) {
     }
 }
 
+const formatRIB = (number: string | undefined | null) => {
+    if (number === null) return '-';
+
+    return (
+        number.substring(0, 3) +
+        ' ' +
+        number.substring(3, 6) +
+        ' ' +
+        number.substring(6, number.length - 2) +
+        ' ' +
+        number.substring(number.length - 2)
+    );
+};
+
 
 export const formater = {
     number,
@@ -82,4 +98,5 @@ export const formater = {
     dateTime,
     phoneNumber,
     startOfDay,
+    formatRIB
 };

@@ -1,37 +1,62 @@
 <script setup lang="ts">
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { rhService } from '@/services';
+import { useRhStore } from '@/store';
+import { helpers, formater } from '@/utils';
+
+const props = defineProps({
+    id: {
+        type: Number,
+        required: true,
+    },
+});
+
+const rhStore = useRhStore();
+
+const employee = ref(computed(() => rhStore.employee));
+
+const showSalary = ref(false);
+
+onMounted(async () => {
+    await rhService.getEmployeeById(props.id);
+});
+
+onUnmounted(() => {
+    rhStore.clearEmployee();
+});
+
+
 
 </script>
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
-        <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe</span> </h5>
-        <div class="row">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe</span> </h5>
+            <div v-if="employee">
+                <button class="btn btn-warning">
+                    <i class="ti ti-pencil me-2"></i>
+                    Modifier
+                </button>
+                <button v-if="employee.status === '1'" class="btn btn-danger ms-2">
+                    <i class="ti ti-circle-x-filled me-2"></i>
+                    Rupture de contrat
+
+                </button>
+            </div>
+        </div>
+        <div v-if="employee" class="row">
             <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
                 <div class="card card-border-shadow-primary mb-4">
                     <div class="card-body">
-                        <div class="user-avatar-section">
+                        <div class="user-avatar-section border-bottom pb-4">
                             <div class=" d-flex align-items-center flex-column">
-                                <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../assets/img/avatars/15.png"
+                                <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../assets/img/avatars/user_avatar.png"
                                     height="100" width="100" alt="User avatar">
                                 <div class="user-info text-center">
-                                    <h4 class="mb-2">Violet Mendoza</h4>
-                                    <span class="badge bg-label-secondary mt-1">Author</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-around flex-wrap mt-3 pt-3 pb-4 border-bottom">
-                            <div class="d-flex align-items-start me-4 mt-3 gap-2">
-                                <span class="badge bg-label-primary p-2 rounded"><i class="ti ti-checkbox ti-sm"></i></span>
-                                <div>
-                                    <p class="mb-0 fw-medium">1.23k</p>
-                                    <small>Tasks Done</small>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-start mt-3 gap-2">
-                                <span class="badge bg-label-primary p-2 rounded"><i
-                                        class="ti ti-briefcase ti-sm"></i></span>
-                                <div>
-                                    <p class="mb-0 fw-medium">568</p>
-                                    <small>Projects Done</small>
+                                    <h4 class="mb-2">{{ employee.first_name + ' ' + employee.first_name }}</h4>
+                                    <span class="badge mt-1" :class="helpers.returnBadge(employee.status)[0]">{{
+                                        helpers.returnBadge(employee.status)[1]
+                                    }}</span>
                                 </div>
                             </div>
                         </div>
@@ -39,36 +64,52 @@
                         <div class="info-container">
                             <ul class="list-unstyled">
                                 <li class="mb-2">
-                                    <span class="fw-medium me-1">Username:</span>
-                                    <span>violet.dev</span>
+                                    <span class="fw-medium me-1">Nom complet:</span>
+                                    <span>{{ employee.first_name + ' ' + employee.first_name }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Email:</span>
-                                    <span>vafgot@vultukir.org</span>
+                                    <span class="fw-medium me-1">Date de naissance:</span>
+                                    <span>{{ formater.date(employee.birthdate) }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Status:</span>
-                                    <span class="badge bg-label-success">Active</span>
+                                    <span class="fw-medium me-1">Poste:</span>
+                                    <span>{{ employee.poste }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Role:</span>
-                                    <span>Author</span>
+                                    <span class="fw-medium me-1">Département:</span>
+                                    <span>{{ employee.departement }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Tax id:</span>
-                                    <span>Tax-8965</span>
+                                    <span class="fw-medium me-1">Sexe:</span>
+                                    <span>{{ employee.sexe }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Contact:</span>
-                                    <span>(123) 456-7890</span>
+                                    <span class="fw-medium me-1">Matricule:</span>
+                                    <span>Nec-{{ employee.matricule }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Languages:</span>
-                                    <span>French</span>
+                                    <span class="fw-medium me-1">Type de contrat:</span>
+                                    <span>
+                                        <span class="badge mt-1" :class="helpers.returnBadge(employee.type_contrat)[0]">{{
+                                            helpers.returnBadge(employee.type_contrat)[1]
+                                        }}</span>
+                                    </span>
                                 </li>
-                                <li class="pt-1">
-                                    <span class="fw-medium me-1">Country:</span>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Date d'embauche:</span>
+                                    <span>{{ formater.date(employee.date_embauche) }}</span>
+                                </li>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Ancienneté:</span>
                                     <span>England</span>
+                                </li>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Ville:</span>
+                                    <span>{{ employee.ville }}</span>
+                                </li>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Adresse:</span>
+                                    <span>{{ employee.adresse }}</span>
                                 </li>
                             </ul>
                         </div>
@@ -76,71 +117,296 @@
                         <div class="info-container">
                             <ul class="list-unstyled">
                                 <li class="mb-2">
-                                    <span class="fw-medium me-1">Username:</span>
-                                    <span>violet.dev</span>
+                                    <span class="fw-medium me-1">Situation familiale:</span>
+                                    <span>{{ employee.situation_familiale }}</span>
                                 </li>
                                 <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Email:</span>
-                                    <span>vafgot@vultukir.org</span>
-                                </li>
-                                <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Status:</span>
-                                    <span class="badge bg-label-success">Active</span>
-                                </li>
-                                <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Role:</span>
-                                    <span>Author</span>
-                                </li>
-                                <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Tax id:</span>
-                                    <span>Tax-8965</span>
-                                </li>
-                                <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Contact:</span>
-                                    <span>(123) 456-7890</span>
-                                </li>
-                                <li class="mb-2 pt-1">
-                                    <span class="fw-medium me-1">Languages:</span>
-                                    <span>French</span>
-                                </li>
-                                <li class="pt-1">
-                                    <span class="fw-medium me-1">Country:</span>
-                                    <span>England</span>
+                                    <span class="fw-medium me-1">Nombre d'enfants:</span>
+                                    <span>{{ employee.num_personne_charge }}</span>
+
                                 </li>
                             </ul>
                         </div>
                         <p class="mt-4 small text-uppercase text-muted">CONTACTS</p>
+                        <div class="info-container">
+                            <ul class="list-unstyled">
+                                <li class="mb-2">
+                                    <span class="fw-medium me-1">Adresse email:</span>
+                                    <span>{{ employee.email }}</span>
+                                </li>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Numéro de flotte:</span>
+                                    <span>{{ formater.phoneNumber('0' + employee.flotte) }}</span>
 
+                                </li>
+                                <li class="mb-2 pt-1">
+                                    <span class="fw-medium me-1">Numéro de téléphone:</span>
+                                    <span>{{ formater.phoneNumber(employee.phone_no) }}</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-xl-8 col-lg-7 col-md-7">
+                <ul class="nav nav-pills mb-3 nav-fill" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                            data-bs-target="#employee_dossier" aria-controls="employee" aria-selected="true">
+                            Dossier de l'employé
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#documents"
+                            aria-controls="documents" aria-selected="false" tabindex="-1">
+                            Documents
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#pointage"
+                            aria-controls="pointage" aria-selected="false" tabindex="-1">
+                            Pointage
+                        </button>
+                    </li>
+                </ul>
 
-                <div class="card card-border-shadow-primary mb-4">
-                    <div class=" card-body">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <span class="badge bg-label-primary">Standard</span>
-                            <div class="d-flex justify-content-center">
-                                <sup class="h6 pricing-currency mt-3 mb-0 me-1 text-primary fw-normal">$</sup>
-                                <h1 class="mb-0 text-primary">99</h1>
-                                <sub class="h6 pricing-duration mt-auto mb-2 text-muted fw-normal">/month</sub>
+                <div class="tab-content p-0" style="background-color: transparent; !important">
+                    <div id="employee_dossier" class="tab-pane fade show active bg-none"
+                        style="background-color: transparent; !important" role="tabpanel">
+                        <div class="row mb-3">
+                            <div class="col-xxl-6">
+                                <div class="card card-border-shadow-primary">
+                                    <div class="card-body" @mouseover="showSalary = true" @mouseleave="showSalary = false">
+                                        <div class="d-flex align-items-center mb-2 pb-1">
+                                            <div class="avatar me-2">
+                                                <span class="avatar-initial rounded bg-label-primary"><i
+                                                        class="ti ti-coins ti-md"></i></span>
+                                            </div>
+                                            <h4 class="ms-1 mb-0">Salaire</h4>
+                                            <button class="ms-auto btn btn-sm btn-outline-primary"
+                                                data-bs-target="#historic-salary" data-bs-toggle="modal">
+                                                Historique
+                                            </button>
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#modifie-salary"
+                                                data-bs-toggle="modal">
+                                                <i class="ti ti-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#augemnt-salary"
+                                                data-bs-toggle="modal">
+                                                <i class="ti ti-square-rounded-plus-filled"></i>
+                                            </button>
+                                        </div>
+                                        <h4 v-if="showSalary" class="mb-1 fw-bold text-primary">
+                                            {{ formater.number(employee.salary) }}
+                                            <small>MAD</small>
+                                        </h4>
+                                        <h4 v-else class="mb-1 fw-bold text-primary">
+                                            ****.**
+                                            <small>MAD</small>
+                                        </h4>
+
+                                        <h6 v-if="showSalary" class="mb-1 fw-bold">
+                                            <small>Salaire par jour :
+                                                {{ formater.number(employee.salaire_jrs) }}
+                                                MAD</small>
+                                        </h6>
+                                        <h6 v-else class="mb-1 fw-bold">
+                                            <small>Salaire par jour : ****.** MAD</small>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <div class="card card-border-shadow-warning">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-2 pb-1">
+                                            <div class="avatar me-2">
+                                                <span class="avatar-initial rounded bg-label-warning"><i
+                                                        class="ti ti-calendar-week ti-md"></i></span>
+                                            </div>
+                                            <h4 class="ms-1 mb-0">Conge</h4>
+                                            <button class="ms-auto btn btn-sm btn-outline-warning"
+                                                data-bs-target="#historic-conge" data-bs-toggle="modal">
+                                                Historique
+                                            </button>
+                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#augemnt-conge"
+                                                data-bs-toggle="modal">
+                                                <i class="ti ti-pencil"></i>
+                                            </button>
+
+                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#enter-conge"
+                                                data-bs-toggle="modal">
+                                                <i class="ti ti-square-rounded-plus-filled"></i>
+                                            </button>
+                                        </div>
+                                        <h4 class="mb-1 fw-bold text-warning">
+                                            <small>Somme de conge : </small>
+                                            {{ employee.solde_conge ?? '0' }}
+                                            <small>Jrs</small>
+                                        </h4>
+                                        <h6 class="mb-1 fw-bold">
+                                            <small>Conge : {{ employee.conge_mois }} Jrs/Mois</small>
+                                        </h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <ul class="ps-3 g-2 my-3">
-                            <li class="mb-2">10 Users</li>
-                            <li class="mb-2">Up to 10 GB storage</li>
-                            <li>Basic Support</li>
-                        </ul>
-                        <div class="d-flex justify-content-between align-items-center mb-1 fw-medium text-heading">
-                            <span>Days</span>
-                            <span>65% Completed</span>
+
+                        <div class="row mb-3">
+                            <div class="col-xxl-6">
+                                <div class="card card-border-shadow-info">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-2 pb-1">
+                                            <div class="me-2">
+                                                <img :src="helpers.bankName(employee.bank_name)[0]" height="92px"
+                                                    width="100px" style="object-fit: contain" />
+                                            </div>
+                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                data-bs-target="#edit-bank">
+                                                <i class="ti ti-pencil"></i>
+                                            </button>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="me-auto">
+                                                <h6 class="mt-3 mb-3 fw-bold text-dark">
+                                                    RIB : {{ formater.formatRIB(employee.rib) }}
+                                                </h6>
+                                                <h6 class="mb-3 fw-bold text-dark">
+                                                    Agence :
+                                                    {{
+                                                        helpers.bankName(employee.bank_name)[1] ??
+                                                        'N/A'
+                                                    }}
+                                                </h6>
+                                            </div>
+                                            <div v-if="employee.copie_rib">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xxl-6">
+                                <div class="card card-border-shadow-info">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-2 pb-1">
+                                            <div class="me-2">
+                                                <img src="@/assets/img/brands/logo_cnss.jpeg" height="89px" width="100px"
+                                                    style="object-fit: contain" />
+                                            </div>
+                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#edit-cnss"
+                                                data-bs-toggle="modal">
+                                                <i class="ti ti-pencil"></i>
+                                            </button>
+                                        </div>
+                                        <h6 class="mb-1 fw-bold text-dark">
+                                            Matricule CNSS : {{ employee.cnss ?? 'N/A' }}
+                                        </h6>
+                                        <div v-if="employee.copie_cnss != null" class="card mt-4 border shadow-none">
+                                            <div class="card-body p-2">
+
+                                            </div>
+                                        </div>
+                                        <div v-else class="card mt-4 border shadow-none">
+                                            <div class="card-body p-2 d-flex align-items-center">
+                                                <p class="text-center m-1 text-muted">
+                                                    <i class="ti ti-file me-2"></i>
+                                                    Aucun carte CNSS trouvé
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="progress mb-1" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65"
-                                aria-valuemin="0" aria-valuemax="100"></div>
+
+                        <div class="card card-action card-border-shadow-primary">
+                            <div class="card-header align-items-center">
+                                <h5 class="card-action-title mb-0">Historique</h5>
+                            </div>
+                            <div v-if="employee.projects.length != 0" class="card-body pb-0">
+                                <ul class="timeline pt-3">
+                                    <li v-for="(item, index) in employee.projects" :key="item.id" :class="index !== employee.projects.length - 1
+                                        ? 'border-left-dashed timeline-item-warning pb-4'
+                                        : 'border-transparent timeline-item-primary pb-0'
+                                        " class="timeline-item">
+                                        <span :class="index !== employee.projects.length - 1
+                                            ? 'timeline-indicator-warning'
+                                            : 'timeline-indicator-primary'
+                                            " class="timeline-indicator-advanced">
+                                            <i class="rounded-circle scaleX-n1-rtl" :class="index !== employee.projects.length - 1
+                                                ? 'ti ti-circle-filled'
+                                                : 'ti ti-circle-dashed'
+                                                "></i>
+                                        </span>
+                                        <div class="timeline-event">
+                                            <div class="timeline-header border-bottom pb-3 mb-3">
+                                                <h6 class="mb-0 fw-bold">{{ item.pivot.poste }}</h6>
+                                                <span class="text-muted">
+                                                    {{ item.pivot.date_debut }}
+                                                    {{
+                                                        item.pivot.date_fin !== null
+                                                        ? '- ' + item.pivot.date_fin
+                                                        : '- Présent'
+                                                    }}
+                                                </span>
+                                            </div>
+                                            <div class="d-flex justify-content-between flex-wrap mb-2">
+                                                <span>Projet :
+                                                    {{ item.pre_project.project_code }}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div v-else class="card-body pb-0 text-center">
+                                <div class="row mb-4">
+                                    <div class="col-12">
+                                        <img src="/src/assets/img/no_pre_project.png" class="empty_stats_img_md" alt=""
+                                            height="180px" width="180px" style="object-fit: contain" />
+                                        <h6 class="text-center mt-3 fw-bold">
+                                            Aucun historique trouvé
+                                        </h6>
+                                        <p class="text-center">
+                                            Il n'y a pas encore d'historique pour cet employé
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <span>4 days remaining</span>
-                        <div class="d-grid w-100 mt-4">
-                            <button class="btn btn-primary waves-effect waves-light" data-bs-target="#upgradePlanModal"
-                                data-bs-toggle="modal">Upgrade Plan</button>
+                    </div>
+                    <div id="documents" class="tab-pane fade" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-12">
+                                <div class="card card-border-shadow-primary card-action mb-4">
+                                    <div class="card-header d-flex align-items-center">
+                                        <h5 class="card-action-title mb-0">Documents</h5>
+                                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#upload-documents">
+                                            <i class="ti ti-upload me-2"></i> Ajouter un document
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="pointage" class="tab-pane fade" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12 col-xl-12"></div>
+                            <div class="col-lg-12 col-xl-12">
+                                <div class="card card-border-shadow-primary card-action mb-4">
+                                    <div class="card-header align-items-center">
+                                        <h5 class="card-action-title mb-0">Pointage</h5>
+                                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#add-pointage">
+                                            <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                                            Nouveau enregistrement
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,15 +3,17 @@ import { SalaryAdvancesCard } from './components';
 import { ref, computed, onMounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { SalaryAdvancesTable } from './components';
+import { SalaryAdvancesTable, AddSalaryAdvanceModal } from './components';
 import { formater } from '@/utils';
 
 const rhStore = useRhStore();
 
 const salaryAdvances = ref(computed(() => rhStore.salaryAdvances));
+const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
   await rhService.getSalarayAdvances();
+  await rhService.getEmployees();
 });
 
 
@@ -33,7 +35,7 @@ onMounted(async () => {
                 <h5 class="fw-bold mb-1">Avance sur salaire</h5>
                 <small class="fw-bold mb-1 text-muted">Liste des avances sur salaire</small>
               </div>
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSalaryAdvance">
                 <i class="ti ti-plus me-2"></i>
                 Ajouter une avance sur salaire
               </button>
@@ -45,6 +47,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddSalaryAdvanceModal v-if="employees" :employees="employees" />
   </div>
 </template>
 
