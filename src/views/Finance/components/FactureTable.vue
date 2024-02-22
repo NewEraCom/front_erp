@@ -3,39 +3,45 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater, helpers } from '@/utils';
 import router from '@/router';
-
+import {useFactureStore} from '@/store'
+const FactureStore = useFactureStore();
 const props = defineProps({
-    employees: {
+    factures: {
         type: Array,
         required: true,
     },
 });
+const Preview = (id:any) => {
+    let data = props.factures;
+    let facture = data.find((facture) => facture.id === id);
+    console.log(facture);
+    FactureStore.Print(facture)
+    if(FactureStore.print_articles && FactureStore.print_facture){
+        router.push('/fn/facture/details');
 
+    }
+    // $(`#preview-facture`).modal('show');
+};
 const headers = [
-    { text: 'Employe', value: 'first_name', isComplex: true, type: 'employee' },
-    { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Departement', value: 'departement', type: 'text' },
-    { text: 'Contrat', value: 'type_contrat', type: 'badge' },
-    { text: 'Date d\'embauche', value: 'date_embauche', type: 'date' },
+    { text: 'Numero', value: 'numero', type: 'text' },
+    { text: 'Type', value: 'type', type: 'text' },
+    { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
+    { text: 'Project', value: 'project.code', type: 'text' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: () => {
-            router.push({ name: 'ProfileEmployee', params: { id: '123' } });
+        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item) => {
+            Preview(item.id)
         }
     },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
 ];
 
 
-const deleteItem = (item: any) => {
-    helpers.setDeleteId(item.id);
-    $('#deleteEmployee').modal('show');
-};
 
-const filteredData = ref(props.employees);
+
+const filteredData = ref(props.factures);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -44,12 +50,12 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.employees.filter((item: any) => {
-        const combinedFields = `${item.first_name} ${item.last_name} ${item.matricule} ${item.departement} ${item.poste} ${item.type_contrat}`.toLowerCase();
+    filteredData.value = props.factures.filter((item: any) => {
+        const combinedFields = `${item.numero} ${item.type} ${item.date_paiement} ${item.status} ${item.project.code}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_embauche) >= formater.startOfDay(startQuery.value)) &&
-            (!endQuery.value || formater.startOfDay(item.date_embauche) <= formater.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_paiement) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_paiement) <= formater.startOfDay(endQuery.value));
     });
 };
 

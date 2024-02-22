@@ -1,5 +1,6 @@
 import router from '../router';
 import { sideBar } from './sidebar_items';
+import { env } from './env';
 
 const isActiveRoute = (to: string, path: string): string | undefined => {
 	if (path === to) {
@@ -163,7 +164,7 @@ import AL_AKHDAR_BANK from '@/assets/img/brands/AL-AKHDAR-BANK.png';
 import UMNIA_BANK from '@/assets/img/brands/UMNIA_BANK.png';
 import NoLogo from '@/assets/img/brands/NoLogo.png';
 
-function bankName(bank) {
+function bankName(bank:String) {
 	switch (bank) {
 		case 'BMCE BANK':
 			return [BMCE, 'BMCE'];
@@ -200,6 +201,9 @@ function bankName(bank) {
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
+ function baseUrl() {
+    return env.VITE_UPLOADS_URL;
+}
 
 
 export const helpers = {
@@ -213,5 +217,6 @@ export const helpers = {
 	returnBadge,
 	calculateDifference,
 	setDeleteId,
+	baseUrl,
 	bankName
 };
