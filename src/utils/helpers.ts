@@ -112,6 +112,12 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Fermé'];
 		case 'open':
 			return ['badge bg-label-warning', 'Ouvert'];
+		case 'paye':
+			return ['badge bg-label-success', 'Paye'];
+		case 'annule':
+			return ['badge bg-label-danger', 'annule'];
+		case 'en attente':
+			return ['badge bg-label-warning', 'En Attente'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}

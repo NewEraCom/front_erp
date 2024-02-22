@@ -128,8 +128,8 @@ const visiblePageNumbers = computed(() => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'project'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <h6 class="mb-1 fw-bold">{{ item.name }}</h6>
-                            <small class="fw-bold text-muted">Code : {{ item.code }}</small>
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <small class="fw-bold text-muted">Code : {{ item.project.code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
