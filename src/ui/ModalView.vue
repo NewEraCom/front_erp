@@ -8,11 +8,11 @@ defineProps({
         default: 'md',
     },
 });
+
 </script>
 
 <template>
-    <div :id="id" class="modal fade" :class="className" data-bs-backdrop="static" tabindex="-1" aria-hidden="true"
-        style="z-index: 9999 !important;">
+    <div :id="id" class="modal fade" :class="className" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" :class="size" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -27,7 +27,10 @@ defineProps({
 </template>
 
 <style>
-.bring-to-front {
-    z-index: 9999 !important;
+    .modal {
+    position: fixed;
+    /* Or another non-static position */
+    z-index: 10000;
+    /* Adjust as needed */
 }
 </style>

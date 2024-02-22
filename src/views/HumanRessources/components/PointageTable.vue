@@ -20,14 +20,10 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-const detailsItem = (item: any) => {
-    console.log(item);
-};
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
@@ -77,7 +73,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#details-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -92,5 +88,12 @@ const filter = () => {
 <style>
 .w-240 {
     width: 240px;
+}
+
+.modal {
+    position: fixed;
+    /* Or another non-static position */
+    z-index: 10000;
+    /* Adjust as needed */
 }
 </style>

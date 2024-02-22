@@ -35,7 +35,7 @@ onMounted(async () => {
             </button>
         </div>
         <div class="card">
-            <div v-if="events" class="card-body">
+            <div v-if="events" class="card-body m-0 p-0 ">
                 <vue-cal class="vuecal--green-theme" click-to-navigate :time-from="8 * 60" :time-to="19.5 * 60"
                     :time-step="30" active-view="month" :disable-views="['years', 'year']" locale="fr" :min-date="minDate"
                     style="width: 100%;height: 56rem" events-on-month-view="short" :events="dataEvents" hide-weekends

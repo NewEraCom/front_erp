@@ -6,7 +6,7 @@ const getEmployees = async () => {
         const response = await api().get('/rh/get');
         if (response.status === 200) {
             const rhStore = useRhStore();
-            rhStore.setEmployees(response.data.employee);
+            rhStore.setEmployees(response.data);
             return;
         }
         throw new Error('Get employees failed with status: ' + response.status);
@@ -136,6 +136,27 @@ const getWorkers = async () => {
     }
 };
 
+
+const addPointage = async (data: any) => {
+    try {
+        const response = await api().post('rh/add-pointage', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushPointage(response.data.pointage);
+            return;
+        }
+        throw new Error('Add pointage failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
+
+const deleteEmployee = async () => {
+    console.log($('#deleteId').val());
+};
+
 export default {
     getEmployees,
     getInterns,
@@ -145,5 +166,7 @@ export default {
     getSalarayAdvances,
     getPointages,
     getPaies,
-    getWorkers
+    getWorkers,
+    deleteEmployee,
+    addPointage
 };

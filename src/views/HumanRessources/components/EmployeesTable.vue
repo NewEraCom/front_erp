@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { helpers } from '@/utils';
+import { formater, helpers } from '@/utils';
 import router from '@/router';
 
 const props = defineProps({
@@ -31,7 +31,8 @@ const actionsConfig = [
 
 
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    helpers.setDeleteId(item.id);
+    $('#deleteEmployee').modal('show');
 };
 
 const filteredData = ref(props.employees);
@@ -47,8 +48,8 @@ const filter = () => {
         const combinedFields = `${item.first_name} ${item.last_name} ${item.matricule} ${item.departement} ${item.poste} ${item.type_contrat}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.date_embauche) >= helpers.startOfDay(startQuery.value)) &&
-            (!endQuery.value || helpers.startOfDay(item.date_embauche) <= helpers.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_embauche) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_embauche) <= formater.startOfDay(endQuery.value));
     });
 };
 

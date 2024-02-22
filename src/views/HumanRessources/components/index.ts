@@ -1,7 +1,6 @@
 import RHStatsCard from './RHStatsCard.vue';
 import CardStats from './CardStats.vue';
-import MassSalarialChart from './MassSalarialChart.vue';
-import EmployeePerMonth from './EmployeePerMonth.vue';
+import EmployeeChart from './EmployeeChart.vue';
 import SalaryAdvancesCard from './SalaryAdvancesCard.vue';
 import PaieCard from './PaieCard.vue';
 import EmployeesTable from './EmployeesTable.vue';
@@ -14,11 +13,13 @@ import PointageTable from './PointageTable.vue';
 import PaieTable from './PaieTable.vue';
 import WorkersTable from './WorkersTable.vue';
 
+
+export * from './modals';
+
 export {
     RHStatsCard,
     CardStats,
-    MassSalarialChart,
-    EmployeePerMonth,
+    EmployeeChart,
     SalaryAdvancesCard,
     PaieCard,
     EmployeesTable,

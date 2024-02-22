@@ -3,14 +3,17 @@ import { ref, computed, onMounted } from 'vue';
 import { CardOne } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { LeavesTable } from './components';
+import { LeavesTable, AddNewLeaveModal } from './components';
 
-const RhStore = useRhStore();
+const rhStore = useRhStore();
 
-const leaves = ref(computed(() => RhStore.leaves));
+const leaves = ref(computed(() => rhStore.leaves));
+const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
   await rhService.getLeaves();
+  await rhService.getEmployees();
+
 });
 
 </script>
@@ -42,9 +45,15 @@ onMounted(async () => {
       <div class="col-12">
         <div class="card">
           <div class="card card-border-shadow-primary">
-            <div class="card-header">
-              <h5 class="fw-bold mb-1">Liste des congés</h5>
-              <small class="fw-bold mb-1 text-muted">Liste des congés demandés par les employés</small>
+            <div class="card-header d-flex align-items-center">
+              <div class="me-auto">
+                <h5 class="fw-bold mb-1">Liste des congés</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des congés demandés par les employés</small>
+              </div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave">
+                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                Ajouter un congé
+              </button>
             </div>
             <div v-if="leaves.data != null" class="card-body border-top pt-4">
               <LeavesTable :leaves="leaves.data" />
@@ -53,6 +62,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddNewLeaveModal v-if="employees" :employees="employees" />
   </div>
 </template>
 

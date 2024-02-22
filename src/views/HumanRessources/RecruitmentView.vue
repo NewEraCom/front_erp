@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CardOne } from '@/ui';
 import { ref, computed, onMounted } from 'vue';
-import { RecruitmentTable } from './components';
+import { RecruitmentTable, AddNewRecruitmentModal } from './components';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 
@@ -36,9 +36,15 @@ onMounted(async () => {
       <div class="col-12">
         <div class="card">
           <div class="card card-border-shadow-primary">
-            <div class="card-header">
-              <h5 class="fw-bold mb-1">Recrutement</h5>
-              <small class="fw-bold mb-1 text-muted">Liste des demandes de recrutement</small>
+            <div class="card-header d-flex align-items-center">
+              <div class="me-auto">
+                <h5 class="fw-bold mb-1">Recrutement</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des demandes de recrutement</small>
+              </div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewRecruitment">
+                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                Ajouter une demande de recrutement
+              </button>
             </div>
             <div v-if="recrutement.data != null" class="card-body border-top pt-4">
               <RecruitmentTable :recruitments="recrutement.data" />
@@ -47,6 +53,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddNewRecruitmentModal />
   </div>
 </template>
 

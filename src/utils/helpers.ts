@@ -92,7 +92,7 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
-			
+
 		case 'Conge Maladie':
 			return ['badge bg-label-warning', 'Congé Maladie'];
 		case 'Congé':
@@ -149,6 +149,11 @@ function calculateDifference(item: any, workingHours: number) {
 }
 
 
+function setDeleteId(id: string) {
+	$('#deleteId').val(id);
+}
+
+
 export const helpers = {
 	isActiveRoute,
 	togglePassword,
@@ -158,5 +163,6 @@ export const helpers = {
 	initialDashboard,
 	returnSideBarItems,
 	returnBadge,
-	calculateDifference
+	calculateDifference,
+	setDeleteId
 };

@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+
 const props = defineProps({
     leaves: {
         type: Array,

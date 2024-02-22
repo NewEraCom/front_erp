@@ -3,14 +3,16 @@ import { ref, computed, onMounted } from 'vue';
 import { CardOne } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { DemandeRhTable } from './components';
+import { DemandeRhTable, AddDemandeRhModal } from './components';
 
 const rhStore = useRhStore();
 
 const demandeRh = ref(computed(() => rhStore.demandeRh));
+const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
   await rhService.getDemandeRh();
+  await rhService.getEmployees();
 });
 </script>
 <template>
@@ -38,9 +40,15 @@ onMounted(async () => {
       <div class="col-12">
         <div class="card">
           <div class="card card-border-shadow-primary">
-            <div class="card-header">
-              <h5 class="fw-bold mb-1">Demande RH</h5>
-              <small class="fw-bold mb-1 text-muted">Liste des demandes RH</small>
+            <div class="card-header d-flex align-items-center">
+              <div class="me-auto">
+                <h5 class="fw-bold mb-1">Demande RH</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des demandes RH</small>
+              </div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDemandeRh">
+                <i class="ti ti-file-plus me-2"></i>
+                Ajouter une demande RH
+              </button>
             </div>
             <div v-if="demandeRh.data" class="card-body border-top pt-4">
               <DemandeRhTable :demandes="demandeRh.data" />
@@ -49,6 +57,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddDemandeRhModal v-if="employees" :employees="employees" />
   </div>
 </template>
 

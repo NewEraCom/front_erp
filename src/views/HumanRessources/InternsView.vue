@@ -3,7 +3,7 @@ import { CardOne, } from '@/ui';
 import { ref, computed, onMounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { InternsTable } from './components';
+import { InternsTable, AddNewInternsModal } from './components';
 
 
 const rhStore = useRhStore();
@@ -40,9 +40,15 @@ onMounted(async () => {
       <div class="col-12">
         <div class="card">
           <div class="card card-border-shadow-primary">
-            <div class="card-header">
-              <h5 class="fw-bold mb-1">Stagiaires</h5>
-              <small class="fw-bold mb-1 text-muted">Liste des stagiaires</small>
+            <div class="card-header d-flex align-items-center">
+              <div class="me-auto">
+                <h5 class="fw-bold mb-1">Stagiaires</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des stagiaires</small>
+              </div>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewInterns">
+                <i class="ti ti-users-plus me-2"></i>
+                Ajouter un stagiaire
+              </button>
             </div>
             <div v-if="interns.data != null" class="card-body border-top pt-4">
               <InternsTable :interns="interns.data" />
@@ -51,6 +57,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddNewInternsModal />
   </div>
 </template>
 

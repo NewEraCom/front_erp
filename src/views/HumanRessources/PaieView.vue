@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { PaieCard, PaieTable } from './components';
+import { PaieCard, PaieTable, AddPaieModal } from './components';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 
@@ -29,7 +29,7 @@ onMounted(async () => {
                 <h5 class="fw-bold mb-1">Paie</h5>
                 <small class="fw-bold mb-1 text-muted">Liste des paies</small>
               </div>
-              <button class="btn btn-primary">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPaie">
                 <i class="ti ti-plus me-2"></i>
                 Ajouter la paie de ce mois
               </button>
@@ -41,6 +41,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <AddPaieModal />
   </div>
 </template>
 

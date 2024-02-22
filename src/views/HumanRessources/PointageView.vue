@@ -1,16 +1,23 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { PointageTable } from './components';
+import { PointageTable, AddPointageModal } from './components';
 
 const rhStore = useRhStore();
 
 const pointages = ref(computed(() => rhStore.pointages));
+const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
     await rhService.getPointages();
+    await rhService.getEmployees();
 });
+
+watch(pointages, (value) => {
+    pointages.value = value;
+});
+
 </script>
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
@@ -24,7 +31,7 @@ onMounted(async () => {
                                 <h5 class="fw-bold mb-1">Pointage</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des pointages</small>
                             </div>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPointage">
                                 <i class="ti ti-clock-plus me-2"></i>
                                 Ajouter un pointage
                             </button>
@@ -36,6 +43,7 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
+        <AddPointageModal v-if="employees" :employees="employees" />
     </div>
 </template>
 

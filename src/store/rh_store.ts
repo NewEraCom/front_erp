@@ -37,22 +37,24 @@ export const useRhStore = defineStore('RhStore', {
     }),
     actions: {
         setEmployees(data: any) {
-            this.employees = data;
+            this.employees = data.employee;
             this.stats = {
-                total: data.filter((e: any) => e.status === '1').length,
-                cdi: data.filter((e: any) => e.status === '1' && e.type_contrat === 'CDI').length,
-                cdd: data.filter((e: any) => e.status === '1' && e.type_contrat === 'CDD').length,
-                chantier: data.filter((e: any) => e.status === '1' && e.type_contrat === 'Chantier').length,
-                commercial: data.filter((e: any) => e.status === '1' && e.type_contrat === 'COMMERCIALE').length,
-                male: data.filter((e: any) => e.status === '1' && e.sexe === 'Homme').length,
-                female: data.filter((e: any) => e.status === '1' && e.sexe === 'Femme').length,
-                salaryMass: data.reduce((accumulator: number, currentEmployee: any) => {
+                total: data.employee.filter((e: any) => e.status === '1').length,
+                cdi: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'CDI').length,
+                cdd: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'CDD').length,
+                chantier: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'Chantier').length,
+                commercial: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'COMMERCIALE').length,
+                male: data.employee.filter((e: any) => e.status === '1' && e.sexe === 'Homme').length,
+                female: data.employee.filter((e: any) => e.status === '1' && e.sexe === 'Femme').length,
+                salaryMass: data.employee.reduce((accumulator: number, currentEmployee: any) => {
                     if (currentEmployee.status === '1') {
                         return accumulator + Number(currentEmployee.salary);
                     } else {
                         return accumulator;
                     }
                 }, 0),
+                employee_per_month: data.employee_per_month,
+                mass_salariale_per_month: data.mass_salarial
             };
         },
         setInterns(data: any) {
@@ -125,6 +127,11 @@ export const useRhStore = defineStore('RhStore', {
                 inactif: data.filter((e: any) => e.status === 0).length,
                 totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
             };
+        },
+        pushPointage(data: any) {
+            this.pointages.push(data);
+            console.log('pointage pushed');
+            console.log(this.pointages);
         }
 
     }
