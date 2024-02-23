@@ -4,7 +4,7 @@ import { CardOne } from '@/ui'
 
 import { ChequeTable } from './components'
 import { financeService } from '@/services';
-import {useFinanceStore} from '@/store';
+import { useFinanceStore } from '@/store';
 
 const FinanceStore = useFinanceStore();
 
@@ -31,9 +31,7 @@ onMounted(async () => {
             <div class="card-body card-widget-separator">
               <div class="row gy-4 gy-sm-1">
                 <div class="col-sm-6 col-lg-4">
-                  <div
-                    class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0"
-                  >
+                  <div class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
                     <div>
                       <h3 class="mb-1 fw-bold">
                         {{ 10 }}
@@ -41,25 +39,19 @@ onMounted(async () => {
                       <p class="mb-0">Total des cheques</p>
                     </div>
                     <span class="avatar me-4">
-                      <span class="avatar-initial bg-label-primary rounded"
-                        ><i class="ti ti-calendar"></i
-                      ></span>
+                      <span class="avatar-initial bg-label-primary rounded"><i class="ti ti-calendar"></i></span>
                     </span>
                   </div>
                   <hr class="d-none d-sm-block d-lg-none me-4" />
                 </div>
                 <div class="col-sm-6 col-lg-4">
-                  <div
-                    class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0"
-                  >
+                  <div class="d-flex justify-content-between align-items-start card-widget-2 border-end pb-3 pb-sm-0">
                     <div>
                       <h3 class="mb-1 fw-bold">{{ 10 }} DH</h3>
                       <p class="mb-0">Cheque Encaissé</p>
                     </div>
                     <span class="avatar me-4">
-                      <span class="avatar-initial bg-label-success rounded"
-                        ><i class="ti ti-coins"></i
-                      ></span>
+                      <span class="avatar-initial bg-label-success rounded"><i class="ti ti-coins"></i></span>
                     </span>
                   </div>
                   <hr class="d-none d-sm-block d-lg-none" />
@@ -71,9 +63,7 @@ onMounted(async () => {
                       <p class="mb-0">Cheque Non Encaissé</p>
                     </div>
                     <span class="avatar me-4">
-                      <span class="avatar-initial bg-label-info rounded"
-                        ><i class="ti ti-coins"></i
-                      ></span>
+                      <span class="avatar-initial bg-label-info rounded"><i class="ti ti-coins"></i></span>
                     </span>
                   </div>
                 </div>

@@ -2,10 +2,10 @@ import { useFinanceStore } from '@/store';
 import { api } from '@/utils';
 
 
- async function get() {
+async function get() {
     try {
         const FinanceStore = useFinanceStore();
-                const response = await api().get('facture/get');
+        const response = await api().get('facture/get');
         if (response.status == 200) {
             FinanceStore.setFacture(response.data);
             return response.data;
@@ -18,7 +18,7 @@ import { api } from '@/utils';
 }
 
 
- async function insert(req) {
+async function insert(req) {
     try {
         const FinanceStore = useFinanceStore();
         const response = await api().post('facture/insert', req);
@@ -34,10 +34,10 @@ import { api } from '@/utils';
     }
 }
 
- async function update( req) {
+async function update(req) {
     try {
         // const FactureStore = useFactureStore();
-        const response = await api().post('facture/update' , req);
+        const response = await api().post('facture/update', req);
         if (response.status == 200) {
             console.log(response.data);
             // let facture = FactureStore.facture.find((item) => item.id === id);
@@ -46,7 +46,7 @@ import { api } from '@/utils';
             // }
             return response.data;
         } else {
-            
+
         }
     } catch (error) {
         console.log(error);
@@ -55,13 +55,13 @@ import { api } from '@/utils';
     }
 }
 
- async function Delete(id) {
+async function Delete(id) {
     try {
-       
+
         const response = await api().delete('facture/delete/' + id);
         if (response.status == 200) {
             console.log(response.data);
-            
+
             return response.data;
         }
     } catch (error) {
@@ -71,7 +71,7 @@ import { api } from '@/utils';
     }
 }
 
- async function getCompsByProjectId(id) {
+async function getCompsByProjectId(id) {
     try {
         const FinanceStore = useFinanceStore();
         const response = await api().get('facture/comp/getCompsByProjectId/' + id);
@@ -83,16 +83,16 @@ import { api } from '@/utils';
         console.log(error);
         return Promise.reject(error);
 
-        
+
     }
 }
 
- async function insertComp(req) {
+async function insertComp(req) {
     try {
-        
+
         const response = await api().post('facture/comp/store-attachement', req);
         if (response.status == 200) {
-            
+
             console.log(response.data);
             return response.data;
         }
@@ -106,7 +106,7 @@ async function getCaution() {
     try {
         const FinanceStore = useFinanceStore();
 
-                const response = await api().get('cautions/index');
+        const response = await api().get('cautions/index');
         if (response.status == 200) {
             FinanceStore.SetCaution(response.data);
             return response.data;
@@ -117,7 +117,7 @@ async function getCaution() {
 
     }
 }
- async function recover(id) {
+async function recover(id) {
     try {
         const FinanceStore = useFinanceStore();
 
@@ -129,7 +129,7 @@ async function getCaution() {
             if (caution) {
                 Object.assign(caution, response.data.caution);
             }
-        } 
+        }
     } catch (error) {
         console.log(error);
     }
@@ -138,7 +138,7 @@ async function getCheque() {
     try {
         const FinanceStore = useFinanceStore();
 
-                const response = await api().get('cheque');
+        const response = await api().get('cheque');
         if (response.status == 200) {
             FinanceStore.SetCheque(response.data);
             return response.data;
@@ -149,9 +149,9 @@ async function getCheque() {
 
     }
 }
- async function encaisser(id) {
+async function encaisser(id) {
     try {
-                const FinanceStore = useFinanceStore();
+        const FinanceStore = useFinanceStore();
 
 
         const response = await api().put('cheque/encaisser/' + id);
@@ -160,7 +160,7 @@ async function getCheque() {
             if (cheque) {
                 Object.assign(cheque, response.data.cheque);
             }
-        } 
+        }
     } catch (error) {
         console.log(error);
     }
