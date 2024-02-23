@@ -90,6 +90,13 @@ const formatRIB = (number: string | undefined | null) => {
 };
 
 
+const limitText = (text: string, limit: number) => {
+    if (text.length > limit) {
+        return text.substring(0, limit) + '...';
+    }
+    return text;
+};
+
 export const formater = {
     number,
     date,
@@ -98,5 +105,6 @@ export const formater = {
     dateTime,
     phoneNumber,
     startOfDay,
-    formatRIB
+    formatRIB,
+    limitText
 };

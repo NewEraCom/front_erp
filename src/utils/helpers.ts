@@ -1,4 +1,4 @@
-import router from '../router';
+import router from '@/router';
 import { sideBar } from './sidebar_items';
 import { env } from './env';
 
@@ -24,16 +24,7 @@ const setSavedUser = (res: unknown): void => {
 
 
 const redirectBasedOnRole = (role: string): void => {
-	switch (role) {
-		case roles.RH:
-			router.push({ name: initialDashboard(role) });
-			break;
-		case roles.CF:
-			router.push({ name: initialDashboard(role) });
-			break;
-		default:
-			router.push({ name: initialDashboard(role) });
-	}
+	router.push({ name: initialDashboard(role) });
 };
 
 const roles = {
@@ -44,7 +35,7 @@ const roles = {
 	LOGISTICS: 'Responsable logistique',
 	RH: 'Responsable ressources humaines',
 	DG: 'Directeur general',
-	DS: 'Directrice Support',
+	DS: 'Directeur support',
 	RAP: 'Responsable d\'avant projet',
 	MAGASINIER: 'Magasinier'
 };
@@ -54,11 +45,16 @@ const initialDashboard = (role: string): string => {
 	switch (role) {
 		case roles.RH:
 			return 'DashboardRH';
+		case roles.SALES:
+			return 'DashboardSales';
+		case roles.LOGISTICS:
+			return 'DashboardLogistics';
 		case roles.CF:
 			console.log('CF');
 			return 'DashboardPM';
+		case roles.DS:
 		case roles.DG:
-			return 'DashboardPM';
+			return 'DashboardAdmin';
 		default:
 			return '404';
 	}
@@ -69,10 +65,16 @@ const returnSideBarItems = (): any => {
 	switch (role) {
 		case roles.DG:
 			return sideBar.DGMenu;
+		case roles.SALES:
+			return sideBar.SalesMenu;
+		case roles.LOGISTICS:
+			return sideBar.LogisticsMenu;
 		case roles.RH:
 			return sideBar.RHMenu;
 		case roles.CF:
 			return sideBar.CFMenu;
+		case roles.DS:
+			return sideBar.SupportMenu;
 		default:
 			return [];
 	}
@@ -94,12 +96,14 @@ const returnBadge = (item: string): string[] => {
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
 
-		case 'Conge Maladie':
+		case 'Maladie':
 			return ['badge bg-label-warning', 'Congé Maladie'];
 		case 'Congé':
 			return ['badge bg-label-success', 'Congé'];
 		case 'pending':
 			return ['badge bg-label-warning', 'En attente'];
+		case 'on going':
+			return ['badge bg-label-info', 'En cours'];
 		case 'done':
 			return ['badge bg-label-success', 'Traitée'];
 		case 'delivered':
@@ -164,7 +168,7 @@ import AL_AKHDAR_BANK from '@/assets/img/brands/AL-AKHDAR-BANK.png';
 import UMNIA_BANK from '@/assets/img/brands/UMNIA_BANK.png';
 import NoLogo from '@/assets/img/brands/NoLogo.png';
 
-function bankName(bank:String) {
+function bankName(bank: String) {
 	switch (bank) {
 		case 'BMCE BANK':
 			return [BMCE, 'BMCE'];
@@ -201,8 +205,8 @@ function bankName(bank:String) {
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
- function baseUrl() {
-    return env.VITE_UPLOADS_URL;
+function baseUrl() {
+	return env.VITE_UPLOADS_URL;
 }
 
 

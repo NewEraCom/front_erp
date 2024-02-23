@@ -82,6 +82,9 @@ export const useRhStore = defineStore('RhStore', {
                 sick: data.conge.filter((e: any) => e.type === 'Conge Maladie').length,
             };
         },
+        pushLeave(data: any) {
+            this.leaves.data.push(data);
+        },
         setRecrutement(data: any) {
             this.recrutement.data = data;
             this.recrutement.stats = {
@@ -102,14 +105,14 @@ export const useRhStore = defineStore('RhStore', {
         setSalaryAdvances(data: any) {
             this.salaryAdvances.data = data;
             this.salaryAdvances.stats = {
-                total: data.reduce((accumulator: number, current: any) => {
+                total: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
                     if (current.status === 'approved') {
                         total = accumulator + Number(current.avance);
                     }
                     return total;
                 }, 0),
-                remaining: data.reduce((accumulator: number, current: any) => {
+                remaining: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
                     if (current.status === 'approved') {
                         total = accumulator + Number(current.restant);
@@ -117,6 +120,27 @@ export const useRhStore = defineStore('RhStore', {
                     return total;
                 }, 0),
             };
+            console.log(this.salaryAdvances.stats);
+        },
+        pushSalaryAdvance(data: any) {
+            this.salaryAdvances.data.push(data);
+            this.salaryAdvances.stats = {
+                total: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.avance);
+                    }
+                    return total;
+                }, 0),
+                remaining: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.restant);
+                    }
+                    return total;
+                }, 0),
+            };
+
         },
         setPointages(data: any) {
             this.pointages = data;

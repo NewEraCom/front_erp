@@ -15,6 +15,7 @@ type ActionButton = {
 const props = defineProps<{
     items: Item[],
     headers: Array<{ text: string, value: string, isComplex?: boolean, type?: string }>,
+    buttonType: string,
     pageSize: number,
     actionsConfig: ActionButton[];
 }>();
@@ -103,8 +104,8 @@ const visiblePageNumbers = computed(() => {
                 </tr>
             </thead>
             <tbody v-if="paginatedItems.length > 0">
-                <tr v-for="item in  paginatedItems " :key="item.id">
-                    <template v-for="(header, index) in  headers " :key="header.value">
+                <tr v-for="item in   paginatedItems  " :key="item.id">
+                    <template v-for="(header, index) in   headers  " :key="header.value">
                         <td v-if="header.isComplex && header.type === 'employee'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
                             <router-link :to="{ name: 'ProfileEmployee', params: { id: item.id } }">
@@ -192,15 +193,34 @@ const visiblePageNumbers = computed(() => {
                                         {{ helpers.calculateDifference(item, item.employe.working_hours)[0] }}
                                     </span>
                                 </span>
+                                <span v-if="header.type === 'workingHourCustom'">
+                                    <span class="fw-bold"
+                                        :class="helpers.calculateDifference(item, item.employe.working_hours)[2]">
+                                        {{ helpers.calculateDifference(item, item.employe.working_hours)[0] }}
+                                    </span>
+                                </span>
                             </small>
                         </td>
                     </template>
-                    <td class="text-center">
+
+                    <td v-if="buttonType == 'simple'" class="text-center">
                         <!-- Render action buttons based on actionsConfig -->
                         <button v-for=" action  in  actionsConfig " :key="action.icon" class="btn me-2"
                             :class="action.class" @click="action.onClick(item)">
                             <i :class="action.icon"></i>
                         </button>
+                    </td>
+                    <td v-else class="text-center">
+                        <div class="dropdown">
+                            <button class="btn p-0" type="button" id="earningReportsId" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="ti ti-dots-vertical ti-sm text-muted"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId" style="">
+                                <a class="dropdown-item" href="javascript:void(0);">Modifier</a>
+                                <a class="dropdown-item text-danger" href="javascript:void(0);">Supprimer</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -218,7 +238,7 @@ const visiblePageNumbers = computed(() => {
                         <i class="ti ti-chevrons-left"></i>
                     </a>
                 </li>
-                <li class="page-item" v-for=" page in visiblePageNumbers " :key="page"
+                <li class="page-item" v-for="  page  in  visiblePageNumbers  " :key="page"
                     :class="{ active: page === currentPage }">
                     <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                 </li>

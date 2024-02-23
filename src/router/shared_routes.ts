@@ -34,5 +34,14 @@ export const sharedRoutes = [
             title: 'Coursier',
             requiresAuth: true
         },
-    }
+    },
+    {
+        path: '/dashboard-admin',
+        name: 'DashboardAdmin',
+        component: () => import('@/views/Shared/MainView.vue'),
+        meta: {
+            title: 'Dashboard',
+            requiresAuth: true
+        },
+    },
 ];

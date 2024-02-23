@@ -151,6 +151,7 @@ const getWorkers = async () => {
     }
 };
 
+// ----------------- POST -----------------
 
 const addPointage = async (data: any) => {
     try {
@@ -167,9 +168,38 @@ const addPointage = async (data: any) => {
     }
 };
 
+const addLeave = async (data: any) => {
+    try {
+        const response = await api().post('/rh/add-conge', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushLeave(response.data.conge);
+            return;
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
+const addSalaryAdvance = async (data: any) => {
+    try {
+        const response = await api().post('/pay/avance/insert', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushSalaryAdvance(response.data.avance);
+            return;
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 
 const deleteEmployee = async () => {
-    console.log($('#deleteId').val());
 };
 
 export default {
@@ -184,5 +214,7 @@ export default {
     getWorkers,
     deleteEmployee,
     addPointage,
-    getEmployeeById
+    getEmployeeById,
+    addLeave,
+    addSalaryAdvance
 };

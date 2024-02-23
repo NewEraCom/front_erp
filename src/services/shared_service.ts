@@ -4,6 +4,8 @@ import { useSharedStore } from '@/store';
 const createEvent = async (data: any) => {
     try {
         const response = await api().post('/events/create', data);
+        const sharedStore = useSharedStore();
+        sharedStore.addEvents(response.data.event);
         return response;
     } catch (error) {
         return Promise.reject(error);

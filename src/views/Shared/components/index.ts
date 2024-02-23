@@ -1,6 +1,7 @@
-import ModalReserve from "./ModalReserve.vue";
-
+import ModalReserve from './ModalReserve.vue';
+import TopBarSupport from './TopBarSupport.vue';
 
 export {
-    ModalReserve
+    ModalReserve,
+    TopBarSupport
 };

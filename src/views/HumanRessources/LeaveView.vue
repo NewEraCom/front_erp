@@ -56,7 +56,7 @@ onMounted(async () => {
               </button>
             </div>
             <div v-if="leaves.data != null" class="card-body border-top pt-4">
-              <LeavesTable :leaves="leaves.data" />
+              <LeavesTable :leaves="leaves.data"  />
             </div>
           </div>
         </div>
