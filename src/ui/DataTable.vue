@@ -181,6 +181,9 @@ const visiblePageNumbers = computed(() => {
                                 <span v-if="header.type === 'time'">
                                     {{ formater.time(String(item[header.value])) }}
                                 </span>
+                                <span v-if="header.type === 'created_by'">
+                                    {{ item.created_by.employee.first_name + ' ' + item.created_by.employee.last_name }}
+                                </span>
                                 <span v-if="header.type === 'phone'">
                                     {{ formater.phoneNumber(item[header.value]) }}
                                 </span>

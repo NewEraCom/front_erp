@@ -1,3 +1,4 @@
 import CardOne from './CardOne.vue';
+import CardTwo from './CardTwo.vue';
 
-export { CardOne };
+export { CardOne, CardTwo };

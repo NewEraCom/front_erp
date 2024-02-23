@@ -44,4 +44,13 @@ export const sharedRoutes = [
             requiresAuth: true
         },
     },
+    {
+        path: '/leave-request',
+        name: 'LeaveRequest',
+        component: () => import('@/views/Shared/LeaveRequestView.vue'),
+        meta: {
+            title: 'Demande de congé',
+            requiresAuth: true
+        },
+    },
 ];

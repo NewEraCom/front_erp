@@ -26,9 +26,9 @@ const sharedMenu2 = [
     {
         id: 9,
         name: 'Demande de congé',
-        route: '/dashboard-sales',
+        route: '/leave-request',
         icon: 'ti ti-plane-inflight',
-        path: 'DashboardSales'
+        path: 'LeaveRequest'
     },
     {
         id: 10,
@@ -210,9 +210,9 @@ const SalesMenu = [
     {
         id: 2,
         name: 'Demande d\'achat',
-        route: '/dashboard-sales',
+        route: '/purchase-order',
         icon: 'ti ti-shopping-cart',
-        path: 'DashboardSales'
+        path: 'PurchaseOrder'
     },
     {
         id: 3,
