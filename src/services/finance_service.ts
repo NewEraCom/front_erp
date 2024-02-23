@@ -102,6 +102,69 @@ import { api } from '@/utils';
 
     }
 }
+async function getCaution() {
+    try {
+        const FinanceStore = useFinanceStore();
+
+                const response = await api().get('cautions/index');
+        if (response.status == 200) {
+            FinanceStore.SetCaution(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+ async function recover(id) {
+    try {
+        const FinanceStore = useFinanceStore();
+
+
+
+        const response = await api().post('cautions/recover/' + id);
+        if (response.status == 200) {
+            let caution = FinanceStore.caution.find((item) => item.id === id);
+            if (caution) {
+                Object.assign(caution, response.data.caution);
+            }
+        } 
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function getCheque() {
+    try {
+        const FinanceStore = useFinanceStore();
+
+                const response = await api().get('cheque');
+        if (response.status == 200) {
+            FinanceStore.SetCheque(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+ async function encaisser(id) {
+    try {
+                const FinanceStore = useFinanceStore();
+
+
+        const response = await api().put('cheque/encaisser/' + id);
+        if (response.status == 200) {
+            let cheque = FinanceStore.cheque.find((item) => item.id === id);
+            if (cheque) {
+                Object.assign(cheque, response.data.cheque);
+            }
+        } 
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export default {
     get,
@@ -109,5 +172,9 @@ export default {
     update,
     Delete,
     getCompsByProjectId,
-    insertComp
+    insertComp,
+    getCaution,
+    recover,
+    getCheque,
+    encaisser
 }

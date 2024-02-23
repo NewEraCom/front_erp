@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { cautionService } from '@/services';
+import { financeService } from '@/services';
 
 const props = defineProps({
     cautions: {
@@ -22,7 +22,7 @@ const headers = [
 const actionsConfig = [
     {
         icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
-            cautionService.recover(item.id)
+            financeService.recover(item.id)
         },
         condition: (item:any) => item.status != 1
     },

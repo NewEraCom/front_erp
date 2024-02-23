@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { CardOne } from '@/ui';
-import {useCautionStore} from '@/store';
-import { cautionService } from '@/services';
+import { financeService } from '@/services';
+import {useFinanceStore} from '@/store';
 import  {CautionTable}  from './components';
 
+const FinanceStore = useFinanceStore();
 
 
-const CautionStore = useCautionStore();
 
-const stats = ref(computed(()=>CautionStore.stats))
 
-const caution = ref(computed(() => CautionStore.caution));
+
+const stats = ref(computed(()=>FinanceStore.stats))
+
+const caution = ref(computed(() => FinanceStore.caution));
 
 onMounted(async () => {
-    await cautionService.get();        
+    await financeService.getCaution();        
 });
 const statsObject = computed(() => {
-    const statsArray = CautionStore.stats;
+    const statsArray = FinanceStore.stats;
     let tempStatsObject = {};
     for(let stat of statsArray) {
         tempStatsObject[stat.type] = stat.total;

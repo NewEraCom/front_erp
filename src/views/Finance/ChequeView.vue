@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { CardOne } from '@/ui'
-import { useChequeStore } from '@/store'
-import { chequeService } from '@/services'
-import { ChequeTable } from './components'
 
-const ChequeStore = useChequeStore()
+import { ChequeTable } from './components'
+import { financeService } from '@/services';
+import {useFinanceStore} from '@/store';
+
+const FinanceStore = useFinanceStore();
+
+
 
 const stats = ref(true)
 
-const cheque = ref(computed(() => ChequeStore.cheque))
+const cheque = ref(computed(() => FinanceStore.cheque))
 
 onMounted(async () => {
-  await chequeService.get()
+  await financeService.getCheque()
 })
 </script>
 
