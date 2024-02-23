@@ -23,4 +23,12 @@ export const financeRoutes = [
             title: 'Caution'
         }
     },
+    {
+        path: '/fn/cheque',
+        name: 'FnCheque',
+        component: () => import('../views/Finance/ChequeView.vue'),
+        meta: {
+            title: 'Cheque'
+        }
+    },
 ];

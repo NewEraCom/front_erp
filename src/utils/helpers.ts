@@ -117,6 +117,10 @@ const returnBadge = (item: any): any[] => {
 			return ['badge bg-label-danger', 'annule'];
 		case 'en attente':
 			return ['badge bg-label-warning', 'En Attente'];
+		case 'non encaissé':
+			return ['badge bg-label-warning', 'Non Encaissé'];
+		case 'encaissé':
+		    return ['badge bg-label-success', 'Encaissé'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}

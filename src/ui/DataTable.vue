@@ -194,11 +194,21 @@ const visiblePageNumbers = computed(() => {
                                 </span>
                             </small>
                         </td>
+                        <td v-if="header.isComplex && header.type === 'tier'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <small class="fw-bold text-muted">Code : {{ item.tier.commercial_name }}</small>
+                        </td>
+                        <td v-if="header.isComplex && header.type === 'carnet'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <h6 class="mb-1 fw-bold">{{ item.carnet.numero }}</h6>
+                            <small class="fw-bold text-muted">RIB : {{ item.carnet.compte_bancaire.rib }}</small>
+                        </td>
                     </template>
                     <td class="text-center">
                         <!-- Render action buttons based on actionsConfig -->
-                        <button v-for=" action  in  actionsConfig " :key="action.icon" class="btn me-2"
-                            :class="action.class" @click="action.onClick(item)">
+                        <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
+                            :class="action.class" @click="action.onClick(item)" >
                             <i :class="action.icon"></i>
                         </button>
                     </td>

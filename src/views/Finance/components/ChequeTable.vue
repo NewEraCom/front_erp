@@ -2,27 +2,30 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { cautionService } from '@/services';
+import { chequeService } from '@/services';
 
 const props = defineProps({
-    cautions: {
+    cheques: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Project' ,isComplex: true, type: 'preproject'},
-    { text: 'Description', value: 'description', type: 'text' },
-    { text: 'date de recuperation', value: 'date_recuperation', type: 'date' },
-    { text: 'Montant',  value: 'amount', type: 'currency'},
-    { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Numero' ,value: 'numero', type: 'text'},
+    { text: 'Montant',  value: 'montant', type: 'currency'},
+    { text: 'date d\'emission', value: 'date_emission', type: 'date' },
+    { text: 'date d\'encaisemment', value: 'date_encaissement', type: 'date' },
+    { text: 'Remarque', value: 'remarque', type: 'text' },
+    // { text: 'Carnet', isComplex: true, type: 'carnet' },
+    { text: 'Tier', isComplex: true, type: 'tier' },
+    { text: 'Status', value: 'statut', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
         icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
-            cautionService.recover(item.id)
+            chequeService.encaisser(item.id)
         },
         condition: (item:any) => item.status != 1
     },
@@ -32,7 +35,7 @@ const actionsConfig = [
 
 
 
-const filteredData = ref(props.cautions);
+const filteredData = ref(props.cheques);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -41,12 +44,12 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.cautions.filter((item: any) => {
-        const combinedFields = `${item.status} ${item.amount} ${item.description} ${item.date_recuperation} ${item.status} ${item.pre_project.code}`.toLowerCase();
+    filteredData.value = props.cheques.filter((item: any) => {
+        const combinedFields = `${item.status} ${item.montant} ${item.remarque} ${item.date_emission} ${item.status} ${item.date_encaissement}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_recuperation) >= formater.startOfDay(startQuery.value)) &&
-            (!endQuery.value || formater.startOfDay(item.date_recuperation) <= formater.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_emission) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_emission) <= formater.startOfDay(endQuery.value));
     });
 };
 

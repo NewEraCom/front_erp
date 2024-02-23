@@ -31,19 +31,19 @@ const statsObject = computed(() => {
       <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Caution</span> </h5>
       <div v-if="stats" class="row">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-          <CardOne title="Caution Definitif Recuperer" :count="String(statsObject.def_in)" color="bg-label-warning" icon="ti-bolt"
+          <CardOne title="Caution Definitif Recuperer" :count="String(statsObject.def_in) +' MAD'" color="bg-label-warning" icon="ti-bolt"
             card-color="card-border-shadow-warning" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-          <CardOne title="Caution Definitif Non Recuperer" :count="String(statsObject.def_out)" color="bg-label-success" icon="ti-bolt"
+          <CardOne title="Caution Definitif Non Recuperer" :count="String(statsObject.def_out) +' MAD'" color="bg-label-success" icon="ti-bolt"
             card-color="card-border-shadow-success" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-          <CardOne title="Caution Definitif provisoire" :count="String(statsObject.in)" color="bg-label-info" icon="ti-bolt"
+          <CardOne title="Caution Definitif provisoire" :count="String(statsObject.in) +' MAD'" color="bg-label-info" icon="ti-bolt"
             card-color="card-border-shadow-info" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-          <CardOne title="Caution Definitif Non provisoir" :count="String(statsObject.out)" color="bg-label-danger"
+          <CardOne title="Caution Definitif Non provisoir" :count="String(statsObject.out) +' MAD'" color="bg-label-danger"
             icon="ti-bolt" card-color="card-border-shadow-danger" />
         </div>
       </div>
