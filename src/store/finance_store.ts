@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 
 
-export const useFactureStore = defineStore('FactureStore', {
+export const useFinanceStore = defineStore('FinanceStore', {
     state: () => ({
         facture: null,
         stats: null,

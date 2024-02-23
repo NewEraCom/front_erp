@@ -79,7 +79,7 @@ const returnSideBarItems = (): any => {
 };
 
 
-const returnBadge = (item: string): string[] => {
+const returnBadge = (item: any): any[] => {
 	switch (item) {
 		case 'CDD':
 			return ['badge bg-warning', 'CDD'];
@@ -93,7 +93,6 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
-
 		case 'Conge Maladie':
 			return ['badge bg-label-warning', 'Congé Maladie'];
 		case 'Congé':

@@ -2,45 +2,36 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import router from '@/router';
-import {useFinanceStore} from '@/store'
-const FinanceStore = useFinanceStore();
+import { cautionService } from '@/services';
+
 const props = defineProps({
-    factures: {
+    cautions: {
         type: Array,
         required: true,
     },
 });
-const Preview = (id:any) => {
-    let data = props.factures;
-    let facture = data.find((facture) => facture.id === id);
-    FinanceStore.Print(facture)
-    if(FinanceStore.print_articles && FinanceStore.print_facture){
-        router.push('/fn/facture/details');
 
-    }
-    // $(`#preview-facture`).modal('show');
-};
 const headers = [
-    { text: 'Numero', value: 'numero', type: 'text' },
-    { text: 'Type', value: 'type', type: 'text' },
-    { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
-    { text: 'Project',  value: 'code',isComplex: true, type: 'project'},
+    { text: 'Project' ,isComplex: true, type: 'preproject'},
+    { text: 'Description', value: 'description', type: 'text' },
+    { text: 'date de recuperation', value: 'date_recuperation', type: 'date' },
+    { text: 'Montant',  value: 'amount', type: 'currency'},
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item:any) => {
-            Preview(item.id)
+        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
+            cautionService.recover(item.id)
         }
     },
+    
 ];
 
 
 
 
-const filteredData = ref(props.factures);
+const filteredData = ref(props.cautions);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -49,12 +40,12 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.factures.filter((item: any) => {
-        const combinedFields = `${item.numero} ${item.type} ${item.date_paiement} ${item.status} ${item.project.code}`.toLowerCase();
+    filteredData.value = props.cautions.filter((item: any) => {
+        const combinedFields = `${item.status} ${item.amount} ${item.description} ${item.date_recuperation} ${item.status} ${item.pre_project.code}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_paiement) >= formater.startOfDay(startQuery.value)) &&
-            (!endQuery.value || formater.startOfDay(item.date_paiement) <= formater.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_recuperation) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_recuperation) <= formater.startOfDay(endQuery.value));
     });
 };
 

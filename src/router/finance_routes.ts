@@ -14,5 +14,13 @@ export const financeRoutes = [
         meta: {
             title: 'Finance Details'
         }
-    }
+    },
+    {
+        path: '/fn/caution',
+        name: 'FnCaution',
+        component: () => import('../views/Finance/CautionView.vue'),
+        meta: {
+            title: 'Caution'
+        }
+    },
 ];

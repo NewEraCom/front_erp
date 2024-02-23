@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import { Modal } from '@/ui';
-import { useFactureStore } from '@/store';
+import { useFinanceStore } from '@/store';
 import html2pdf from 'html2pdf.js';
 // import {baseUrl} from '@/utils';
 import {  helpers } from '@/utils';
@@ -10,7 +10,7 @@ import {  helpers } from '@/utils';
 const getFileUrl = (attachment) => {
     return helpers.baseUrl() + `${attachment}`;
 };
-const FactureStore = useFactureStore();
+const FinanceStore = useFinanceStore();
 const props = defineProps({
     id: {
         type: String,
@@ -27,8 +27,8 @@ const addOneMonth = (date) => {
     return newDate;
 };
 
-const facture = ref(computed(() => FactureStore.print_facture));
-const articles = ref(computed(() => FactureStore.print_articles));
+const facture = ref(computed(() => FinanceStore.print_facture));
+const articles = ref(computed(() => FinanceStore.print_articles));
 
 const comment = ref('comment');
 const objet = ref('test');

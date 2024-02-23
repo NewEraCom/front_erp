@@ -1,13 +1,13 @@
-import { useFactureStore } from '@/store';
+import { useFinanceStore } from '@/store';
 import { api } from '@/utils';
 
 
  async function get() {
     try {
-        const FactureStore = useFactureStore();
-        const response = await api().get('facture/get');
+        const FinanceStore = useFinanceStore();
+                const response = await api().get('facture/get');
         if (response.status == 200) {
-            FactureStore.setFacture(response.data);
+            FinanceStore.setFacture(response.data);
             return response.data;
         }
     } catch (error) {
@@ -20,10 +20,10 @@ import { api } from '@/utils';
 
  async function insert(req) {
     try {
-        const FactureStore = useFactureStore();
+        const FinanceStore = useFinanceStore();
         const response = await api().post('facture/insert', req);
         if (response.status == 200) {
-            FactureStore.facture.push(response.data.facture);
+            FinanceStore.facture.push(response.data.facture);
             console.log(response.data);
             return response.data;
         }
@@ -73,10 +73,10 @@ import { api } from '@/utils';
 
  async function getCompsByProjectId(id) {
     try {
-        const FactureStore = useFactureStore();
+        const FinanceStore = useFinanceStore();
         const response = await api().get('facture/comp/getCompsByProjectId/' + id);
         if (response.status === 200) {
-            FactureStore.setComposants(response.data.factureComposent);
+            FinanceStore.setComposants(response.data.factureComposent);
             return response.data.factureComposent;
         }
     } catch (error) {

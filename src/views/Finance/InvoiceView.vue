@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { CardOne } from '@/ui';
-import {useFactureStore} from '@/store';
-import { factureService } from '@/services';
+import {useFinanceStore} from '@/store';
+import { financeService } from '@/services';
 import  {FactureTable}  from './components';
 
 
 const Prevmodal = "preview-facture"
-const FactureStore = useFactureStore();
+const FinanceStore = useFinanceStore();
 const stats = ref(true)
 
-const facture = ref(computed(() => FactureStore.facture));
+const facture = ref(computed(() => FinanceStore.facture));
 
 onMounted(async () => {
-    await factureService.get();    
+    await financeService.get();    
 });
 
 </script>
