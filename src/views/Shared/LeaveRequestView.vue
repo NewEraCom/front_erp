@@ -9,7 +9,6 @@ const rhStore = useRhStore();
 
 const user = ref(computed(() => rhStore.employee));
 
-
 let totalApprovedDays = ref(0);
 let totalSickleaves = ref(0);
 
@@ -35,15 +34,15 @@ onUnmounted(() => {
         <div v-if="user" class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
                 <CardTwo title="Solde de congé" :count="(user.solde_conge ?? 0) + ' Jrs'" color="bg-label-primary"
-                    icon="ti ti-bolt" cardColor="card-border-shadow-primary" />
+                    icon="ti ti-plane-inflight" card-color=" card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
                 <CardTwo title="Solde congé consommé" :count="(totalApprovedDays) + ' Jrs'" color="bg-label-success"
-                    icon="ti ti-bolt" cardColor="card-border-shadow-success" />
+                    icon="ti ti-plane-inflight" card-color="card-border-shadow-success" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
                 <CardTwo title="Congé maladie" :count="(totalSickleaves) + ' Jrs'" color="bg-label-warning"
-                    icon="ti ti-bolt" cardColor="card-border-shadow-warning" />
+                    icon="ti ti-plane-inflight" card-color="card-border-shadow-warning" />
             </div>
         </div>
         <div class="row mt-4">

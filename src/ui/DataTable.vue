@@ -166,13 +166,22 @@ const visiblePageNumbers = computed(() => {
                                     {{ formater.date(item[header.value]) }}
                                 </span>
                                 <span v-if="header.type === 'text'">
-                                    {{ item[header.value] }}
+                                    {{ formater.limitText(String(item[header.value]), 40) }}
                                 </span>
                                 <span v-if="header.type === 'project'">
                                     {{ item.project.code }}
                                 </span>
+                                <span v-if="header.type === 'preproject'">
+                                    {{ item.preproject.project_code }}
+                                </span>
                                 <span v-if="header.type === 'currency'">
                                     {{ formater.number(item[header.value]) }} MAD
+                                </span>
+                                <span v-if="header.type === 'km'">
+                                    {{ formater.number(item[header.value]) }} KM
+                                </span>
+                                <span v-if="header.type === 'number'">
+                                    {{ formater.number(item[header.value]) }}
                                 </span>
                                 <span v-if="header.type === 'days'">
                                     {{ item[header.value] > 1 ? item[header.value] + ' Jours' : item[header.value] + ' Jour'
@@ -184,11 +193,38 @@ const visiblePageNumbers = computed(() => {
                                 <span v-if="header.type === 'created_by'">
                                     {{ item.created_by.employee.first_name + ' ' + item.created_by.employee.last_name }}
                                 </span>
+                                <span v-if="header.type === 'achat'">
+                                    N° {{ item.achat.n_order }}
+                                </span>
+                                <span v-if="header.type === 'bdc'">
+                                    N° {{ item.bon_commande.num }}
+                                </span>
                                 <span v-if="header.type === 'phone'">
                                     {{ formater.phoneNumber(item[header.value]) }}
                                 </span>
+                                <span v-if="header.type === 'facture'">
+                                    <small v-if="item[header.value] == '-'">Aucun facture</small>
+                                    <button v-else class="btn btn-label-primary btn-sm">
+                                        <i class="ti ti-download me-2"></i> Télécharger la facture
+                                    </button>
+                                </span>
+                                <span v-if="header.type === 'attachement'">
+                                    <small v-if="item[header.value] == '-'">Aucun Attachement</small>
+                                    <button v-else class="btn btn-label-primary btn-sm">
+                                        <i class="ti ti-download me-2"></i> Télécharger l'attachement
+                                    </button>
+                                </span>
+                                <span v-if="header.type === 'stock'">
+                                    <span :class="helpers.returnStockAlert(item[header.value], item.alert)[0]">
+                                        {{ helpers.returnStockAlert(item[header.value], item.alert)[1] }}
+                                    </span>
+                                </span>
                                 <span v-if="header.type === 'soustraitant'">
-                                    {{ formater.phoneNumber(item.soustraitant.raison_social) }}
+                                    {{ item[header.value].raison_social }}
+                                </span>
+
+                                <span v-if="header.type === 'soustraitant_facture'">
+                                    {{ item.bon_commande.soustraitant.raison_social }}
                                 </span>
                                 <span v-if="header.type === 'workingHour'">
                                     <span class="fw-bold"
@@ -201,6 +237,33 @@ const visiblePageNumbers = computed(() => {
                                         :class="helpers.calculateDifference(item, item.employe.working_hours)[2]">
                                         {{ helpers.calculateDifference(item, item.employe.working_hours)[0] }}
                                     </span>
+                                </span>
+                                <span v-if="header.type === 'caisse'">
+                                    <span v-if="item.operation == 'entree'">
+                                        <h6 class="mb-1 fw-bold">{{ item.emetteur }}</h6>
+                                        <small>Date de l'opération : {{ formater.date(item.created_at) }}</small>
+                                    </span>
+                                    <span v-else>
+                                        <h6 class="mb-1 fw-bold">{{ item.recepteur.first_name + ' ' +
+                                            item.recepteur.last_name }}</h6>
+                                        <small>Matricule : NEC-{{ item.recepteur.matricule }}</small>
+                                    </span>
+                                </span>
+                                <span v-if="header.type == 'project_manager'">
+                                    {{ item.preproject.project_manager.employee.first_name + ' ' +
+                                        item.preproject.project_manager.employee.last_name
+                                    }}
+                                </span>
+                                <span v-if="header.type == 'client'">
+                                    <router-link to="/">
+                                        <h6 class="mb-1 fw-bold text-primary">{{ formater.limitText(item.raison_social, 30)
+                                        }}
+                                        </h6>
+                                    </router-link>
+                                    <small class="fw-bold text-muted">Numéro RC : {{ item.num_rc ?? 'N/A' }}</small>
+                                </span>
+                                <span v-if="header.type === 'test'">
+                                    {{ item }}
                                 </span>
                             </small>
                         </td>

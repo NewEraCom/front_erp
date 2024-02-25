@@ -11,14 +11,14 @@ defineProps({
 </script>
 
 <template>
-    <div class="card" :class="cardColor">
+    <div class="card h-100" :class="cardColor">
         <div class="card-body">
             <div class="d-flex align-items-center justify-content-between">
                 <div class="content-left">
-                    <h4 class="mb-0">{{ count }}</h4>
-                    <small>{{ title }}</small>
+                    <h4 class="mb-0 fw-bold">{{ count }}</h4>
+                    <small class="fw-bold">{{ title }}</small>
                 </div>
-                <span class="badge bg-label-primary rounded-circle p-2">
+                <span class="badge rounded-circle p-2" :class="color">
                     <i class="ti" :class="icon"></i>
                 </span>
             </div>

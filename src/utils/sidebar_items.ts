@@ -33,16 +33,16 @@ const sharedMenu2 = [
     {
         id: 10,
         name: 'Demande RH',
-        route: '/dashboard-sales',
+        route: '/rh-request',
         icon: 'ti ti-file-export',
-        path: 'DashboardSales'
+        path: 'RhRequest'
     },
     {
         id: 11,
         name: 'Demande de recrutement',
-        route: '/dashboard-sales',
+        route: '/recruitment-request',
         icon: 'ti ti-search',
-        path: 'DashboardSales'
+        path: 'RecruitmentRequest'
     },
 ];
 
@@ -217,44 +217,62 @@ const SalesMenu = [
     {
         id: 3,
         name: 'Demande d\'exécution',
-        route: '/dashboard-sales',
+        route: '/execution-request',
         icon: 'ti ti-settings',
-        path: 'DashboardSales'
+        path: 'ExecutionRequest'
     },
     {
         id: 4,
         name: 'Bons de commande',
-        route: '/dashboard-sales',
+        route: '/bon-de-commande',
         icon: 'ti ti-file-3d',
-        path: 'DashboardSales'
+        path: 'BonDeCommande'
     },
     {
         id: 5,
         name: 'Factures',
-        route: '/dashboard-sales',
+        route: '/invoices-sales',
         icon: 'ti ti-file-invoice',
-        path: 'DashboardSales'
+        path: 'InvoicesSales'
     },
     {
         id: 6,
         name: 'Fournisseur',
-        route: '/dashboard-sales',
+        route: '/fournisseur',
         icon: 'ti ti-building-store',
-        path: 'DashboardSales'
+        path: 'Fournisseur'
     },
     {
         id: 7,
-        name: 'Soustraitant',
-        route: '/dashboard-sales',
+        name: 'Sous-traitant',
+        route: '/soustraitant',
         icon: 'ti ti-forklift',
-        path: 'DashboardSales'
+        path: 'Soustraitant'
     },
     {
         id: 8,
-        name: 'Stock',
-        route: '/dashboard-sales',
+        name: 'Suive des stocks',
         icon: 'ti ti-stack',
-        path: 'DashboardSales'
+        children: [
+            {
+                id: 1,
+                name: 'Stock',
+                route: '/stock',
+                path: 'Stock'
+            },
+            {
+                id: 2,
+                name: 'Stock Informatique',
+                route: '/stock-informatique',
+                path: 'StockInformatique'
+            },
+            {
+                id: 3,
+                name: 'Fournitures',
+                route: '/fournitures',
+                path: 'Fournitures'
+            },
+        ]
     },
     ...sharedMenu2,
     ...sharedMenu
@@ -264,9 +282,9 @@ const LogisticsMenu = [
     {
         id: 1,
         name: 'Dashboard',
-        route: '/dashboard-sales',
+        route: '/dashboard-logistics',
         icon: 'ti ti-smart-home',
-        path: 'DashboardSales'
+        path: 'DashboardLogistics'
     },
     {
         id: 2,
@@ -276,53 +294,57 @@ const LogisticsMenu = [
             {
                 id: 1,
                 name: 'Parc GSM',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/parc-gsm',
+                path: 'ParcGsm'
             },
             {
                 id: 2,
                 name: 'Carte carburant',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/carte-carburant',
+                path: 'CarteCarburant'
+            },
+            {
+                id: 3,
+                name: 'Jawaz',
+                route: '/Jawaz',
+                path: 'Jawaz'
             },
         ]
     },
     {
         id: 4,
         name: 'Cachets',
-        route: '/dashboard-sales',
-        icon: 'ti ti-file-3d',
-        path: 'DashboardSales'
+        route: '/cachets',
+        icon: 'ti ti-rubber-stamp',
+        path: 'Cachets'
     },
     {
         id: 5,
-        name: 'Caisses',
-        route: '/dashboard-sales',
-        icon: 'ti ti-file-invoice',
-        path: 'DashboardSales'
+        name: 'Caisse',
+        route: '/caisse',
+        icon: 'ti ti-cash',
+        path: 'Caisse'
     },
     {
         id: 6,
         name: 'Véhicules',
-        route: '/dashboard-sales',
-        icon: 'ti ti-users-group',
-        path: 'DashboardSales'
+        route: '/vehicules',
+        icon: 'ti ti-car',
+        path: 'Vehicules'
     },
     {
         id: 7,
-        name: 'Fournisseurs',
-        route: '/dashboard-sales',
+        name: 'Fournisseur',
+        route: '/fournisseur',
         icon: 'ti ti-building-store',
-        path: 'DashboardSales'
+        path: 'Fournisseur'
     },
     {
         id: 8,
-        name: 'Sous-traitants',
-        route: '/dashboard-sales',
+        name: 'Sous-traitant',
+        route: '/soustraitant',
         icon: 'ti ti-forklift',
-        path: 'DashboardSales'
+        path: 'Soustraitant'
     },
     {
         id: 9,
@@ -332,39 +354,36 @@ const LogisticsMenu = [
             {
                 id: 1,
                 name: 'Stock',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/stock',
+                path: 'Stock'
             },
             {
                 id: 2,
                 name: 'Stock Informatique',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/stock-informatique',
+                path: 'StockInformatique'
             },
             {
                 id: 3,
                 name: 'Fournitures',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/fournitures',
+                path: 'Fournitures'
             },
         ]
     },
     {
         id: 8,
         name: 'Transports',
-        route: '/dashboard-sales',
-        icon: 'ti ti-forklift',
-        path: 'DashboardSales'
+        route: '/transports',
+        icon: 'ti ti-truck-delivery',
+        path: 'Transports'
     },
     {
         id: 8,
         name: 'Louer',
-        route: '/dashboard-sales',
-        icon: 'ti ti-forklift',
-        path: 'DashboardSales'
+        route: '/louer',
+        icon: 'ti ti-building',
+        path: 'Louer'
     },
     ...sharedMenu2,
     ...sharedMenu
@@ -437,24 +456,24 @@ const SupportMenu = [
     },
     {
         id: 4,
-        name: 'Caisses',
-        route: '/dashboard-sales',
-        icon: 'ti ti-businessplan',
-        path: 'DashboardSales'
+        name: 'Caisse',
+        route: '/caisse',
+        icon: 'ti ti-cash',
+        path: 'Caisse'
     },
     {
         id: 5,
-        name: 'Projet',
-        route: '/dashboard-sales',
+        name: 'Projets',
+        route: '/projects',
         icon: 'ti ti-package',
-        path: 'DashboardSales'
+        path: 'Projects'
     },
     {
         id: 6,
         name: 'Clients',
-        route: '/dashboard-sales',
+        route: '/clients',
         icon: 'ti ti-affiliate',
-        path: 'DashboardSales'
+        path: 'Clients'
     },
     {
         id: 7,
@@ -464,32 +483,20 @@ const SupportMenu = [
             {
                 id: 1,
                 name: 'Demandes d\'achats',
-                route: '/dashboard-sales',
-                path: 'DashboardSales'
+                route: '/purchase-order',
+                path: 'PurchaseOrder'
             },
             {
                 id: 2,
-                name: 'Demandes d\'exécution',
-                route: '/dashboard-sales',
-                path: 'DashboardSales'
+                name: 'Demande d\'exécution',
+                route: '/execution-request',
+                path: 'ExecutionRequest',
             },
             {
                 id: 3,
                 name: 'Bons de commande',
-                route: '/dashboard-sales',
-                path: 'DashboardSales'
-            },
-            {
-                id: 4,
-                name: 'Factures',
-                route: '/dashboard-sales',
-                path: 'DashboardSales'
-            },
-            {
-                id: 5,
-                name: 'Suivie des achats',
-                route: '/dashboard-sales',
-                path: 'DashboardSales'
+                route: '/bon-de-commande',
+                path: 'BonDeCommande'
             },
         ]
     },
@@ -521,17 +528,17 @@ const SupportMenu = [
     },
     {
         id: 10,
-        name: 'Fournisseurs',
-        route: '/dashboard-sales',
+        name: 'Fournisseur',
+        route: '/fournisseur',
         icon: 'ti ti-building-store',
-        path: 'DashboardSales'
+        path: 'Fournisseur'
     },
     {
-        id: 11,
-        name: 'Sous-traitants',
-        route: '/dashboard-sales',
+        id: 12,
+        name: 'Sous-traitant',
+        route: '/soustraitant',
         icon: 'ti ti-forklift',
-        path: 'DashboardSales'
+        path: 'Soustraitant'
     },
     {
         id: 12,
@@ -541,23 +548,20 @@ const SupportMenu = [
             {
                 id: 1,
                 name: 'Stock',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/stock',
+                path: 'Stock'
             },
             {
                 id: 2,
                 name: 'Stock Informatique',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/stock-informatique',
+                path: 'StockInformatique'
             },
             {
                 id: 3,
                 name: 'Fournitures',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/fournitures',
+                path: 'Fournitures'
             },
         ]
     },
@@ -569,23 +573,20 @@ const SupportMenu = [
             {
                 id: 1,
                 name: 'Louer',
-                route: '/dashboard-sales',
-                icon: 'ti ti-forklift',
-                path: 'DashboardSales'
+                route: '/louer',
+                path: 'Louer'
             },
             {
                 id: 2,
                 name: 'Cachets',
-                route: '/dashboard-sales',
-                icon: 'ti ti-file-3d',
-                path: 'DashboardSales'
+                route: '/cachets',
+                path: 'Cachets'
             },
             {
                 id: 3,
                 name: 'Véhicules',
-                route: '/dashboard-sales',
-                icon: 'ti ti-users-group',
-                path: 'DashboardSales'
+                route: '/vehicules',
+                path: 'Vehicules'
             },
         ]
     },
@@ -597,16 +598,20 @@ const SupportMenu = [
             {
                 id: 1,
                 name: 'Parc GSM',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/parc-gsm',
+                path: 'ParcGsm'
             },
             {
                 id: 2,
                 name: 'Carte carburant',
-                route: '/dashboard-sales',
-                icon: 'ti ti-stack',
-                path: 'DashboardSales'
+                route: '/carte-carburant',
+                path: 'CarteCarburant'
+            },
+            {
+                id: 3,
+                name: 'Jawaz',
+                route: '/Jawaz',
+                path: 'Jawaz'
             },
         ]
     },

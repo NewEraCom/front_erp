@@ -14,7 +14,7 @@ const togglePassword = (value: string[]): string[] => {
 		: ['ti-eye', 'password'];
 };
 
-const setSavedUser = (res: unknown): void => {
+const setSavedUser = (res: any): void => {
 	localStorage.setItem('user', JSON.stringify(res.user));
 	localStorage.setItem('isOnline', 'true');
 	localStorage.setItem('role', res.user.roles[0].name);
@@ -95,19 +95,24 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
-
 		case 'Maladie':
-			return ['badge bg-label-warning', 'Congé Maladie'];
+			return ['badge bg-warning', 'Congé Maladie'];
 		case 'Congé':
-			return ['badge bg-label-success', 'Congé'];
+			return ['badge bg-success', 'Congé'];
 		case 'pending':
 			return ['badge bg-label-warning', 'En attente'];
 		case 'on going':
 			return ['badge bg-label-info', 'En cours'];
+		case 'on road':
+			return ['badge bg-label-primary', 'Sur la route'];
 		case 'done':
 			return ['badge bg-label-success', 'Traitée'];
 		case 'delivered':
-			return ['badge bg-label-info', 'Livré'];
+			return ['badge bg-label-success', 'Livré'];
+		case 'active':
+			return ['badge bg-label-success', 'Active'];
+		case 'in stock':
+			return ['badge bg-label-warning', 'En Stock'];
 		case 'approved':
 			return ['badge bg-label-success', 'Approuvé'];
 		case 'dissaproved':
@@ -116,6 +121,10 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Fermé'];
 		case 'open':
 			return ['badge bg-label-warning', 'Ouvert'];
+		case 'entree':
+			return ['badge bg-success', 'Entree'];
+		case 'sortie':
+			return ['badge bg-warning', 'Sortie'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
@@ -168,7 +177,7 @@ import AL_AKHDAR_BANK from '@/assets/img/brands/AL-AKHDAR-BANK.png';
 import UMNIA_BANK from '@/assets/img/brands/UMNIA_BANK.png';
 import NoLogo from '@/assets/img/brands/NoLogo.png';
 
-function bankName(bank: String) {
+function bankName(bank: string) {
 	switch (bank) {
 		case 'BMCE BANK':
 			return [BMCE, 'BMCE'];
@@ -202,6 +211,15 @@ function bankName(bank: String) {
 }
 
 
+function returnStockAlert(stock: number, alert: number) {
+	if (stock === 0) {
+		return ['fw-bold badge bg-danger', 'Rupture de stock'];
+	} else if (stock <= alert) {
+		return ['fw-bold badge bg-warning', 'Alerte de stock'];
+	}
+	return ['fw-bold badge bg-success', 'En stock'];
+}
+
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
@@ -209,6 +227,11 @@ function baseUrl() {
 	return env.VITE_UPLOADS_URL;
 }
 
+function init() {
+	// console.log('init');
+	return '';
+
+}
 
 export const helpers = {
 	isActiveRoute,
@@ -222,5 +245,7 @@ export const helpers = {
 	calculateDifference,
 	setDeleteId,
 	baseUrl,
-	bankName
+	bankName,
+	init,
+	returnStockAlert
 };

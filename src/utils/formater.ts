@@ -91,6 +91,8 @@ const formatRIB = (number: string | undefined | null) => {
 
 
 const limitText = (text: string, limit: number) => {
+    if (text == 'null') return '-';
+    if (!text) return '-';
     if (text.length > limit) {
         return text.substring(0, limit) + '...';
     }

@@ -1,3 +1,4 @@
+console.log(helpers.init());
 import { helpers } from '@/utils';
 
 export const hrRoutes = [
@@ -44,7 +45,7 @@ export const hrRoutes = [
         name: 'SoustraitantRh',
         component: () => import('@/views/HumanRessources/SoustraitantView.vue'),
         meta: {
-            title: 'Soustraitant',
+            title: 'Employés soustraitants',
             role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
