@@ -3,7 +3,19 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { helpers, formater } from '@/utils';
-import { PointageTable, AddPointageModal } from './components';
+import { Modal } from '@/ui';
+import {
+    PointageTable,
+    AddPointageModal,
+    EditSalaryModal,
+    AugementationSalaryModal,
+    EditLeavePerMonthModal,
+    AddCongeModal,
+    EditBanInfoModal,
+    EditCnssModal,
+    ResumptionContractModal,
+    EditEmployeeModal
+} from './components';
 
 const props = defineProps({
     id: {
@@ -40,14 +52,14 @@ watch(data, () => {
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe</span> </h5>
             <div v-if="employee">
-                <button class="btn btn-warning">
+                <button class="btn btn-warning" data-bs-target="#editNewEmployee" data-bs-toggle="modal">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
-                <button v-if="employee.status === '1'" class="btn btn-danger ms-2">
+                <button v-if="employee.status === '1'" class="btn btn-danger ms-2" data-bs-toggle="modal"
+                    data-bs-target="#ruptureContrat">
                     <i class="ti ti-circle-x-filled me-2"></i>
                     Rupture de contrat
-
                 </button>
             </div>
         </div>
@@ -191,14 +203,14 @@ watch(data, () => {
                                             </div>
                                             <h4 class="ms-1 mb-0">Salaire</h4>
                                             <button class="ms-auto btn btn-sm btn-outline-primary"
-                                                data-bs-target="#historic-salary" data-bs-toggle="modal">
+                                                data-bs-target="#historiqueSalary" data-bs-toggle="modal">
                                                 Historique
                                             </button>
-                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#modifie-salary"
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#editSalary"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
-                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#augemnt-salary"
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#augemntSalary"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-square-rounded-plus-filled"></i>
                                             </button>
@@ -233,16 +245,16 @@ watch(data, () => {
                                             </div>
                                             <h4 class="ms-1 mb-0">Conge</h4>
                                             <button class="ms-auto btn btn-sm btn-outline-warning"
-                                                data-bs-target="#historic-conge" data-bs-toggle="modal">
+                                                data-bs-target="#historicConge" data-bs-toggle="modal">
                                                 Historique
                                             </button>
-                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#augemnt-conge"
+                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#editLeavePerMonth"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
 
-                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#enter-conge"
-                                                data-bs-toggle="modal">
+                                            <button class="btn btn-warning btn-sm ms-2"
+                                                data-bs-target="#addNewLeaveEmployee" data-bs-toggle="modal">
                                                 <i class="ti ti-square-rounded-plus-filled"></i>
                                             </button>
                                         </div>
@@ -269,7 +281,7 @@ watch(data, () => {
                                                     width="100px" style="object-fit: contain" />
                                             </div>
                                             <button class="ms-auto btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#edit-bank">
+                                                data-bs-target="#editInfoBank">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
                                         </div>
@@ -307,7 +319,7 @@ watch(data, () => {
                                                 <img src="@/assets/img/brands/logo_cnss.jpeg" height="89px" width="100px"
                                                     style="object-fit: contain" />
                                             </div>
-                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#edit-cnss"
+                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#editInfoCnss"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
@@ -348,7 +360,7 @@ watch(data, () => {
                             <div class="card-header align-items-center">
                                 <h5 class="card-action-title mb-0">Historique</h5>
                             </div>
-                            <!-- <div v-if="employee.projects.length != 0" class="card-body pb-0">
+                            <div v-if="employee.projects != null && employee.projects.length != 0" class="card-body pb-0">
                                 <ul class="timeline pt-3">
                                     <li v-for="(item, index) in employee.projects" :key="item.id" :class="index !== employee.projects.length - 1
                                         ? 'border-left-dashed timeline-item-warning pb-4'
@@ -396,7 +408,7 @@ watch(data, () => {
                                         </p>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div id="documents" class="tab-pane fade" role="tabpanel">
@@ -411,7 +423,53 @@ watch(data, () => {
                                         </button>
                                     </div>
                                     <div class="card-body">
+                                        <div class="row">
 
+                                        </div>
+                                        <div v-if="employee.projects != null && employee.documents.length != 0" class="row">
+                                            <div v-for="item in employee.documents" :key="item" class="col-6 mb-3">
+                                                <div class="card shadow-none border">
+                                                    <div class="card-body d-flex align-items-center">
+                                                        <div class="bg-label-primary p-3 rounded">
+                                                            <i class="ti ti-file-filled"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-2">
+                                                                {{
+                                                                    formater.limitText(
+                                                                        item.title,
+                                                                        55
+                                                                    )
+                                                                }}
+                                                            </h6>
+                                                            <small class="mt-auto">Créé le
+                                                                {{
+                                                                    formater.date(
+                                                                        item.created_at
+                                                                    )
+                                                                }}</small>
+                                                        </div>
+                                                        <button class="ms-auto btn btn-danger btn-sm m-0"
+                                                            data-bs-toggle="modal" data-bs-target="#delete-doc">
+                                                            <i class="ti ti-trash-filled"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="row mb-4">
+                                            <div class="col-12 text-center">
+                                                <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt=""
+                                                    height="180px" width="180px" style="object-fit: contain" />
+                                                <h6 class="text-center mt-3 fw-bold">
+                                                    Aucun document trouvé
+                                                </h6>
+                                                <p class="text-center">
+                                                    Il n'y a pas encore de documents pour cet
+                                                    employé
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -440,6 +498,106 @@ watch(data, () => {
                     </div>
                 </div>
             </div>
+            <Modal id="historiqueSalary" title="Historique de salaire" size="modal-lg">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="fw-bold">Salaire</th>
+                                        <th class="fw-bold text-center">Salaire/Jrs</th>
+                                        <th class="fw-bold text-center">Date de debut</th>
+                                        <th class="fw-bold text-center">Date d'augmentation</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="employee.historique_paye != 0">
+                                    <tr v-for="item in employee.historique_paye" :key="item.id">
+                                        <td>
+                                            {{ formater.number(item.salaire) }} MAD
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.number(item.salaire / 26) }} MAD
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.date(item.start_date) }}
+                                        </td>
+
+                                        <td class="text-center">
+                                            {{ formater.date(item.upgrade_date) }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            Aucun historique trouvé
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <Modal id="historicConge" title="Historique de conge" size="modal-lg">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="fw-bold">Date de debut</th>
+                                        <th class="fw-bold text-center">Date de fin</th>
+                                        <th class="fw-bold text-center">Nombre de jours</th>
+                                        <th class="fw-bold text-center">Type</th>
+                                        <th class="fw-bold text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="employee.conges != 0">
+                                    <tr v-for="item in employee.conges" :key="item.id">
+                                        <td>
+                                            {{ formater.date(item.date_start) }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.date(item.date_end) }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ item.duree ? item.duree > 1 ? item.duree + ' Jours' : item.duree + ' Jour' :
+                                                'N/A' }}
+                                        </td>
+                                        <td class="text-center">
+                                            <small class="fw-bold" :class="helpers.returnBadge(String(item.type))[0]">{{
+                                                helpers.returnBadge(String(item.type))[1] }}
+                                            </small>
+                                        </td>
+                                        <td class="text-center">
+                                            <small class="fw-bold" :class="helpers.returnBadge(String(item.status))[0]">{{
+                                                helpers.returnBadge(String(item.status))[1] }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            Aucun historique trouvé
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <EditSalaryModal :id="employee.id" :old-salary="employee.salary" />
+            <AugementationSalaryModal :id="employee.id" />
+            <EditLeavePerMonthModal :id="employee.id" :old-day-per-month="employee.conge_mois" />
+            <AddCongeModal :id="employee.id" />
+            <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :old-bank="employee.bank_name" />
+            <EditCnssModal :id="employee.id" :old-cnss="employee.cnss" />
+            <ResumptionContractModal :id="employee.id" />
+            <EditEmployeeModal :employee="employee" />
         </div>
         <AddPointageModal source="simple" :id="id" />
     </div>
