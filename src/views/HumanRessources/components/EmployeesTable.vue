@@ -22,8 +22,8 @@ const headers = [
 
 const actionsConfig = [
     {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: () => {
-            router.push({ name: 'ProfileEmployee', params: { id: '123' } });
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            router.push({ name: 'ProfileEmployee', params: { id: item.id } });
         }
     },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
