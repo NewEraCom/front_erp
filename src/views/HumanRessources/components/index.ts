@@ -1,5 +1,4 @@
 import RHStatsCard from './RHStatsCard.vue';
-import CardStats from './CardStats.vue';
 import EmployeeChart from './EmployeeChart.vue';
 import SalaryAdvancesCard from './SalaryAdvancesCard.vue';
 import PaieCard from './PaieCard.vue';
@@ -18,7 +17,6 @@ export * from './modals';
 
 export {
     RHStatsCard,
-    CardStats,
     EmployeeChart,
     SalaryAdvancesCard,
     PaieCard,

@@ -34,5 +34,77 @@ export const sharedRoutes = [
             title: 'Coursier',
             requiresAuth: true
         },
-    }
+    },
+    {
+        path: '/dashboard-admin',
+        name: 'DashboardAdmin',
+        component: () => import('@/views/Shared/MainView.vue'),
+        meta: {
+            title: 'Dashboard',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/leave-request',
+        name: 'LeaveRequest',
+        component: () => import('@/views/Shared/LeaveRequestView.vue'),
+        meta: {
+            title: 'Demande de congé',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/rh-request',
+        name: 'RhRequest',
+        component: () => import('@/views/Shared/RhRequestView.vue'),
+        meta: {
+            title: 'Demande RH',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/recruitment-request',
+        name: 'RecruitmentRequest',
+        component: () => import('@/views/Shared/RecruitementView.vue'),
+        meta: {
+            title: 'Demande de recrutement',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/fournisseur',
+        name: 'Fournisseur',
+        component: () => import('@/views/Shared/FournisseursView.vue'),
+        meta: {
+            title: 'Fournisseur',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/soustraitant',
+        name: 'Soustraitant',
+        component: () => import('@/views/Shared/SoustraitantView.vue'),
+        meta: {
+            title: 'Sous-traitant',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/projects',
+        name: 'Projects',
+        component: () => import('@/views/Shared/ProjectsView.vue'),
+        meta: {
+            title: 'Projets',
+            requiresAuth: true
+        },
+    },
+    {
+        path: '/clients',
+        name: 'Clients',
+        component: () => import('@/views/Shared/ClientsView.vue'),
+        meta: {
+            title: 'Clients',
+            requiresAuth: true
+        },
+    },
 ];

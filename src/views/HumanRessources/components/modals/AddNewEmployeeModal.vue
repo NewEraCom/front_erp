@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
@@ -29,12 +30,24 @@ const formData = ref({
     city: null,
 });
 
-const handleFileChange = (e) => {
-    formData.value.copie_cin = e.target.files[0];
+const handleFileChange = (e, value) => {
+    if (value == 'cin') {
+        formData.value.copie_cin = e.target.files[0];
+    } else {
+        formData.value.copie_rib = e.target.files[0];
+    }
 };
 
 const submit = async () => {
-    console.log('submit');
+    isLoading.value = true;
+    await rhService.addEmployee(formData.value).then(() => {
+        console.log('Employee added');
+        $('#addNewEmployee').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
+        isLoading.value = false;
+    });
 };
 </script>
 <template>
@@ -104,7 +117,8 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="copie_cin" ref="cin_copie" class="form-control" placeholder="Choisir le fichier"
-                                type="file" tabindex="0" name="copie_cin" required />
+                                type="file" tabindex="0" name="copie_cin" required
+                                @change="e => handleFileChange(e, 'cin')" />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -122,7 +136,8 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="copie_rib" ref="rib_copie" class="form-control" placeholder="Choisir le fichier"
-                                type="file" tabindex="0" name="copie_rib" required />
+                                type="file" tabindex="0" name="copie_rib" required
+                                @change="e => handleFileChange(e, 'rib')" />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -189,7 +204,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <div v-if="type_contrat == 'CDD'" ß class="col-sm-12">
+                    <div v-if="formData.type_contrat == 'CDD'" ß class="col-sm-12">
                         <div class="mb-3">
                             <label for="duree" class="form-label">Durée du contrat <span class="text-danger">*</span>
                             </label>

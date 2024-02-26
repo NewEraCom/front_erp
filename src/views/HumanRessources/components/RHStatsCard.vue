@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { CardOne } from '@/ui';
-import { CardStats } from '.';
+import { CardOne, CardStats } from '@/ui';
 import { formater } from '@/utils';
 
 defineProps({
@@ -18,15 +17,15 @@ defineProps({
       <CardStats :male=stats.male :female=stats.female card-color="card-border-shadow-primary" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-      <CardOne title="Mass Salarial" :count="formater.number(stats.salaryMass) + ' MAD'" color=" bg-label-warning"
+      <CardOne title="Mass salarial" :count="formater.number(stats.salaryMass) + ' MAD'" color=" bg-label-warning"
         icon="ti-coins" card-color="card-border-shadow-warning" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-      <CardOne title="Demande Non Traitées" count="21" color="bg-label-danger" icon="ti-mailbox"
+      <CardOne title="Demande non traitée" count="21" color="bg-label-danger" icon="ti-mailbox"
         card-color="card-border-shadow-danger" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-      <CardOne title="Total Employés" :count="String(stats.total)" color="bg-label-success" icon="ti-users"
+      <CardOne title="Total employés" :count="String(stats.total)" color="bg-label-success" icon="ti-users"
         card-color="card-border-shadow-success" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">

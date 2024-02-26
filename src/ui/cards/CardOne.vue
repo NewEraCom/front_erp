@@ -21,7 +21,7 @@ defineProps({
                 </div>
                 <h4 class="ms-1 mb-0 fw-bold">{{ count }}</h4>
             </div>
-            <p class="mb-1 fw-bold">{{ title }}</p>
+            <p class="mb-2 fw-bold">{{ title }}</p>
         </div>
     </div>
 </template>

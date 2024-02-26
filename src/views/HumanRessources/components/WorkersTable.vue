@@ -93,8 +93,6 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
     </div>
 </template>
 <style>

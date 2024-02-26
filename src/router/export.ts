@@ -4,4 +4,6 @@ export * from './project_manager_routes';
 export * from './landing_routes';
 export * from './auth_routes';
 export * from './finance_routes';
+export * from './sales_routes';
+export * from './logistics_routes';
 

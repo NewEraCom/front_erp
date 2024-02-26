@@ -58,6 +58,28 @@ export const useRhStore = defineStore('RhStore', {
                 mass_salariale_per_month: data.mass_salarial
             };
         },
+        deleteEmployee(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.employees.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.employees.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
+        pushEmployee(data: any) {
+            this.employees.push(data);
+        },
+        pushPointageToUser(data: any) {
+            this.employee.pointages.push(data);
+            console.log(this.employee.pointages);
+        },
+        clearEmployees() {
+            this.employees = null;
+        },
+        clearStats() {
+            this.stats = null;
+        },
         setEmployeeId(data: any) {
             this.employee = data;
         },
@@ -79,8 +101,11 @@ export const useRhStore = defineStore('RhStore', {
                 total: data.conge.length,
                 accepted: data.conge.filter((e: any) => e.status === 'approved').length,
                 pending: data.conge.filter((e: any) => e.status === 'pending').length,
-                sick: data.conge.filter((e: any) => e.type === 'Conge Maladie').length,
+                sick: data.conge.filter((e: any) => e.type === 'Maladie').length,
             };
+        },
+        pushLeave(data: any) {
+            this.leaves.data.push(data);
         },
         setRecrutement(data: any) {
             this.recrutement.data = data;
@@ -102,14 +127,14 @@ export const useRhStore = defineStore('RhStore', {
         setSalaryAdvances(data: any) {
             this.salaryAdvances.data = data;
             this.salaryAdvances.stats = {
-                total: data.reduce((accumulator: number, current: any) => {
+                total: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
                     if (current.status === 'approved') {
                         total = accumulator + Number(current.avance);
                     }
                     return total;
                 }, 0),
-                remaining: data.reduce((accumulator: number, current: any) => {
+                remaining: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
                     if (current.status === 'approved') {
                         total = accumulator + Number(current.restant);
@@ -117,6 +142,27 @@ export const useRhStore = defineStore('RhStore', {
                     return total;
                 }, 0),
             };
+            console.log(this.salaryAdvances.stats);
+        },
+        pushSalaryAdvance(data: any) {
+            this.salaryAdvances.data.push(data);
+            this.salaryAdvances.stats = {
+                total: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.avance);
+                    }
+                    return total;
+                }, 0),
+                remaining: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
+                    let total = 0;
+                    if (current.status === 'approved') {
+                        total = accumulator + Number(current.restant);
+                    }
+                    return total;
+                }, 0),
+            };
+
         },
         setPointages(data: any) {
             this.pointages = data;

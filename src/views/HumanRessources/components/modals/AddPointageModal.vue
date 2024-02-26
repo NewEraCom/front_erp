@@ -3,11 +3,19 @@ import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
 import { rhService } from '@/services';
 
-defineProps({
+const porps = defineProps({
     employees: {
         type: Object,
         default: () => ({})
-    }
+    },
+    source: {
+        type: String,
+        default: 'simple'
+    },
+    id: {
+        type: Number,
+        default: 0
+    },
 });
 
 
@@ -26,9 +34,14 @@ const message = ref(null);
 
 
 const submit = async () => {
+
     isLoading.value = true;
 
-    formData.value.employee_id = formData.value.employee_id.key;
+    if (porps.source == 'simple') {
+        formData.value.employee_id = String(porps.id);
+    } else {
+        formData.value.employee_id = formData.value.employee_id.key;
+    }
 
     await rhService.addPointage(formData.value);
     $('#addPointage').modal('hide');
@@ -41,7 +54,7 @@ const submit = async () => {
         <form @submit.prevent="submit">
             <div class="modal-body">
                 <div class="row">
-                    <div v-if="employees != null" class="col-12 mb-3">
+                    <div v-if="employees != null && source != 'simple'" class="col-12 mb-3">
                         <CustomSelect v-model="formData.employee_id" placeholder="Choisir un employee" label="Employee"
                             :data="employees.filter(item => item.status == 1).map((item) => ({
                                 key: item.id,
