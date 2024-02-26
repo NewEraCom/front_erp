@@ -58,6 +58,22 @@ export const useRhStore = defineStore('RhStore', {
                 mass_salariale_per_month: data.mass_salarial
             };
         },
+        deleteEmployee(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.employees.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.employees.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
+        pushEmployee(data: any) {
+            this.employees.push(data);
+        },
+        pushPointageToUser(data: any) {
+            this.employee.pointages.push(data);
+            console.log(this.employee.pointages);
+        },
         clearEmployees() {
             this.employees = null;
         },

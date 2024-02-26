@@ -48,7 +48,7 @@ watch(pointages, (value) => {
                 </div>
             </div>
         </div>
-        <AddPointageModal v-if="employees" :employees="employees" />
+        <AddPointageModal v-if="employees" :employees="employees" source="complex" />
     </div>
 </template>
 

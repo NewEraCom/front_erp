@@ -56,10 +56,14 @@ function dateTime(props: string | null): string {
 }
 
 function phoneNumber(phoneNumber: string | undefined | null) {
-
+    if (phoneNumber == 'null') return 'N/A';
     if (!phoneNumber) return 'N/A';
+    let newPhone = phoneNumber;
+    if (String(phoneNumber).length < 10) {
+        newPhone = '0' + phoneNumber;
+    }
     // Remove non-numeric characters from the phone number
-    const cleanedNumber = phoneNumber?.replace(/\D/g, '');
+    const cleanedNumber = newPhone?.replace(/\D/g, '');
 
     // Check if the cleaned number has 10 digits
     if (cleanedNumber?.length === 10) {
@@ -75,9 +79,16 @@ function phoneNumber(phoneNumber: string | undefined | null) {
     }
 }
 
-const formatRIB = (number: string | undefined | null) => {
-    if (number === null) return '-';
+function monthDifferent(date: string | undefined | null) {
+    const today = new Date();
+    const otherDate = new Date(date);
+    const diffTime = Math.abs(Number(today) - Number(otherDate));
+    const diffMonth = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30)) - 1;
+    return diffMonth;
+}
 
+const formatRIB = (number: string) => {
+    if (number === null) return '-';
     return (
         number.substring(0, 3) +
         ' ' +
@@ -108,5 +119,6 @@ export const formater = {
     phoneNumber,
     startOfDay,
     formatRIB,
-    limitText
+    limitText,
+    monthDifferent,
 };
