@@ -37,7 +37,8 @@ const roles = {
 	DG: 'Directeur general',
 	DS: 'Directeur support',
 	RAP: 'Responsable d\'avant projet',
-	MAGASINIER: 'Magasinier'
+	MAGASINIER: 'Magasinier',
+	FINANCE: 'Responsable financier',
 };
 
 
@@ -54,7 +55,10 @@ const initialDashboard = (role: string): string => {
 			return 'DashboardPM';
 		case roles.DS:
 		case roles.DG:
-			return 'DashboardAdmin';
+			return 'DashboardPM';
+		case roles.FINANCE:
+			return 'FnFacture';
+			// return 'DashboardAdmin';
 		default:
 			return '404';
 	}
@@ -73,6 +77,8 @@ const returnSideBarItems = (): any => {
 			return sideBar.RHMenu;
 		case roles.CF:
 			return sideBar.CFMenu;
+		case roles.FINANCE:
+			return sideBar.FinanceMenu;
 		case roles.DS:
 			return sideBar.SupportMenu;
 		default:
@@ -81,7 +87,7 @@ const returnSideBarItems = (): any => {
 };
 
 
-const returnBadge = (item: string): string[] => {
+const returnBadge = (item: any): any[] => {
 	switch (item) {
 		case 'CDD':
 			return ['badge bg-warning', 'CDD'];
@@ -95,6 +101,8 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
+		case 'Conge Maladie':
+			return ['badge bg-label-warning', 'Congé Maladie'];
 		case 'Maladie':
 			return ['badge bg-warning', 'Congé Maladie'];
 		case 'Congé':
@@ -121,6 +129,16 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Fermé'];
 		case 'open':
 			return ['badge bg-label-warning', 'Ouvert'];
+		case 'paye':
+			return ['badge bg-label-success', 'Paye'];
+		case 'annule':
+			return ['badge bg-label-danger', 'annule'];
+		case 'en attente':
+			return ['badge bg-label-warning', 'En Attente'];
+		case 'non encaissé':
+			return ['badge bg-label-warning', 'Non Encaissé'];
+		case 'encaissé':
+			return ['badge bg-label-success', 'Encaissé'];
 		case 'entree':
 			return ['badge bg-success', 'Entree'];
 		case 'sortie':

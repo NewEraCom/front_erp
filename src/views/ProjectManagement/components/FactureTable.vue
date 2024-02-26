@@ -1,38 +1,44 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater } from '@/utils';
-import router from '@/router';
-import {useFinanceStore} from '@/store'
-const FinanceStore = useFinanceStore();
+import { formater, helpers } from '@/utils';
+import {usePMStore} from '@/store'
+const PMStore = usePMStore();
 const props = defineProps({
     factures: {
         type: Array,
         required: true,
     },
 });
-const Preview = (id:any) => {
-    let data = props.factures;
-    let facture = data.find((facture) => facture.id === id);
-    FinanceStore.Print(facture)
-    if(FinanceStore.print_articles && FinanceStore.print_facture){
-        router.push('/fn/facture/details');
+const deleteFactureModal = 'delete-facture';
+const editFactureModal ='edit-facture';
 
-    }
-    // $(`#preview-facture`).modal('show');
+const showEditModal = (item:any) => {
+    PMStore.setItem(item)
+    $(`#${editFactureModal}`).modal('show');
+};
+const deleteItem = (item: any) => {
+    helpers.setDeleteId(item.id);
+    $(`#${deleteFactureModal}`).modal('show');
 };
 const headers = [
     { text: 'Numero', value: 'numero', type: 'text' },
     { text: 'Type', value: 'type', type: 'text' },
     { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
-    { text: 'Project',  value: 'code',isComplex: true, type: 'project'},
+    { text: 'Projecto',  value: 'code',isComplex: true, type: 'project'},
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item:any) => {
-            Preview(item.id)
+        icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item:any) => {  
+            showEditModal(item);
+        },
+    },
+    {
+        icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item:any) => {
+            deleteItem(item);
+
         }
     },
 ];
@@ -78,8 +84,9 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Non Actif</option>
+                            <option value="annule">Annuler</option>
+                            <option value="en attente">En Attente</option>
+                            <option value="paye">Payé</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-auto">
@@ -98,7 +105,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" button-type="simple" />
     </div>
 </template>
 <style>

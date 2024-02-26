@@ -2,45 +2,37 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import router from '@/router';
-import {useFinanceStore} from '@/store'
-const FinanceStore = useFinanceStore();
+import { PMService } from '@/services';
+
 const props = defineProps({
-    factures: {
+    demandeAchat: {
         type: Array,
         required: true,
     },
 });
-const Preview = (id:any) => {
-    let data = props.factures;
-    let facture = data.find((facture) => facture.id === id);
-    FinanceStore.Print(facture)
-    if(FinanceStore.print_articles && FinanceStore.print_facture){
-        router.push('/fn/facture/details');
 
-    }
-    // $(`#preview-facture`).modal('show');
-};
 const headers = [
-    { text: 'Numero', value: 'numero', type: 'text' },
+    { text: 'N° Ordre' ,value:'n_order', type: 'text'},
     { text: 'Type', value: 'type', type: 'text' },
-    { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
-    { text: 'Project',  value: 'code',isComplex: true, type: 'project'},
+    { text: 'Commantaire', value: 'commentaire', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Code Projet',  isComplex:true, type: 'project'},
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item:any) => {
-            Preview(item.id)
-        }
+        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
+            
+        },
+        // condition: (item:any) => item.status != 1
     },
+    
 ];
 
 
 
 
-const filteredData = ref(props.factures);
+const filteredData = ref(props.demandeAchat);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -49,12 +41,12 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.factures.filter((item: any) => {
-        const combinedFields = `${item.numero} ${item.type} ${item.date_paiement} ${item.status} ${item.project.code}`.toLowerCase();
+    filteredData.value = props.demandeAchat.filter((item: any) => {
+        const combinedFields = `${item.status} ${item.n_order} ${item.type} ${item.commentaire} ${item.project.code}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_paiement) >= formater.startOfDay(startQuery.value)) &&
-            (!endQuery.value || formater.startOfDay(item.date_paiement) <= formater.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_recuperation) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_recuperation) <= formater.startOfDay(endQuery.value));
     });
 };
 
