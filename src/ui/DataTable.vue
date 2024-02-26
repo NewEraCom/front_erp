@@ -9,6 +9,7 @@ type Item = {
 type ActionButton = {
     icon: string;
     class: string;
+    type?: string;
     onClick: (item: Item) => void;
 };
 
@@ -17,6 +18,7 @@ const props = defineProps<{
     headers: Array<{ text: string, value: string, isComplex?: boolean, type?: string }>,
     buttonType: string,
     pageSize: number,
+    disabled: string,
     actionsConfig: ActionButton[];
 }>();
 
@@ -129,13 +131,13 @@ const visiblePageNumbers = computed(() => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'project'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <h6 class="mb-1 fw-bold">{{ item.name }}</h6>
-                            <small class="fw-bold text-muted">Code : {{ item.code }}</small>
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <small class="fw-bold text-muted">Code : {{ item.project.code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <h6 class="mb-1 fw-bold">{{ item.name }}</h6>
-                            <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <small class="fw-bold text-muted">Code : {{ item.pre_project.project_code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'leave'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
@@ -267,12 +269,24 @@ const visiblePageNumbers = computed(() => {
                                 </span>
                             </small>
                         </td>
+                        <td v-if="header.isComplex && header.type === 'tier'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <small class="fw-bold text-muted">Code : {{ item.tier.commercial_name }}</small>
+                        </td>
+                        <td v-if="header.isComplex && header.type === 'carnet'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <h6 class="mb-1 fw-bold">{{ item.carnet.numero }}</h6>
+                            <small class="fw-bold text-muted">RIB : {{ item.carnet.compte_bancaire.rib }}</small>
+                        </td>
                     </template>
 
                     <td v-if="buttonType == 'simple'" class="text-center">
                         <!-- Render action buttons based on actionsConfig -->
-                        <button v-for=" action  in  actionsConfig " :key="action.icon" class="btn me-2"
-                            :class="action.class" @click="action.onClick(item)">
+                        <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
+                            :class="action.type == 'delete' ? (item.status != disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
+                            @click="action.onClick(item)"
+                            :disabled="action.type == 'delete' ? (item.status == disabled) : false">
                             <i :class="action.icon"></i>
                         </button>
                     </td>
