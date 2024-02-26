@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
+import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 
 const props = defineProps({
@@ -48,9 +48,7 @@ const filter = () => {
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.start_payment) >= formater.startOfDay(startQuery.value)) &&
             (!endQuery.value || formater.startOfDay(item.end_payment) <= formater.startOfDay(endQuery.value));
     });
-
 };
-
 </script>
 <template>
     <div>
@@ -94,9 +92,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            button-type="simple" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
+            button-type="simple" disabled="approved" />
     </div>
 </template>
 <style>
