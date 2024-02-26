@@ -126,5 +126,28 @@ const RHMenu = [
         path: 'CompanyCourier'
     }
 ];
+const FinanceMenu = [
+    {
+        id: 1,
+        name: 'Facture',
+        route: '/fn/facture',
+        icon: 'ti ti-files',
+        path: 'FnFacture'
+    },
+    {
+        id: 2,
+        name: 'Cheque',
+        route: '/fn/cheque',
+        icon: 'ti ti-file-dollar',
+        path: 'FnCheque'
+    },
+    {
+        id: 3,
+        name: 'Caution',
+        route: '/fn/Caution',
+        icon: 'ti ti-coins',
+        path: 'FnCaution'
+    }
+];
 
-export const sideBar = { DGMenu, CFMenu, RHMenu };
+export const sideBar = { DGMenu, CFMenu, RHMenu ,FinanceMenu};

@@ -4,10 +4,10 @@ export const projectManagerRoutes = [
     {
         path: '/dashboard-pm',
         name: 'DashboardPM',
-        component: () => import('@/views/ProjectManagement/MainView.vue'),
+        component: () => import('@/views/ProjectManagement/DirecteurOperation.vue'),
         meta: {
             title: 'Dashboard',
-            role : [helpers.roles.PM]
+            role : [helpers.roles.CF]
         },
     },
 ];
