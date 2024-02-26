@@ -12,7 +12,18 @@ const login = async (formData: { email: string, password: string }) => {
     }
 };
 
+const logout = async () => {
+    try {
+        const response = await api().post('/auth/logout');
+        localStorage.clear();
+        return response.status;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 export default {
-    login
+    login,
+    logout
 };

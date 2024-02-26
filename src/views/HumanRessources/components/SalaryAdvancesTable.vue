@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { helpers } from '@/utils';
+import { formater } from '@/utils';
 
 const props = defineProps({
     salaryAdvances: {
@@ -45,8 +45,8 @@ const filter = () => {
         const combinedFields = `${item.employe.last_name} ${item.employe.first_name}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.start_payment) >= helpers.startOfDay(startQuery.value)) &&
-            (!endQuery.value || helpers.startOfDay(item.end_payment) <= helpers.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.start_payment) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.end_payment) <= formater.startOfDay(endQuery.value));
     });
 
 };
@@ -93,7 +93,8 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
+            button-type="simple" />
         <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
         </Modal>
     </div>

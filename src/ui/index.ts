@@ -6,6 +6,7 @@ import CustomSelect from './CustomSelect.vue';
 import MultiSelect from './MultiSelect.vue';
 import AchatPieChart from './AchatPieChart.vue'; 
 import ProjectChart from './ProjectChart.vue';
+import CardStats from './CardStats.vue';
 
 export * from './cards';
 export * from './modals';
@@ -19,5 +20,6 @@ export {
     CustomSelect,
     MultiSelect,
     AchatPieChart,
-    ProjectChart
+    ProjectChart,
+    CardStats
 };

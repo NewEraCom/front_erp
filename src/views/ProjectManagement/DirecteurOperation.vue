@@ -61,7 +61,7 @@ onMounted(async () => {
       </div>
     </div>
     <!-- /Last 10 Achats -->
-    <div v-if="data" class="row">
+    <div v-if="data" class="row mt-4">
             <div class="col-6">
                 <ProjectChart
                     title="Statistique des projets"

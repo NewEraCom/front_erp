@@ -32,8 +32,73 @@ async function getPurchasesOrder() {
     return Promise.reject(e);
   }
 }
+ async function getFacture() {
+    try {
+    const PMStore = usePMStore()
+
+        const response = await api().get('facture/get');
+        if (response.status == 200) {
+            PMStore.setFacture(response.data);
+            return response.data;
+        }
+    } catch (error) {
+    return Promise.reject(error);
+
+    }
+}
+ async function getBorderaux(id) {
+    try {
+    const PMStore = usePMStore()
+
+
+        const res = await api().get('purchase/get-articles/'+id);
+        if (res.status === 200) {
+            PMStore.setBorderaux(res.data.articles);
+        }
+    } catch (e) {
+    return Promise.reject(e);
+
+    }
+} 
+ async function updateFacture( req) {
+    try {
+        // const FactureStore = useFactureStore();
+        const response = await api().post('facture/update' , req);
+        if (response.status == 200) {
+            console.log(response.data);
+            // let facture = FactureStore.facture.find((item) => item.id === id);
+            // if (facture) {
+            //     Object.assign(facture, response.data.facture);
+            // }
+            return response.data;
+        } else {
+            return false;
+        }
+    } catch (error) {
+    return Promise.reject(error);
+
+    }
+}
+ async function deleteFacture(id) {
+    try {
+       
+        const response = await api().delete('facture/delete/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+            
+            return response.data;
+        }
+    } catch (error) {
+        return Promise.reject(error);
+
+    }
+}
 
 export default {
   getDataManager,
-  getPurchasesOrder
+  getPurchasesOrder,
+  getFacture,
+  getBorderaux,
+  updateFacture,
+  deleteFacture
 }

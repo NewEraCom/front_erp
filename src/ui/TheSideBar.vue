@@ -4,56 +4,72 @@ import { useRoute } from 'vue-router';
 import { helpers } from '@/utils';
 
 const route = useRoute();
-
 const itemsMenu = ref([]);
+const activeIndex = ref(-1); // Changed from hoveredIndex to activeIndex
 
 const isActiveRoute = (routePath: any) => {
     return route.path.includes(routePath);
 };
 
+const toggleActiveIndex = (index: number) => {
+    if (activeIndex.value === index) {
+        activeIndex.value = -1; // Clicking the same item will close it
+    } else {
+        activeIndex.value = index; // Open the clicked item
+    }
+};
+
 onMounted(() => {
-    itemsMenu.value = helpers.returnSideBarItems();
+    itemsMenu.value = helpers.returnSideBarItems().map(item => ({
+        ...item,
+        children: item.children ? item.children : null
+    }));
 });
-
-
 </script>
+
 <template>
     <div>
         <aside class="sidebar locked">
+            <!-- Other elements -->
             <div class="logo_items text-center mt-2 pt-2">
-                <img src="/src/assets/img/Logo_white_bg.png" alt="logo" class="logo" srcset="" />
+                <img src="@/assets/img/Logo_white_bg.png" alt="logo" class="logo" srcset="" />
             </div>
-
             <div class="menu_container mt-4 ps-0">
                 <div class="menu_items">
                     <ul class="menu_item ps-1">
                         <div class="menu_title flex">
                             <small class="title text-muted fw-normal">Menu</small>
                         </div>
-                        <li v-for="item in itemsMenu" :key="item.id" class="item"
-                            :class="{ active: isActiveRoute(item.route) }">
-                            <router-link :to="item.route" class="link flex">
-                                <i class="ti" :class="item.icon" />
+                        <li v-for="(item, index) in itemsMenu" :key="item.id" class="item"
+                            :class="{ 'has-children': item.children, active: isActiveRoute(item.route) }"
+                            @click="toggleActiveIndex(index)">
+                            <span v-if="item.children" class="link flex">
+                                <i class="ti" :class="item.icon"></i>
+                                <span>{{ item.name }}</span>
+                                <i class="ms-auto ti"
+                                    :class="activeIndex === index ? 'ti-chevron-down' : 'ti-chevron-right'"></i>
+                            </span>
+                            <router-link v-else :to="item.route" class="link flex">
+                                <i class="ti" :class="item.icon"></i>
                                 <span>{{ item.name }}</span>
                             </router-link>
+                            <ul v-if="item.children && activeIndex === index" class="submenu">
+                                <li v-for="child in item.children" :key="child.id" class="submenu-item">
+                                    <router-link :to="child.route" class="link flex">
+                                        <i class="ti ti-circle icon-children"></i>
+                                        <span>{{ child.name }}</span>
+                                    </router-link>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </aside>
-        <aside class="sidebar-small locked">
-            <div class="logo_items text-center mt-2 pt-2">
-                <img src="/src/assets/img/Logo_white_bg_small.png" alt="logo" class="logo_small" srcset="" />
-            </div>
-
-            <div class="menu_container mt-4 ps-0">
-                <div class="menu_items">
-
-                </div>
-            </div>
-        </aside>
     </div>
 </template>
+
+
 
 <style scoped>
 .flex {
@@ -361,5 +377,57 @@ onMounted(() => {
 
 .logo_small {
     width: 100%;
+}
+
+
+.submenu {
+    list-style: none;
+    padding-left: 10px;
+    /* Adjust according to your design */
+    display: none;
+    background-color: white;
+    border-radius: 5px;
+    color: #191919 !important;
+    padding-bottom: 2px;
+    margin-bottom: 10px;
+    /* Initially hide the submenu */
+}
+
+.item.has-children .submenu {
+    display: block;
+    width: 100%;
+
+    /* Show submenu on hover */
+}
+
+.submenu-item {
+    padding: 0;
+    margin: 10px 0;
+    height: 45px;
+    align-items: center;
+    font-size: 14px;
+    color: #191919 !important;
+    /* Adjust padding */
+}
+
+.submenu-item:hover {
+    color: black !important;
+    border-radius: 5px;
+    /* Adjust padding */
+}
+
+.submenu-item .link {
+    color: #191919 !important;
+
+}
+
+.submenu-item .link:hover {
+    color: black !important;
+
+    /* Adjust padding */
+}
+
+.icon-children {
+    font-size: 14px !important;
 }
 </style>

@@ -5,6 +5,8 @@ export const usePMStore = defineStore('PMStore', {
     state: () => ({
         purchase: null,
         stats: null,
+        facture: null,
+        borderaux: null,
         
 
        
@@ -40,6 +42,13 @@ export const usePMStore = defineStore('PMStore', {
         },
         setDashboardData(data:any){
             this.stats = data;
+        },
+        setFacture(data) {
+            this.facture = data.facture;
+            this.stats = data.stats;
+        },
+        setBorderaux(data){
+            this.borderaux = data;
         },
     }
 });

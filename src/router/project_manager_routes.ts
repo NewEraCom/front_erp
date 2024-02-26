@@ -10,4 +10,13 @@ export const projectManagerRoutes = [
             role : [helpers.roles.CF]
         },
     },
+    {
+        path: '/facture',
+        name: 'FactureCF',
+        component: () => import('@/views/ProjectManagement/FactureView.vue'),
+        meta: {
+            title: 'Facture',
+            role : [helpers.roles.CF]
+        },
+    },
 ];

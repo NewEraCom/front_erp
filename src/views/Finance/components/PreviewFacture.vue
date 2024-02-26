@@ -4,7 +4,7 @@ import { Modal } from '@/ui';
 import { useFinanceStore } from '@/store';
 import html2pdf from 'html2pdf.js';
 // import {baseUrl} from '@/utils';
-import {  helpers } from '@/utils';
+import { helpers } from '@/utils';
 
 
 const getFileUrl = (attachment) => {
@@ -93,30 +93,16 @@ const generatePDF = (elementId) => {
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nameEx" class="form-label">Objet de Facture :</label>
-                        <input
-                            class="form-control"
-                            placeholder="Entrez le numéro de l'offre"
-                            type="text"
-                            tabindex="0"
-                            id="nameEx"
-                            v-model="objet"
-                            autofocus
-                            required
-                        />
+                        <input class="form-control" placeholder="Entrez le numéro de l'offre" type="text" tabindex="0"
+                            id="nameEx" v-model="objet" autofocus required />
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nameEx" class="form-label">Commentaire</label>
 
-                        <textarea
-                            placeholder="Saisisser votre Commentaire"
-                            id=""
-                            cols="30"
-                            rows="10"
-                            class="form-control"
-                            v-model="comment"
-                        ></textarea>
+                        <textarea placeholder="Saisisser votre Commentaire" id="" cols="30" rows="10" class="form-control"
+                            v-model="comment"></textarea>
                     </div>
                 </div>
                 <div>
@@ -127,59 +113,39 @@ const generatePDF = (elementId) => {
             </div>
         </div>
     </div>
-    <iframe
-        id="pdfPreview"
-        name="pdfPreview"
-        style="width: 100%; height: 80vh"
-        class="container"
-    ></iframe>
+    <iframe id="pdfPreview" name="pdfPreview" style="width: 100%; height: 80vh" class="container"></iframe>
     <div class="container mt-3" v-if="!pdfUrl" id="printsection">
         <div class="d-flex flex-wrap justify-content-between" v-if="articles && facture">
             <div class="p-2">
                 <div class="row flex-container mb-4 header">
-                    <img
-                        class="img-thumbnail h-px-100 w-px-250 flex-item"
-                        src="../../../assets/img/Logo_Neweracom.png"
-                        alt="Company Logo"
-                    />
+                    <img class="img-thumbnail h-px-100 w-px-250 flex-item" src="../../../assets/img/Logo_Neweracom.png"
+                        alt="Company Logo" />
 
                     <div class="col-md-6 flex-item">
                         <h3>Facture N° {{ facture.numero }}</h3>
 
                         <span>
                             Rabat, Le
-                            <span id="date">{{ formatDate(new Date()) }} .</span> </span
-                        ><br />
-                        <span
-                            >Date Limite de validitée
-                            {{ formatDate(addOneMonth(new Date())) }} .</span
-                        ><br />
+                            <span id="date">{{ formatDate(new Date()) }} .</span> </span><br />
+                        <span>Date Limite de validitée
+                            {{ formatDate(addOneMonth(new Date())) }} .</span><br />
                     </div>
                 </div>
                 <div class="row m-2 flex-container">
                     <div class="col-md-6 flex-item">
                         <h4 class="text-primary">Client</h4>
-                        <span
-                            ><strong>Raison Social:</strong>
-                            {{ facture.project.client.raison_social }}</span
-                        ><br />
-                        <span><strong>Adresse:</strong> {{ facture.project.client.adresse }}</span
-                        ><br />
-                        <span><strong>Fix:</strong> {{ facture.project.client.fix }}</span
-                        ><br />
-                        <span><strong>Telephone:</strong> {{ facture.project.client.phone }}</span
-                        ><br />
-                        <span><strong>Email:</strong> {{ facture.project.client.email }}</span
-                        ><br />
+                        <span><strong>Raison Social:</strong>
+                            {{ facture.project.client.raison_social }}</span><br />
+                        <span><strong>Adresse:</strong> {{ facture.project.client.adresse }}</span><br />
+                        <span><strong>Fix:</strong> {{ facture.project.client.fix }}</span><br />
+                        <span><strong>Telephone:</strong> {{ facture.project.client.phone }}</span><br />
+                        <span><strong>Email:</strong> {{ facture.project.client.email }}</span><br />
                     </div>
                     <div class="col-md-6 flex-item">
                         <h4 class="text-primary">Societe</h4>
-                        <span><strong>NewEraCom</strong></span
-                        ><br />
-                        <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
-                        ><br />
-                        <span><strong>Hay Riad, Rabat.</strong></span
-                        ><br />
+                        <span><strong>NewEraCom</strong></span><br />
+                        <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span><br />
+                        <span><strong>Hay Riad, Rabat.</strong></span><br />
                     </div>
                 </div>
                 <div class="row flex-item m-2 mt-2">
@@ -191,13 +157,8 @@ const generatePDF = (elementId) => {
                 <div class="row flex-item m-2 mt-2">
                     <h4 class="text-primary">Attachements</h4>
                     <div style="display: flex; flex-wrap: wrap">
-                        <div
-                            class="p-2"
-                            style="flex: 1 0 50%"
-                            v-for="(attachment, index) in facture.facture_attachement"
-                            :key="index"
-                            v-if="facture.facture_attachement.length > 0"
-                        >
+                        <div class="p-2" style="flex: 1 0 50%" v-for="(attachment, index) in facture.facture_attachement"
+                            :key="index" v-if="facture.facture_attachement.length > 0">
                             <strong>{{ attachment.composent.label }}:</strong>
                             <div v-if="attachment.composent.type === 'file'">
                                 <a :href="getFileUrl(attachment.value)" target="_blank">View File</a>
@@ -262,9 +223,7 @@ const generatePDF = (elementId) => {
                     </div>
                 </div>
                 <div class="row">
-                    <span class="font-weight-bold" style="text-decoration: underline; color: red"
-                        >NB :</span
-                    >
+                    <span class="font-weight-bold" style="text-decoration: underline; color: red">NB :</span>
                     <span>{{ comment }}</span>
                 </div>
             </div>
@@ -313,6 +272,7 @@ const generatePDF = (elementId) => {
         display: table-cell;
     }
 }
+
 .empty_stats_img_md {
     width: 100%;
     max-width: 180px;
