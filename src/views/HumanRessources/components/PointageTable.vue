@@ -7,17 +7,31 @@ const props = defineProps({
         type: Array,
         required: true,
     },
+    custom: {
+        type: Boolean,
+        default: true,
+    },
+    buttonType: {
+        type: String,
+        default: 'simple',
+    }
 });
 
 const headers = [
-    { text: 'Employe', value: 'employee', isComplex: true, type: 'leave' },
-    { text: 'Date de pointage', value: 'date_pointage', type: 'date' },
+    { text: 'Date de pointage', value: 'date_pointage', isComplex: false, type: 'date' },
     { text: 'Heure d\'entrée', value: 'clock_in', type: 'time' },
     { text: 'Heure de sortie', value: 'clock_out', type: 'time' },
     { text: 'Break in', value: 'break_start', type: 'time' },
     { text: 'Break out', value: 'break_end', type: 'time' },
-    { text: 'Heure de travail', value: 'workingHour', type: 'workingHour' },
+    { text: 'Heures travaillées', value: 'worked_hours', type: props.custom ? 'workingHour' : 'workingHourCustom' },
 ];
+
+
+if (props.custom === true) {
+    headers.unshift({ text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
+    );
+}
+
 
 const actionsConfig = [
     { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
@@ -31,6 +45,7 @@ const deleteItem = (item: any) => {
 
 const filteredData = ref(props.pointages);
 
+
 const searchQuery = ref('');
 const startQuery = ref();
 const endQuery = ref();
@@ -38,7 +53,10 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.pointages.filter((item: any) => {
-        const combinedFields = `${item.employe.first_name} ${item.employe.last_name}`.toLowerCase();
+        let combinedFields = `${item.date_pointage}`.toLowerCase();
+        if (props.custom === true) {
+            combinedFields += `${item.employe.first_name} ${item.employe.last_name}`.toLowerCase();
+        }
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (!startQuery.value || new Date(item.date_pointage) >= new Date(startQuery.value)) &&
@@ -73,14 +91,15 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#details-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#details-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
+            :button-type="buttonType" />
         <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
         </Modal>
     </div>

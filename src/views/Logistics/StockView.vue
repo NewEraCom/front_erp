@@ -1,0 +1,64 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { CardTwo } from '@/ui';
+import { useLogisticsStore } from '@/store';
+import { logisticsService } from '@/services';
+import { StockTable } from './components';
+import { formater } from '@/utils';
+
+const logisticsStore = useLogisticsStore();
+
+const stock = ref(computed(() => logisticsStore.stock.data));
+const stats = ref(computed(() => logisticsStore.stock.stats));
+
+onMounted(async () => {
+    await logisticsService.getStock('autre');
+});
+
+onUnmounted(() => {
+    logisticsStore.clearStock();
+});
+
+</script>
+
+<template>
+    <div class="flex-grow-1 container-fluid mt-3">
+        <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Stock</span></h5>
+        <div v-if="stats" class="row">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwo title="En alert stock" :count="stats.alert" color="bg-label-warning" icon="ti ti-building-store"
+                    card-color=" card-border-shadow-warning" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwo title="En Stock" :count="stats.total" color="bg-label-success" icon="ti ti-building-store"
+                    card-color="card-border-shadow-success" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwo title="En Rupture De Stock" :count="stats.rupture" color="bg-label-danger"
+                    icon="ti ti-building-store" card-color="card-border-shadow-danger" />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwo title="Valeur Global De Stock" :count="formater.number(stats.totalValue) + ' MAD'"
+                    color="bg-label-info" icon="ti ti-building-store" card-color="card-border-shadow-info" />
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card card-border-shadow-primary">
+                        <div class="card-header d-flex align-items-center">
+                            <div class="me-auto">
+                                <h5 class="fw-bold mb-1">Liste des articles</h5>
+                                <small class="fw-bold mb-1 text-muted">Liste des articles en stock</small>
+                            </div>
+                        </div>
+                        <div v-if="stock != null" class="card-body border-top pt-4">
+                            <StockTable :stock="stock" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

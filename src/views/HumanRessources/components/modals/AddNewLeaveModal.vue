@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
+import { rhService } from '@/services';
 
 defineProps({
     employees: {
@@ -11,27 +12,30 @@ defineProps({
 const isLoading = ref(false);
 
 const formData = ref({
-    first_name: null,
-    last_name: null,
-    phone_no: null,
-    matricule: null,
-    cin: null,
-    copie_cin: null,
-    birthdate: null,
-    sexe: '-',
-    email: null,
-    adresse: null,
-    date_embauche: null,
+    date_start: null,
+    date_end: null,
+    type: '-',
+    duree: null,
     employee_id: '-',
+    attachement: null
 
 });
 
 const handleFileChange = (e) => {
-    formData.value.copie_cin = e.target.files[0];
+    formData.value.attachement = e.target.files[0];
 };
 
 const submit = async () => {
-    console.log('submit');
+    isLoading.value = true;
+
+    formData.value.employee_id = formData.value.employee_id.key;
+
+    await rhService.addLeave(formData.value).then(() => {
+        isLoading.value = false;
+        $('#addNewLeave').modal('hide');
+    }).catch(() => {
+        isLoading.value = false;
+    });
 };
 </script>
 <template>
@@ -49,44 +53,43 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date debut de congé <span
+                            <label for="start" class="form-label">Date debut de congé <span
                                     class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
-                                v-model="formData.birthdate" required />
+                            <input class="form-control" placeholder="" type="date" tabindex="0" id="start"
+                                v-model="formData.date_start" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date fin de congé <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
-                                v-model="formData.birthdate" required />
+                            <label for="end" class="form-label">Date fin de congé <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="" type="date" tabindex="0" id="end"
+                                v-model="formData.date_end" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Type de congé <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-select" required v-model="formData.sexe">
-                                <option value="-">Choisir le sexe</option>
-                                <option value="Conge">Congé</option>
+                            <label for="type" class="form-label">Type de congé <span class="text-danger">*</span></label>
+                            <select name="" id="type" class="form-select" required v-model="formData.type">
+                                <option value="-">Choisir un type</option>
+                                <option value="Congé">Congé</option>
                                 <option value="Maladie">Maladie</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Durée de congé <span class="text-danger">*</span></label>
+                            <label for="duree" class="form-label">Durée de congé <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre le nombre de jours" type="number" tabindex="0"
-                                id="nameEx" v-model="formData.email" required />
+                                id="duree" v-model="formData.duree" required />
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="assurance" class="form-label">Attachement (Certificat médical, Email de demande,
+                            <label for="attachemet" class="form-label">Attachement (Certificat médical, Email de demande,
                                 etc.) <span class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
-                                name="copie_cin" @change="handleFileChange" required />
+                            <input class="form-control" placeholder="" type="file" tabindex="0" id="attachemet"
+                                name="attachemet" @change="handleFileChange" required />
                         </div>
                     </div>
                 </div>

@@ -42,7 +42,7 @@ import { TheSideBar, TheTopBar, LogoutModal } from '@/ui';
     }
 
     .layout-page {
-        margin-left: 75px;
+        margin-left: 0px;
     }
 }
 </style>

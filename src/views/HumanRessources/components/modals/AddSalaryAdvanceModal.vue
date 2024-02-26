@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
+import { rhService } from '@/services';
 
 defineProps({
     employees: {
@@ -16,11 +17,19 @@ const formData = ref({
     avance: null,
     deduction: null,
     date_start: null,
-    date_end: null
 });
 
 const submit = async () => {
-    console.log('submit');
+    isLoading.value = true;
+
+    formData.value.employee_id = formData.value.employee_id.key;
+
+    await rhService.addSalaryAdvance(formData.value).then(() => {
+        isLoading.value = false;
+        $('#addSalaryAdvance').modal('hide');
+    }).catch(() => {
+        isLoading.value = false;
+    });
 };
 
 
@@ -39,8 +48,6 @@ const submit = async () => {
                             }))
                                 " />
                     </div>
-
-
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="avance" class="form-label">Montant d'avance <span
@@ -64,20 +71,10 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="date_start" class="form-label">Date de début <span
                                     class="text-danger">*</span></label>
-                            <input class="form-control" type="number" placeholder="Entrez le total des salaires"
-                                tabindex="0" id="date_start" v-model="formData.date_start" required>
+                            <input class="form-control" type="date" placeholder="Entrez le total des salaires" tabindex="0"
+                                id="date_start" v-model="formData.date_start" required>
                         </div>
                     </div>
-
-
-                    <div class="col-sm-12">
-                        <div class="mb-3">
-                            <label for="date_end" class="form-label">Date de fin <span class="text-danger">*</span></label>
-                            <input class="form-control" type="number" placeholder="Entrez le total des salaires"
-                                tabindex="0" id="date_end" v-model="formData.date_end" required>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div class="modal-footer">

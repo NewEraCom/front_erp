@@ -34,7 +34,6 @@ const submit = async () => {
     $('#addEventModal').modal('hide');
     isLoading.value = false;
 };
-
 </script>
 <template>
     <Modal id="addEventModal" :title="title">

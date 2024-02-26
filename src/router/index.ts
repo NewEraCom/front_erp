@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 import { helpers } from '@/utils';
-import { landingRoutes, authRoutes, hrRoutes, projectManagerRoutes, sharedRoutes , financeRoutes } from './export';
+import { landingRoutes, authRoutes, hrRoutes, projectManagerRoutes, sharedRoutes, financeRoutes, salesRoutes, logisticsRoutes } from './export';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -19,7 +19,9 @@ const router = createRouter({
                 ...sharedRoutes,
                 ...hrRoutes,
                 ...projectManagerRoutes,
-                ...financeRoutes
+                ...financeRoutes,
+                ...salesRoutes,
+                ...logisticsRoutes,
             ]
         },
     ]
@@ -36,6 +38,9 @@ router.beforeEach((to, from, next) => {
     } else if (to.matched.some(record => record.meta.requiresAuth) && !isOnline) {
         next({ name: 'Login' });
     } else {
+        if (to.matched.length === 0) {
+            next({ name: helpers.initialDashboard(role) });
+        }
         next();
     }
 });

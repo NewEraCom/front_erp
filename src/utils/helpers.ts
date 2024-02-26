@@ -1,4 +1,4 @@
-import router from '../router';
+import router from '@/router';
 import { sideBar } from './sidebar_items';
 import { env } from './env';
 
@@ -14,7 +14,7 @@ const togglePassword = (value: string[]): string[] => {
 		: ['ti-eye', 'password'];
 };
 
-const setSavedUser = (res: unknown): void => {
+const setSavedUser = (res: any): void => {
 	localStorage.setItem('user', JSON.stringify(res.user));
 	localStorage.setItem('isOnline', 'true');
 	localStorage.setItem('role', res.user.roles[0].name);
@@ -24,16 +24,7 @@ const setSavedUser = (res: unknown): void => {
 
 
 const redirectBasedOnRole = (role: string): void => {
-	switch (role) {
-		case roles.RH:
-			router.push({ name: initialDashboard(role) });
-			break;
-		case roles.CF:
-			router.push({ name: initialDashboard(role) });
-			break;
-		default:
-			router.push({ name: initialDashboard(role) });
-	}
+	router.push({ name: initialDashboard(role) });
 };
 
 const roles = {
@@ -44,9 +35,10 @@ const roles = {
 	LOGISTICS: 'Responsable logistique',
 	RH: 'Responsable ressources humaines',
 	DG: 'Directeur general',
-	DS: 'Directrice Support',
+	DS: 'Directeur support',
 	RAP: 'Responsable d\'avant projet',
-	MAGASINIER: 'Magasinier'
+	MAGASINIER: 'Magasinier',
+	FINANCE: 'Responsable financier',
 };
 
 
@@ -54,11 +46,19 @@ const initialDashboard = (role: string): string => {
 	switch (role) {
 		case roles.RH:
 			return 'DashboardRH';
+		case roles.SALES:
+			return 'DashboardSales';
+		case roles.LOGISTICS:
+			return 'DashboardLogistics';
 		case roles.CF:
 			console.log('CF');
 			return 'DashboardPM';
+		case roles.DS:
 		case roles.DG:
 			return 'DashboardPM';
+		case roles.FINANCE:
+			return 'FnFacture';
+			// return 'DashboardAdmin';
 		default:
 			return '404';
 	}
@@ -69,17 +69,25 @@ const returnSideBarItems = (): any => {
 	switch (role) {
 		case roles.DG:
 			return sideBar.DGMenu;
+		case roles.SALES:
+			return sideBar.SalesMenu;
+		case roles.LOGISTICS:
+			return sideBar.LogisticsMenu;
 		case roles.RH:
 			return sideBar.RHMenu;
 		case roles.CF:
 			return sideBar.CFMenu;
+		case roles.FINANCE:
+			return sideBar.FinanceMenu;
+		case roles.DS:
+			return sideBar.SupportMenu;
 		default:
 			return [];
 	}
 };
 
 
-const returnBadge = (item: string): string[] => {
+const returnBadge = (item: any): any[] => {
 	switch (item) {
 		case 'CDD':
 			return ['badge bg-warning', 'CDD'];
@@ -93,17 +101,26 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Actif'];
 		case '0':
 			return ['badge bg-label-warning', 'Inactif'];
-
 		case 'Conge Maladie':
 			return ['badge bg-label-warning', 'Congé Maladie'];
+		case 'Maladie':
+			return ['badge bg-warning', 'Congé Maladie'];
 		case 'Congé':
-			return ['badge bg-label-success', 'Congé'];
+			return ['badge bg-success', 'Congé'];
 		case 'pending':
 			return ['badge bg-label-warning', 'En attente'];
+		case 'on going':
+			return ['badge bg-label-info', 'En cours'];
+		case 'on road':
+			return ['badge bg-label-primary', 'Sur la route'];
 		case 'done':
 			return ['badge bg-label-success', 'Traitée'];
 		case 'delivered':
-			return ['badge bg-label-info', 'Livré'];
+			return ['badge bg-label-success', 'Livré'];
+		case 'active':
+			return ['badge bg-label-success', 'Active'];
+		case 'in stock':
+			return ['badge bg-label-warning', 'En Stock'];
 		case 'approved':
 			return ['badge bg-label-success', 'Approuvé'];
 		case 'dissaproved':
@@ -112,6 +129,20 @@ const returnBadge = (item: string): string[] => {
 			return ['badge bg-label-success', 'Fermé'];
 		case 'open':
 			return ['badge bg-label-warning', 'Ouvert'];
+		case 'paye':
+			return ['badge bg-label-success', 'Paye'];
+		case 'annule':
+			return ['badge bg-label-danger', 'annule'];
+		case 'en attente':
+			return ['badge bg-label-warning', 'En Attente'];
+		case 'non encaissé':
+			return ['badge bg-label-warning', 'Non Encaissé'];
+		case 'encaissé':
+			return ['badge bg-label-success', 'Encaissé'];
+		case 'entree':
+			return ['badge bg-success', 'Entree'];
+		case 'sortie':
+			return ['badge bg-warning', 'Sortie'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
@@ -198,6 +229,15 @@ function bankName(bank: string) {
 }
 
 
+function returnStockAlert(stock: number, alert: number) {
+	if (stock === 0) {
+		return ['fw-bold badge bg-danger', 'Rupture de stock'];
+	} else if (stock <= alert) {
+		return ['fw-bold badge bg-warning', 'Alerte de stock'];
+	}
+	return ['fw-bold badge bg-success', 'En stock'];
+}
+
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
@@ -205,6 +245,11 @@ function baseUrl() {
 	return env.VITE_UPLOADS_URL;
 }
 
+function init() {
+	// console.log('init');
+	return '';
+
+}
 
 export const helpers = {
 	isActiveRoute,
@@ -218,5 +263,7 @@ export const helpers = {
 	calculateDifference,
 	setDeleteId,
 	baseUrl,
-	bankName
+	bankName,
+	init,
+	returnStockAlert
 };

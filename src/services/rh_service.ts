@@ -151,6 +151,7 @@ const getWorkers = async () => {
     }
 };
 
+// ----------------- POST -----------------
 
 const addPointage = async (data: any) => {
     try {
@@ -158,6 +159,7 @@ const addPointage = async (data: any) => {
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.pushPointage(response.data.pointage);
+
             return;
         }
         throw new Error('Add pointage failed with status: ' + response.status);
@@ -167,10 +169,88 @@ const addPointage = async (data: any) => {
     }
 };
 
+const addLeave = async (data: any) => {
+    try {
+        const response = await api().post('/rh/add-conge', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushLeave(response.data.conge);
+            return;
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
+const addSalaryAdvance = async (data: any) => {
+    try {
+        const response = await api().post('/pay/avance/insert', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushSalaryAdvance(response.data.avance);
+            return;
+        }
+    }
+    catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 
 const deleteEmployee = async () => {
-    console.log($('#deleteId').val());
+    const id = $('#deleteId').val();
+    if (id) {
+        try {
+            const response = await api().delete('/rh/delete/' + id);
+            if (response.status === 200) {
+                const rhStore = useRhStore();
+                rhStore.deleteEmployee(Number(id));
+                return;
+            }
+            throw new Error('Delete employee failed with status: ' + response.status);
+        } catch (error) {
+            console.error(error);
+            return error;
+        }
+    }
 };
+
+const deleteSalaryAdvance = async () => {
+    const id = $('#deleteId').val();
+    if (id) {
+        try {
+            const response = await api().delete('/pay/avance/delete/' + id);
+            if (response.status === 200) {
+                const rhStore = useRhStore();
+                rhStore.deleteSalaryAdvance(Number(id));
+                return;
+            }
+            throw new Error('Delete employee failed with status: ' + response.status);
+        } catch (error) {
+            console.error(error);
+            return error;
+        }
+    }
+};
+
+const addEmployee = async (data: any) => {
+    try {
+        const response = await api().post('/rh/insert/', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushEmployee(response.data.employee);
+            return;
+        }
+        throw new Error('Delete employee failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 
 export default {
     getEmployees,
@@ -184,5 +264,9 @@ export default {
     getWorkers,
     deleteEmployee,
     addPointage,
-    getEmployeeById
+    getEmployeeById,
+    addLeave,
+    addSalaryAdvance,
+    addEmployee,
+    deleteSalaryAdvance
 };

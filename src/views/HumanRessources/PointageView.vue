@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { PointageTable, AddPointageModal } from './components';
@@ -12,6 +13,16 @@ const employees = ref(computed(() => rhStore.employees));
 onMounted(async () => {
     await rhService.getPointages();
     await rhService.getEmployees();
+});
+
+
+onUnmounted(() => {
+    rhStore.pointages = null;
+    employees.value = null;
+});
+
+watch(pointages, (value) => {
+    pointages.value = value;
 });
 
 </script>
@@ -39,7 +50,7 @@ onMounted(async () => {
                 </div>
             </div>
         </div>
-        <AddPointageModal v-if="employees" :employees="employees" />
+        <AddPointageModal v-if="employees" :employees="employees" source="complex" />
     </div>
 </template>
 

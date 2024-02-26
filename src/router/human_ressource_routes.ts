@@ -1,3 +1,4 @@
+console.log(helpers.init());
 import { helpers } from '@/utils';
 
 export const hrRoutes = [
@@ -16,7 +17,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/EmployeesView.vue'),
         meta: {
             title: 'Employés',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
 
@@ -27,7 +28,7 @@ export const hrRoutes = [
         props: true,
         meta: {
             title: 'Profil de l\'employé',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -36,16 +37,16 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/PointageView.vue'),
         meta: {
             title: 'Pointage',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
-        path: '/soustraitant',
-        name: 'Soustraitant',
+        path: '/soustraitant-rh',
+        name: 'SoustraitantRh',
         component: () => import('@/views/HumanRessources/SoustraitantView.vue'),
         meta: {
-            title: 'Soustraitant',
-            role: [helpers.roles.RH]
+            title: 'Employés soustraitants',
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -54,7 +55,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/InternsView.vue'),
         meta: {
             title: 'Stagiaires',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -63,7 +64,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/LeaveView.vue'),
         meta: {
             title: 'Congés',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -81,7 +82,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/RecruitmentView.vue'),
         meta: {
             title: 'Recrutements',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -90,7 +91,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/DemandesRhView.vue'),
         meta: {
             title: 'Demandes RH',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -108,7 +109,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/PaieView.vue'),
         meta: {
             title: 'Paie',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {
@@ -117,7 +118,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/SalaryAdvanceView.vue'),
         meta: {
             title: 'Avance sur salaire',
-            role: [helpers.roles.RH]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
 ];
