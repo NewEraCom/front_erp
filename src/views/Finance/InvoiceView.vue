@@ -23,19 +23,19 @@ onMounted(async () => {
     <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Facture</span> </h5>
     <div v-if="stats" class="row">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Employés CDI" :count="String(10)" color="bg-label-warning" icon="ti-bolt"
+        <CardOne title="Total Factures" :count="String(10)" color="bg-label-warning" icon="ti-bolt"
           card-color="card-border-shadow-warning" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Employés CDD" :count="String(10)" color="bg-label-success" icon="ti-bolt"
+        <CardOne title="Facture En attente" :count="String(10)" color="bg-label-success" icon="ti-bolt"
           card-color="card-border-shadow-success" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-        <CardOne title="Employés Chantier" :count="String(10)" color="bg-label-info" icon="ti-bolt"
+        <CardOne title="Facture en cours" :count="String(10)" color="bg-label-info" icon="ti-bolt"
           card-color="card-border-shadow-info" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-        <CardOne title="Employés Contrat Commercial" :count="String(10)" color="bg-label-danger" icon="ti-bolt"
+        <CardOne title="Facture Traitee" :count="String(10)" color="bg-label-danger" icon="ti-bolt"
           card-color="card-border-shadow-danger" />
       </div>
     </div>
