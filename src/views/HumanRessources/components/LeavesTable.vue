@@ -43,7 +43,7 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.leaves.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+        const combinedFields = `${item.employe.first_name} ${item.employe.last_name} ${item.employe.matricule} ${item.type}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
@@ -64,8 +64,9 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Non Actif</option>
+                            <option value="pending">En attente</option>
+                            <option value="approved">Approuvé</option>
+                            <option value="disapproved">Rejeté</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-2">
@@ -80,14 +81,13 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
-                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

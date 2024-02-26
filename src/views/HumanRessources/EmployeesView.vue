@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { CardOne } from '@/ui';
 import { AddNewEmployeeModal } from './components/modals';
 import { DeleteModal } from '@/ui';
@@ -14,6 +14,10 @@ const stats = ref(computed(() => RhStore.stats));
 
 onMounted(async () => {
   await rhService.getEmployees();
+});
+
+onUnmounted(() => {
+  RhStore.clearEmployees();
 });
 
 </script>

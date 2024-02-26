@@ -154,13 +154,13 @@ const RHMenu = [
         icon: 'ti ti-plane-inflight',
         path: 'Leaves'
     },
-    {
+    /* {
         id: 7,
         name: 'Documents',
         route: '/documents',
         icon: 'ti ti-files',
         path: 'DocumentsRH'
-    },
+    }, */
     {
         id: 8,
         name: 'Recrutements',
@@ -175,13 +175,13 @@ const RHMenu = [
         icon: 'ti ti-file-export',
         path: 'DemandesRH'
     },
-    {
-        id: 10,
-        name: 'Contrats',
-        route: '/contracts',
-        icon: 'ti ti-file-stack',
-        path: 'Contracts',
-    },
+    /*   {
+          id: 10,
+          name: 'Contrats',
+          route: '/contracts',
+          icon: 'ti ti-file-stack',
+          path: 'Contracts',
+      }, */
     {
         id: 11,
         name: 'Paie',

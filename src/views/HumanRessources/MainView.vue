@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 
 import { RHStatsCard, EmployeeChart } from './components';
 
@@ -12,6 +12,10 @@ const RhStore = useRhStore();
 
 onMounted(async () => {
   await rhService.getEmployees();
+});
+
+onUnmounted(() => {
+  RhStore.clearStats();
 });
 
 </script>

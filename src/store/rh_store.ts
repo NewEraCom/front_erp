@@ -58,6 +58,12 @@ export const useRhStore = defineStore('RhStore', {
                 mass_salariale_per_month: data.mass_salarial
             };
         },
+        clearEmployees() {
+            this.employees = null;
+        },
+        clearStats() {
+            this.stats = null;
+        },
         setEmployeeId(data: any) {
             this.employee = data;
         },
@@ -79,7 +85,7 @@ export const useRhStore = defineStore('RhStore', {
                 total: data.conge.length,
                 accepted: data.conge.filter((e: any) => e.status === 'approved').length,
                 pending: data.conge.filter((e: any) => e.status === 'pending').length,
-                sick: data.conge.filter((e: any) => e.type === 'Conge Maladie').length,
+                sick: data.conge.filter((e: any) => e.type === 'Maladie').length,
             };
         },
         pushLeave(data: any) {
