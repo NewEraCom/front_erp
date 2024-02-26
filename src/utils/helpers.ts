@@ -46,7 +46,8 @@ const roles = {
 	DG: 'Directeur general',
 	DS: 'Directrice Support',
 	RAP: 'Responsable d\'avant projet',
-	MAGASINIER: 'Magasinier'
+	MAGASINIER: 'Magasinier',
+	FINANCE: 'Responsable financier',
 };
 
 
@@ -59,6 +60,8 @@ const initialDashboard = (role: string): string => {
 			return 'DashboardPM';
 		case roles.DG:
 			return 'DashboardPM';
+		case roles.FINANCE:
+			return 'FnFacture';
 		default:
 			return '404';
 	}
@@ -120,7 +123,7 @@ const returnBadge = (item: any): any[] => {
 		case 'non encaissé':
 			return ['badge bg-label-warning', 'Non Encaissé'];
 		case 'encaissé':
-		    return ['badge bg-label-success', 'Encaissé'];
+			return ['badge bg-label-success', 'Encaissé'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
@@ -173,7 +176,7 @@ import AL_AKHDAR_BANK from '@/assets/img/brands/AL-AKHDAR-BANK.png';
 import UMNIA_BANK from '@/assets/img/brands/UMNIA_BANK.png';
 import NoLogo from '@/assets/img/brands/NoLogo.png';
 
-function bankName(bank:String) {
+function bankName(bank: String) {
 	switch (bank) {
 		case 'BMCE BANK':
 			return [BMCE, 'BMCE'];
@@ -210,8 +213,8 @@ function bankName(bank:String) {
 function setDeleteId(id: string) {
 	$('#deleteId').val(id);
 }
- function baseUrl() {
-    return env.VITE_UPLOADS_URL;
+function baseUrl() {
+	return env.VITE_UPLOADS_URL;
 }
 
 
