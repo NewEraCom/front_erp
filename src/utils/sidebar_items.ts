@@ -89,7 +89,7 @@ const CFMenu = [
     {
         id: 5,
         name: 'Sous-traitants',
-        route: '/dashboard-pm',
+        route: '/soustraitant',
         icon: 'ti ti-smart-home',
         path: 'DashboardPM'
     },

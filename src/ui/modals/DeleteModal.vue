@@ -32,6 +32,7 @@ const handleSubmit = async () => {
         }
     } else {
         console.error('The action prop is not a function');
+        // Optionally handle the error here
     }
 };
 </script>

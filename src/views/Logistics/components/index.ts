@@ -7,6 +7,7 @@ import CachetsTable from './CachetsTable.vue';
 import CaisseTable from './CaisseTable.vue';
 import VehiculesTable from './VehiculesTable.vue';
 import TransportTable from './TransportTable.vue';
+import ValidateCaisse from './ValidateCaisse.vue';
 
 export {
     StockTable,
@@ -17,5 +18,6 @@ export {
     CachetsTable,
     CaisseTable,
     VehiculesTable,
-    TransportTable
+    TransportTable,
+    ValidateCaisse
 };

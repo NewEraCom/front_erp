@@ -89,6 +89,6 @@ const deleteST = async () => {
             title="Supprimer une Facture"
             text="Voulez-vous vraiment supprimer cette facture ?"
             textButton="Supprimer"
-            :method="deleteST"/>
+            :action="deleteST"/>
   </div>
 </template>

@@ -30,12 +30,12 @@ onUnmounted(() => {
                     card-color=" card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardTwo title="Sous-traitant Actif" :count="stats.actif" color="bg-label-warning"
-                    icon="ti ti-building-store" card-color="card-border-shadow-warning" />
+                <CardTwo title="Sous-traitant Actif" :count="stats.actif" color="bg-label-success"
+                    icon="ti ti-building-store" card-color="card-border-shadow-success" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardTwo title="Sous-traitant Inactif" :count="stats.inactif" color="bg-label-success"
-                    icon="ti ti-building-store" card-color="card-border-shadow-success" />
+                <CardTwo title="Sous-traitant Inactif" :count="stats.inactif" color="bg-label-warning"
+                    icon="ti ti-building-store" card-color="card-border-shadow-warning" />
             </div>
         </div>
         <div class="row mt-4">

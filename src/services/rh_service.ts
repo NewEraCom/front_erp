@@ -232,6 +232,23 @@ const addEmployee = async (data: any) => {
         return error;
     }
 };
+ async function Confirmation(id, req) {
+    try {
+
+
+        const response = await api().post('conge/valider/' + id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+
+            
+            await getLeaves()
+
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 export default {
@@ -249,5 +266,6 @@ export default {
     getEmployeeById,
     addLeave,
     addSalaryAdvance,
-    addEmployee
+    addEmployee,
+    Confirmation
 };

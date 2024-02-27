@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
+import { useLogisticsStore } from '@/store';
 
 const props = defineProps({
     caisse: {
@@ -9,7 +10,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+const logisticsStore = useLogisticsStore();
 const headers = [
     { text: 'Récepteur/Émetteur', value: 'recepteur', type: 'caisse' },
     { text: 'Montant', value: 'montant', type: 'currency' },
@@ -22,6 +23,18 @@ const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
+
+if ([helpers.roles.DG , helpers.roles.DS ].includes(localStorage.getItem('role'))) {
+    actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+        showValidationModal(item);
+    } });
+}
+const showValidationModal = (item: any) => {
+    logisticsStore.setItemId(item.id)
+
+    $("#validate-caisse-modal").modal("show");
+
+};
 
 const detailsItem = (item: any) => {
     console.log(item);

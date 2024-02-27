@@ -3,8 +3,7 @@ import { useSalesStore } from '@/store';
 
 const getPurchaseOrders = async (type: string) => {
     try {
-        // const response = await api().get('/purchase/get/' + type);
-        const response = await api().get('/purchase/get');
+        const response = await api().get('/purchase/get/' + type);
         const salesStore = useSalesStore();
         salesStore.setPurchaseOrders(response.data.purchases);
     } catch (error) {

@@ -102,6 +102,23 @@ const getTransport = async () => {
         return Promise.reject(error);
     }
 };
+async function validateCaisse(id: number) {
+    try {
+
+
+        const response = await api().post('logistics/caisse/validate/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+
+            
+            await getCaisse()
+
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 export default {
@@ -114,7 +131,8 @@ export default {
     getCachets,
     getOperationCaisse,
     getVehicules,
-    getTransport
+    getTransport,
+    validateCaisse
 };
 
 

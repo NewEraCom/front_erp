@@ -62,7 +62,7 @@ onMounted(async () => {
     </div>
     <!-- /Last 10 Achats -->
     <div v-if="data" class="row mt-4">
-            <div class="col-6">
+            <div class="col-6 h-50">
                 <ProjectChart
                     title="Statistique des projets"
                     subtitle="Budget des Projets"
@@ -73,7 +73,7 @@ onMounted(async () => {
                     type="bar"
                 />
             </div>
-            <div class="col-6">
+            <div class="col-6 h-50 ">
                 <AchatPieChart :data="data.achatByProject" />
             </div>
         </div>

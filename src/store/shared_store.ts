@@ -103,8 +103,8 @@ export const useSharedStore = defineStore('ShareStore', {
             this.fournisseurs.data = data;
             this.fournisseurs.stats = {
                 total: data.length,
-                actif: data.filter((item: any) => item.status === 'pending').length,
-                inactif: data.filter((item: any) => item.status === 'completed').length,
+                actif: data.filter((item: any) => item.is_active === 1).length,
+                inactif: data.filter((item: any) => item.is_active === 0).length,
             };
             this.fournisseurs.loading = true;
         },
