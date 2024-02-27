@@ -1,10 +1,13 @@
 import { defineStore } from 'pinia';
 
 
-export const useFactureStore = defineStore('FactureStore', {
+export const useFinanceStore = defineStore('FinanceStore', {
     state: () => ({
         facture: null,
         stats: null,
+        caution: null,
+        cheque: null,
+
        
         item: null,
         ItemId: null,
@@ -42,6 +45,14 @@ export const useFactureStore = defineStore('FactureStore', {
             this.print_articles = data.facture_article;
             this.print_facture = data;
             console.log(data);
-        }
+        },
+        SetCaution(data:any){
+            this.caution = data.cautions;
+            this.stats = data.kpis;
+        },
+        SetCheque(data:any){
+            this.cheque = data.cheques;
+            this.stats = data.kpis;
+        },
     }
 });

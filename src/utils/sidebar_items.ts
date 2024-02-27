@@ -68,21 +68,21 @@ const CFMenu = [
     {
         id: 2,
         name: 'Projets',
-        route: '/dashboard-pm',
+        route: '/projects',
         icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        path: 'Projects'
     },
     {
         id: 3,
         name: 'Demande d\'achat',
-        route: '/dashboard-pm',
+        route: '/purchase-order',
         icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        path: 'PurchaseOrder'
     },
     {
         id: 4,
         name: 'Factures',
-        route: '/dashboard-pm',
+        route: '/facture',
         icon: 'ti ti-smart-home',
         path: 'DashboardPM'
     },
@@ -100,13 +100,7 @@ const CFMenu = [
         icon: 'ti ti-smart-home',
         path: 'DashboardPM'
     },
-    {
-        id: 6,
-        name: 'Demande de DSS',
-        route: '/dashboard-pm',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
-    },
+    
     ...sharedMenu2,
     ...sharedMenu
 ];
@@ -605,6 +599,29 @@ const SupportMenu = [
     },
     ...sharedMenu
 ];
+const FinanceMenu = [
+    {
+        id: 1,
+        name: 'Facture',
+        route: '/fn/facture',
+        icon: 'ti ti-files',
+        path: 'FnFacture'
+    },
+    {
+        id: 2,
+        name: 'Cheque',
+        route: '/fn/cheque',
+        icon: 'ti ti-file-dollar',
+        path: 'FnCheque'
+    },
+    {
+        id: 3,
+        name: 'Caution',
+        route: '/fn/Caution',
+        icon: 'ti ti-coins',
+        path: 'FnCaution'
+    }
+];
 
 export const sideBar = {
     DGMenu,
@@ -612,5 +629,6 @@ export const sideBar = {
     RHMenu,
     SalesMenu,
     LogisticsMenu,
-    SupportMenu
+    SupportMenu,
+    FinanceMenu
 };

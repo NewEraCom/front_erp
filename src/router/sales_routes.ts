@@ -17,7 +17,7 @@ export const salesRoutes = [
         component: () => import('@/views/Sales/PurchaseOrderView.vue'),
         meta: {
             title: 'Demande d\'achat',
-            role: [helpers.roles.SALES]
+            role: [helpers.roles.SALES, helpers.roles.CF]
         },
     },
     {

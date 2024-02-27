@@ -15,6 +15,7 @@ import EditBanInfoModal from './EditBanInfoModal.vue';
 import EditCnssModal from './EditCnssModal.vue';
 import ResumptionContractModal from './ResumptionContractModal.vue';
 import EditEmployeeModal from './EditEmployeeModal.vue';
+import SalaryAdvancesDetailsModal from './SalaryAdvanceDetailsModal.vue';
 
 export {
     AddNewEmployeeModal,
@@ -33,5 +34,6 @@ export {
     EditBanInfoModal,
     EditCnssModal,
     ResumptionContractModal,
-    EditEmployeeModal
+    EditEmployeeModal,
+    SalaryAdvancesDetailsModal
 };

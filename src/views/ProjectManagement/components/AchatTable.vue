@@ -1,47 +1,53 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
+import { formater } from '@/utils';
+import { PMService } from '@/services';
 
 const props = defineProps({
-    interns: {
+    demandeAchat: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Stagiaires', value: 'nom', isComplex: true, type: 'fullname' },
-    { text: 'Numéro de téléphone', value: 'tel', type: 'phone' },
-    { text: 'Poste', value: 'poste', type: 'text' },
-    { text: 'Diplome', value: 'diplome', type: 'text' },
+    { text: 'N° Ordre' ,value:'n_order', type: 'text'},
+    { text: 'Type', value: 'type', type: 'text' },
+    { text: 'Commantaire', value: 'commentaire', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'Code Projet',  isComplex:true, type: 'project'},
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    {
+        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
+            
+        },
+        // condition: (item:any) => item.status != 1
+    },
+    
 ];
 
 
 
-const deleteItem = (item: any) => {
-    console.log('Delete item', item);
-};
 
-const filteredData = ref(props.interns);
+const filteredData = ref(props.demandeAchat);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
+const startQuery = ref();
+const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.interns.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+    filteredData.value = props.demandeAchat.filter((item: any) => {
+        const combinedFields = `${item.status} ${item.n_order} ${item.type} ${item.commentaire} ${item.project.code}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value);
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_recuperation) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.date_recuperation) <= formater.startOfDay(endQuery.value));
     });
-
 };
 
 </script>
@@ -52,7 +58,15 @@ const filter = () => {
                 <div class="d-flex align-items-center">
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
                         @input="filter" />
-
+                    <div class="d-flex align-items-center ms-2">
+                        <label for="start">De</label>
+                        <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
+                            @change="filter" />
+                    </div>
+                    <div class="d-flex align-items-center ms-0">
+                        <label for="end">à</label>
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                    </div>
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
@@ -61,23 +75,22 @@ const filter = () => {
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-auto">
-                        <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
+                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            button-type="simple" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" />
     </div>
 </template>
 <style>

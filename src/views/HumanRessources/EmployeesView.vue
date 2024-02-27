@@ -80,8 +80,8 @@ watch(employees, () => {
       </div>
     </div>
     <AddNewEmployeeModal />
-    <DeleteModal title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?" textButton="Supprimer"
-      :action="() => rhService.deleteEmployee()" />
+    <DeleteModal title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?"
+      textButton="Oui, Supprimer" :action="() => rhService.deleteEmployee()" />
   </div>
 </template>
 
