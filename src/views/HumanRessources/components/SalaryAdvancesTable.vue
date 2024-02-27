@@ -53,7 +53,6 @@ const filter = () => {
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.start_payment) >= formater.startOfDay(startQuery.value)) &&
             (!endQuery.value || formater.startOfDay(item.end_payment) <= formater.startOfDay(endQuery.value));
     });
-
 };
 </script>
 <template>
@@ -99,7 +98,6 @@ const filter = () => {
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
             button-type="simple" disabled="approved" />
-
     </div>
 </template>
 <style>

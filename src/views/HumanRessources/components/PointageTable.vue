@@ -34,8 +34,8 @@ if (props.custom === true) {
 
 
 const actionsConfig = [
-    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { text: 'Modifier', class: 'text-primary', onClick: (item: any) => deleteItem(item) },
+    { text: 'Supprimer', class: 'text-danger', onClick: (item: any) => deleteItem(item) },
 ];
 
 
