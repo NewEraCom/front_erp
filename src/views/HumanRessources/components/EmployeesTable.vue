@@ -94,7 +94,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
-            button-type="simple" disabled="1" />
+            button-type="simple" disabled=1 />
     </div>
 </template>
 <style>

@@ -69,38 +69,52 @@ const CFMenu = [
         id: 2,
         name: 'Projets',
         route: '/projects',
-        icon: 'ti ti-smart-home',
+        icon: 'ti ti-package',
         path: 'Projects'
     },
     {
         id: 3,
         name: 'Demande d\'achat',
-        route: '/purchase-order',
-        icon: 'ti ti-smart-home',
-        path: 'PurchaseOrder'
+        route: '/project/purchase_order',
+        icon: 'ti ti-shopping-cart',
+        path: 'PurchaseOrderProject'
+    },
+    {
+        id: 3,
+        name: 'Demande d\'exécution',
+        route: '/project/executation_order',
+        icon: 'ti ti-settings',
+        path: 'ExecutionOrderProject'
     },
     {
         id: 4,
         name: 'Factures',
         route: '/facture',
-        icon: 'ti ti-smart-home',
+        icon: 'ti ti-file-invoice',
         path: 'DashboardPM'
     },
     {
         id: 5,
-        name: 'Sous-traitants',
-        route: '/dashboard-pm',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        name: 'Demande DSS',
+        route: '/project/out-of-stock',
+        icon: 'ti ti-transfer-out',
+        path: 'OutOfStockProject'
     },
     {
         id: 6,
-        name: 'Demande de caisse',
-        route: '/dashboard-pm',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        name: 'Sous-traitants',
+        route: '/soustraitant',
+        icon: 'ti ti-forklift',
+        path: 'Soustraitant'
     },
-    
+    {
+        id: 7,
+        name: 'Demande de caisse',
+        route: '/project/caisse-request',
+        icon: 'ti ti-transfer-out',
+        path: 'CaisseRequest'
+    },
+
     ...sharedMenu2,
     ...sharedMenu
 ];
@@ -455,11 +469,10 @@ const SupportMenu = [
 
         ]
     },
-
     {
         id: 2,
         name: 'Logistique',
-        icon: 'ti ti-users',
+        icon: 'ti ti-stack',
         children: [
             {
                 id: 4,

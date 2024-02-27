@@ -21,6 +21,16 @@ export const salesRoutes = [
         },
     },
     {
+        path: '/purchase-order/details/:id',
+        name: 'PurchaseOrderDetails',
+        component: () => import('@/views/Sales/DetailsPurchaseOrderView.vue'),
+        props: true,
+        meta: {
+            title: 'Details de la demande d\'achat',
+            role: [helpers.roles.SALES, helpers.roles.CF]
+        },
+    },
+    {
         path: '/execution-request',
         name: 'ExecutionRequest',
         component: () => import('@/views/Sales/ExecutionRequestView.vue'),

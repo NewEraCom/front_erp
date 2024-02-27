@@ -302,8 +302,7 @@ watch(() => props.pageSize, () => {
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId" style="">
                                 <button v-for="action in actionsConfig" :key="action.icon" class="dropdown-item"
-                                    :class="action.type == 'delete' ? (item.status != disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
-                                    @click="action.onClick(item)"
+                                    :class="action.class" @click="action.onClick(item)"
                                     :disabled="action.type == 'delete' ? (item.status == disabled) : false">
                                     {{ action.text }}
                                 </button>
