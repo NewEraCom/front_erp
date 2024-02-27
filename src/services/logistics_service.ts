@@ -111,7 +111,7 @@ async function validateCaisse(id: number) {
             console.log(response.data);
 
             
-            await getCaisse()
+            await getOperationCaisse()
 
             return response.data;
         }

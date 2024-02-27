@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
+import { useRhStore } from '@/store';
 
 const props = defineProps({
     recruitment: {
@@ -9,7 +10,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+const rhStore = useRhStore();
 const headers = [
     { text: 'Poste', value: 'post_name', type: 'text' },
     { text: 'Experience', value: 'experience', type: 'text' },
@@ -22,6 +23,16 @@ const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
+if( localStorage.getItem('role') === helpers.roles.DS ){
+    actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+        showValidationModal(item);
+    } });
+}
+const showValidationModal = (item: any) => {
+    rhStore.setItemId(item.id)
+    $("#validate-recruitement-modal").modal("show");
+
+};
 
 const detailsItem = (item: any) => {
     console.log(item);

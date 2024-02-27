@@ -10,11 +10,11 @@ defineProps({
 </script>
 
 <template>
-    <Modal :id="id" title="Valider Caisse">
+    <Modal :id="id" title="Validation Recrutement">
         <form @submit.prevent="method">
-            <div class="modal-body ">
+            <div class="modal-body">
                 <input type="text" id="validateInput" hidden :value="itemid" />
-                <p>Êtes-vous sûr de valider cette demande de caisse</p>
+                <p>Êtes-vous sûr de valider ce Recrutement</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">

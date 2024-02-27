@@ -7,12 +7,12 @@ import { useRhStore } from '@/store';
 
 
 const rhStore = useRhStore();
-
 const recrutement = ref(computed(() => rhStore.recrutement));
 
 onMounted(async () => {
   await rhService.getRecrutement();
 });
+
 
 </script>
 <template>
@@ -54,6 +54,7 @@ onMounted(async () => {
       </div>
     </div>
     <AddNewRecruitmentModal />
+   
   </div>
 </template>
 

@@ -19,5 +19,5 @@ export {
     AddDemandeRhModal,
     AddPaieModal,
     AddSalaryAdvanceModal,
-    ValidateConge
+    ValidateConge,
 };

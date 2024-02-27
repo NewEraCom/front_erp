@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardTwo } from '@/ui';
-import { useSharedStore } from '@/store';
-import { sharedService } from '@/services';
-import { RecruitementTable } from './components';
+import { useRhStore, useSharedStore } from '@/store';
+import { rhService, sharedService } from '@/services';
+import { RecruitementTable,ValidateRecruitementModal } from './components';
 
 const sharedStore = useSharedStore();
-
+const isLoading = ref(false);
+const rhStore = useRhStore();
 const recruitment = ref(computed(() => sharedStore.recruitment.data));
 const stats = ref(computed(() => sharedStore.recruitment.stats));
 
@@ -17,6 +18,16 @@ onMounted(async () => {
 onUnmounted(() => {
     sharedStore.clearRecruitment();
 });
+const ValidateRecruite = async () => {
+     isLoading.value = true;
+
+    await rhService.ValidateRecruite(rhStore.ItemId).then(() => {
+     isLoading.value = false;
+      $("#validate-recruitement-modal").modal("hide");
+    
+   });
+  // console.log($('#validateInput').val());
+};
 
 </script>
 <template>
@@ -62,6 +73,12 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <ValidateRecruitementModal
+        id="validate-recruitement-modal"
+        :isLoading="isLoading"
+      :method="ValidateRecruite"
+      :itemid="rhStore.ItemId"
+    />
     </div>
 </template>
 

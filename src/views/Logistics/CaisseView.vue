@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { watch } from 'vue';
 import { CardOne, CardCaisse, CardOneSkeleton } from '@/ui';
 import { CaisseTable ,ValidateCaisse} from './components';
 import { useLogisticsStore } from '@/store';
@@ -17,14 +18,19 @@ onMounted(async () => {
     await logisticsService.getCaisse();
 });
 
+// ...
+
+watch(caisse, (newValue, oldValue) => {
+    caisse.value = newValue;
+    console.log('caisse changed:', newValue);
+}, { deep: true });
+
 onUnmounted(() => {
     logisticsStore.clearOperationCaisse();
     logisticsStore.clearCaisse();
 });
 const Validate = async () => {
      isLoading.value = true;
-
-
     await logisticsService.validateCaisse(logisticsStore.ItemId).then(() => {
      isLoading.value = false;
       $("#validate-caisse-modal").modal("hide");
