@@ -34,7 +34,8 @@ export const useRhStore = defineStore('RhStore', {
         workers: {
             data: null,
             stats: null,
-        }
+        },
+        salaryAdvanceSelected: null
     }),
     actions: {
         setEmployees(data: any) {
@@ -143,6 +144,15 @@ export const useRhStore = defineStore('RhStore', {
                 }, 0),
             };
             console.log(this.salaryAdvances.stats);
+        },
+        deleteSalaryAdvance(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.salaryAdvances.data.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.salaryAdvances.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
         },
         pushSalaryAdvance(data: any) {
             this.salaryAdvances.data.push(data);

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
+import { useRhStore } from '@/store';
+const rhStore = useRhStore();
 
 const props = defineProps({
     salaryAdvances: {
@@ -21,15 +23,18 @@ const headers = [
 
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 const detailsItem = (item: any) => {
-    console.log(item);
+    rhStore.salaryAdvanceSelected = item;
+    $('#showSalaryAdvance').modal('show');
 };
 
+
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    helpers.setDeleteId(item.id);
+    $('#deleteModal').modal('show');
 };
 
 const filteredData = ref(props.salaryAdvances);

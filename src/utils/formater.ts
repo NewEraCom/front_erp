@@ -100,6 +100,14 @@ const formatRIB = (number: string) => {
     );
 };
 
+function limitedTextWithValue(props: string, value: number): string {
+    if (props === null) return '-';
+
+    if (props.length > value) {
+        return props.substring(0, value) + '...';
+    }
+    return props;
+}
 
 const limitText = (text: string, limit: number) => {
     if (text == 'null') return '-';

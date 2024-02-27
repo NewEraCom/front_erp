@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater, helpers } from '@/utils';
+import { formater } from '@/utils';
 import router from '@/router';
-import {useFactureStore} from '@/store'
-const FactureStore = useFactureStore();
+import {useFinanceStore} from '@/store'
+const FinanceStore = useFinanceStore();
 const props = defineProps({
     factures: {
         type: Array,
@@ -14,9 +14,8 @@ const props = defineProps({
 const Preview = (id:any) => {
     let data = props.factures;
     let facture = data.find((facture) => facture.id === id);
-    console.log(facture);
-    FactureStore.Print(facture)
-    if(FactureStore.print_articles && FactureStore.print_facture){
+    FinanceStore.Print(facture)
+    if(FinanceStore.print_articles && FinanceStore.print_facture){
         router.push('/fn/facture/details');
 
     }
@@ -26,13 +25,13 @@ const headers = [
     { text: 'Numero', value: 'numero', type: 'text' },
     { text: 'Type', value: 'type', type: 'text' },
     { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
-    { text: 'Project', value: 'project.code', type: 'text' },
+    { text: 'Project',  value: 'code',isComplex: true, type: 'project'},
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item) => {
+        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item:any) => {
             Preview(item.id)
         }
     },

@@ -18,13 +18,11 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => editItem(item) },
+    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
 ];
 
-const editItem = (item: any) => {
-    console.log('Edit item', item);
-};
+
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);

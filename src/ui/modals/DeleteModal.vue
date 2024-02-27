@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, defineProps } from 'vue';
 
+
 // Define props with 'action' as a Function. If using TypeScript for strict typing,
 // you can specify a more detailed type that matches the expected signature of the function.
 const props = defineProps({
@@ -13,6 +14,7 @@ const props = defineProps({
 const isLoading = ref(false);
 
 const handleSubmit = async () => {
+
     // Ensure the action prop is a function before attempting to call it
     if (typeof props.action === 'function') {
         isLoading.value = true; // Start loading
@@ -33,7 +35,8 @@ const handleSubmit = async () => {
     } else {
         console.error('The action prop is not a function');
     }
-};
+}
+    ;
 </script>
 
 <template>
