@@ -23,6 +23,7 @@ const actionsConfig = [
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
+
 const detailsItem = (item: any) => {
     console.log(item);
 };

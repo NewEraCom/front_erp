@@ -1,5 +1,5 @@
-<script setup>
-import { onMounted ,ref} from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
 import { Chart as ChartJS } from 'chart.js';
 
 
@@ -88,8 +88,8 @@ onMounted(async () => {
                 <small class="text-muted">Statistique des Achats par Projets</small>
             </div>
         </div>
-        <div v-if="!empty" class="card-body mt-4">
-            <canvas :id="chartId" style="height: 300px; width: 100%;"></canvas>
+        <div v-if="!empty" class="card-body h-100 mt-4">
+            <canvas :id="chartId" style="height: 100px !important; width: 100%;"></canvas>
         </div>
         <div v-else class="card-body mt-4 text-center">
             <img src="@/assets/img/Empty.png" width="180px" alt="" srcset="" class="mt-5" />
@@ -98,3 +98,10 @@ onMounted(async () => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.h-100 {
+    height: 900px !important;
+}
+</style>
+

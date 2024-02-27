@@ -16,6 +16,7 @@ export const useSalesStore = defineStore('SalesStore', {
             data: null,
             stats: null,
         },
+        purchase: null,
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -28,6 +29,12 @@ export const useSalesStore = defineStore('SalesStore', {
                 onroad: purchases.filter((p: any) => p.status === 'on road').length,
                 completed: purchases.filter((p: any) => p.status === 'done').length,
             };
+        },
+        setPurchase(purchase: any) {
+            this.purchase = purchase;
+        },
+        clearPurchase() {
+            this.purchase = null;
         },
         clearPurchaseOrders() {
             this.purchaseOrders.data = null;

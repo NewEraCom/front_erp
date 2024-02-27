@@ -2,8 +2,9 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater, helpers } from '@/utils';
-import {usePMStore} from '@/store'
+import { usePMStore } from '@/store';
 const PMStore = usePMStore();
+
 const props = defineProps({
     factures: {
         type: Array,
@@ -11,10 +12,10 @@ const props = defineProps({
     },
 });
 const deleteFactureModal = 'delete-facture';
-const editFactureModal ='edit-facture';
+const editFactureModal = 'edit-facture';
 
-const showEditModal = (item:any) => {
-    PMStore.setItem(item)
+const showEditModal = (item: any) => {
+    PMStore.setItem(item);
     $(`#${editFactureModal}`).modal('show');
 };
 const deleteItem = (item: any) => {
@@ -23,20 +24,19 @@ const deleteItem = (item: any) => {
 };
 const headers = [
     { text: 'Numero', value: 'numero', type: 'text' },
-    { text: 'Type', value: 'type', type: 'text' },
     { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
-    { text: 'Projecto',  value: 'code',isComplex: true, type: 'project'},
+    { text: 'Project', value: 'code', type: 'project' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item:any) => {  
+        icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => {
             showEditModal(item);
         },
     },
     {
-        icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item:any) => {
+        icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
             deleteItem(item);
 
         }
@@ -105,7 +105,8 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" button-type="simple" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
+            button-type="simple" disabled="1" />
     </div>
 </template>
 <style>

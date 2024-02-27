@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { PMService } from '@/services';
 
 const props = defineProps({
     demandeAchat: {
@@ -12,21 +11,17 @@ const props = defineProps({
 });
 
 const headers = [
-    { text: 'N° Ordre' ,value:'n_order', type: 'text'},
-    { text: 'Type', value: 'type', type: 'text' },
+    { text: 'N° Ordre', value: 'n_order', type: 'text' },
+    { text: 'Projet', value: 'code', type: 'project' },
     { text: 'Commantaire', value: 'commentaire', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },
-    { text: 'Code Projet',  isComplex:true, type: 'project'},
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
-            
+        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         },
-        // condition: (item:any) => item.status != 1
     },
-    
 ];
 
 
@@ -90,7 +85,8 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
+            disabled="1" />
     </div>
 </template>
 <style>
