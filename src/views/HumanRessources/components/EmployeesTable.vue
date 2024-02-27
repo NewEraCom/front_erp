@@ -26,7 +26,7 @@ const actionsConfig = [
             router.push({ name: 'ProfileEmployee', params: { id: item.id } });
         }
     },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
 ];
 
 
@@ -93,7 +93,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
-            button-type="simple" disabled="1" />
+            button-type="simple" disabled=1 />
     </div>
 </template>
 <style>

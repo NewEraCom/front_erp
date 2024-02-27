@@ -1,3 +1,4 @@
+import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useRhStore = defineStore('RhStore', {
@@ -122,6 +123,12 @@ export const useRhStore = defineStore('RhStore', {
                 pending: data.filter((e: any) => e.status === 'pending').length,
                 done: data.filter((e: any) => e.status === 'done').length,
                 delivered: data.filter((e: any) => e.status === 'delivered').length,
+            };
+        },
+        clearDemandeRh() {
+            this.demandeRh = {
+                data: null,
+                stats: null,
             };
         },
         setSalaryAdvances(data: any) {

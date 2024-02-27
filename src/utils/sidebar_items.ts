@@ -461,11 +461,10 @@ const SupportMenu = [
 
         ]
     },
-
     {
         id: 2,
         name: 'Logistique',
-        icon: 'ti ti-users',
+        icon: 'ti ti-stack',
         children: [
             {
                 id: 4,
