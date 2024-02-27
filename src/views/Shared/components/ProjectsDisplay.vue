@@ -21,15 +21,10 @@ const headers = [
 
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 const detailsItem = (item: any) => {
     console.log(item);
-};
-
-const deleteItem = (item: any) => {
-    console.log('Delete item', item);
 };
 
 const filteredData = ref(props.projects);
@@ -48,9 +43,7 @@ const filter = () => {
             (statusQuery.value === '-' || item.status == statusQuery.value) && (!startQuery.value || formater.startOfDay(item.date_start) >= formater.startOfDay(startQuery.value)) &&
             (!endQuery.value || formater.startOfDay(item.date_start) <= formater.startOfDay(endQuery.value));
     });
-
 };
-
 </script>
 <template>
     <div>
@@ -85,7 +78,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -93,7 +86,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" />
+            buttonType="simple" disabled="on going" />
     </div>
 </template>
 <style>

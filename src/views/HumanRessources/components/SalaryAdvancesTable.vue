@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { DataTable } from '@/ui';
+import { formater, helpers } from '@/utils';
+import { useRhStore } from '@/store';
+const rhStore = useRhStore();
 
 const props = defineProps({
     salaryAdvances: {
@@ -21,15 +23,18 @@ const headers = [
 
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 const detailsItem = (item: any) => {
-    console.log(item);
+    rhStore.salaryAdvanceSelected = item;
+    $('#showSalaryAdvance').modal('show');
 };
 
+
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    helpers.setDeleteId(item.id);
+    $('#deleteModal').modal('show');
 };
 
 const filteredData = ref(props.salaryAdvances);
@@ -48,9 +53,7 @@ const filter = () => {
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.start_payment) >= formater.startOfDay(startQuery.value)) &&
             (!endQuery.value || formater.startOfDay(item.end_payment) <= formater.startOfDay(endQuery.value));
     });
-
 };
-
 </script>
 <template>
     <div>
@@ -86,7 +89,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -94,9 +97,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            button-type="simple" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
+            button-type="simple" disabled="approved" />
     </div>
 </template>
 <style>

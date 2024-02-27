@@ -1,3 +1,4 @@
+import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useRhStore = defineStore('RhStore', {
@@ -37,6 +38,7 @@ export const useRhStore = defineStore('RhStore', {
         },
         ItemId: null,
 
+        salaryAdvanceSelected: null
     }),
     actions: {
         setEmployees(data: any) {
@@ -126,6 +128,12 @@ export const useRhStore = defineStore('RhStore', {
                 delivered: data.filter((e: any) => e.status === 'delivered').length,
             };
         },
+        clearDemandeRh() {
+            this.demandeRh = {
+                data: null,
+                stats: null,
+            };
+        },
         setSalaryAdvances(data: any) {
             this.salaryAdvances.data = data;
             this.salaryAdvances.stats = {
@@ -145,6 +153,15 @@ export const useRhStore = defineStore('RhStore', {
                 }, 0),
             };
             console.log(this.salaryAdvances.stats);
+        },
+        deleteSalaryAdvance(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.salaryAdvances.data.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.salaryAdvances.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
         },
         pushSalaryAdvance(data: any) {
             this.salaryAdvances.data.push(data);

@@ -16,6 +16,8 @@ export const useSalesStore = defineStore('SalesStore', {
             data: null,
             stats: null,
         },
+        purchase: null,
+        ItemId: null,
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -28,6 +30,12 @@ export const useSalesStore = defineStore('SalesStore', {
                 onroad: purchases.filter((p: any) => p.status === 'on road').length,
                 completed: purchases.filter((p: any) => p.status === 'valide').length,
             };
+        },
+        setPurchase(purchase: any) {
+            this.purchase = purchase;
+        },
+        clearPurchase() {
+            this.purchase = null;
         },
         clearPurchaseOrders() {
             this.purchaseOrders.data = null;
@@ -61,5 +69,8 @@ export const useSalesStore = defineStore('SalesStore', {
             this.invoices.data = null;
             this.invoices.stats = null;
         },
+        setItemId(id: number) {
+            this.ItemId = id;
+        }
     }
 });

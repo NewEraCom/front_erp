@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Chart, registerables } from 'chart.js';
 Chart.register(...registerables);
@@ -11,19 +11,19 @@ const props = defineProps({
     subtitle: {
         type: String,
         default: 'Nombre d\'employés par mois en '
-    },color: {
+    }, color: {
         type: String,
         default: 'rgb(234,83,84)'
-    },data: {
+    }, data: {
         type: Array,
         default: () => ([])
-    },pin: {
+    }, pin: {
         type: String,
         default: 'total_employee'
-    },type: {
+    }, type: {
         type: String,
         default: 'bar'
-    },legened: {
+    }, legened: {
         type: String,
         default: 'Employees'
     }
@@ -126,11 +126,17 @@ onMounted(async () => {
         <div class="card-header pb-2 mb-1">
             <div class="card-title mb-1">
                 <h5 class="m-0 me-2 fw-bold">{{ title }}</h5>
-                <small class="text-muted"> {{ subtitle+' '+year }}</small>
+                <small class="text-muted"> {{ subtitle + ' ' + year }}</small>
             </div>
         </div>
-        <div class="card-body">
+        <div class="card-body h-100">
             <canvas ref="chartCanvas" style="height: 500px; width: 100%;"></canvas>
         </div>
     </div>
 </template>
+
+<style scoped>
+.h-100 {
+    height: 700px !important;
+}
+</style>

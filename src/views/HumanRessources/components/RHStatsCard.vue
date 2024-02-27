@@ -7,6 +7,10 @@ defineProps({
     type: Object,
     required: true,
   },
+  pending: {
+    type: Number,
+    required: true,
+  }
 });
 
 </script>
@@ -21,7 +25,7 @@ defineProps({
         icon="ti-coins" card-color="card-border-shadow-warning" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-      <CardOne title="Demande non traitée" count="21" color="bg-label-danger" icon="ti-mailbox"
+      <CardOne title="Demande non traitée" :count="String(pending)" color="bg-label-danger" icon="ti-mailbox"
         card-color="card-border-shadow-danger" />
     </div>
     <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">

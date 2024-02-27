@@ -11,10 +11,6 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-    buttonType: {
-        type: String,
-        default: 'simple',
-    }
 });
 
 const headers = [
@@ -33,9 +29,14 @@ if (props.custom === true) {
 }
 
 
+
 const actionsConfig = [
-    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    {
+        icon: 'ti ti-eye', text: 'Modifier', class: 'text-dark', onClick: (item: any) => {
+            console.log('Edit item', item);
+        }
+    },
+    { icon: 'ti ti-trash-filled', text: 'Supprimer', type: 'delete', class: 'text-danger', onClick: (item: any) => deleteItem(item) }
 ];
 
 
@@ -99,9 +100,8 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            :button-type="buttonType" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
+            button-type="custom" disabled="true" />
+
     </div>
 </template>
 <style>

@@ -218,6 +218,24 @@ const deleteEmployee = async () => {
     }
 };
 
+const deleteSalaryAdvance = async () => {
+    const id = $('#deleteId').val();
+    if (id) {
+        try {
+            const response = await api().delete('/pay/avance/delete/' + id);
+            if (response.status === 200) {
+                const rhStore = useRhStore();
+                rhStore.deleteSalaryAdvance(Number(id));
+                return;
+            }
+            throw new Error('Delete employee failed with status: ' + response.status);
+        } catch (error) {
+            console.error(error);
+            return error;
+        }
+    }
+};
+
 const addEmployee = async (data: any) => {
     try {
         const response = await api().post('/rh/insert/', data);
@@ -285,5 +303,6 @@ export default {
     addSalaryAdvance,
     addEmployee,
     Confirmation,
-    ValidateRecruite
+    ValidateRecruite,
+    deleteSalaryAdvance
 };

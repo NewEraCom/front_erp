@@ -6,23 +6,28 @@ import { RHStatsCard, EmployeeChart } from './components';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 
-const stats = ref(computed(() => RhStore.stats));
-
 const RhStore = useRhStore();
+
+
+const stats = ref(computed(() => RhStore.stats));
+const demandeRh = ref(computed(() => RhStore.demandeRh.stats));
+
 
 onMounted(async () => {
   await rhService.getEmployees();
+  await rhService.getDemandeRh();
 });
 
 onUnmounted(() => {
   RhStore.clearStats();
+  RhStore.clearDemandeRh();
 });
 
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
     <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
-    <RHStatsCard v-if="stats" :stats="stats" />
+    <RHStatsCard v-if="stats != null && demandeRh != null" :stats="stats" :pending="demandeRh.pending" />
     <div v-if="stats" class="row mt-2 g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
         <EmployeeChart title="Statistique des employés" subtitle="Nombre d'employés par mois en" color="rgb(37, 144, 250)"

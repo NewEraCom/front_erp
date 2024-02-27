@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { formater, helpers } from '@/utils';
 
 type Item = {
@@ -9,6 +9,8 @@ type Item = {
 type ActionButton = {
     icon: string;
     class: string;
+    type?: string;
+    text?: string;
     onClick: (item: Item) => void;
 };
 
@@ -17,6 +19,7 @@ const props = defineProps<{
     headers: Array<{ text: string, value: string, isComplex?: boolean, type?: string }>,
     buttonType: string,
     pageSize: number,
+    disabled: string,
     actionsConfig: ActionButton[];
 }>();
 
@@ -84,6 +87,10 @@ const visiblePageNumbers = computed(() => {
     }
 
     return pages;
+});
+
+watch(() => props.pageSize, () => {
+    currentPage.value = 1;
 });
 
 
@@ -280,9 +287,10 @@ const visiblePageNumbers = computed(() => {
                     </template>
 
                     <td v-if="buttonType == 'simple'" class="text-center">
-                        <!-- Render action buttons based on actionsConfig -->
                         <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
-                            :class="action.class" @click="action.onClick(item)" >
+                            :class="action.type == 'delete' ? (item.status != disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
+                            @click="action.onClick(item)"
+                            :disabled="action.type == 'delete' ? (item.status == disabled) : false">
                             <i :class="action.icon"></i>
                         </button>
                     </td>
@@ -293,8 +301,11 @@ const visiblePageNumbers = computed(() => {
                                 <i class="ti ti-dots-vertical ti-sm text-muted"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId" style="">
-                                <a class="dropdown-item" href="javascript:void(0);">Modifier</a>
-                                <a class="dropdown-item text-danger" href="javascript:void(0);">Supprimer</a>
+                                <button v-for="action in actionsConfig" :key="action.icon" class="dropdown-item"
+                                    :class="action.class" @click="action.onClick(item)"
+                                    :disabled="action.type == 'delete' ? (item.status == disabled) : false">
+                                    {{ action.text }}
+                                </button>
                             </div>
                         </div>
                     </td>

@@ -2,12 +2,12 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
+import { Modal } from '@/ui';
 import { helpers, formater } from '@/utils';
-import { PointageTable, AddPointageModal } from './components';
 
 const props = defineProps({
     id: {
-        type: Number,
+        type: String,
         required: true,
     },
 });
@@ -40,18 +40,18 @@ watch(data, () => {
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe</span> </h5>
             <div v-if="employee">
-                <button class="btn btn-warning">
+                <button class="btn btn-warning" data-bs-target="#editNewEmployee" data-bs-toggle="modal">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
-                <button v-if="employee.status === '1'" class="btn btn-danger ms-2">
+                <button v-if="employee.status === '1'" class="btn btn-danger ms-2" data-bs-toggle="modal"
+                    data-bs-target="#ruptureContrat">
                     <i class="ti ti-circle-x-filled me-2"></i>
                     Rupture de contrat
-
                 </button>
             </div>
         </div>
-        <div v-if="employee" class="row">
+        <div v-if="employee" class="row ">
             <div class="col-xl-4 col-lg-5 col-md-5 order-1 order-md-0">
                 <div class="card card-border-shadow-primary mb-4">
                     <div class="card-body">
@@ -180,7 +180,7 @@ watch(data, () => {
                 <div class="tab-content p-0" style="background-color: transparent; !important">
                     <div id="employee_dossier" class="tab-pane fade show active bg-none"
                         style="background-color: transparent; !important" role="tabpanel">
-                        <div class="row mb-3">
+                        <div class="row mb-3 g-3">
                             <div class="col-xxl-6">
                                 <div class="card card-border-shadow-primary">
                                     <div class="card-body" @mouseover="showSalary = true" @mouseleave="showSalary = false">
@@ -191,14 +191,14 @@ watch(data, () => {
                                             </div>
                                             <h4 class="ms-1 mb-0">Salaire</h4>
                                             <button class="ms-auto btn btn-sm btn-outline-primary"
-                                                data-bs-target="#historic-salary" data-bs-toggle="modal">
+                                                data-bs-target="#historiqueSalary" data-bs-toggle="modal">
                                                 Historique
                                             </button>
-                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#modifie-salary"
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#editSalary"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
-                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#augemnt-salary"
+                                            <button class="btn btn-primary btn-sm ms-2" data-bs-target="#augemntSalary"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-square-rounded-plus-filled"></i>
                                             </button>
@@ -233,16 +233,16 @@ watch(data, () => {
                                             </div>
                                             <h4 class="ms-1 mb-0">Conge</h4>
                                             <button class="ms-auto btn btn-sm btn-outline-warning"
-                                                data-bs-target="#historic-conge" data-bs-toggle="modal">
+                                                data-bs-target="#historicConge" data-bs-toggle="modal">
                                                 Historique
                                             </button>
-                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#augemnt-conge"
+                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#editLeavePerMonth"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
 
-                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#enter-conge"
-                                                data-bs-toggle="modal">
+                                            <button class="btn btn-warning btn-sm ms-2"
+                                                data-bs-target="#addNewLeaveEmployee" data-bs-toggle="modal">
                                                 <i class="ti ti-square-rounded-plus-filled"></i>
                                             </button>
                                         </div>
@@ -259,17 +259,17 @@ watch(data, () => {
                             </div>
                         </div>
 
-                        <div class="row mb-3">
+                        <div class="row mb-3 ">
                             <div class="col-xxl-6">
                                 <div class="card card-border-shadow-info">
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-2 pb-1">
                                             <div class="me-2">
-                                                <img :src="String(helpers.bankName(employee.bank_name)[0])" height="92px"
+                                                <img :src="helpers.bankName(employee.bank_name)[0]" height="92px"
                                                     width="100px" style="object-fit: contain" />
                                             </div>
                                             <button class="ms-auto btn btn-sm btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#edit-bank">
+                                                data-bs-target="#editInfoBank">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
                                         </div>
@@ -307,7 +307,7 @@ watch(data, () => {
                                                 <img src="@/assets/img/brands/logo_cnss.jpeg" height="89px" width="100px"
                                                     style="object-fit: contain" />
                                             </div>
-                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#edit-cnss"
+                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#editInfoCnss"
                                                 data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
@@ -317,18 +317,7 @@ watch(data, () => {
                                         </h6>
                                         <div v-if="employee.copie_cnss != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
-                                                <a :href="'/uploads/employee/' +
-                                                    employee.dossier +
-                                                    '/' +
-                                                    employee.copie_cnss
-                                                    " target="_blank" class="d-flex align-items-center">
-                                                    <div class="p-1 rounded bg-label-info">
-                                                        <i class="ti ti-file-download text-info ps-3 pe-3"></i>
-                                                    </div>
-                                                    <small class="ms-3">
-                                                        Télécharger la carte CNSS
-                                                    </small>
-                                                </a>
+
                                             </div>
                                         </div>
                                         <div v-else class="card mt-4 border shadow-none">
@@ -348,7 +337,7 @@ watch(data, () => {
                             <div class="card-header align-items-center">
                                 <h5 class="card-action-title mb-0">Historique</h5>
                             </div>
-                            <!-- <div v-if="employee.projects.length != 0" class="card-body pb-0">
+                            <div v-if="employee.projects != null && employee.projects.length != 0" class="card-body pb-0">
                                 <ul class="timeline pt-3">
                                     <li v-for="(item, index) in employee.projects" :key="item.id" :class="index !== employee.projects.length - 1
                                         ? 'border-left-dashed timeline-item-warning pb-4'
@@ -396,7 +385,7 @@ watch(data, () => {
                                         </p>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div id="documents" class="tab-pane fade" role="tabpanel">
@@ -411,7 +400,6 @@ watch(data, () => {
                                         </button>
                                     </div>
                                     <div class="card-body">
-
                                     </div>
                                 </div>
                             </div>
@@ -419,7 +407,6 @@ watch(data, () => {
                     </div>
                     <div id="pointage" class="tab-pane fade" role="tabpanel">
                         <div class="row">
-                            <div class="col-lg-12 col-xl-12"></div>
                             <div class="col-lg-12 col-xl-12">
                                 <div class="card card-border-shadow-primary card-action mb-4">
                                     <div class="card-header align-items-center">
@@ -430,16 +417,112 @@ watch(data, () => {
                                             Nouveau enregistrement
                                         </button>
                                     </div>
-                                    <div class="card-body border-top pt-4">
-                                        <PointageTable v-if="employee.pointages" :pointages="employee.pointages"
-                                            :custom="false" button-type="complex" />
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <Modal id="historiqueSalary" title="Historique de salaire" size="modal-lg">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="fw-bold">Salaire</th>
+                                        <th class="fw-bold text-center">Salaire/Jrs</th>
+                                        <th class="fw-bold text-center">Date de debut</th>
+                                        <th class="fw-bold text-center">Date d'augmentation</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="employee.historique_paye != 0">
+                                    <tr v-for="item in employee.historique_paye" :key="item.id">
+                                        <td>
+                                            {{ formater.number(item.salaire) }} MAD
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.number(item.salaire / 26) }} MAD
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.date(item.start_date) }}
+                                        </td>
+
+                                        <td class="text-center">
+                                            {{ formater.date(item.upgrade_date) }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="4" class="text-center">
+                                            Aucun historique trouvé
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <Modal id="historicConge" title="Historique de conge" size="modal-lg">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="fw-bold">Date de debut</th>
+                                        <th class="fw-bold text-center">Date de fin</th>
+                                        <th class="fw-bold text-center">Nombre de jours</th>
+                                        <th class="fw-bold text-center">Type</th>
+                                        <th class="fw-bold text-center">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody v-if="employee.conges != 0">
+                                    <tr v-for="item in employee.conges" :key="item.id">
+                                        <td>
+                                            {{ formater.date(item.date_start) }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ formater.date(item.date_end) }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ item.duree ? item.duree > 1 ? item.duree + ' Jours' : item.duree + ' Jour' :
+                                                'N/A' }}
+                                        </td>
+                                        <td class="text-center">
+                                            <small class="fw-bold" :class="helpers.returnBadge(String(item.type))[0]">{{
+                                                helpers.returnBadge(String(item.type))[1] }}
+                                            </small>
+                                        </td>
+                                        <td class="text-center">
+                                            <small class="fw-bold" :class="helpers.returnBadge(String(item.status))[0]">{{
+                                                helpers.returnBadge(String(item.status))[1] }}
+                                            </small>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tbody v-else>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            Aucun historique trouvé
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+            <EditSalaryModal :id="employee.id" :old-salary="employee.salary" />
+            <AugementationSalaryModal :id="employee.id" />
+            <EditLeavePerMonthModal :id="employee.id" :old-day-per-month="employee.conge_mois" />
+            <AddCongeModal :id="employee.id" />
+            <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :old-bank="employee.bank_name" />
+            <EditCnssModal :id="employee.id" :old-cnss="employee.cnss" />
+            <ResumptionContractModal :id="employee.id" />
+            <EditEmployeeModal :employee="employee" />
         </div>
         <AddPointageModal source="simple" :id="id" />
     </div>

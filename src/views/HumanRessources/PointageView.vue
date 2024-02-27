@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
@@ -13,6 +14,7 @@ onMounted(async () => {
     await rhService.getPointages();
     await rhService.getEmployees();
 });
+
 
 onUnmounted(() => {
     rhStore.pointages = null;
@@ -42,7 +44,7 @@ watch(pointages, (value) => {
                             </button>
                         </div>
                         <div v-if="pointages" class="card-body border-top pt-4">
-                            <PointageTable :pointages="pointages" />
+                            <PointageTable :pointages="pointages" :custom="true" />
                         </div>
                     </div>
                 </div>

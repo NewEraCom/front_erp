@@ -69,38 +69,52 @@ const CFMenu = [
         id: 2,
         name: 'Projets',
         route: '/projects',
-        icon: 'ti ti-smart-home',
+        icon: 'ti ti-package',
         path: 'Projects'
     },
     {
         id: 3,
         name: 'Demande d\'achat',
-        route: '/purchase-order',
-        icon: 'ti ti-smart-home',
-        path: 'PurchaseOrder'
+        route: '/project/purchase_order',
+        icon: 'ti ti-shopping-cart',
+        path: 'PurchaseOrderProject'
+    },
+    {
+        id: 3,
+        name: 'Demande d\'exécution',
+        route: '/project/executation_order',
+        icon: 'ti ti-settings',
+        path: 'ExecutionOrderProject'
     },
     {
         id: 4,
         name: 'Factures',
         route: '/facture',
-        icon: 'ti ti-smart-home',
+        icon: 'ti ti-file-invoice',
         path: 'DashboardPM'
     },
     {
         id: 5,
-        name: 'Sous-traitants',
-        route: '/soustraitant',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        name: 'Demande DSS',
+        route: '/project/out-of-stock',
+        icon: 'ti ti-transfer-out',
+        path: 'OutOfStockProject'
     },
     {
         id: 6,
-        name: 'Demande de caisse',
-        route: '/dashboard-pm',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardPM'
+        name: 'Sous-traitants',
+        route: '/soustraitant',
+        icon: 'ti ti-forklift',
+        path: 'Soustraitant'
     },
-    
+    {
+        id: 7,
+        name: 'Demande de caisse',
+        route: '/project/caisse-request',
+        icon: 'ti ti-transfer-out',
+        path: 'CaisseRequest'
+    },
+
     ...sharedMenu2,
     ...sharedMenu
 ];
@@ -393,7 +407,7 @@ const SupportMenu = [
     },
     {
         id: 2,
-        name: 'Employés',
+        name: 'Resources Humaines',
         icon: 'ti ti-users',
         children: [
             {
@@ -407,6 +421,20 @@ const SupportMenu = [
                 name: 'Employés sous-traitants',
                 route: '/soustraitant-rh',
                 path: 'SoustraitantRh'
+            },
+            {
+                id: 3,
+                name: 'Paie',
+                route: '/paie',
+                icon: 'ti ti-file-invoice',
+                path: 'Paie'
+            },
+            {
+                id: 9,
+                name: 'Stagiaires',
+                route: '/interns',
+                icon: 'ti ti-users-group',
+                path: 'Interns'
             },
             {
                 id: 3,
@@ -442,32 +470,72 @@ const SupportMenu = [
         ]
     },
     {
-        id: 3,
-        name: 'Paie',
-        route: '/paie',
-        icon: 'ti ti-file-invoice',
-        path: 'Paie'
-    },
-    {
-        id: 4,
-        name: 'Caisse',
-        route: '/caisse',
-        icon: 'ti ti-cash',
-        path: 'Caisse'
-    },
-    {
-        id: 5,
-        name: 'Projets',
-        route: '/projects',
-        icon: 'ti ti-package',
-        path: 'Projects'
-    },
-    {
-        id: 6,
-        name: 'Clients',
-        route: '/clients',
-        icon: 'ti ti-affiliate',
-        path: 'Clients'
+        id: 2,
+        name: 'Logistique',
+        icon: 'ti ti-stack',
+        children: [
+            {
+                id: 4,
+                name: 'Caisse',
+                route: '/caisse',
+                icon: 'ti ti-cash',
+                path: 'Caisse'
+            },
+            {
+                id: 1,
+                name: 'Stock',
+                route: '/stock',
+                path: 'Stock'
+            },
+            {
+                id: 2,
+                name: 'Stock Informatique',
+                route: '/stock-informatique',
+                path: 'StockInformatique'
+            },
+            {
+                id: 3,
+                name: 'Fournitures',
+                route: '/fournitures',
+                path: 'Fournitures'
+            },
+            {
+                id: 1,
+                name: 'Louer',
+                route: '/louer',
+                path: 'Louer'
+            },
+            {
+                id: 2,
+                name: 'Cachets',
+                route: '/cachets',
+                path: 'Cachets'
+            },
+            {
+                id: 3,
+                name: 'Véhicules',
+                route: '/vehicules',
+                path: 'Vehicules'
+            },
+            {
+                id: 1,
+                name: 'Parc GSM',
+                route: '/parc-gsm',
+                path: 'ParcGsm'
+            },
+            {
+                id: 2,
+                name: 'Carte carburant',
+                route: '/carte-carburant',
+                path: 'CarteCarburant'
+            },
+            {
+                id: 3,
+                name: 'Jawaz',
+                route: '/Jawaz',
+                path: 'Jawaz'
+            },
+        ]
     },
     {
         id: 7,
@@ -514,12 +582,21 @@ const SupportMenu = [
         ]
     },
     {
-        id: 9,
-        name: 'Stagiaires',
-        route: '/interns',
-        icon: 'ti ti-users-group',
-        path: 'Interns'
+        id: 5,
+        name: 'Projets',
+        route: '/projects',
+        icon: 'ti ti-package',
+        path: 'Projects'
     },
+    {
+        id: 6,
+        name: 'Clients',
+        route: '/clients',
+        icon: 'ti ti-affiliate',
+        path: 'Clients'
+    },
+
+
     {
         id: 10,
         name: 'Fournisseur',
@@ -533,81 +610,6 @@ const SupportMenu = [
         route: '/soustraitant',
         icon: 'ti ti-forklift',
         path: 'Soustraitant'
-    },
-    {
-        id: 12,
-        name: 'Stock',
-        icon: 'ti ti-stack',
-        children: [
-            {
-                id: 1,
-                name: 'Stock',
-                route: '/stock',
-                path: 'Stock'
-            },
-            {
-                id: 2,
-                name: 'Stock Informatique',
-                route: '/stock-informatique',
-                path: 'StockInformatique'
-            },
-            {
-                id: 3,
-                name: 'Fournitures',
-                route: '/fournitures',
-                path: 'Fournitures'
-            },
-        ]
-    },
-    {
-        id: 13,
-        name: 'Suivie',
-        icon: 'ti ti-chart-bar',
-        children: [
-            {
-                id: 1,
-                name: 'Louer',
-                route: '/louer',
-                path: 'Louer'
-            },
-            {
-                id: 2,
-                name: 'Cachets',
-                route: '/cachets',
-                path: 'Cachets'
-            },
-            {
-                id: 3,
-                name: 'Véhicules',
-                route: '/vehicules',
-                path: 'Vehicules'
-            },
-        ]
-    },
-    {
-        id: 14,
-        name: 'Abonnements',
-        icon: 'ti ti-layers-subtract',
-        children: [
-            {
-                id: 1,
-                name: 'Parc GSM',
-                route: '/parc-gsm',
-                path: 'ParcGsm'
-            },
-            {
-                id: 2,
-                name: 'Carte carburant',
-                route: '/carte-carburant',
-                path: 'CarteCarburant'
-            },
-            {
-                id: 3,
-                name: 'Jawaz',
-                route: '/Jawaz',
-                path: 'Jawaz'
-            },
-        ]
     },
     ...sharedMenu
 ];

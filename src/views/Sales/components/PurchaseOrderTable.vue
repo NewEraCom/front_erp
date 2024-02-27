@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+import router from '@/router';
 
 const props = defineProps({
     purchaseOrders: {
@@ -19,7 +20,11 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            router.push(`/purchase-order/details/${item.id}`);
+        }
+    },
 ];
 
 const detailsItem = (item: any) => {

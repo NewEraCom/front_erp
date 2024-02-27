@@ -70,8 +70,7 @@ defineProps({
                                 <hr class="d-none d-sm-block d-lg-none me-4">
                             </div>
                             <div class="col-sm-6 col-lg-3">
-                                <div
-                                    class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                <div class="d-flex justify-content-between align-items-start card-widget-1 pb-3 pb-sm-0">
                                     <div>
                                         <h6 class="fw-bold mb-2">Total Prime</h6>
                                         <h5 class="fw-bold mb-2">
