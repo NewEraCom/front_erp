@@ -139,6 +139,26 @@ watch(() => props.pageSize, () => {
                             <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
                             <small class="fw-bold text-muted">Code : {{ item.project.code }}</small>
                         </td>
+                        <td v-if="header.isComplex && header.type === 'preProjects'">
+                            <router-link
+                                        :to="{
+                                            name: 'PreProjectDetail',
+                                            params: { id: item.id }
+                                        }"
+                                    >
+                                    <h6 class=" fw-bold">{{ item.maitre_ouvrage}}</h6>
+                             </router-link>
+                            <small class="fw-bold text-muted">  
+                                    Code : {{ helpers.limitedClientName(item.project_code) }}
+                                        <i
+                                            v-if="
+                                                item.type_project != 'simple' &&
+                                                item.lots.length == 0
+                                            "
+                                            class="ti ti-alert-circle-filled text-danger"
+                                        />
+                                </small>
+                        </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
                             <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
@@ -284,13 +304,33 @@ watch(() => props.pageSize, () => {
                             <h6 class="mb-1 fw-bold">{{ item.carnet.numero }}</h6>
                             <small class="fw-bold text-muted">RIB : {{ item.carnet.compte_bancaire.rib }}</small>
                         </td>
+                        <td class="text-center" v-if="header.isComplex && header.type === 'date_echantillion'">
+                                <i
+                                    v-if="item.date_echantillion != null"
+                                    class="ti ti-square-rounded-check-filled text-success f-26"
+                                ></i>
+                                <i
+                                    v-else
+                                    class="ti ti-square-rounded-x-filled text-danger f-26"
+                                ></i>
+                            </td>
+                            <td class="text-center" v-if="header.isComplex && header.type === 'date_visite'">
+                                <i
+                                    v-if="item.date_visite != null"
+                                    class="ti ti-square-rounded-check-filled text-success f-26"
+                                ></i>
+                                <i
+                                    v-else
+                                    class="ti ti-square-rounded-x-filled text-danger f-26"
+                                ></i>
+                            </td>
                     </template>
 
                     <td v-if="buttonType == 'simple'" class="text-center">
                         <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
-                            :class="action.type == 'delete' ? (item.status != disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
+                            :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
-                            :disabled="action.type == 'delete' ? (item.status == disabled) : false">
+                            :disabled="action.type == 'delete' ? (item.status != disabled) : false">
                             <i :class="action.icon"></i>
                         </button>
                     </td>

@@ -55,4 +55,24 @@ export const projectManagerRoutes = [
             role: [helpers.roles.CF]
         },
     },
+    {
+        path: '/pre-project',
+        name: 'PreProject',
+        component: () => import('@/views/ProjectManagement/PreProjectView.vue'),
+        meta: {
+            title: 'Avant Projet',
+            // role: [helpers.roles.CF]
+        },
+    },
+    {
+        path: '/pre-project/detail/:id',
+        name: 'PreProjectDetail',
+        component: () => import('@/views/ProjectManagement/PreProjectDetailView.vue'),
+        props: true,
+        meta: {
+            title: 'Detail Avant Projet',
+            props: true,
+            requiresAuth: true
+        }
+    },
 ];

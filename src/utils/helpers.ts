@@ -143,6 +143,20 @@ const returnBadge = (item: any): any[] => {
 			return ['badge bg-success', 'Entree'];
 		case 'sortie':
 			return ['badge bg-warning', 'Sortie'];
+		case 'simple':
+			return ['badge bg-info', 'Simple'];
+		case 'special':
+			return ['badge bg-info', 'Special'];
+			case 'En attente':
+				return ['bg-label-warning', 'En attente', 'ti-clock'];
+			case 'En soumission':
+				return ['bg-label-info', 'En soumission', 'ti-clock'];
+			case 'Perdu':
+				return ['bg-label-danger', 'Perdu', 'ti-thumb-down'];
+			case 'Gagné':
+				return ['bg-label-success', 'Gagné', 'ti-circle-check'];
+			case 'Non Validé':
+				return ['bg-label-dark', 'Non Validé', 'ti-circle-x'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
@@ -250,6 +264,96 @@ function init() {
 	return '';
 
 }
+function limitedClientName(props) {
+    if (props === null) return '-';
+    if (props.length > 35) {
+        return props.substring(0, 35) + '...';
+    }
+    return props;
+}
+function dateDiff(date) {
+    const today = new Date();
+
+    const otherDate = new Date(date);
+    const diffTime = Math.abs(today - otherDate);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    let result;
+
+    if (otherDate < today) {
+        result = ['bg-label-danger', 'Offre expirée', '1', 'border-danger'];
+    } else {
+        switch (true) {
+            case diffDays === 0:
+                result = ['bg-label-warning', 'Aujourd\'hui', '1', diffDays, 'border-warning'];
+                break;
+            case diffDays >= 1 && diffDays <= 7:
+                result = ['bg-label-success', 'Cette semaine', '1', diffDays, 'border-success'];
+                break;
+            default:
+                result = ['bg-label-danger', 'Plus de 30 jours', '0', diffDays, 'border-danger'];
+        }
+    }
+    return result;
+}
+function formattedDate(props) {
+    if (props === null) return 'Aucune date.';
+    const date = new Date(props);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+}
+function calculatePercentage(current, total) {
+    if (typeof current !== 'number' || typeof total !== 'number' || total === 0) {
+        return 0; // Handle invalid input
+    }
+
+    const widthPercentage = (current / total) * 100;
+    return {
+        width: `${widthPercentage}%`
+    };
+}
+function formatNumber(value) {
+    if (!value) return '-';
+
+    // Round the value to two decimal places
+    const roundedValue = Math.round(value * 100) / 100;
+
+    // Convert to string and format
+    const formattedValue = roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    return formattedValue;
+}
+function formattedDateTime(props) {
+    if (props === null) return 'Aucune date.';
+
+    // Create a Date object from the input string
+    const inputDate = new Date(props);
+
+    // Extract year, month, day, hours, and minutes from the Date object
+    const year = inputDate.getFullYear();
+    const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+    const day = String(inputDate.getDate()).padStart(2, '0');
+    const hours = String(inputDate.getHours()).padStart(2, '0');
+    const minutes = String(inputDate.getMinutes()).padStart(2, '0');
+
+    // Construct the formatted date string
+    return `${day}-${month}-${year} ${hours}:${minutes}`;
+}
+function formattedText(paragraph) {
+    return paragraph.replace(/\n/g, '<br>');
+}
+export function dateRegex(date) {
+    const selectedDateTime = new Date(date);
+    const currentDateTime = new Date();
+    let result;
+
+    if (selectedDateTime <= currentDateTime) {
+        result = false;
+    } else {
+        result = true;
+    }
+    return result;
+}
 
 export const helpers = {
 	isActiveRoute,
@@ -265,5 +369,13 @@ export const helpers = {
 	baseUrl,
 	bankName,
 	init,
-	returnStockAlert
+	returnStockAlert,
+	limitedClientName,
+	dateDiff,
+	formattedDate,
+	calculatePercentage,
+	formatNumber,
+	formattedDateTime,
+	formattedText,
+	dateRegex
 };

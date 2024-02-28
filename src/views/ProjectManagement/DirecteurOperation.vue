@@ -154,8 +154,7 @@ onUnmounted(() => {
                 <AchatPieChart :data="data.achatByProject" />
             </div>
         </div>
-    </div>
-  </div>
+    </div>  
 </template>
 
 <style scoped></style>
