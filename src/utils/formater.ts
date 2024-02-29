@@ -100,15 +100,6 @@ const formatRIB = (number: string) => {
     );
 };
 
-function limitedTextWithValue(props: string, value: number): string {
-    if (props === null) return '-';
-
-    if (props.length > value) {
-        return props.substring(0, value) + '...';
-    }
-    return props;
-}
-
 const limitText = (text: string, limit: number) => {
     if (text == 'null') return '-';
     if (!text) return '-';
@@ -117,6 +108,11 @@ const limitText = (text: string, limit: number) => {
     }
     return text;
 };
+
+const paragraph = (text: string) => {
+    return text.replace(/\n/g, '<br>');
+};
+
 
 export const formater = {
     number,
@@ -129,4 +125,5 @@ export const formater = {
     formatRIB,
     limitText,
     monthDifferent,
+    paragraph,
 };

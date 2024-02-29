@@ -2,34 +2,32 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+import router from '@/router';
 
 const props = defineProps({
-    rhRequest: {
+    purchase: {
         type: Array,
         required: true,
     },
 });
 
 const headers = [
-    { text: 'Titre', value: 'titre', type: 'text' },
-    { text: 'Créé le', value: 'created_at', type: 'datetime' },
+    { text: 'N° de commande', value: 'art', type: 'text' },
+    { text: 'Créé par', value: 'created_by', type: 'created_by' },
+    { text: 'Projet', value: 'project', type: 'project' },
+    { text: 'Date de création', value: 'created_at', type: 'datetime' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            router.push(`/purchase-order/details/${item.id}`);
+        }
+    },
 ];
 
-const detailsItem = (item: any) => {
-    console.log(item);
-};
-
-const deleteItem = (item: any) => {
-    console.log('Delete item', item);
-};
-
-const filteredData = ref(props.rhRequest);
+const filteredData = ref(props.purchase);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -38,8 +36,8 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.rhRequest.filter((item: any) => {
-        const combinedFields = `${item.titre}`.toLowerCase();
+    filteredData.value = props.purchase.filter((item: any) => {
+        const combinedFields = `${item.created_by.employee.first_name} ${item.created_by.employee.last_name} ${item.project.code} ${item.n_order}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
@@ -56,34 +54,17 @@ const filter = () => {
                 <div class="d-flex align-items-center">
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
                         @input="filter" />
-
-                    <div class="d-flex align-items-center ms-0">
-                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
-                            <option value="-">Tout</option>
-                            <option value="pending">En attente</option>
-                            <option value="done">Traité</option>
-                            <option value="delivered">Livré</option>
-                        </select>
-                    </div>
-                    <div class="d-flex align-items-center ms-2">
-                        <label for="start">De</label>
-                        <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
-                            @change="filter" />
-                    </div>
-                    <div class="d-flex align-items-center ms-0">
-                        <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
-                    </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
+                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

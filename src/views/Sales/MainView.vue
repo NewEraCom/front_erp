@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { salesService, logisticsService } from '@/services';
 import { useSalesStore, useLogisticsStore } from '@/store';
-import { CardTwo } from '@/ui';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { formater, helpers } from '@/utils';
 
 const salesStore = useSalesStore();
@@ -64,15 +64,41 @@ onUnmounted(() => {
                     color="bg-label-success" icon="ti-shopping-cart" card-color="card-border-shadow-success" />
             </div>
         </div>
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+        </div>
         <div class="row mt-4">
-            <div v-if="purchaseOrders.stats" class="col-7">
+            <div class="col-7">
                 <div class="card card-border-shadow-primary">
                     <div class="card-header">
                         <h5 class="fw-bold mb-1">Demande d'achat</h5>
                         <small class="fw-bold mb-1 text-muted">Les derniers demandes d'achats
                         </small>
                     </div>
-                    <div class="card-body">
+                    <div v-if="purchaseOrders.data != null" class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle">
                                 <thead class="table-light">
@@ -100,9 +126,10 @@ onUnmounted(() => {
                                             <small>{{ formater.date(order.created_at) }}</small>
                                         </td>
                                         <td class="text-center">
-                                            <button class="btn btn-sm btn-primary">
+                                            <router-link :to="{ name: 'PurchaseOrderDetails', params: { id: order.id } }"
+                                                target="_blank" class="btn btn-sm btn-primary">
                                                 <i class="ti ti-eye"></i>
-                                            </button>
+                                            </router-link>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -116,15 +143,26 @@ onUnmounted(() => {
                             </table>
                         </div>
                     </div>
+                    <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                        style="height: 450px;">
+                        <div class="row mt-5">
+                            <div class="col-12 text-center">
+                                <h5>Chargement des données...</h5>
+                                <div class="spinner-border text-primary mt-4" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div v-if="invoices.data" class="col-5">
+            <div class="col-5">
                 <div class="card card-border-shadow-primary h-100">
                     <div class="card-header">
                         <h5 class="fw-bold mb-1">Factures</h5>
                         <small class="fw-bold mb-1 text-muted">Les derniers factures</small>
                     </div>
-                    <div class="card-body">
+                    <div v-if="invoices.data != null" class="card-body">
                         <div class="table-responsive">
                             <table class="table table-hover align-middle">
                                 <thead class="table-light">
@@ -164,6 +202,17 @@ onUnmounted(() => {
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                        style="height: 450px;">
+                        <div class="row mt-5">
+                            <div class="col-12 text-center">
+                                <h5>Chargement des données...</h5>
+                                <div class="spinner-border text-primary mt-4" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

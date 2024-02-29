@@ -148,6 +148,7 @@ export const useSharedStore = defineStore('ShareStore', {
                 ongoing: data.filter((item: any) => item.status === 'ongoing').length,
                 completed: data.filter((item: any) => item.status === 'completed').length,
             };
+            console.log(this.projects.data);
         },
         clearProjects() {
             this.projects.data = null;

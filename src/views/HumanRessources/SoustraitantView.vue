@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { CardOne, } from '@/ui';
+import { CardOne, CardOneSkeleton } from '@/ui';
 import { ref, computed, onMounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { WorkersTable, AddNewWorkersModal } from './components';
-
 
 const rhStore = useRhStore();
 
@@ -17,7 +16,9 @@ onMounted(async () => {
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
-    <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Soustraitant</span> </h5>
+    <h5 class="py-3 mb-4 fw-medium text-muted">
+      Dashboard / <span class="text-dark">Soustraitant</span>
+    </h5>
     <div v-if="workers.stats != null" class="row g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
         <CardOne title="Total Soustraitant" :count="String(workers.stats.totalSoustraitant)" color="bg-label-primary"
@@ -34,6 +35,21 @@ onMounted(async () => {
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
         <CardOne title="Total Employés Inactif" :count="String(workers.stats.inactif)" color="bg-label-danger"
           icon="ti-settings" card-color="card-border-shadow-danger" />
+      </div>
+
+    </div>
+    <div v-else class="row g-3">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardOneSkeleton />
       </div>
     </div>
     <div class="row mt-4">
@@ -53,12 +69,22 @@ onMounted(async () => {
             <div v-if="workers.data != null" class="card-body border-top pt-4">
               <WorkersTable :workers="workers.data" />
             </div>
+            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+              style="height: 650px;">
+              <div class="row mt-5">
+                <div class="col-12 text-center">
+                  <h5>Chargement des données...</h5>
+                  <div class="spinner-border text-primary mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <AddNewWorkersModal />
-
   </div>
 </template>
 

@@ -31,6 +31,16 @@ export const salesRoutes = [
         },
     },
     {
+        path: '/edit/purchase-order/details/:id',
+        name: 'EditPurchaseOrder',
+        component: () => import('@/views/Sales/EditPurchaseOrder.vue'),
+        props: true,
+        meta: {
+            title: 'Modifier la demande d\'achat',
+            role: [helpers.roles.SALES, helpers.roles.CF]
+        },
+    },
+    {
         path: '/execution-request',
         name: 'ExecutionRequest',
         component: () => import('@/views/Sales/ExecutionRequestView.vue'),

@@ -11,7 +11,7 @@ const FinanceStore = useFinanceStore();
 
 
 
-const stats = ref(computed(() => FinanceStore.stats))
+const stats = ref(computed(() => FinanceStore.stats));
 
 const caution = ref(computed(() => FinanceStore.caution));
 

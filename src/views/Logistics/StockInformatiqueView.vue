@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { CardTwo } from '@/ui';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { StockTable } from './components';
@@ -30,6 +30,12 @@ onUnmounted(() => {
                     card-color="card-border-shadow-primary" />
             </div>
         </div>
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                <CardTwoSkeleton />
+            </div>
+        </div>
+
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
@@ -42,6 +48,17 @@ onUnmounted(() => {
                         </div>
                         <div v-if="stock != null" class="card-body border-top pt-4">
                             <StockTable :stock="stock" />
+                        </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

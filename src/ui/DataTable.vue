@@ -7,7 +7,7 @@ type Item = {
 }
 
 type ActionButton = {
-    icon: string;
+    icon?: string;
     class: string;
     type?: string;
     text?: string;
@@ -17,9 +17,9 @@ type ActionButton = {
 const props = defineProps<{
     items: Item[],
     headers: Array<{ text: string, value: string, isComplex?: boolean, type?: string }>,
-    buttonType: string,
+    buttonType?: string,
     pageSize: number,
-    disabled: string,
+    disabled?: string,
     actionsConfig: ActionButton[];
 }>();
 
@@ -269,6 +269,7 @@ watch(() => props.pageSize, () => {
                                     </router-link>
                                     <small class="fw-bold text-muted">Numéro RC : {{ item.num_rc ?? 'N/A' }}</small>
                                 </span>
+
                                 <span v-if="header.type === 'test'">
                                     {{ item }}
                                 </span>
@@ -288,9 +289,9 @@ watch(() => props.pageSize, () => {
 
                     <td v-if="buttonType == 'simple'" class="text-center">
                         <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
-                            :class="action.type == 'delete' ? (item.status != disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
+                            :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
-                            :disabled="action.type == 'delete' ? (item.status == disabled) : false">
+                            :disabled="action.type == 'delete' ? (item.status != disabled) : false">
                             <i :class="action.icon"></i>
                         </button>
                     </td>
@@ -302,8 +303,9 @@ watch(() => props.pageSize, () => {
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId" style="">
                                 <button v-for="action in actionsConfig" :key="action.icon" class="dropdown-item"
-                                    :class="action.class" @click="action.onClick(item)"
-                                    :disabled="action.type == 'delete' ? (item.status == disabled) : false">
+                                    :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'text-secondary') : action.class"
+                                    @click="action.onClick(item)"
+                                    :disabled="action.type == 'delete' ? (item.status != disabled) : false">
                                     {{ action.text }}
                                 </button>
                             </div>

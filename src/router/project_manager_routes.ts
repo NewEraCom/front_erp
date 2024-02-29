@@ -55,4 +55,14 @@ export const projectManagerRoutes = [
             role: [helpers.roles.CF]
         },
     },
+    {
+        path: '/project/details/:id',
+        name: 'DetailsProject',
+        props: true,
+        component: () => import('@/views/ProjectManagement/DetailsProjectView.vue'),
+        meta: {
+            title: 'Détails du projet',
+            role: [helpers.roles.CF]
+        },
+    },
 ];

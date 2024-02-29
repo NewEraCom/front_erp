@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, computed } from 'vue'
-import { PMService } from '@/services'
+import { pmService } from '@/services'
 import { usePMStore } from '@/store'
 import { CardTwo, DeleteModal } from '@/ui';
 import {FactureTable,EditFacture} from './components'
@@ -8,11 +8,11 @@ const PMStore = usePMStore()
 const factures = ref(computed(() => PMStore.facture))
 const stats = ref(computed(() => PMStore.stats))
 onMounted(async () => {
-  await PMService.getFacture()
+  await pmService.getFacture()
 })
 const deleteST = async () => {
     const idToDelete = $('#deleteId').val();
-    PMService.deleteFacture(idToDelete).then(() => {
+    pmService.deleteFacture(idToDelete).then(() => {
         $('#delete-facture').modal('hide');
         const updatedFacture = PMStore.facture.filter(item => item.id !== idToDelete);
         PMStore.facture = updatedFacture;

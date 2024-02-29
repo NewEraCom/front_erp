@@ -1,3 +1,0 @@
-<template>
-    Achat View
-</template>

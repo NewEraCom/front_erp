@@ -25,6 +25,15 @@ export const landingRoutes = [
 			title: 'Demande de document administratif',
 			requiresAuth: false
 		},
+	},
+	{
+		path: '/404',
+		name: '404',
+		component: () => import('@/views/Landing/404View.vue'),
+		meta: {
+			title: '404',
+			requiresAuth: false
+		},
 	}
 
 ];

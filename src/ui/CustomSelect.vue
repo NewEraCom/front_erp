@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { defineProps, ref, defineEmits, watch } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
@@ -22,6 +22,12 @@ const props = defineProps({
                 value: 'value'
             }
         ]
+    },
+    action: {
+        type: Function,
+        default: () => { },
+        required: false
+
     },
     error: Boolean,
     errorMessage: {

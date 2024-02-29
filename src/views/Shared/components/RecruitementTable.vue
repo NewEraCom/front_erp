@@ -13,7 +13,7 @@ const props = defineProps({
 const headers = [
     { text: 'Poste', value: 'post_name', type: 'text' },
     { text: 'Experience', value: 'experience', type: 'text' },
-    { text: 'Diplome', value: 'diploma', type: 'text' }, 
+    { text: 'Diplome', value: 'diploma', type: 'text' },
     { text: 'Créé le', value: 'created_at', type: 'datetime' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
@@ -94,9 +94,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
+            buttonType="simple" disabled="1" />
     </div>
 </template>
 <style>

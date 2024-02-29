@@ -11,7 +11,9 @@ export const usePMStore = defineStore('PMStore', {
         ItemId: null,
         composants: null,
         print_articles: null,
-        print_facture: null
+        print_facture: null,
+        project: null,
+        selectedArticle: null,
     }),
     actions: {
         clearStore() {
@@ -44,5 +46,30 @@ export const usePMStore = defineStore('PMStore', {
         setBorderaux(data) {
             this.borderaux = data;
         },
-    }
+        setProject(data: any) {
+            this.project = data;
+        },
+        clearProject() {
+            this.project = null;
+        },
+        setSelectedArticle(data: any) {
+            this.selectedArticle = data;
+        },
+        clearSelectedArticle() {
+            this.selectedArticle = null;
+        },
+        pushPurchaseOrder(data: any) {
+            this.project.purchase.push(data);
+        },
+        deletePurchaseOrderFromProject(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.project.purchase.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.project.purchase.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+        }
+
+    },
 });

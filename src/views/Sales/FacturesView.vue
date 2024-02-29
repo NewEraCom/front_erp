@@ -2,7 +2,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { salesService } from '@/services';
 import { useSalesStore } from '@/store';
-import { CardTwo } from '@/ui';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { FacturesTable } from './components';
 
 const salesStore = useSalesStore();
@@ -42,6 +42,21 @@ onUnmounted(() => {
                     card-color="card-border-shadow-info" />
             </div>
         </div>
+
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
@@ -56,6 +71,17 @@ onUnmounted(() => {
                         </div>
                         <div v-if="invoices != null" class="card-body border-top pt-4">
                             <FacturesTable :invoices="invoices" />
+                        </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

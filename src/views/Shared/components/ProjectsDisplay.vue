@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
+import router from '@/router';
 
 const props = defineProps({
     projects: {
@@ -20,7 +21,7 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => router.push({ name: 'DetailsProject', params: { id: item.id } }) },
 ];
 
 const detailsItem = (item: any) => {

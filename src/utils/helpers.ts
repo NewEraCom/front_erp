@@ -58,7 +58,7 @@ const initialDashboard = (role: string): string => {
 			return 'DashboardPM';
 		case roles.FINANCE:
 			return 'FnFacture';
-			// return 'DashboardAdmin';
+		// return 'DashboardAdmin';
 		default:
 			return '404';
 	}
@@ -112,9 +112,11 @@ const returnBadge = (item: any): any[] => {
 		case 'on going':
 			return ['badge bg-label-info', 'En cours'];
 		case 'on road':
-			return ['badge bg-label-primary', 'Sur la route'];
+			return ['badge bg-label-primary', 'En route'];
 		case 'done':
 			return ['badge bg-label-success', 'Traitée'];
+		case 'need validation':
+			return ['badge bg-label-danger', 'Besoin de validation'];
 		case 'delivered':
 			return ['badge bg-label-success', 'Livré'];
 		case 'active':

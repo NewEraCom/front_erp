@@ -10,7 +10,7 @@
                 </small>
             </div>
             <div class="card-icon">
-                <span class="badge rounded p-3 bg-secondary">
+                <span class="badge rounded-circle p-3 bg-secondary">
                     <i class="ti-sm"></i>
                 </span>
             </div>

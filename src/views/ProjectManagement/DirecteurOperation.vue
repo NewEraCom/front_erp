@@ -2,11 +2,10 @@
 <script setup lang="ts">
 
 import { onMounted, ref, computed, onUnmounted } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 import { usePMStore } from '@/store';
 import { CardOne } from '@/ui';
 import { helpers } from '@/utils';
-import { on } from 'events';
 
 const PMStore = usePMStore();
 
@@ -14,8 +13,8 @@ const demande_achat = ref(computed(() => PMStore.purchase));
 const data = ref(computed(() => PMStore.stats));
 
 onMounted(async () => {
-  await PMService.getDataManager();
-  await PMService.getPurchasesOrder('Achats');
+  await pmService.getDataManager();
+  await pmService.getPurchasesOrder('Achats');
 });
 
 onUnmounted(() => {

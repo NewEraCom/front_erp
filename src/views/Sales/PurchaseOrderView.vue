@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { salesService } from '@/services';
-import { useSalesStore } from '@/store';
-import { CardTwo } from '@/ui';
-import { PurchaseOrderTable } from './components';
+import { salesService, sharedService } from '@/services';
+import { useSalesStore, useSharedStore } from '@/store';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
+import { PurchaseOrderTable, NewPurchaseOrder } from './components';
 
 const salesStore = useSalesStore();
+const sharedStore = useSharedStore();
 
 const stats = ref(computed(() => salesStore.purchaseOrders.stats));
 const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
 
+
 onMounted(async () => {
+    await sharedService.getProjects();
     await salesService.getPurchaseOrders('Achats');
 });
 
+
 onUnmounted(() => {
     salesStore.clearPurchaseOrders();
+    sharedStore.clearProjects();
 });
 </script>
 
@@ -40,6 +45,20 @@ onUnmounted(() => {
                     icon="ti-shopping-cart" card-color="card-border-shadow-success" />
             </div>
         </div>
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
@@ -50,14 +69,30 @@ onUnmounted(() => {
                                     <h5 class="fw-bold mb-1">Demande d'achat</h5>
                                     <small class="fw-bold mb-1 text-muted">Liste des demandes d'achat</small>
                                 </div>
+                                <button class="btn btn-primary" data-bs-target="#addNewPurchaseOrder"
+                                    data-bs-toggle="modal">
+                                    <i class="ti ti-shopping-bag-plus me-2"></i> Ajouter une demande d'achat
+                                </button>
                             </div>
                         </div>
                         <div v-if="purchaseOrders != null" class="card-body border-top pt-4">
                             <PurchaseOrderTable :purchase-orders="purchaseOrders" />
                         </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <NewPurchaseOrder />
     </div>
 </template>

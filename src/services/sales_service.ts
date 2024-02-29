@@ -1,5 +1,5 @@
 import { api } from '@/utils';
-import { useSalesStore } from '@/store';
+import { usePMStore, useSalesStore } from '@/store';
 
 const getPurchaseOrders = async (type: string) => {
     try {
@@ -52,6 +52,28 @@ const getFacturesClient = async () => {
     }
 };
 
+const createPurchaseOrder = async (data: any) => {
+    try {
+        const response = await api().post('/purchase/create', data);
+        const pmStore = usePMStore();
+        pmStore.pushPurchaseOrder(response.data.purchase);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createExecutionOrder = async (data: any) => {
+    try {
+        const response = await api().post('/purchase/execution', data);
+        const pmStore = usePMStore();
+        pmStore.pushPurchaseOrder(response.data.purchase);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 
 export default {
@@ -59,5 +81,7 @@ export default {
     getBonDeCommande,
     getFacturesClient,
     getPurchaseOrdersByProjectManager,
-    getPurchaseOrderById
+    getPurchaseOrderById,
+    createPurchaseOrder,
+    createExecutionOrder
 };

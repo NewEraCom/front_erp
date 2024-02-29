@@ -31,6 +31,8 @@ async function getPurchasesOrder(type: string) {
     return Promise.reject(e);
   }
 }
+
+
 async function getFacture() {
   try {
     const PMStore = usePMStore();
@@ -93,6 +95,34 @@ async function deleteFacture(id) {
   }
 }
 
+
+const getProjectById = async (id: string) => {
+  try {
+    const response = await api().get('projects/details/' + id);
+    if (response.status === 200) {
+      const PMStore = usePMStore();
+      PMStore.setProject(response.data.project);
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+const deleteDemande = async () => {
+  try {
+    const PMStore = usePMStore();
+    const id = PMStore.selectedArticle.id;
+    const response = await api().delete('purchase/delete/' + id);
+    if (response.status === 200) {
+      const PMStore = usePMStore();
+      PMStore.deletePurchaseOrderFromProject(id);
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -100,4 +130,6 @@ export default {
   getBorderaux,
   updateFacture,
   deleteFacture,
+  getProjectById,
+  deleteDemande
 };

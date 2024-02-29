@@ -42,7 +42,7 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.parcGsm.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+        const combinedFields = `${item.operator} ${item.num} ${item.type} ${item.currentEmployee}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.type === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&

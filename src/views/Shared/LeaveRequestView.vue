@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { CardTwo } from '@/ui';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useRhStore } from '@/store';
 import { rhService } from '@/services';
 import { LeavesRequestTable, AddLeaveRequest } from './components';
@@ -18,8 +18,6 @@ onMounted(async () => {
         totalApprovedDays.value = approvedConges.reduce((total, conge) => total + conge.duree, 0);
         const sickLeaves = rhStore.employee.conges.filter((conge) => conge.type === 'Maladie');
         totalSickleaves.value = sickLeaves.reduce((total, conge) => total + conge.duree, 0);
-
-
     });
 });
 
@@ -45,6 +43,17 @@ onUnmounted(() => {
                     icon="ti ti-plane-inflight" card-color="card-border-shadow-warning" />
             </div>
         </div>
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardTwoSkeleton />
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
@@ -61,6 +70,17 @@ onUnmounted(() => {
                         </div>
                         <div v-if="user != null" class="card-body border-top pt-4">
                             <LeavesRequestTable :leaves="user.conges" />
+                        </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

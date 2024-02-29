@@ -2,7 +2,7 @@
 import { computed, ref, onMounted, watch, watchEffect } from 'vue';
 import { Modal } from '@/ui';
 import {usePMStore} from '@/store';
-import { PMService } from '@/services'
+import { pmService } from '@/services'
 
 
 const props = defineProps({
@@ -32,7 +32,7 @@ watchEffect(() => {
 watch(async () => {
     try {
         if (props.facture) {
-            await PMService.getBorderaux(props.facture.project_id);
+            await pmService.getBorderaux(props.facture.project_id);
             articles.value = PMStore.borderaux;
         }
     } catch (error) {
@@ -117,7 +117,7 @@ const submit = async () => {
     formData.append('project_id', payload.project_id);
     formData.append('facture_id', payload.facture_id);
     try {
-        await PMService.update(formData)
+        await pmService.update(formData)
             .then((response) => {
                 console.log(response);
             })
