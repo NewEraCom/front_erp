@@ -26,19 +26,19 @@ onMounted(async () => {
       <div v-if="stats" class="row g-3">
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
           <CardTwo title="Avant Projet En attente de validation" :count="String(stats.total_waiting)"
-            color="bg-label-warning" icon="ti ti ti-bolt" card-color="card-border-shadow-warning" />
+            color="bg-label-warning" icon="ti ti-bolt" card-color="card-border-shadow-warning" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
           <CardTwo title="Avant Projet En soumission" :count="String(stats.total_in_progress)" color="bg-label-info"
-            icon="ti ti ti-bolt" card-color="card-border-shadow-info" />
+            icon="ti ti-bolt" card-color="card-border-shadow-info" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
           <CardTwo title="Avant Projet Gagné" :count="String(stats.total_win)" color="bg-label-successs"
-            icon="ti ti ti-bolt" card-color="card-border-shadow-successs" />
+            icon="ti ti-bolt" card-color="card-border-shadow-successs" />
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
           <CardTwo title="Avant Projet Perdu" :count="String(stats.total_lost)" color="bg-label-danger"
-            icon="ti ti ti-bolt" card-color="card-border-shadow-danger" />
+            icon="ti ti-bolt" card-color="card-border-shadow-danger" />
         </div>
       </div>
       <div class="row mt-4">

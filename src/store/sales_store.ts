@@ -18,6 +18,9 @@ export const useSalesStore = defineStore('SalesStore', {
         },
         purchase: null,
         ItemId: null,
+        print_commande: null,
+        print_bonCommande: null,
+        commande: null,
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -71,6 +74,12 @@ export const useSalesStore = defineStore('SalesStore', {
         },
         setItemId(id: number) {
             this.ItemId = id;
+        },
+        setPrintCommande(data) {
+            this.print_commande = data;
+        },
+        setPrintBonCommande(data) {
+            this.print_bonCommande = data;
         }
     }
 });

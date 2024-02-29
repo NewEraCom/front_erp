@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 import router from '@/router';
-import {useFinanceStore} from '@/store'
+import {useFinanceStore} from '@/store';
 const FinanceStore = useFinanceStore();
 const props = defineProps({
     factures: {
@@ -14,7 +14,7 @@ const props = defineProps({
 const Preview = (id:any) => {
     let data = props.factures;
     let facture = data.find((facture) => facture.id === id);
-    FinanceStore.Print(facture)
+    FinanceStore.Print(facture);
     if(FinanceStore.print_articles && FinanceStore.print_facture){
         router.push('/fn/facture/details');
 
@@ -32,7 +32,7 @@ const headers = [
 const actionsConfig = [
     {
         icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item:any) => {
-            Preview(item.id)
+            Preview(item.id);
         }
     },
 ];
@@ -98,7 +98,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" button-type="simple"/>
     </div>
 </template>
 <style>

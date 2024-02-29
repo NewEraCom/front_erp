@@ -132,7 +132,7 @@ async function addLots(req) {
     const response = await api().post('preprojects/add-lots', req);
     console.log(response.data);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preproject = null;
       PMStore.setPreProject(response.data[0]);
     }
   } catch (error) {
@@ -304,7 +304,7 @@ async function remove(req) {
   try {
     const PMStore = usePMStore();
 
-      const response = await API().post('chiffrage/import', req);
+      const response = await api().post('chiffrage/import', req);
       await PMStore.setChiffrageOnMass(response.data.chiffrages);
   } catch (error) {
       console.log(error);

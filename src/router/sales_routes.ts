@@ -49,6 +49,25 @@ export const salesRoutes = [
         },
     },
     {
+        path: '/bon-commande/details/:id',
+        name: 'Print',
+        component: () => import('../views/Sales/components/PrintBonCommande.vue'),
+        meta: {
+            title: 'Print',
+            // role: ['Responsable d\'achats']
+        }
+    },
+    {
+        path: '/details/bon-commande/:id',
+        name: 'Detail-bonCommande',
+        component: () => import('../views/Sales/components/Detail.vue'),
+        meta: {
+            title: 'Detail-bonCommande',
+            
+        },
+        props: (route) => ({ id: route.params.id })
+    },
+    {
         path: '/invoices-sales',
         name: 'InvoicesSales',
         component: () => import('@/views/Sales/FacturesView.vue'),

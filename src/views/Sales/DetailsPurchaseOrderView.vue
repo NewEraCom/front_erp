@@ -1,35 +1,72 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useSalesStore } from '@/store'
-import { salesService } from '@/services'
-import { formater } from '@/utils'
-import { ValidateArticleModal } from './components'
+import { ref, onMounted, computed } from 'vue';
+import { useSalesStore } from '@/store';
+import { salesService } from '@/services';
+import { formater } from '@/utils';
+import { ValidateArticleModal } from './components';
+import {useRouter } from 'vue-router';
 
-const salesStore = useSalesStore()
-const isLoading = ref(false)
-const purchase = ref(computed(() => salesStore.purchase))
+const router = useRouter();
+const salesStore = useSalesStore();
+const isLoading = ref(false);
+const purchase = ref(computed(() => salesStore.purchase));
 
 onMounted(() => {
-  salesService.getPurchaseOrderById(props.id)
-})
+  salesService.getPurchaseOrderById(props.id);
+});
 
 const props = defineProps({
   id: {
     type: Number,
     default: 0
   }
-})
+});
+// let bonCommandes = ref([]);
+// let bonCommande;
+// let commande = ref([]);
+// onMounted(async () => {
+//     // await salesService.getBonCommandeByAchatId();
+//     // bonCommandes.value = salesStore.bonDeCommande.data;
+//     // if (props && props.id) {
+//     //     bonCommande = bonCommandes.value.find((bc) => bc.id === Number(props.id));
+//     //     const achatId = bonCommande ? bonCommande.d_achat_id : null;
+//     //     console.log(achatId);
+//     //     if (achatId) {
+//     //         await salesService.commande(props.id);
+//     //         commande.value = salesStore._commande;
+//     //         console.log(commande.value);
+//     //     }
+//     await salesService.commande(props.id);
+
+//     // }
+// });
 const ValidationArticle = async () => {
-  isLoading.value = true
+  isLoading.value = true;
 
   await salesService.ValidateArticle(salesStore.ItemId).then(() => {
-    isLoading.value = false
-    salesService.getPurchaseOrderById(props.id)
+    isLoading.value = false;
+    salesService.getPurchaseOrderById(props.id);
 
-    $('#validate-article-modal').modal('hide')
-  })
+    $('#validate-article-modal').modal('hide');
+  });
   // console.log($('#validateInput').val());
-}
+};
+// const generatePDF = (fournisseurId) => {
+//     const selectedCommande = commande.value[fournisseurId];
+//     const selectedBonCommande = bonCommande;
+//     console.log(selectedCommande);
+//     console.log(selectedBonCommande);
+//     console.log(fournisseurId);
+//     salesStore.setPrintBonCommande(selectedBonCommande);
+//     salesStore.setPrintCommande(selectedCommande);
+
+//     router.push({
+//         name: 'Print',
+//         params: {
+//             id: fournisseurId
+//         }
+//     });
+// };
 </script>
 
 <template>
@@ -45,9 +82,21 @@ const ValidationArticle = async () => {
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="card-title m-0">Details de la demande</h5>
-            <button data-bs-target="#details-doc" data-bs-toggle="modal" class="btn btn-primary">
+            <router-link
+              class="btn btn-sm btn-label-primary m-1"
+              :to="{
+                name: 'Detail-bonCommande',
+                params: {
+                  id: props.id
+                }
+              }"
+            >
               <i class="ti ti-download me-2"></i> Télécharger
-            </button>
+            </router-link>
+            <!-- <button  class="btn btn-primary" >
+              <i class="ti ti-download me-2"></i> Télécharger
+              
+            </button> -->
           </div>
           <div class="card-body">
             <div class="table-responsive text-nowrap">
@@ -70,7 +119,9 @@ const ValidationArticle = async () => {
                     <td>
                       <button
                         class="btn bg-label-success m-1"
-                        v-if="article.article.type === 'hors bordreau' && article.article.status !=1"
+                        v-if="
+                          article.article.type === 'hors bordreau' && article.article.status != 1
+                        "
                         @click="salesStore.setItemId(article.article.id)"
                         data-bs-toggle="modal"
                         data-bs-target="#validate-article-modal"
