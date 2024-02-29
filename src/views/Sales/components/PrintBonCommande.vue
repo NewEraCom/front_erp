@@ -88,8 +88,17 @@ const generatePDF = (elementId) => {
           </div>
         </div>
         <div class="row m-2 flex-container">
+            <div class="col-md-6 flex-item">
+            <h5 class="text-primary">Acheteur</h5>
+            <span><strong>NewEraCom</strong></span
+            ><br />
+            <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
+            ><br />
+            <span><strong>Hay Riad, Rabat.</strong></span
+            ><br />
+          </div>
           <div class="col-md-6 flex-item">
-            <h5 class="text-primary">Vendeur</h5>
+            <h5 class="text-primary">Fournisseur</h5>
             <span><strong>Name:</strong> {{ commande[0].fournisseur.commercial_name }}</span
             ><br />
             <span><strong>Adresse:</strong> {{ commande[0].fournisseur.adresse }}</span
@@ -101,15 +110,7 @@ const generatePDF = (elementId) => {
             <span><strong>Email:</strong> {{ commande[0].fournisseur.email }}</span
             ><br />
           </div>
-          <div class="col-md-6 flex-item">
-            <h5 class="text-primary">Acheteur</h5>
-            <span><strong>NewEraCom</strong></span
-            ><br />
-            <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
-            ><br />
-            <span><strong>Hay Riad, Rabat.</strong></span
-            ><br />
-          </div>
+          
         </div>
 
         <table class="table table-bordered mt-5 my-2">

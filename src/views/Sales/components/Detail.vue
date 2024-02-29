@@ -2,7 +2,6 @@
 import { onMounted, ref ,computed} from 'vue';
 // import { useBonCommndeStore } from '@/stores';
 import { useRouter } from 'vue-router';
-import html2pdf from 'html2pdf.js';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
 
@@ -91,8 +90,18 @@ const addOneMonth = (date) => {
           </div>
         </div>
         <div class="row m-2">
+          
           <div class="col-md-6">
-            <h5 class="text-primary">Vendeur</h5>
+            <h5 class="text-primary">Acheteur</h5>
+            <span><strong>NewEraCom</strong></span
+            ><br />
+            <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
+            ><br />
+            <span><strong>Hay Riad, Rabat.</strong></span
+            ><br />
+          </div>
+          <div class="col-md-6">
+            <h5 class="text-primary">Fournisseur</h5>
             <span><strong>Name:</strong> {{ items[0].fournisseur.commercial_name }}</span
             ><br />
             <span><strong>Adresse:</strong> {{ items[0].fournisseur.adresse }}</span
@@ -102,15 +111,6 @@ const addOneMonth = (date) => {
             <span><strong>Telephone:</strong> {{ items[0].fournisseur.phone_no_1 }}</span
             ><br />
             <span><strong>Email:</strong> {{ items[0].fournisseur.email }}</span
-            ><br />
-          </div>
-          <div class="col-md-6">
-            <h5 class="text-primary">Acheteur</h5>
-            <span><strong>NewEraCom</strong></span
-            ><br />
-            <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
-            ><br />
-            <span><strong>Hay Riad, Rabat.</strong></span
             ><br />
           </div>
         </div>
