@@ -121,5 +121,16 @@ export const logisticsRoutes = [
             role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },
     },
+    {
+        path: '/demande-sortie',
+        name: 'DemandeSortie',
+        component: () => import('@/views/Logistics/DemandeSortieView.vue'),
+        props: true,
+        meta: {
+            title: 'Demande Sortie',
+            props: true,
+            requiresAuth: true
+        }
+    },
 ];
 

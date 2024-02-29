@@ -48,6 +48,8 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             loading: false,
         },
         ItemId:null,
+        demandeSortie:null,
+        SelecteddemandeSortie:null,
     }),
     actions: {
         setStock(data: any) {
@@ -297,5 +299,8 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         setItemId(id: any) {
             this.ItemId = id;
         },
+        setSelectedDemandeSortie(data: any) {
+            this.SelecteddemandeSortie = data;
+        }
     }
 });

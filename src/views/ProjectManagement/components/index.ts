@@ -20,7 +20,6 @@ import SetFileNumber from './SetFileNumber.vue';
 import SetFileNumberDone from './SetFileNumberDone.vue';
 import ValidatePreProject from './ValidatePreProject.vue';
 import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
-
 export {
     AchatTable,
     EditFacture,

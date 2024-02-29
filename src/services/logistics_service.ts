@@ -111,7 +111,7 @@ async function validateCaisse(id: number) {
             console.log(response.data);
 
             
-            await getOperationCaisse()
+            await getOperationCaisse();
 
             return response.data;
         }
@@ -119,6 +119,15 @@ async function validateCaisse(id: number) {
         console.log(error);
     }
 }
+const getDemandeSortie = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const response = await api().get('/logistics/stock/get-all-sortie');
+        logisticsStore.demandeSortie =response.data.sorties;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -132,7 +141,8 @@ export default {
     getOperationCaisse,
     getVehicules,
     getTransport,
-    validateCaisse
+    validateCaisse,
+    getDemandeSortie
 };
 
 
