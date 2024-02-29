@@ -32,6 +32,7 @@ onMounted(async () => {
   }
 });
 
+
 const generatePDF = (fournisseurId) => {
   const selectedCommande = commande.value[fournisseurId];
   const selectedBonCommande = bonCommande;
@@ -80,8 +81,8 @@ const addOneMonth = (date) => {
             alt="Company Logo"
           />
 
-          <div class="col-md-6">
-            <h3>Bon de Commande N° {{ bonCommande.num }}</h3>
+          <div class="col-md-6 ">
+            <h5>Bon de Commande N° {{ bonCommande.num }}</h5>
 
             <span>
               Rabat, Le <span id="date">{{ formatDate(new Date()) }} .</span> </span
@@ -91,7 +92,7 @@ const addOneMonth = (date) => {
         </div>
         <div class="row m-2">
           <div class="col-md-6">
-            <h4 class="text-primary">Vendeur</h4>
+            <h5 class="text-primary">Vendeur</h5>
             <span><strong>Name:</strong> {{ items[0].fournisseur.commercial_name }}</span
             ><br />
             <span><strong>Adresse:</strong> {{ items[0].fournisseur.adresse }}</span
@@ -104,7 +105,7 @@ const addOneMonth = (date) => {
             ><br />
           </div>
           <div class="col-md-6">
-            <h4 class="text-primary">Acheteur</h4>
+            <h5 class="text-primary">Acheteur</h5>
             <span><strong>NewEraCom</strong></span
             ><br />
             <span><strong>10100, Rue Al Hodal Secteur 10 Bloc O Lot 7,</strong></span
@@ -137,49 +138,62 @@ const addOneMonth = (date) => {
             </tr>
 
             <tr style="border: none">
-              <td colspan="3" style="border: none"></td>
-              <td style="text-align: right; border: 1px solid">
-                <strong>Total HT:</strong>
-              </td>
-              <td id="totalAmount" style="border: 1px solid">
-                {{
-                  items.reduce((total, item) => {
-                    const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-                    const unitPrice = item[priceProperty]
-                    return total + item.quantity * unitPrice
-                  }, 0)
-                }}
-                MAD
-              </td>
+                <td style="text-align: left; border: none">
+                    <strong>Total HT:</strong>
+                </td>
+                <td colspan="2" style="border: none"></td>
+                <td style="border: none"></td>
+                <td id="totalAmount" style="text-align: right; border: 1px solid">
+                    {{
+                        items.reduce((total, item) => {
+                            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+                            const unitPrice = item[priceProperty]
+                            return total + item.quantity * unitPrice
+                        }, 0)
+                    }}
+                    MAD
+                </td>
+            </tr>
+            <tr style="border: none">
+                <td style="text-align: left; border: none">
+                    <strong>Total TVA:</strong>
+                </td>
+                <td colspan="2" style="border: none"></td>
+                <td style="border: none"></td>
+                <td id="totalAmount" style="text-align: right; border: 1px solid">
+                    {{
+                        items.reduce((total, item) => {
+                            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+                            const unitPrice = item[priceProperty]
+                            return total + item.quantity * unitPrice * 0.2
+                        }, 0)
+                    }}
+                    MAD
+                </td>
+            </tr>
+            <tr style="border: none">
+                <td style="text-align: left; border: none">
+                    <strong>Total TTC:</strong>
+                </td>
+                <td colspan="2" style="border: none"></td>
+                <td style="border: none"></td>
+                <td id="totalAmount" style="text-align: right; border: 1px solid">
+                    {{
+                        items.reduce((total, item) => {
+                            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+                            const unitPrice = item[priceProperty]
+                            return total + item.quantity * unitPrice * 1.2
+                        }, 0)
+                    }}
+                    MAD
+                </td>
             </tr>
           </tbody>
         </table>
 
         <div class="row mt-5 w-100 header">
           
-        <div class="col-md-12 text-end">
-            <p>Total HT: {{
-                items.reduce((total, item) => {
-                    const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-                    const unitPrice = item[priceProperty]
-                    return total + item.quantity * unitPrice
-                }, 0)
-            }} MAD</p>
-            <p>TVA: {{
-                items.reduce((total, item) => {
-                    const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-                    const unitPrice = item[priceProperty]
-                    return total + item.quantity * unitPrice * 0.2
-                }, 0)
-            }} MAD</p>
-            <p>Total TTC: {{
-                items.reduce((total, item) => {
-                    const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-                    const unitPrice = item[priceProperty]
-                    return total + item.quantity * unitPrice * 1.2
-                }, 0)
-            }} MAD</p>
-        </div>
+        
         </div>
         <div class="col-md-12 p-2 mt-1">
             <p>Arret du present bon de commande toutes taxes comprises a la somme de :</p>
