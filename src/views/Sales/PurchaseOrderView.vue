@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { salesService, sharedService } from '@/services';
 import { useSalesStore, useSharedStore } from '@/store';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
-import { PurchaseOrderTable, NewPurchaseOrder } from './components';
+import { PurchaseOrderTable } from './components';
 
 const salesStore = useSalesStore();
 const sharedStore = useSharedStore();
@@ -93,6 +93,5 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-        <NewPurchaseOrder />
     </div>
 </template>

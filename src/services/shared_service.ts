@@ -93,6 +93,32 @@ const getDashboard = async () => {
     }
 };
 
+
+const deleteRecruitment = async () => {
+    try {
+        const sharedStore = useSharedStore();
+        const id = sharedStore.selectedItem.id;
+        const response = await api().delete('/dmnd/delete-recruitement/' + id);
+        if (response.status == 200) {
+            sharedStore.deleteRecruitment(id);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const addNewRecruitment = async (data: any) => {
+    try {
+        const response = await api().post('rh/recrute/request', data);
+        if (response.status == 200) {
+            const sharedStore = useSharedStore();
+            sharedStore.pushRecruitment(response.data.recrutement);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 export default {
     createEvent,
     getEvent,
@@ -102,5 +128,7 @@ export default {
     getSoustraitant,
     getProjects,
     getClients,
-    getDashboard
+    getDashboard,
+    deleteRecruitment,
+    addNewRecruitment
 };

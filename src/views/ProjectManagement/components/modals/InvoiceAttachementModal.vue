@@ -1,3 +1,5 @@
+
+import { routerViewLocationKey } from 'vue-router';
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
@@ -54,9 +56,18 @@ const handleFileChange = (event, index) => {
     }
 };
 
+const removeItem = (index) => {
+    if (items.value.length > 1) {
+        items?.value.splice(index - 1, 1);
+        article?.value.splice(index - 1, 1);
+        qty?.value.splice(index - 1, 1);
+    }
+};
+
 const submit = async () => {
 
 };
+
 </script>
 <template>
     <Modal id="invoiceUpload" title="Attachements de la Facture" size="modal-xl">
@@ -75,6 +86,7 @@ const submit = async () => {
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div v-for="item in items" :key="item" class="col-12">
                         <div class="repeater-wrapper pt-0 pt-md-4">
@@ -89,10 +101,9 @@ const submit = async () => {
                                             <option selected="" disabled="">
                                                 Sélectionner un article
                                             </option>
-                                            <option v-for="(art, index) in project.pre_project.articles" :key="index"
-                                                :value="art">
-                                                {{ art.article }}
-                                            </option>
+                                            <option
+                                                v-for="(art, index) in project.pre_project.articles.filter(item => item.status === 1)"
+                                                @change="changeValue(art, item)" :key="index">{{ art.article }}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-2 col-12 mb-md-0 mb-3">

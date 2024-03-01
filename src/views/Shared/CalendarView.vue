@@ -2,7 +2,7 @@
 import { watch, ref, computed, onMounted } from 'vue';
 import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css';
-import { ModalReserve } from './components';
+import { ModalReserve, EventModal } from './components';
 import { sharedService } from '@/services';
 import { useSharedStore } from '@/store';
 
@@ -12,7 +12,8 @@ const minDate = new Date();
 const events = ref(computed(() => sharedStore.events));
 
 const onEventClick = (event: any) => {
-  console.log(event);
+  sharedStore.setEvent(event);
+  $('#eventModal').modal('show');
 };
 
 watch(events, () => {
@@ -42,6 +43,7 @@ onMounted(async () => {
       </div>
     </div>
     <ModalReserve type="event" title="Ajouter un événement" />
+    <EventModal />
   </div>
 </template>
 

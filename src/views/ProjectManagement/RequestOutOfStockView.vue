@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { salesService } from '@/services';
-import { useSalesStore } from '@/store';
-import { CardOne } from '@/ui';
-import PurchaseOrderTable from '../Sales/components/PurchaseOrderTable.vue';
+import { pmService } from '@/services';
+import { usePMStore } from '@/store';
+import { CardOne, OutOfStockTable } from '@/ui';
 
-const salesStore = useSalesStore();
+const pmStore = usePMStore();
 
-const stats = ref(computed(() => salesStore.purchaseOrders.stats));
-const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
+const stats = ref(computed(() => pmStore.outOfStock.stats));
+const requests = ref(computed(() => pmStore.outOfStock.data));
 
 onMounted(async () => {
-    await salesService.getPurchaseOrdersByProjectManager('Service');
+    await pmService.getOutOfStockRequests();
 });
 
 onUnmounted(() => {
-    salesStore.clearPurchaseOrders();
+    pmStore.clearOutOfStockRequests();
 });
 </script>
 
@@ -25,15 +24,15 @@ onUnmounted(() => {
         </h5>
         <div v-if="stats" class="row g-3">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardOne title="Demande en attente" :count="String(stats.total)" color="bg-label-primary"
+                <CardOne title="Demande en attente" :count="String(stats.pending)" color="bg-label-primary"
                     icon="ti-shopping-cart" card-color="card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardOne title="Demande en cours" :count="String(stats.pending)" color="bg-label-warning"
+                <CardOne title="Demande en cours" :count="String(stats.ongoing)" color="bg-label-warning"
                     icon="ti-shopping-cart" card-color="card-border-shadow-warning" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardOne title="Demande traitée" :count="String(stats.ongoing)" color="bg-label-success"
+                <CardOne title="Demande traitée" :count="String(stats.completed)" color="bg-label-success"
                     icon="ti-shopping-cart" card-color="card-border-shadow-success" />
             </div>
         </div>
@@ -49,8 +48,8 @@ onUnmounted(() => {
                                 </div>
                             </div>
                         </div>
-                        <div v-if="purchaseOrders != null" class="card-body border-top pt-4">
-                            <PurchaseOrderTable :purchase-orders="purchaseOrders" />
+                        <div v-if="requests != null" class="card-body border-top pt-4">
+                            <OutOfStockTable :requests="requests" role="chef" />
                         </div>
                     </div>
                 </div>

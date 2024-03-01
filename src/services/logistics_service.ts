@@ -103,6 +103,25 @@ const getTransport = async () => {
     }
 };
 
+const getOutOfStockRequests = async () => {
+    try {
+        const response = await api().get('/logistics/stock/get-all-sortie');
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setOutOfStockRequests(response.data);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createOutOfStock = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/stock/demande-sortie', data);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 export default {
     getStock,
@@ -114,7 +133,9 @@ export default {
     getCachets,
     getOperationCaisse,
     getVehicules,
-    getTransport
+    getTransport,
+    createOutOfStock,
+    getOutOfStockRequests
 };
 
 

@@ -4,9 +4,10 @@ import DataTable from './DataTable.vue';
 import Modal from './ModalView.vue';
 import CustomSelect from './CustomSelect.vue';
 import MultiSelect from './MultiSelect.vue';
-import AchatPieChart from './AchatPieChart.vue'; 
+import AchatPieChart from './AchatPieChart.vue';
 import ProjectChart from './ProjectChart.vue';
 import CardStats from './CardStats.vue';
+import OutOfStockTable from './OutOfStockTable.vue';
 
 export * from './cards';
 export * from './modals';
@@ -21,5 +22,6 @@ export {
     MultiSelect,
     AchatPieChart,
     ProjectChart,
-    CardStats
+    CardStats,
+    OutOfStockTable
 };

@@ -14,6 +14,10 @@ export const usePMStore = defineStore('PMStore', {
         print_facture: null,
         project: null,
         selectedArticle: null,
+        outOfStock: {
+            data: null,
+            stats: null,
+        }
     }),
     actions: {
         clearStore() {
@@ -69,7 +73,27 @@ export const usePMStore = defineStore('PMStore', {
             } else {
                 console.log('Item not found in array.');
             }
-        }
+        },
+        updateProjectArticle(data: any) {
+            const indexToUpdate = this.project.pre_project.articles.findIndex((item: any) => item.id == data.id);
+            if (indexToUpdate !== -1) {
+                this.project.pre_project.articles.splice(indexToUpdate, 1, data);
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
+        setOutOfStockRequests(data: any) {
+            this.outOfStock.data = data;
+            this.outOfStock.stats = {
+                pending: data.filter((item: any) => item.status === 'pending').length,
+                ongoing: data.filter((item: any) => item.status === 'on going').length,
+                completed: data.filter((item: any) => item.status === 'done').length,
+            };
+        },
+        clearOutOfStockRequests() {
+            this.outOfStock.data = null;
+            this.outOfStock.stats = null;
+        },
 
     },
 });

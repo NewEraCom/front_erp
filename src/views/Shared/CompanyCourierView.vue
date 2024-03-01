@@ -4,7 +4,7 @@ import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css';
 import { useSharedStore } from '@/store';
 import { sharedService } from '@/services';
-import { ModalReserve } from './components';
+import { ModalReserve, EventModal } from './components';
 
 const sharedStore = useSharedStore();
 
@@ -13,8 +13,10 @@ const events = ref(computed(() => sharedStore.events));
 const dataEvents = ref(events.value);
 
 const onEventClick = (event: any) => {
-    console.log(event);
+    sharedStore.setEvent(event);
+    $('#eventModal').modal('show');
 };
+
 
 watch(events, () => {
     dataEvents.value = events.value;
@@ -41,8 +43,16 @@ onMounted(async () => {
                     style="width: 100%;height: 56rem" events-on-month-view="short" :events="dataEvents" hide-weekends
                     :onEventClick="onEventClick" />
             </div>
+            <div v-else>
+                <div class="d-flex justify-content-center align-items-center" style="height: 50vh">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <ModalReserve type="coursier" title="Réserver un coursier" />
+        <EventModal />
     </div>
 </template>
 

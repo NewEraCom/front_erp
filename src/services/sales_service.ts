@@ -57,7 +57,6 @@ const createPurchaseOrder = async (data: any) => {
         const response = await api().post('/purchase/create', data);
         const pmStore = usePMStore();
         pmStore.pushPurchaseOrder(response.data.purchase);
-        return response.data;
     } catch (error) {
         return Promise.reject(error);
     }
@@ -68,7 +67,16 @@ const createExecutionOrder = async (data: any) => {
         const response = await api().post('/purchase/execution', data);
         const pmStore = usePMStore();
         pmStore.pushPurchaseOrder(response.data.purchase);
-        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const editArticle = async (id: number, data: any) => {
+    try {
+        const response = await api().post('/purchase/edit-articles/' + id, data);
+        const pmStore = usePMStore();
+        pmStore.updateProjectArticle(response.data.article);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -83,5 +91,6 @@ export default {
     getPurchaseOrdersByProjectManager,
     getPurchaseOrderById,
     createPurchaseOrder,
-    createExecutionOrder
+    createExecutionOrder,
+    editArticle
 };

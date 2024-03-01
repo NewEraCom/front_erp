@@ -74,12 +74,12 @@ const filter = () => {
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
                         @input="filter" />
 
-                    <div class="d-flex align-items-center ms-2">
+                    <div v-if="custom" class="d-flex align-items-center ms-2">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
                             @change="filter" />
                     </div>
-                    <div class="d-flex align-items-center ms-0">
+                    <div v-if="custom" class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
                         <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
                     </div>

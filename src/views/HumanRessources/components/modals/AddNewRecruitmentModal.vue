@@ -1,20 +1,26 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { sharedService } from '@/services';
 
 
 const isLoading = ref(false);
 
 const formData = ref({
-    poste: null,
+    post_name: null,
     description: null,
     diploma: '-',
-    exprience: '-',
+    experience: '-',
 
 });
 
 const submit = async () => {
-    console.log('submit');
+    isLoading.value = true;
+
+    await sharedService.addNewRecruitment(formData.value).then(() => {
+        isLoading.value = false;
+        $('#addNewRecruitment').modal('hide');
+    });
 };
 </script>
 <template>
@@ -22,12 +28,11 @@ const submit = async () => {
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Poste <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entrez le nom du poste" type="text" tabindex="0"
-                                id="nameEx" v-model="formData.poste" required>
+                                id="nameEx" v-model="formData.post_name" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -48,7 +53,7 @@ const submit = async () => {
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Expérience <span class="text-danger">*</span></label>
-                            <select name="" id="" class="form-select" required v-model="formData.exprience">
+                            <select name="" id="" class="form-select" required v-model="formData.experience">
                                 <option value="-">Choisir une expérience</option>
                                 <option value="Moins de 1 an">Moins de 1 an</option>
                                 <option value="1 à 3 ans">1 a 3 ans</option>

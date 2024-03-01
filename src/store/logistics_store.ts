@@ -46,7 +46,12 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             data: null,
             stats: null,
             loading: false,
-        }
+        },
+        outOfStockRequests: {
+            data: null,
+            stats: null,
+            loading: false,
+        },
     }),
     actions: {
         setStock(data: any) {
@@ -293,5 +298,23 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.vehicules.stats = null;
             this.vehicules.loading = false;
         },
+        setOutOfStockRequests(data: any) {
+            this.outOfStockRequests.data = data;
+            this.outOfStockRequests.stats = {
+                total: data.length,
+                pending: data.filter((item: any) => item.status === 'pending').length,
+                ongoing: data.reduce((acc: any, item: any) => {
+                    if (item.status == 'on going') {
+                        acc++;
+                    }
+                    return acc;
+                }, 0),
+            };
+        },
+        clearOutOfStockRequest() {
+            this.outOfStockRequests.data = null;
+            this.outOfStockRequests.stats = null;
+            this.outOfStockRequests.loading = false;
+        }
     }
 });

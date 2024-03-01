@@ -114,8 +114,19 @@ const deleteDemande = async () => {
     const id = PMStore.selectedArticle.id;
     const response = await api().delete('purchase/delete/' + id);
     if (response.status === 200) {
-      const PMStore = usePMStore();
       PMStore.deletePurchaseOrderFromProject(id);
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
+const getOutOfStockRequests = async () => {
+  try {
+    const response = await api().get('logistics/stock/get-project-sortie');
+    if (response.status === 200) {
+      const PMStore = usePMStore();
+      PMStore.setOutOfStockRequests(response.data.demandes);
     }
   } catch (e) {
     return Promise.reject(e);
@@ -131,5 +142,6 @@ export default {
   updateFacture,
   deleteFacture,
   getProjectById,
-  deleteDemande
+  deleteDemande,
+  getOutOfStockRequests
 };

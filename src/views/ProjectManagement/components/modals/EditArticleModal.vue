@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
+import { salesService } from '@/services';
+
 
 const props = defineProps({
     selectedArticle: {
@@ -16,12 +18,14 @@ const formData = ref({
     unite: props.selectedArticle?.unite,
 });
 
-const submit = () => {
+const submit = async () => {
     isLoading.value = true;
-    console.log(props.id);
-    setTimeout(() => {
+    await salesService.editArticle(props.selectedArticle.id, formData.value).then(() => {
         isLoading.value = false;
-    }, 2000);
+        $('#editArticle').modal('hide');
+    });
+
+
 };
 
 watch(() => props.selectedArticle, (newVal) => {
@@ -41,13 +45,13 @@ watch(() => props.selectedArticle, (newVal) => {
                                 <div class="row w-100 p-3">
                                     <div class="col-md-8 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">
-                                            Service
+                                            Article
                                         </p>
                                         <input class="form-control" type="text" v-model="formData.article" />
                                     </div>
                                     <div class="col-md-4 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Unite</p>
-                                        <p class="mb-0" v-html="formData.unite ? formData.unite : '-'"></p>
+                                        <input class="form-control" type="text" v-model="formData.unite" />
                                     </div>
                                 </div>
                             </div>

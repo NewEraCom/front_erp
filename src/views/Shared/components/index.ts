@@ -7,6 +7,8 @@ import AddLeaveRequest from './AddLeaveRequestModal.vue';
 import FournisseurTable from './FournisseurTable.vue';
 import ProjectsDisplay from './ProjectsDisplay.vue';
 import ClientsTable from './ClientsTable.vue';
+import EventModal from './EventModal.vue';
+import DetailsRecruitementModal from './DetailsRecruitementModal.vue';
 
 export {
     ModalReserve,
@@ -17,5 +19,7 @@ export {
     RecruitementTable,
     FournisseurTable,
     ProjectsDisplay,
-    ClientsTable
+    ClientsTable,
+    EventModal,
+    DetailsRecruitementModal
 };

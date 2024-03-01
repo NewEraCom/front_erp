@@ -4,6 +4,7 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { Modal } from '@/ui';
 import { helpers, formater } from '@/utils';
+import { PointageTable } from './components';
 
 const props = defineProps({
     id: {
@@ -315,9 +316,17 @@ watch(data, () => {
                                         <h6 class="mb-1 fw-bold text-dark">
                                             Matricule CNSS : {{ employee.cnss ?? 'N/A' }}
                                         </h6>
+
                                         <div v-if="employee.copie_cnss != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
-
+                                                <a href="" target="_blank" class="d-flex align-items-center">
+                                                    <div class="p-1 rounded bg-label-info">
+                                                        <i class="ti ti-file-download text-info ps-3 pe-3"></i>
+                                                    </div>
+                                                    <small class="ms-3">
+                                                        Télécharger la carte CNSS
+                                                    </small>
+                                                </a>
                                             </div>
                                         </div>
                                         <div v-else class="card mt-4 border shadow-none">
@@ -399,7 +408,79 @@ watch(data, () => {
                                             <i class="ti ti-upload me-2"></i> Ajouter un document
                                         </button>
                                     </div>
+
                                     <div class="card-body">
+                                        <div class="row">
+                                            <div v-if="employee.copie_cin != null" class="col-6 mb-3">
+                                                <div class="card shadow-none border">
+                                                    <div class="card-body d-flex">
+                                                        <div class="bg-label-primary p-3 rounded">
+                                                            <i class="ti ti-file-filled"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-2">
+                                                                {{
+                                                                    formater.limitText(
+                                                                        employee.copie_cin,
+                                                                        45
+                                                                    )
+                                                                }}
+                                                            </h6>
+                                                            <small class="mt-auto">Créé le
+                                                                {{
+                                                                    formater.date(
+                                                                        employee.created_at
+                                                                    )
+                                                                }}</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="employee.documents.length != 0" class="row">
+                                            <div v-for="item in employee.documents" :key="item" class="col-6 mb-3">
+                                                <div class="card shadow-none border">
+                                                    <div class="card-body d-flex align-items-center">
+                                                        <div class="bg-label-primary p-3 rounded">
+                                                            <i class="ti ti-file-filled"></i>
+                                                        </div>
+                                                        <div class="ms-2">
+                                                            <h6 class="mb-2">
+                                                                {{
+                                                                    formater.limitText(
+                                                                        item.title,
+                                                                        55
+                                                                    )
+                                                                }}
+                                                            </h6>
+                                                            <small class="mt-auto">Créé le
+                                                                {{
+                                                                    formater.date(
+                                                                        item.created_at
+                                                                    )
+                                                                }}</small>
+                                                        </div>
+                                                        <button class="ms-auto btn btn-danger btn-sm m-0"
+                                                            data-bs-toggle="modal" data-bs-target="#delete-doc">
+                                                            <i class="ti ti-trash-filled"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-else class="row mb-4">
+                                            <div class="col-12 text-center">
+                                                <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt=""
+                                                    height="180px" width="180px" style="object-fit: contain" />
+                                                <h6 class="text-center mt-3 fw-bold">
+                                                    Aucun document trouvé
+                                                </h6>
+                                                <p class="text-center">
+                                                    Il n'y a pas encore de documents pour cet
+                                                    employé
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -416,6 +497,9 @@ watch(data, () => {
                                             <i class="ti ti-square-rounded-plus-filled me-2"></i>
                                             Nouveau enregistrement
                                         </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <PointageTable :pointages="employee.pointages" :custom="false" />
                                     </div>
                                 </div>
                             </div>

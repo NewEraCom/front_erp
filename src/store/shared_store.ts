@@ -43,6 +43,8 @@ export const useSharedStore = defineStore('ShareStore', {
             data: null,
             loading: false
         },
+        event: null,
+        selectedItem: null,
     }),
     actions: {
         setEvents(data: any) {
@@ -192,6 +194,27 @@ export const useSharedStore = defineStore('ShareStore', {
         clearDashboardStats() {
             this.dashboard.stats = null;
             this.dashboard.loading = false;
+        },
+        setEvent(data: any) {
+            this.event = data;
+        },
+        clearEvent() {
+            this.event = null;
+        },
+        deleteRecruitment(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.recruitment.data.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.recruitment.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
+        setSelectedItem(data: any) {
+            this.selectedItem = data;
+        },
+        pushRecruitment(data: any) {
+            this.recruitment.data.push(data);
         },
     },
 });

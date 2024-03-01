@@ -7,16 +7,17 @@ import { formater, helpers } from '@/utils';
 const salesStore = useSalesStore();
 
 const purchase = ref(computed(() => salesStore.purchase));
+const role = ref(localStorage.getItem('role'));
 
 const props = defineProps({
     id: {
-        type: Number,
-        default: 0
+        type: String,
+        required: true,
     }
 });
 
 onMounted(() => {
-    salesService.getPurchaseOrderById(props.id);
+    salesService.getPurchaseOrderById(Number(props.id));
 });
 
 onUnmounted(() => {
@@ -94,7 +95,9 @@ onUnmounted(() => {
                                     <td class="text-center">{{ article.unity }}</td>
                                     <td class="text-center">{{ article.quantity }}</td>
                                     <td class="text-center">
-                                        <button v-if="article.type == 'hors bordereau'"
+
+                                        <button
+                                            v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations')"
                                             class="btn rounded btn-success btn-sm">
                                             <i class="ti ti-check"></i>
                                         </button>
@@ -185,7 +188,8 @@ onUnmounted(() => {
             <div class="col-xl-3 col-md-4 col-12 invoice-actions">
                 <div class="card card-border-shadow-primary mb-4">
                     <div class="card-body">
-                        <button v-if="purchase.status == 'pending'"
+
+                        <button v-if="purchase.status == 'pending' && role == 'Responsable achat'"
                             class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex">
                             <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
                         </button>
@@ -193,10 +197,10 @@ onUnmounted(() => {
                             href="./app-invoice-print.html">
                             <i class="ti ti-printer me-2"></i> Imprimer la demande
                         </a>
-                        <a v-if="purchase.status == 'pending'" href="./app-invoice-edit.html"
-                            class="btn btn-label-warning d-grid w-100 mb-2 waves-effect d-flex">
+                        <button disabled v-if="purchase.status == 'pending'" href="./app-invoice-edit.html"
+                            class="btn btn-label-secondary d-grid w-100 mb-2 waves-effect d-flex">
                             <i class="ti ti-pencil me-2"></i> Modifier la demande
-                        </a>
+                        </button>
                         <button v-if="purchase.status != 'pending'"
                             class="btn btn-primary d-grid w-100 waves-effect waves-light" data-bs-toggle="offcanvas"
                             data-bs-target="#addPaymentOffcanvas">

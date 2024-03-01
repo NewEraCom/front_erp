@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { logisticsService } from '@/services';
 
 const isLoading = ref(false);
-const isStock = ref('Stock');
+
 const props = defineProps({
     id: {
         type: Number,
@@ -16,27 +17,17 @@ const props = defineProps({
 });
 
 const formData = ref({
-    selectedSoustrait: '-',
     remark: '',
+    recepteur: '',
+    address: '',
     items: [1],
-    service: [],
-    qty: [],
+    articles: [],
     unite: [],
-    price: [],
-    total: [],
-    itemsArticle: [],
-    itemsArticleHors: [],
-    articleHors: ['-'],
-    qtyHors: [],
-    unites: [],
+    qte_demande: [],
 });
 
 const addItem = () => {
     formData.value.items.push(formData.value.items.length + 1);
-};
-
-const addItemHors = () => {
-    formData.value.itemsArticle.push(formData.value.itemsArticle.length + 1);
 };
 
 const removeItem = (index) => {
@@ -47,43 +38,28 @@ const removeItem = (index) => {
     }
 };
 
-const removeItemHors = (index) => {
-    formData.value.itemsArticle.splice(index - 1, 1);
-};
-
 
 const changeValue = (item, index) => {
-    formData.value.price[index] = item.prix_ht?.toFixed(2);
     formData.value.unite[index] = item.unite;
-    if (formData.value.qty[index] != null) {
-        formData.value.total[index] = item.prix_ht * formData.value.qty[index];
-        formData.value.total[index] = formData.value.total[index].toFixed(2);
-    }
 };
 
-const changeQuantity = (index) => {
-    if (formData.value.qty[index] != 0) {
-        formData.value.total[index] = formData.value.price[index] * formData.value.qty[index];
-        formData.value.total[index] = formData.value.total[index].toFixed(2);
-    } else {
-        formData.value.total[index] = 0;
-    }
-};
-
-
-const checkItem = (value) => {
-    if (value == 'Stock') {
-        isStock.value = 'Stock';
-    } else {
-        isStock.value = 'Chantier';
-    }
-};
-const submit = () => {
+const submit = async () => {
     isLoading.value = true;
-    console.log(props.id);
-    setTimeout(() => {
+
+    await logisticsService.createOutOfStock({
+        project_id: props.id,
+        articles: JSON.stringify(formData.value.articles),
+        qte_demande: JSON.stringify(formData.value.qte_demande),
+        recepteur: formData.value.recepteur,
+        address: formData.value.address,
+        remark: formData.value.remark,
+    }).then(() => {
         isLoading.value = false;
-    }, 2000);
+        $(`#outOfStock`).modal('hide');
+
+    }).catch(() => {
+        isLoading.value = false;
+    });
 };
 
 </script>
@@ -100,8 +76,8 @@ const submit = () => {
                                         <p class="mb-2 repeater-title">
                                             Article {{ item }}
                                         </p>
-                                        <select v-model="formData.service[item]" class="form-select item-details mb-3"
-                                            @change="changeValue(formData.service[item], item)">
+                                        <select v-model="formData.articles[item]" class="form-select item-details mb-3"
+                                            @change="changeValue(formData.articles[item], item)">
                                             <option value="-">
                                                 Sélectionner un article
                                             </option>
@@ -112,12 +88,13 @@ const submit = () => {
                                     </div>
                                     <div class="col-md-3 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Qty</p>
-                                        <input id="qteInput" v-model="formData.qty[item]" type="number"
+                                        <input id="qteInput" v-model="formData.qte_demande[item]" type="number"
                                             class="form-control invoice-item-qty" placeholder="1" min="1"
-                                            :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)" />
-                                        <small class="text-muted" v-if="formData.service[item]?.qte_restant">Quantite
+                                            :max="formData.articles[item]?.qte_restant" />
+                                        <small class="text-muted" v-if="formData.articles[item]?.qte_restant">Quantite
                                             restante:
-                                            {{ formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant : 0
+                                            {{ formData.articles[item]?.qte_restant ? formData.articles[item]?.qte_restant :
+                                                0
                                             }}</small>
                                     </div>
                                     <div class="col-md-3 col-12 pe-0">
@@ -132,47 +109,20 @@ const submit = () => {
                         </div>
                     </div>
 
-                    <div v-for="item in formData.itemsArticle" :key="item" class="col-12">
-                        <div class="repeater-wrapper pt-0 pt-md-4">
-                            <div class="d-flex border rounded position-relative pe-0">
-                                <div class="row w-100 p-3">
-                                    <div class="col-md-4 col-12 mb-md-0 mb-3">
-                                        <p class="mb-2 repeater-title">
-                                            Article Hors Bordereau {{ item }}
-                                        </p>
-                                        <input id="qteInput" v-model="formData.articleHors[item]" type="text"
-                                            class="form-control" placeholder="Entrez le désignation de l'article" />
-                                    </div>
-                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
-                                        <p class="mb-2 repeater-title">Qty</p>
-                                        <input id="qteInput" v-model="formData.qtyHors[item]" type="number"
-                                            class="form-control" placeholder="1" min="1" max="50" />
-                                    </div>
-                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
-                                        <p class="mb-2 repeater-title">Unite</p>
-                                        <input id="qteInput" v-model="formData.unites[item]" type="text"
-                                            class="form-control" placeholder="M2" />
-                                    </div>
-                                </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                                    <i class="ti ti-x cursor-pointer" @click="removeItemHors(item)"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="col-12 mb-1 mt-3">
                         <div class="mb-3">
-                            <label for="recepteur" class="mb-3">Récepteur</label>
-                            <input id="recepteur" v-model="recepteur" type="text" class="form-control"
-                                placeholder="Entrez le nom du récepteur de la commande" />
+                            <label for="recepteur" class="mb-3">Récepteur <span class="text-danger">*</span></label>
+                            <input id="recepteur" v-model="formData.recepteur" type="text" class="form-control"
+                                placeholder="Entrez le nom du récepteur de la commande" required />
                         </div>
                     </div>
                     <div class="col-12 mb-1">
                         <div class="mb-3">
-                            <label for="recepteur" class="mb-3">Adresse de livraison</label>
-                            <input id="recepteur" v-model="recepteur" type="text" class="form-control"
-                                placeholder="Entrez l'adresse de livraison" />
+                            <label for="recepteur" class="mb-3">Adresse de livraison <span
+                                    class="text-danger">*</span></label>
+                            <input id="recepteur" v-model="formData.address" type="text" class="form-control"
+                                placeholder="Entrez l'adresse de livraison" required />
                         </div>
                     </div>
 
@@ -189,9 +139,6 @@ const submit = () => {
                 </div>
             </div>
             <div class="modal-footer">
-                <div v-if="formData.itemsArticle.length > 0" class="alert alert-danger me-auto" role="alert">
-                    Les articles hors bordereau doit être validé avant la demande d'achat envoyé au responsable d'achat.
-                </div>
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>

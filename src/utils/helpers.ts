@@ -55,7 +55,7 @@ const initialDashboard = (role: string): string => {
 			return 'DashboardPM';
 		case roles.DS:
 		case roles.DG:
-			return 'DashboardPM';
+			return 'DashboardAdmin';
 		case roles.FINANCE:
 			return 'FnFacture';
 		// return 'DashboardAdmin';
@@ -68,7 +68,7 @@ const returnSideBarItems = (): any => {
 	const role = localStorage.getItem('role');
 	switch (role) {
 		case roles.DG:
-			return sideBar.DGMenu;
+			return sideBar.SupportMenu;
 		case roles.SALES:
 			return sideBar.SalesMenu;
 		case roles.LOGISTICS:

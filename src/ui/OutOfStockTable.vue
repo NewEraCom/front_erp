@@ -2,41 +2,43 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { useSharedStore } from '@/store';
-
-const sharedStore = useSharedStore();
+import router from '@/router';
 
 const props = defineProps({
-    recruitment: {
+    requests: {
         type: Array,
         required: true,
     },
+    role: {
+        type: String,
+        required: true,
+    }
 });
 
 const headers = [
-    { text: 'Poste', value: 'post_name', type: 'text' },
-    { text: 'Experience', value: 'experience', type: 'text' },
-    { text: 'Diplome', value: 'diploma', type: 'text' },
-    { text: 'Créé le', value: 'created_at', type: 'datetime' },
-    { text: 'Status', value: 'status', type: 'badge' },
+    { text: 'N° de demande', value: 'code', type: 'text' },
+    { text: 'Projet', value: 'code', type: 'project' },
+    { text: 'Date de demande', value: 'created_at', type: 'date' },
+    { text: 'Statut', value: 'status', type: 'badge' },
 ];
+
+if (props.role != 'chef') {
+    headers.push({ text: 'Créé par', value: 'created_by', type: 'created_by' });
+}
 
 const actionsConfig = [
     {
         icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
-            sharedStore.setEvent(item);
-            $('#detailsRecruitementModal').modal('show');
-        }
-    },
-    {
-        icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
-            sharedStore.setSelectedItem(item);
-            $('#deleteModal').modal('show');
+            router.push(`/purchase-order/details/${item.id}`);
         }
     },
 ];
 
-const filteredData = ref(props.recruitment);
+
+
+
+
+const filteredData = ref(props.requests);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -45,8 +47,8 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.recruitment.filter((item: any) => {
-        const combinedFields = `${item.titre}`.toLowerCase();
+    filteredData.value = props.requests.filter((item: any) => {
+        const combinedFields = `${item.created_by.employee.first_name} ${item.created_by.employee.last_name} ${item.project.code} ${item.code}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
@@ -68,8 +70,8 @@ const filter = () => {
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
                             <option value="pending">En attente</option>
+                            <option value="on going">En cours</option>
                             <option value="done">Traité</option>
-                            <option value="delivered">Livré</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-2">
@@ -98,7 +100,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" disabled="pending" />
+            buttonType="simple" disabled="done" />
     </div>
 </template>
 <style>
