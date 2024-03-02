@@ -69,6 +69,7 @@ const addOneMonth = (date) => {
         :key="fournisseurId"
         :id="`content-${fournisseurId}`"
         style="width: 48%"
+        v-if="items"
       >
         <button class="no-print btn btn-primary w-20 m-2" @click="generatePDF(fournisseurId)">
           Télécharger
@@ -212,10 +213,8 @@ const addOneMonth = (date) => {
 
           </div>
       </div>
-    </div>
-  </div>
-  <div class="container mt-3" v-else>
-    <div class="mt-2 mb-4">
+      <div class="container mt-3" v-else>
+    <div class="mt-2 mb-4 text-center">
       <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt="no_results" />
       <h5 class="mt-3 fw-bold">Aucun bon de commande créé pour le moment.</h5>
       <p class="text-muted">
@@ -224,6 +223,9 @@ const addOneMonth = (date) => {
       </p>
     </div>
   </div>
+    </div>
+  </div>
+  
 
   <iframe id="pdfPreview" style="width: 60%; height: 500px"></iframe>
 </template>
