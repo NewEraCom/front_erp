@@ -69,8 +69,9 @@ const addOneMonth = (date) => {
         :key="fournisseurId"
         :id="`content-${fournisseurId}`"
         style="width: 48%"
-        v-if="items"
+        
       >
+      <div v-if="items[0].fournisseur">
         <button class="no-print btn btn-primary w-20 m-2" @click="generatePDF(fournisseurId)">
           Télécharger
         </button>
@@ -81,7 +82,7 @@ const addOneMonth = (date) => {
             alt="Company Logo"
           />
 
-          <div class="col-md-6 ">
+          <div class="col-md-6 " v-if="bonCommande">
             <h5>Bon de Commande N° {{ bonCommande.num }}</h5>
 
             <span>
@@ -213,8 +214,8 @@ const addOneMonth = (date) => {
 
           </div>
       </div>
-      <div class="container mt-3" v-else>
-    <div class="mt-2 mb-4 text-center">
+      <div class="mt-3 text-center" v-else>
+    <div class="mt-2 mb-4">
       <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt="no_results" />
       <h5 class="mt-3 fw-bold">Aucun bon de commande créé pour le moment.</h5>
       <p class="text-muted">
@@ -223,6 +224,7 @@ const addOneMonth = (date) => {
       </p>
     </div>
   </div>
+    </div>
     </div>
   </div>
   
