@@ -7,6 +7,7 @@ import AddNewRecruitmentModal from './AddNewRecruitmentModal.vue';
 import AddDemandeRhModal from './AddDemandeRhModal.vue';
 import AddPaieModal from './AddPaieModal.vue';
 import AddSalaryAdvanceModal from './AddSalaryAdvanceModal.vue';
+import ValidateConge from './ValidateConge.vue'
 import EditSalaryModal from './EditSalaryModal.vue';
 import AugementationSalaryModal from './AugementationSalaryModal.vue';
 import EditLeavePerMonthModal from './EditLeavePerMonthModal.vue';
@@ -27,6 +28,7 @@ export {
     AddDemandeRhModal,
     AddPaieModal,
     AddSalaryAdvanceModal,
+    ValidateConge,
     EditSalaryModal,
     AugementationSalaryModal,
     EditLeavePerMonthModal,

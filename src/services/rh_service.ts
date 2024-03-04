@@ -250,6 +250,40 @@ const addEmployee = async (data: any) => {
         return error;
     }
 };
+ async function Confirmation(id, req) {
+    try {
+
+
+        const response = await api().post('conge/valider/' + id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+
+            
+            await getLeaves()
+
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function ValidateRecruite(id:number) {
+    try {
+
+
+        const response = await api().post('dmnd/validate-recruite/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+
+            
+            await getLeaves()
+
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 export default {
@@ -268,5 +302,7 @@ export default {
     addLeave,
     addSalaryAdvance,
     addEmployee,
+    Confirmation,
+    ValidateRecruite,
     deleteSalaryAdvance
 };

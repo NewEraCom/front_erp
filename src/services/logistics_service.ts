@@ -1,7 +1,5 @@
 import { api } from '@/utils';
 import { useLogisticsStore } from '@/store';
-import { useSalesStore } from '@/store';
-import { log } from 'console';
 
 
 const getStock = async (type: string) => {
@@ -103,6 +101,32 @@ const getTransport = async () => {
         return Promise.reject(error);
     }
 };
+async function validateCaisse(id: number) {
+    try {
+
+
+        const response = await api().post('logistics/caisse/validate/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+
+
+            await getOperationCaisse();
+
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+const getDemandeSortie = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const response = await api().get('/logistics/stock/get-all-sortie');
+        logisticsStore.demandeSortie = response.data.sorties;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 const getOutOfStockRequests = async () => {
     try {
@@ -182,7 +206,9 @@ export default {
     getSubscriptionById,
     getGasoilById,
     getJawazById,
-    deleteCaisseOperation
+    deleteCaisseOperation,
+    validateCaisse,
+    getDemandeSortie
 };
 
 

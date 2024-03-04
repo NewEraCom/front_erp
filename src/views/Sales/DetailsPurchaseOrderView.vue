@@ -2,10 +2,11 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
-import { formater, helpers } from '@/utils';
+import { formater } from '@/utils';
+import { ValidateArticleModal } from './components';
 
 const salesStore = useSalesStore();
-
+const isLoading = ref(false);
 const purchase = ref(computed(() => salesStore.purchase));
 const role = ref(localStorage.getItem('role'));
 
@@ -211,48 +212,144 @@ onUnmounted(() => {
                     </div>
                 </div>
             </div>
+            <h6 class="mb-2">Adresse email: {{ purchase.created_by.employee.email }}</h6>
+            <h6 class="mb-1">
+              Numéro de téléphone: {{ purchase.created_by.employee.phone ?? 'N/A' }}
+            </h6>
+          </div>
+        </div>
+        <div
+          v-if="purchase.commentaire != null && purchase.commentaire != '-'"
+          class="card card-border-shadow-primary mb-4"
+        >
+          <div class="card-header">
+            <h5 class="card-title m-0">Commentaire</h5>
+          </div>
+          <div class="card-body">
+            <p class="mb-0">{{ purchase.commentaire }}</p>
+          </div>
+        </div>
+        <div v-if="purchase.type == 'Achats'" class="card card-border-shadow-primary mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">Informations de livraison</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <span class="badge bg-label-success rounded-circle p-2 me-2">
+                <i class="ti ti-map-pin f-18"></i>
+              </span>
+              <p class="mb-0">Adresse de livraison : {{ purchase.location }}</p>
+            </div>
+            <div v-if="purchase.location != 'Stock'" class="d-flex align-items-center mt-4">
+              <span class="badge bg-label-success rounded-circle p-2 me-2">
+                <i class="ti ti-user f-18"></i>
+              </span>
+              <p class="mb-0">Livrer à : {{ purchase.recepteur }}</p>
+            </div>
+          </div>
         </div>
 
+        <div v-else class="card card-border-shadow-primary mb-4">
+          <div class="card-header">
+            <h5 class="card-title m-0">Informations de Soustraitant</h5>
+          </div>
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Soustraitant :
+                {{ purchase.purchase_article[0].fournisseur.raison_social }}
+              </p>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Nom de commercial :
+                {{ purchase.purchase_article[0].fournisseur.commercial_name }}
+              </p>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Téléphone de commercial :
+                {{ purchase.purchase_article[0].fournisseur.commercial_phone }}
+              </p>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Téléphone de soustraitant :
+                {{
+                  (purchase.purchase_article[0].fournisseur.phone_no_1 ?? 'N/A') +
+                  ' / ' +
+                  (purchase.purchase_article[0].fournisseur.phone_no_2 ?? 'N/A')
+                }}
+              </p>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Adresse :
+                {{ purchase.purchase_article[0].fournisseur.adresse ?? 'N/A' }}
+              </p>
+            </div>
+            <div class="d-flex align-items-center mt-3">
+              <i class="ti ti-chevron-right f-18"></i>
+              <p class="mb-0">
+                Ville :
+                {{ purchase.purchase_article[0].fournisseur.ville ?? 'N/A' }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <ValidateArticleModal
+      id="validate-article-modal"
+      :isLoading="isLoading"
+      :method="ValidationArticle"
+      :itemid="salesStore.ItemId"
+    />
+  </div>
 </template>
 
 <style>
 .bottom-image {
-    position: fixed;
-    bottom: 35px;
-    width: 80%;
-    /* Adjust the width as needed */
+  position: fixed;
+  bottom: 35px;
+  width: 80%;
+  /* Adjust the width as needed */
 }
 
 .f-18 {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .f-36 {
-    font-size: 36px;
+  font-size: 36px;
 }
 
 .empty_stats_img_md {
-    width: 100%;
-    max-width: 180px;
-    margin: 0 auto;
+  width: 100%;
+  max-width: 180px;
+  margin: 0 auto;
 }
 
 .only-in-mobile {
-    display: block;
+  display: block;
 }
 
 .hide-in-mobile {
-    display: none;
+  display: none;
 }
 
 @media (min-width: 980px) {
-    .only-in-mobile {
-        display: none;
-    }
+  .only-in-mobile {
+    display: none;
+  }
 
-    .hide-in-mobile {
-        display: block;
-    }
+  .hide-in-mobile {
+    display: block;
+  }
 }
 </style>

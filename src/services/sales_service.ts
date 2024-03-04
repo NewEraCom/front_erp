@@ -51,6 +51,32 @@ const getFacturesClient = async () => {
         return Promise.reject(error);
     }
 };
+async function ValidateArticle(id: number) {
+    try {
+
+
+        const response = await api().post('purchase/validate-article/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const commande = async (id) => {
+    try {
+        const salesStore = useSalesStore();
+
+        const res = await api().get(`logistics/bon-commande/print/${id}`);
+        console.log(res.data.data);
+        salesStore.commande = res.data.data;
+        return res.data;
+    } catch (e) {
+        return Promise.reject(e);
+    }
+};
 
 const createPurchaseOrder = async (data: any) => {
     try {
@@ -90,7 +116,9 @@ export default {
     getFacturesClient,
     getPurchaseOrdersByProjectManager,
     getPurchaseOrderById,
-    createPurchaseOrder,
+    ValidateArticle,
+    commande,
+    editArticle,
     createExecutionOrder,
-    editArticle
+    createPurchaseOrder
 };

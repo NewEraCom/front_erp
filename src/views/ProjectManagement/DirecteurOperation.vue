@@ -136,7 +136,24 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
-  </div>
+    <!-- /Last 10 Achats -->
+    <div v-if="data" class="row mt-4">
+            <div class="col-6 h-50">
+                <ProjectChart
+                    title="Statistique des projets"
+                    subtitle="Budget des Projets"
+                    color="rgb(37, 144, 250)"
+                    :data="data.chart"
+                    pin="total_employee"
+                    legened="Budget en MAD"
+                    type="bar"
+                />
+            </div>
+            <div class="col-6 h-50 ">
+                <AchatPieChart :data="data.achatByProject" />
+            </div>
+        </div>
+    </div>  
 </template>
 
 <style scoped></style>

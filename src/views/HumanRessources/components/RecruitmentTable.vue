@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { helpers } from '@/utils';
+import { useRhStore } from '@/store';
 
 const props = defineProps({
     recruitments: {
@@ -9,7 +10,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+const rhStore = useRhStore();
 const headers = [
     { text: 'Créé par', value: 'created_by', isComplex: true, type: 'recrute' },
     { text: 'Poste', value: 'post_name', type: 'text' },
@@ -23,6 +24,7 @@ const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => editItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
 ];
+
 
 const editItem = (item: any) => {
     console.log('Edit item', item);

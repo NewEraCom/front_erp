@@ -20,6 +20,16 @@ onMounted(async () => {
 onUnmounted(() => {
     sharedStore.clearRecruitment();
 });
+const ValidateRecruite = async () => {
+     isLoading.value = true;
+
+    await rhService.ValidateRecruite(rhStore.ItemId).then(() => {
+     isLoading.value = false;
+      $("#validate-recruitement-modal").modal("hide");
+    
+   });
+  // console.log($('#validateInput').val());
+};
 
 
 watch(data, () => {

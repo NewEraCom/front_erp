@@ -3,10 +3,10 @@ import { ref, computed, onMounted } from 'vue';
 import { CardOne } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { LeavesTable, AddNewLeaveModal } from './components';
+import { LeavesTable, AddNewLeaveModal, ValidateConge } from './components';
 
 const rhStore = useRhStore();
-
+const isLoading = ref(false);
 const leaves = ref(computed(() => rhStore.leaves));
 const employees = ref(computed(() => rhStore.employees));
 
@@ -15,6 +15,18 @@ onMounted(async () => {
   await rhService.getEmployees();
 
 });
+const Validate = async () => {
+     isLoading.value = true;
+
+   const formData = new FormData();
+     formData.append('status',1 ); 
+    await rhService.Confirmation(rhStore.ItemId,formData).then(() => {
+     isLoading.value = false;
+      $("#validate-modal").modal("hide");
+    
+   });
+  // console.log($('#validateInput').val());
+};
 
 </script>
 <template>
@@ -63,6 +75,12 @@ onMounted(async () => {
       </div>
     </div>
     <AddNewLeaveModal v-if="employees" :employees="employees" />
+    <ValidateConge
+        id="validate-modal"
+        :isLoading="isLoading"
+      :method="Validate"
+      :itemid="rhStore.ItemId"
+    />
   </div>
 </template>
 

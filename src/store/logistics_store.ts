@@ -46,21 +46,7 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             data: null,
             stats: null,
             loading: false,
-        },
-        outOfStockRequests: {
-            data: null,
-            stats: null,
-            loading: false,
-        },
-        delivery: {
-            data: null,
-            stats: null,
-            loading: false,
-        },
-        subscription: null,
-        gasoil: null,
-        selectedJawaz: null,
-        selectedItem: null,
+        }
     }),
     actions: {
         setStock(data: any) {
@@ -293,51 +279,5 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.vehicules.stats = null;
             this.vehicules.loading = false;
         },
-        setOutOfStockRequests(data: any) {
-            this.outOfStockRequests.data = data;
-            this.outOfStockRequests.stats = {
-                total: data.length,
-                pending: data.filter((item: any) => item.status == 'pending').length,
-                done: data.filter((item: any) => item.status == 'done').length,
-            };
-        },
-        clearOutOfStockRequest() {
-            this.outOfStockRequests.data = null;
-            this.outOfStockRequests.stats = null;
-            this.outOfStockRequests.loading = false;
-        },
-        setDelivery(data: any) {
-            this.delivery.data = data;
-            this.delivery.stats = {
-                total: data.length,
-                pending: data.filter((item: any) => item.status == 'pending').length,
-                onroad: data.filter((item: any) => item.status == 'on road').length,
-                done: data.filter((item: any) => item.status == 'done').length,
-            };
-        },
-        setSubscription(data: any) {
-            this.subscription = data;
-        },
-        clearSubscription() {
-            this.subscription = null;
-        },
-        setGasoil(data: any) {
-            this.gasoil = data;
-        },
-        clearGasoil() {
-            this.gasoil = null;
-        },
-        setSelectedJawaz(data: any) {
-            this.selectedJawaz = data;
-        },
-        clearSelectedJawaz() {
-            this.selectedJawaz = null;
-        },
-        setSelectedItem(data: any) {
-            this.selectedItem = data;
-        },
-        clearSelectedItem() {
-            this.selectedItem = null;
-        }
     }
 });

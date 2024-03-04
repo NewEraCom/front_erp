@@ -12,7 +12,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+const rhStore = useRhStore();
 const headers = [
     { text: 'Poste', value: 'post_name', type: 'text' },
     { text: 'Experience', value: 'experience', type: 'text' },
@@ -35,6 +35,16 @@ const actionsConfig = [
         }
     },
 ];
+if( localStorage.getItem('role') === helpers.roles.DS ){
+    actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+        showValidationModal(item);
+    } });
+}
+const showValidationModal = (item: any) => {
+    rhStore.setItemId(item.id)
+    $("#validate-recruitement-modal").modal("show");
+
+};
 
 const filteredData = ref(props.recruitment);
 

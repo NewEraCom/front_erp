@@ -13,6 +13,9 @@ import NewSubscriptionModal from './NewSubscriptionModal.vue';
 import NewOperationModal from './NewOperationModal.vue';
 import DetailsCaisseOperation from './DetailsCaisseOperationModal.vue';
 import DetailsLouerModal from './DetailsLouerModal.vue';
+import ValidateCaisse from './ValidateCaisse.vue';
+import DemandeSortieTable from './DemandeSortieTable.vue';
+import PreviewDemandeSortie from './PreviewDemandeSortie.vue';
 
 export {
     StockTable,
@@ -30,4 +33,7 @@ export {
     NewOperationModal,
     DetailsCaisseOperation,
     DetailsLouerModal
+    ValidateCaisse,
+    DemandeSortieTable,
+    PreviewDemandeSortie
 };

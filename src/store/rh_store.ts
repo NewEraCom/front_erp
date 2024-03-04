@@ -36,6 +36,8 @@ export const useRhStore = defineStore('RhStore', {
             data: null,
             stats: null,
         },
+        ItemId: null,
+
         salaryAdvanceSelected: null
     }),
     actions: {
@@ -202,7 +204,10 @@ export const useRhStore = defineStore('RhStore', {
             this.pointages.push(data);
             console.log('pointage pushed');
             console.log(this.pointages);
-        }
+        },
+        setItemId(id: number) {
+            this.ItemId = id;
+        },
 
     }
 });

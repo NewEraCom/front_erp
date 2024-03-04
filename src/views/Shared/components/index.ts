@@ -9,6 +9,7 @@ import ProjectsDisplay from './ProjectsDisplay.vue';
 import ClientsTable from './ClientsTable.vue';
 import EventModal from './EventModal.vue';
 import DetailsRecruitementModal from './DetailsRecruitementModal.vue';
+import ValidateRecruitementModal from './ValidateRecruitementModal.vue';
 
 export {
     ModalReserve,
@@ -21,5 +22,6 @@ export {
     ProjectsDisplay,
     ClientsTable,
     EventModal,
-    DetailsRecruitementModal
+    DetailsRecruitementModal,
+    ValidateRecruitementModal
 };

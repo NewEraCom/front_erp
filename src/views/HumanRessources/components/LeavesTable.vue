@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
+import { rhService } from '@/services';
+import { useRhStore } from '@/store';
 
+const rhStore = useRhStore();
 const props = defineProps({
     leaves: {
         type: Array,
@@ -24,9 +27,22 @@ const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
+if( localStorage.getItem('role') === helpers.roles.RH){
+    actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+        showValidationModal(item);
+    } });
+}
 
 const detailsItem = (item: any) => {
     console.log(item);
+};
+const isLoading = ref(false);
+
+const showValidationModal = (item: any) => {
+    rhStore.setItemId(item.id)
+
+    $("#validate-modal").modal("show");
+
 };
 
 const deleteItem = (item: any) => {
