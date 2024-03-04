@@ -1,6 +1,7 @@
 import { api } from '@/utils';
 import { useLogisticsStore } from '@/store';
 import { useSalesStore } from '@/store';
+import { log } from 'console';
 
 
 const getStock = async (type: string) => {
@@ -95,9 +96,9 @@ const getVehicules = async () => {
 
 const getTransport = async () => {
     try {
-        const response = await api().get('/logistics/transport/');
-        const salesStore = useSalesStore();
-        salesStore.setPurchaseOrders(response.data.purchases);
+        const response = await api().get('/logistics/transport');
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setDelivery(response.data.delivery);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -107,7 +108,7 @@ const getOutOfStockRequests = async () => {
     try {
         const response = await api().get('/logistics/stock/get-all-sortie');
         const logisticsStore = useLogisticsStore();
-        logisticsStore.setOutOfStockRequests(response.data);
+        logisticsStore.setOutOfStockRequests(response.data.sorties);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -122,6 +123,48 @@ const createOutOfStock = async (data: any) => {
     }
 };
 
+const getSubscriptionById = async (id: number) => {
+    try {
+        const response = await api().get('/logistics/pacgsm/' + id);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setSubscription(response.data.pagsm);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const getGasoilById = async (id: number) => {
+    try {
+        const response = await api().get('/logistics/carte-gasoil/' + id);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setGasoil(response.data.carteGasoile);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const getJawazById = async (id: number) => {
+    try {
+        const response = await api().get('/logistics/pass-jawaz/' + id);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setSelectedJawaz(response.data.data);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+
+const deleteCaisseOperation = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const id = logisticsStore.selectedItem.id;
+        console.log(id);
+        const response = await api().delete('/logistics/caisse/operation/' + id);
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 export default {
     getStock,
@@ -135,7 +178,11 @@ export default {
     getVehicules,
     getTransport,
     createOutOfStock,
-    getOutOfStockRequests
+    getOutOfStockRequests,
+    getSubscriptionById,
+    getGasoilById,
+    getJawazById,
+    deleteCaisseOperation
 };
 
 

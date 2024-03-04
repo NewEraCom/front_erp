@@ -52,6 +52,15 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             stats: null,
             loading: false,
         },
+        delivery: {
+            data: null,
+            stats: null,
+            loading: false,
+        },
+        subscription: null,
+        gasoil: null,
+        selectedJawaz: null,
+        selectedItem: null,
     }),
     actions: {
         setStock(data: any) {
@@ -181,19 +190,8 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.cardsCarburant.data = data;
             this.cardsCarburant.stats = {
                 total: data.length,
-                active: data.reduce((acc: any, item: any) => {
-                    if (item.used == 1) {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
-                inactif: data.reduce((acc: any, item: any) => {
-                    if (item.used == 0) {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
-
+                active: data.filter((item: any) => item.used == 1).length,
+                inactif: data.filter((item: any) => item.used == 0).length,
             };
             this.cardsCarburant.loading = true;
         },
@@ -256,19 +254,25 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.opertationCaisse.data = data;
             this.opertationCaisse.stats = {
                 requested: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'en cours') {
+                    if (item.status == 'on going') {
                         acc++;
                     }
                     return acc;
                 }, 0),
                 delivered: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'livré') {
+                    if (item.status == 'done') {
                         acc++;
                     }
                     return acc;
                 }, 0),
             };
             this.opertationCaisse.loading = true;
+        },
+        setDetailsOperationCaisse(data: any) {
+            this.selectedItem = data;
+        },
+        clearDetailsOperationCaisse() {
+            this.selectedItem = null;
         },
         clearOperationCaisse() {
             this.opertationCaisse.data = null;
@@ -278,18 +282,9 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.vehicules.data = data;
             this.vehicules.stats = {
                 total: data.length,
-                rented: data.reduce((acc: any, item: any) => {
-                    if (item.rented === 1) {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
-                neweracom: data.reduce((acc: any, item: any) => {
-                    if (item.rented === 0) {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
+                rented: data.filter((item: any) => item.rented == 0).length,
+                neweracom: data.filter((item: any) => item.rented != 0).length,
+                used: data.filter((item: any) => item.used == 1).length,
             };
             this.vehicules.loading = true;
         },
@@ -302,19 +297,47 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.outOfStockRequests.data = data;
             this.outOfStockRequests.stats = {
                 total: data.length,
-                pending: data.filter((item: any) => item.status === 'pending').length,
-                ongoing: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'on going') {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
+                pending: data.filter((item: any) => item.status == 'pending').length,
+                done: data.filter((item: any) => item.status == 'done').length,
             };
         },
         clearOutOfStockRequest() {
             this.outOfStockRequests.data = null;
             this.outOfStockRequests.stats = null;
             this.outOfStockRequests.loading = false;
+        },
+        setDelivery(data: any) {
+            this.delivery.data = data;
+            this.delivery.stats = {
+                total: data.length,
+                pending: data.filter((item: any) => item.status == 'pending').length,
+                onroad: data.filter((item: any) => item.status == 'on road').length,
+                done: data.filter((item: any) => item.status == 'done').length,
+            };
+        },
+        setSubscription(data: any) {
+            this.subscription = data;
+        },
+        clearSubscription() {
+            this.subscription = null;
+        },
+        setGasoil(data: any) {
+            this.gasoil = data;
+        },
+        clearGasoil() {
+            this.gasoil = null;
+        },
+        setSelectedJawaz(data: any) {
+            this.selectedJawaz = data;
+        },
+        clearSelectedJawaz() {
+            this.selectedJawaz = null;
+        },
+        setSelectedItem(data: any) {
+            this.selectedItem = data;
+        },
+        clearSelectedItem() {
+            this.selectedItem = null;
         }
     }
 });

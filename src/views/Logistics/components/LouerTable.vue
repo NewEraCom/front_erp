@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+import { useLogisticsStore } from '@/store';
+
+const logisticsStore = useLogisticsStore();
 
 const props = defineProps({
     louers: {
@@ -21,7 +24,12 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            logisticsStore.setSelectedItem(item);
+            $('#detailsLouer').modal('show');
+        }
+    },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 

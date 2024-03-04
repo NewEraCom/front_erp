@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
+import { DataTable } from '@/ui';
 import { formater } from '@/utils';
+import { useLogisticsStore } from '@/store';
+
+const logisticsStore = useLogisticsStore();
 
 const props = defineProps({
     caisse: {
@@ -19,17 +22,20 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            logisticsStore.setDetailsOperationCaisse(item);
+            $('#detailsOperation').modal('show');
+        }
+    },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 
-const detailsItem = (item: any) => {
-    console.log(item);
-};
 
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    logisticsStore.setDetailsOperationCaisse(item);
+    $('#deleteModal').modal('show');
 };
 
 const filteredData = ref(props.caisse);
@@ -85,7 +91,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -94,8 +100,6 @@ const filter = () => {
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
             buttonType="simple" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
     </div>
 </template>
 <style>

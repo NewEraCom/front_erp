@@ -56,7 +56,30 @@ export const logisticsRoutes = [
         name: 'ParcGsm',
         component: () => import('@/views/Logistics/ParcView.vue'),
         meta: {
-            title: 'ParcGsm',
+            title: 'Parc Gsm',
+            requiresAuth: true,
+            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
+
+    {
+        path: '/parc-gsm/details/:id',
+        name: 'DetailsParcGSM',
+        component: () => import('@/views/Logistics/DetailsGSMParcView.vue'),
+        props: true,
+        meta: {
+            title: 'Details Abonnement GSM',
+            requiresAuth: true,
+            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
+    {
+        path: '/carte-carburant/details/:id',
+        name: 'DetailsCarteCarburant',
+        component: () => import('@/views/Logistics/DetailsCarburantView.vue'),
+        props: true,
+        meta: {
+            title: 'Details Carte Carburant',
             requiresAuth: true,
             role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },
@@ -77,6 +100,17 @@ export const logisticsRoutes = [
         component: () => import('@/views/Logistics/JawazView.vue'),
         meta: {
             title: 'Jawaz',
+            requiresAuth: true,
+            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
+    {
+        path: '/jawaz/details/:id',
+        name: 'DetailsJawaz',
+        component: () => import('@/views/Logistics/DetailsJawazView.vue'),
+        props: true,
+        meta: {
+            title: 'Details Jawaz',
             requiresAuth: true,
             role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },

@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardTwo } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { LouerTable } from './components';
+import { LouerTable, DetailsLouerModal } from './components';
 import { formater } from '@/utils';
 
 const logisticsStore = useLogisticsStore();
@@ -72,5 +72,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <DetailsLouerModal />
     </div>
 </template>

@@ -21,13 +21,15 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            console.log('View item', item);
+
+        }
+    },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-const detailsItem = (item: any) => {
-    console.log(item);
-};
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);

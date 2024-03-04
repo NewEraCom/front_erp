@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardOne, CardOneSkeleton } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { ParcGsmTable } from './components';
+import { ParcGsmTable, NewSubscriptionModal } from './components';
 import { formater } from '@/utils';
 
 const logisticsStore = useLogisticsStore();
@@ -65,6 +65,9 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des Abonnements</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des abonnements en stock</small>
                             </div>
+                            <button class="btn btn-primary" data-bs-target="#newSubscription" data-bs-toggle="modal">
+                                <i class="ti ti-plus me-2"></i> Ajouter un abonnement
+                            </button>
                         </div>
                         <div v-if="parcGsm != null" class="card-body border-top pt-4">
                             <ParcGsmTable :parc-gsm="parcGsm" />
@@ -84,5 +87,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <NewSubscriptionModal />
     </div>
 </template>

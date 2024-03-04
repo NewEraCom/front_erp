@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { CardOne, CardCaisse, CardOneSkeleton } from '@/ui';
-import { CaisseTable } from './components';
+import { CardOne, CardCaisse, CardOneSkeleton, DeleteModal } from '@/ui';
+import { CaisseTable, NewOperationModal, DetailsCaisseOperation } from './components';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { formater } from '@/utils';
@@ -60,9 +60,9 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des opérations de caisse</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des opérations de caisse</small>
                             </div>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newOperation">
                                 <i class="ti ti-plus me-2"></i>
-                                Ajouter un louer
+                                Ajouter une opération
                             </button>
                         </div>
 
@@ -73,5 +73,9 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <NewOperationModal />
+        <DetailsCaisseOperation />
+        <DeleteModal title="Supprimer un opération" text="Voulez-vous vraiment supprimer cette opération ?"
+            textButton="Oui, Supprimer" :action="() => logisticsService.deleteCaisseOperation()" />
     </div>
 </template>
