@@ -354,6 +354,78 @@ export function dateRegex(date) {
     }
     return result;
 }
+export function numberToTextMAD(number) {
+    const units = ['', 'mille', 'million', 'milliard', 'billion'];
+    const baseNumbers = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
+    const tens = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-', 'quatre-vingt', 'quatre-vingt-'];
+
+    const toFrenchWords = (num, unitIndex = 0) => {
+        if (num === 0) {
+            return '';
+        }
+
+        let result = '';
+        const thousands = Math.floor(num / 1000);
+        const remainder = num % 1000;
+
+        if (thousands > 0) {
+            result += toFrenchWords(thousands, unitIndex + 1) + ' ';
+        }
+
+        if (remainder > 0) {
+            const hundreds = Math.floor(remainder / 100);
+            const tensAndOnes = remainder % 100;
+
+            if (hundreds > 0) {
+                result += baseNumbers[hundreds] + ' cent ';
+            }
+
+            if (tensAndOnes > 0) {
+                if (tensAndOnes < 20) {
+                    result += baseNumbers[tensAndOnes];
+                } else {
+                    const tensDigit = Math.floor(tensAndOnes / 10);
+                    const onesDigit = tensAndOnes % 10;
+
+                    if (tensDigit === 2 && onesDigit === 0) {
+                        result += 'vingt';
+                    } else {
+                        result += tens[tensDigit];
+                        if (tensDigit > 1 && onesDigit > 0) {
+                            result += `-${baseNumbers[onesDigit]}`;
+                        } else {
+                            result += baseNumbers[onesDigit];
+                        }
+                    }
+                }
+            }
+        }
+
+        result += ' ' + units[unitIndex];
+
+        return result.trim();
+    };
+
+    const [integerPart, decimalPart] = number.toFixed(2).split('.').map(part => parseInt(part, 10) || 0);
+
+    if (isNaN(integerPart) || isNaN(decimalPart)) {
+        return 'Invalid input';
+    }
+
+    let result = toFrenchWords(integerPart) + ' DIRHAMS';
+
+    if (integerPart > 1) {
+        result += ' TTC';
+    } else {
+        result += ' HT';
+    }
+
+    if (decimalPart > 0) {
+        result += ` et ${toFrenchWords(decimalPart)} centimes`;
+    }
+
+    return result.toUpperCase();
+}
 
 export const helpers = {
 	isActiveRoute,
@@ -377,5 +449,6 @@ export const helpers = {
 	formatNumber,
 	formattedDateTime,
 	formattedText,
-	dateRegex
+	dateRegex,
+	numberToTextMAD
 };
