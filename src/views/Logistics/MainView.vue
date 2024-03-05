@@ -30,6 +30,7 @@ onUnmounted(() => {
 
 
 </script>
+
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
         <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
@@ -82,11 +83,12 @@ onUnmounted(() => {
                                         </td>
                                         <td class="text-center">
                                             <h6 class="mb-0 fw-bold">{{ item.created_by.employee.first_name + ' ' +
-                                                item.created_by.employee.last_name }}</h6>
+            item.created_by.employee.last_name }}</h6>
                                         </td>
 
                                         <td class="text-center pe-0">
-                                            <span class="fw-bold me-3 badge" :class="helpers.returnBadge(item.status)[0]">
+                                            <span class="fw-bold me-3 badge"
+                                                :class="helpers.returnBadge(item.status)[0]">
                                                 {{ helpers.returnBadge(item.status)[1] }}
                                             </span>
                                         </td>

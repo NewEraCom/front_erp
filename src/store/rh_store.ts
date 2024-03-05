@@ -1,4 +1,3 @@
-import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useRhStore = defineStore('RhStore', {

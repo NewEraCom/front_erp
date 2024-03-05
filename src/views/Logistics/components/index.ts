@@ -32,7 +32,7 @@ export {
     NewSubscriptionModal,
     NewOperationModal,
     DetailsCaisseOperation,
-    DetailsLouerModal
+    DetailsLouerModal,
     ValidateCaisse,
     DemandeSortieTable,
     PreviewDemandeSortie

@@ -35,10 +35,12 @@ const actionsConfig = [
         }
     },
 ];
-if( localStorage.getItem('role') === helpers.roles.DS ){
-    actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
-        showValidationModal(item);
-    } });
+if (localStorage.getItem('role') === helpers.roles.DS) {
+    actionsConfig.push({
+        icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+            showValidationModal(item);
+        }
+    });
 }
 const showValidationModal = (item: any) => {
     rhStore.setItemId(item.id)
@@ -66,13 +68,14 @@ const filter = () => {
 };
 
 </script>
+
 <template>
     <div>
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
 
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
@@ -89,7 +92,8 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
@@ -111,6 +115,7 @@ const filter = () => {
             buttonType="simple" disabled="pending" />
     </div>
 </template>
+
 <style>
 .w-240 {
     width: 240px;
