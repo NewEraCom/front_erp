@@ -23,6 +23,7 @@ export const usePMStore = defineStore('PMStore', {
         },
         projectManager: null,
         preprojectDetail: null,
+        projects: null,
     }),
     actions: {
         clearStore() {

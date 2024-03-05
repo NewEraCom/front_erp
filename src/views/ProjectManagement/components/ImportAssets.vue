@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -23,7 +23,7 @@ const submit = async () => {
     formData.append('rc_file', rc.value.files[0]);
     formData.append('others', others.value.files[0]);
 
-    await PMService.uploadFiles(formData).then(() => {
+    await pmService.uploadFiles(formData).then(() => {
         isLoading.value = false;
         $('#import-assets').modal('hide');
     });

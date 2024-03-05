@@ -35,6 +35,10 @@ export const useRhStore = defineStore('RhStore', {
             data: null,
             stats: null,
         },
+        sousTraitants: {
+            data: null,
+            stats: null,
+        },
         ItemId: null,
 
         salaryAdvanceSelected: null
@@ -72,6 +76,9 @@ export const useRhStore = defineStore('RhStore', {
         },
         pushEmployee(data: any) {
             this.employees.push(data);
+        },
+        pushIntern(data: any) {
+            this.interns.data.push(data);
         },
         pushPointageToUser(data: any) {
             this.employee.pointages.push(data);
@@ -198,6 +205,14 @@ export const useRhStore = defineStore('RhStore', {
                 inactif: data.filter((e: any) => e.status === 0).length,
                 totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
             };
+        },
+        setSousTraitants(data: any) {
+            this.sousTraitants.data = data;
+            // this.sousTraitants.stats = {
+            //     actif: data.filter((e: any) => e.status === 1).length,
+            //     inactif: data.filter((e: any) => e.status === 0).length,
+            //     totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
+            // };
         },
         pushPointage(data: any) {
             this.pointages.push(data);

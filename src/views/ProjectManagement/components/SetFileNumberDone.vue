@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import{PMService} from '@/services';
+import{pmService} from '@/services';
 
 const props = defineProps({
     id: {
@@ -20,7 +20,7 @@ const submit = async () => {
     formData.append('doc_id', $('#docID').val());
     formData.append('number_file_done', nomberDocs.value);
 
-    await PMService.setFilesDone(formData).then(() => {
+    await pmService.setFilesDone(formData).then(() => {
         isLoading.value = false;
         nomberDocs.value = '';
         $('#set-number_file_done').modal('hide');

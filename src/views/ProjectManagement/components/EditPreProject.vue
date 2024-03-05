@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 
 const props = defineProps({
     preProject: {
@@ -82,7 +82,7 @@ const submit = async () => {
     formData.append('created_by', JSON.parse(localStorage.getItem('user')).id);
 
 
-    await PMService.update(formData)
+    await pmService.update(formData)
         .then((response) => {
             if (response.status == 200) {
                 resetFormFields();

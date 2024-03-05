@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { onMounted, ref, computed } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 import { usePMStore } from '@/store';
 import { CardOne, CardTwo } from '@/ui';
 import { PreProjectTable } from './components';
@@ -12,7 +12,7 @@ const preProject = ref(computed(() => PMStore.preproject.data));
 const stats = ref(computed(() => PMStore.preproject.stats));
 
 onMounted(async () => {
-  await PMService.getPreProject(); 
+  await pmService.getPreProject(); 
 });
 
 

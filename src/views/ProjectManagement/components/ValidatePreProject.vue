@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -17,7 +17,7 @@ const submit = async () => {
     formData.append('id', props.id);
     formData.append('is_caution_auto', isCautionAuto.value == true ? 1 : 0);
 
-    await PMService.validate(formData)
+    await pmService.validate(formData)
         .then(() => {
             isLoading.value = false;
             $('#validate-project').modal('hide');

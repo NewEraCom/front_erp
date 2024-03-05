@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
+import { rhService } from '@/services';
 
 defineProps({
     employees: {
@@ -19,7 +20,17 @@ const formData = ref({
 });
 
 const submit = async () => {
-    console.log('submit');
+
+    formData.value.employee_id = formData.value.employee_id.key;
+    console.log(formData.value);
+    isLoading.value = true;
+    await rhService.addDemandeRh(formData.value).then(() => {
+        $('#addDemandeRh').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
+        isLoading.value = false;
+    });
 };
 </script>
 <template>

@@ -8,6 +8,8 @@ import { LeavesTable, AddNewLeaveModal, ValidateConge } from './components';
 const rhStore = useRhStore();
 const isLoading = ref(false);
 const leaves = ref(computed(() => rhStore.leaves));
+
+
 const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
@@ -19,10 +21,10 @@ const Validate = async () => {
      isLoading.value = true;
 
    const formData = new FormData();
-     formData.append('status',1 ); 
+     formData.append('status','approved' ); 
     await rhService.Confirmation(rhStore.ItemId,formData).then(() => {
      isLoading.value = false;
-      $("#validate-modal").modal("hide");
+      $('#validate-modal').modal('hide');
     
    });
   // console.log($('#validateInput').val());

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 
 const props = defineProps({
     id: {
@@ -19,7 +19,7 @@ const submit = async () => {
     formData.append('motif', motif.value);
     formData.append('id', props.id);
 
-    await PMService.cancel(formData)
+    await pmService.cancel(formData)
         .then(() => {
             isLoading.value = false;
             $('#cancel-submission').modal('hide');

@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Modal } from '@/ui';
+import { ref ,onMounted, computed} from 'vue';
+import { Modal ,CustomSelect} from '@/ui';
+import { pmService, rhService } from '@/services';
+import { usePMStore, useRhStore } from '@/store';
 
 const isLoading = ref(false);
-
+const pmStore = usePMStore();
+const rhStore = useRhStore();
 const formData = ref({
     first_name: null,
     last_name: null,
@@ -11,22 +14,66 @@ const formData = ref({
     matricule: null,
     cin: null,
     copie_cin: null,
-    birthdate: null,
     sexe: '-',
     email: null,
     adresse: null,
-    date_embauche: null,
-    bank_name: '-',
+    bank_name: null,
     type_transcation: '-',
+    cnss :null,
+    copie_cnss :null,
+    rib  :null,
+    copie_rib :null,
+    date_start:null,
+    date_end:null,
+    status:null,
+    poste:null,
+    project_id:0,
+    copie_contract:null,
+    tier_id:0,
+    // fiche_assurance:null,
 
 });
+const projects = ref(computed(()=> pmStore.projects));
+const soustraitants = ref(computed(()=> rhStore.sousTraitants.data));
 
-const handleFileChange = (e) => {
-    formData.value.copie_cin = e.target.files[0];
+onMounted(async () => {
+  await pmService.getProjects();
+  await rhService.getSousTaraitant();
+    console.log('soustraitants',soustraitants.value);
+    
+});
+const handleFileChange = (e, value) => {
+    if (value == 'cin') {
+        formData.value.copie_cin = e.target.files[0];
+    } if(value == 'cnss') {
+        formData.value.copie_cnss = e.target.files[0];
+    }if(value == 'rib'){
+        formData.value.copie_rib = e.target.files[0];
+    }
+    if(value == 'contract'){
+        formData.value.copie_contract = e.target.files[0];
+    
+    }
+    // else{
+    //     formData.value.copie_contract = e.target.files[0];
+    // }
 };
 
 const submit = async () => {
     console.log('submit');
+    formData.value.tier_id = formData.value.tier_id.key;
+    formData.value.project_id = formData.value.project_id.key;
+    console.log(formData.value);
+    isLoading.value = true;
+    await rhService.addWorker(formData.value).then(() => {
+        console.log('Employee added');
+        $('#addNewWorkers').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
+        isLoading.value = false;
+    });
+    
 };
 </script>
 <template>
@@ -58,39 +105,81 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
+                            <label for="nameEx" class="form-label">Adresse mail <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
+                                id="nameEx" v-model="formData.email" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
                             <label for="nameEx" class="form-label">Numéro de CIN <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre le numéro de CIN" type="text" tabindex="0"
-                                v-model="formData.matricule" required />
+                                v-model="formData.cin" required />
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="copie_cin" class="form-label">Copie Cin</label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cin"
-                                name="copie_cin" @change="handleFileChange" required />
+                                name="copie_cin" @change="e => handleFileChange(e, 'cin')" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+
+                                    <div v-if="projects != null" >
+                        <CustomSelect v-model="formData.project_id" placeholder="Choisir un projet"
+                            label="Projets" :data="projects.filter(item => item.status == 'on going').map((item) => ({
+                                key: item.id,
+                                value: item.code 
+                            }))
+                                " />
+                    </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+
+                                    <div v-if="soustraitants != null" >
+                        <CustomSelect v-model="formData.tier_id" placeholder="Choisir un projet"
+                            label="Sous Triatants" :data="soustraitants.filter(item => item.is_active == 1).map((item) => ({
+                                key: item.id,
+                                value: item.raison_social 
+                            }))
+                                " />
+                    </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Poste <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre le poste" type="text" tabindex="0"
-                                v-model="formData.cin" required />
+                                v-model="formData.poste" required />
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="nameEx" class="form-label">Département <span class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="Entre le département" type="text" tabindex="0"
-                                v-model="formData.cin" required />
-                        </div>
-                    </div>
+                    
 
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="copie_cv" class="form-label">Copie Contrat <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cin" @change="handleFileChange" required />
+                                name="copie_cin" @change="e => handleFileChange(e, 'contract')" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="copie_cv" class="form-label">Copie Cnss <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
+                                name="copie_cin" @change="e => handleFileChange(e, 'cnss')" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Cnss <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre le poste" type="text" tabindex="0"
+                                v-model="formData.cnss" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -109,7 +198,7 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="salary" class="form-label">RIB <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre le RIB" type="number" tabindex="0"
-                                v-model="formData.birthdate" required />
+                                v-model="formData.rib" required />
                         </div>
                     </div>
                     <div v-if="formData.type_transcation === 'virement'" class="col-sm-6">
@@ -134,6 +223,14 @@ const submit = async () => {
                             </select>
                         </div>
                     </div>
+                    <div v-if="formData.type_transcation === 'virement'" class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="assurance" class="form-label">Copie de RIB <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
+                                name="copie_cin" @change="e => handleFileChange(e, 'rib')" required />
+                        </div>
+                    </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Sexe <span class="text-danger">*</span></label>
@@ -146,42 +243,43 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Adresse mail <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Adresse <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
-                                id="nameEx" v-model="formData.email" required />
+                                id="nameEx" v-model="formData.adresse" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date debut de stage <span
+                            <label for="nameEx" class="form-label">Date debut  <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
-                                v-model="formData.date_embauche" required />
+                                v-model="formData.date_start" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Date fin  <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
+                                v-model="formData.date_end" required />
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="copie_cv" class="form-label">Copie CV <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cin" @change="handleFileChange" required />
+                                name="copie_cin" @change="e => handleFileChange(e, 'cv')" required />
                         </div>
-                    </div>
-                    <div class="col-sm-6">
+                    </div> -->
+                    <!-- <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="assurance" class="form-label">Fiche d'assurance <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
-                                name="copie_cin" @change="handleFileChange" required />
+                                name="copie_cin" @change="e => handleFileChange(e, 'assurance')" required />
                         </div>
-                    </div>
-                    <div v-if="formData.type_transcation === 'virement'" class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="assurance" class="form-label">Copie de RIB <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
-                                name="copie_cin" @change="handleFileChange" required />
-                        </div>
-                    </div>
+                    </div> -->
+                    
                 </div>
             </div>
             <div class="modal-footer">

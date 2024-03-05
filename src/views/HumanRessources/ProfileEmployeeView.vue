@@ -35,6 +35,10 @@ watch(data, () => {
     employee.value = data;
 }, { deep: true });
 
+const getFileUrl = (attachment) => {
+  return helpers.baseUrl() + `uploads/employe/${attachment}`;
+};
+
 </script>
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
@@ -418,7 +422,8 @@ watch(data, () => {
                                                             <i class="ti ti-file-filled"></i>
                                                         </div>
                                                         <div class="ms-2">
-                                                            <h6 class="mb-2">
+                                                            <a :href="getFileUrl(employee.copie_cin)" target="_blank">
+                                                                <h6 class="mb-2">
                                                                 {{
                                                                     formater.limitText(
                                                                         employee.copie_cin,
@@ -426,6 +431,8 @@ watch(data, () => {
                                                                     )
                                                                 }}
                                                             </h6>
+                                                            </a>
+                                                            
                                                             <small class="mt-auto">Créé le
                                                                 {{
                                                                     formater.date(

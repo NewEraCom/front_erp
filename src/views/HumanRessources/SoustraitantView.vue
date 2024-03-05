@@ -58,12 +58,12 @@ onMounted(async () => {
           <div class="card card-border-shadow-primary">
             <div class="card-header d-flex align-items-center">
               <div class="me-auto">
-                <h5 class="fw-bold mb-1">Soustraitants</h5>
-                <small class="fw-bold mb-1 text-muted">Liste des soustraitants</small>
+                <h5 class="fw-bold mb-1">Soustraitants Employés</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des Employés</small>
               </div>
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewWorkers">
                 <i class="ti ti-settings-plus me-2"></i>
-                Ajouter un soustraitant
+                Ajouter un employé
               </button>
             </div>
             <div v-if="workers.data != null" class="card-body border-top pt-4">

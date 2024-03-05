@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -29,7 +29,7 @@ const submit = async () => {
     formData.append('localite', localite.value);
     formData.append('caution_group', check.value);
 
-    await PMService.addLots(formData).then(() => {
+    await pmService.addLots(formData).then(() => {
         isLoading.value = false;
         $('#add-lots').modal('hide');
     });

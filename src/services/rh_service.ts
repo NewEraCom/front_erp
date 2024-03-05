@@ -238,7 +238,7 @@ const deleteSalaryAdvance = async () => {
 
 const addEmployee = async (data: any) => {
     try {
-        const response = await api().post('/rh/insert/', data);
+        const response = await api().post('/rh/insert', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.pushEmployee(response.data.employee);
@@ -259,9 +259,9 @@ const addEmployee = async (data: any) => {
             console.log(response.data);
 
             
-            await getLeaves()
+            await getLeaves();
 
-            return response.data;
+            // return response.data;
         }
     } catch (error) {
         console.log(error);
@@ -276,7 +276,7 @@ async function ValidateRecruite(id:number) {
             console.log(response.data);
 
             
-            await getLeaves()
+            await getLeaves();
 
             return response.data;
         }
@@ -285,6 +285,64 @@ async function ValidateRecruite(id:number) {
     }
 }
 
+const addInterns = async (data: any) => {
+    try {
+        const response = await api().post('/stg/insert', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushIntern(response.data.stagiaire);
+            return;
+        }
+        throw new Error('Insert Intern failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const addWorker = async (data:any) => {
+    try {
+        const response = await api().post('/tiers/add-worker',data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            // rhStore.setWorkers(response.data.workers);
+            rhStore.workers.data = response.data.worker;
+            return;
+        }
+        throw new Error('Get workers failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
+const getSousTaraitant = async () => {
+    try {
+        const response = await api().get('/tiers/getSoustraitant');
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.setSousTraitants(response.data.fournisseur);
+            return;
+        }
+        throw new Error('Get interns failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const addDemandeRh = async (data:any) => {
+    try {
+        const response = await api().post('/dmnd/insert',data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.demandeRh.data = response.data.demande;
+            return;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 
 export default {
     getEmployees,
@@ -304,5 +362,9 @@ export default {
     addEmployee,
     Confirmation,
     ValidateRecruite,
-    deleteSalaryAdvance
+    deleteSalaryAdvance,
+    addInterns,
+    addWorker,
+    getSousTaraitant,
+    addDemandeRh
 };

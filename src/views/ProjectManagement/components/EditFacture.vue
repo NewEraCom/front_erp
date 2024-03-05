@@ -117,7 +117,7 @@ const submit = async () => {
     formData.append('project_id', payload.project_id);
     formData.append('facture_id', payload.facture_id);
     try {
-        await PMService.updateFacture(formData)
+        await pmService.updateFacture(formData)
             .then((response) => {
                 console.log(response);
             })

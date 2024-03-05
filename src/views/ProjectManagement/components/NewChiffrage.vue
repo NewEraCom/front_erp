@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService } from '@/services';
+import {pmService } from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -25,7 +25,7 @@ const isLoading = ref(false);
 
 const submit = async () => {
     isLoading.value = true;
-    await PMService.create(formData.value)
+    await pmService.create(formData.value)
         .then(() => {
             formData.value = {
                 projectId: props.id,

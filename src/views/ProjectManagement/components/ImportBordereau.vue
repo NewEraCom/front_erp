@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -34,7 +34,7 @@ const submit = async () => {
         formData.append('lot', lot.value);
     }
 
-    await PMService.importBordereau(formData)
+    await pmService.importBordereau(formData)
         .then(() => {
             isLoading.value = false;
             $('#import-bordereau').modal('hide');

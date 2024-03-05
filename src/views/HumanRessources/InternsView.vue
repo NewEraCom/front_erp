@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { CardOne, } from '@/ui';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted ,watch} from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { InternsTable, AddNewInternsModal } from './components';
@@ -9,11 +9,19 @@ import { InternsTable, AddNewInternsModal } from './components';
 const rhStore = useRhStore();
 
 const interns = ref(computed(() => rhStore.interns));
-
+let data = ref({
+  interns: null,
+  stats: null,
+});
 onMounted(async () => {
   await rhService.getInterns();
 });
 
+
+
+watch(interns, () => {
+  data.value.interns = interns.value;
+}, { deep: true });
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">

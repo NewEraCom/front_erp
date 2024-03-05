@@ -1,7 +1,7 @@
 <script setup>
 import { computed, onMounted, ref } from 'vue';
 import { usePMStore } from '@/store';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 import { helpers } from '@/utils';
 // import { Modal, DataTableDevis, DataTableBordereau, DetailsPreProjectSkeleton } from '@/ui';
 import { Modal } from '@/ui';
@@ -39,7 +39,7 @@ let user = ref(null);
 const projectManager = ref(computed(() => PMStore.projectManager));
 
 onMounted(async () => {
-  await PMService.getPreProjectById(props.id).then(() => {
+  await pmService.getPreProjectById(props.id).then(() => {
     user.value = JSON.parse(localStorage.getItem('user'));
   });
 });

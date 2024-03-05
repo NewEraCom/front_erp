@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 import {usePMStore} from '@/store';
 
 import { CustomSelect } from '@/ui';
@@ -44,7 +44,7 @@ const ClotureSimple = async () => {
     formData.append('project_manager', projectManagerSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
-    await PMService.clotureSimple(formData).then(() => {
+    await pmService.clotureSimple(formData).then(() => {
         isLoading.value = false;
         $('#cloture').modal('hide');
     });
@@ -64,7 +64,7 @@ const ClotureComplex = async () => {
     formData.append('project_manager', projectManagerSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
-    await PMService.clotureComplex(formData).then(() => {
+    await pmService.clotureComplex(formData).then(() => {
         isLoading.value = false;
         $('#cloture').modal('hide');
     });

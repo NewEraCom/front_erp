@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService } from '@/services';
+import {pmService } from '@/services';
 
 const props = defineProps({
     id: {
@@ -21,7 +21,7 @@ const submit = async () => {
     formData.append('user_id',JSON.parse(localStorage.getItem('user')).id);
     formData.append('file', file.value.files[0]);
 
-    await PMService.importChiffrage(formData).then(() => {
+    await pmService.importChiffrage(formData).then(() => {
         isLoading.value = false;
         $('#import-chiffrage').modal('hide');
     });

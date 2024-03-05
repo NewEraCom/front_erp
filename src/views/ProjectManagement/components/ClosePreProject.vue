@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 
 const props = defineProps({
     id: {
@@ -23,7 +23,7 @@ const method = async () => {
         montantMarche: montant.value,
         comment: commentaire.value
     };
-    await PMService.clotureLostProject(formData)
+    await pmService.clotureLostProject(formData)
         .then((result) => {
             isLoading.value = false;
             if (result === 200) {
