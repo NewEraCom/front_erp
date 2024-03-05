@@ -112,6 +112,15 @@ const downloadAllAttachments = async () => {
   const content = await zip.generateAsync({ type: 'blob' });
   saveAs(content, 'attachments.zip');
 };
+const total = computed(() => {
+      return articles.value.reduce((total, item) => {
+        return total + item.article.quantite * item.article.prix_ht * 1.2;
+      }, 0);
+    });
+
+    const totalInWords = computed(() => {
+      return helpers.numberToTextMAD(total.value);
+    });
 </script>
 
 <template>
@@ -256,11 +265,7 @@ const downloadAllAttachments = async () => {
                 <p class="fw-bold">
                   {{
                     
-                      articles.reduce((total, item) => {
-                        let number = total + item.article.quantite * item.article.prix_ht * 1.2;
-                        const textRepresentation = helpers.numberToTextMAD(number);
-                        return textRepresentation;
-                      }, 0)
+                    totalInWords
                     
                   }}
                 </p>
