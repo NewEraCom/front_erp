@@ -65,6 +65,7 @@ export const sharedRoutes = [
     {
         path: '/recruitment-request',
         name: 'RecruitmentRequest',
+        
         component: () => import('@/views/Shared/RecruitementView.vue'),
         meta: {
             title: 'Demande de recrutement',

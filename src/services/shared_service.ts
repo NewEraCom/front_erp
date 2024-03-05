@@ -36,6 +36,7 @@ const getRecruitment = async () => {
     try {
         const response = await api().get('/dmnd/get-recruitement-by-id');
         const sharedStore = useSharedStore();
+        console.log(response.data);
         sharedStore.setRecruitment(response.data.recruitments);
     } catch (error) {
         return Promise.reject(error);
