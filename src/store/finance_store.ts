@@ -13,7 +13,10 @@ export const useFinanceStore = defineStore('FinanceStore', {
         ItemId: null,
         composants: null,
         print_articles: null,
-        print_facture: null
+        print_facture: null,
+
+        comment: 'comment',
+        objet:'objet',
     }),
    
 
