@@ -158,7 +158,9 @@ const addPointage = async (data: any) => {
         const response = await api().post('rh/add-pointage', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            rhStore.pushPointage(response.data.pointage);
+            // rhStore.pushPointage(response.data.pointage);
+            rhStore.pointages.push(response.data.pointage);
+
 
             return;
         }
@@ -175,6 +177,7 @@ const addLeave = async (data: any) => {
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.pushLeave(response.data.conge);
+            // rhStore.leaves.data.push(response.data.conge);
             return;
         }
     }
@@ -343,6 +346,185 @@ const addDemandeRh = async (data:any) => {
         return error;
     }
 };
+async function UpdateSalaire(id, req) {
+    try {
+
+
+        const response = await api().post('rh/update-salaire/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function AugmentationSalaire(id, req) {
+    try {
+
+
+        const response = await api().post('rh/augement-salaire/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function EditLeaveEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/edit-conge/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function EditBankEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/update-bank/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function EditCnssEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/update-cnss/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function UploadDocEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/upload-documents/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function DeleteDocEmployee(id) {
+    try {
+
+
+        const response = await api().delete('docs/delete/' + id);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee.documents = rhStore.employee.documents.filter(doc => doc.id !== id);
+            
+            
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function EditEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/update/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function RuptureContractEmployee(id, req) {
+    try {
+
+
+        const response = await api().post('rh/repture/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.employee = response.data.employee;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 export default {
     getEmployees,
@@ -366,5 +548,14 @@ export default {
     addInterns,
     addWorker,
     getSousTaraitant,
-    addDemandeRh
+    addDemandeRh,
+    UpdateSalaire,
+    AugmentationSalaire,
+    EditLeaveEmployee,
+    EditBankEmployee,
+    EditCnssEmployee,
+    UploadDocEmployee,
+    DeleteDocEmployee,
+    EditEmployee,
+    RuptureContractEmployee
 };

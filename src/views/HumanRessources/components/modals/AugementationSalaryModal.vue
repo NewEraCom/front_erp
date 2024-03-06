@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
@@ -17,12 +18,21 @@ const newSalary = ref(null);
 const commentaire = ref(null);
 
 
-const submit = () => {
+const submit = async() => {
     isLoading.value = true;
     console.log(props.id);
-    setTimeout(() => {
+    
+    const formData = {
+        new_salary: newSalary.value,
+        comment: commentaire.value
+    };
+    await rhService.AugmentationSalaire(props.id,formData).then(() => {
+        $('#augemntSalary').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
         isLoading.value = false;
-    }, 2000);
+    });
 };
 
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
@@ -22,26 +23,31 @@ const props = defineProps({
 
 const formData = ref({
     rib: null,
-    bank: null,
+    bank_name: null,
     date_virement: null,
-    copie_rib: null,
+    rib_copie: null,
 });
 
 const handleFileChange = (e, type) => {
     formData.value[type] = e.target.files[0];
 };
 
-const submit = () => {
+const submit = async() => {
     isLoading.value = true;
     console.log(props.id);
-    setTimeout(() => {
+    
+    await rhService.EditBankEmployee(props.id,formData.value).then(() => {
+        $('#editInfoBank').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
         isLoading.value = false;
-    }, 2000);
+    });
 };
 
 watch(() => props.oldRib, (value) => {
     formData.value.rib = value;
-    formData.value.bank = props.oldBank;
+    formData.value.bank_name = props.oldBank;
 });
 
 
@@ -78,7 +84,7 @@ watch(() => props.oldRib, (value) => {
                                 <span class="text-danger">*</span>
                             </label>
 
-                            <select id="bank_name" v-model="formData.bank" class="form-select" required>
+                            <select id="bank_name" v-model="formData.bank_name" class="form-select" required>
                                 <option value="-">Choisir la banque</option>
                                 <option value="CIH">CIH Bank</option>
                                 <option value="BMCE BANK">BMCE Bank</option>
@@ -103,7 +109,7 @@ watch(() => props.oldRib, (value) => {
                             </label>
                             <input id="copie_rib" ref="rib_copie" class="form-control" placeholder="Choisir le fichier"
                                 type="file" tabindex="0" name="copie_rib" required
-                                @change="e => handleFileChange(e, 'rib')" />
+                                @change="e => handleFileChange(e, 'rib_copie')" />
                         </div>
                     </div>
                 </div>
