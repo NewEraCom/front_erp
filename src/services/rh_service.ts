@@ -678,6 +678,19 @@ const addPayImport = async (data:any) => {
         return error;
     }
 };
+const PayExport = async (data:any) => {
+    try {
+        const response = await api().post('/pay/prime/export',data, { responseType: 'blob' });
+        if (response.status === 200) {
+            
+            return response.data;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 const validateAvavnce = async (id,data:any) => {
     try {
         const response = await api().post('/pay/avance/valider/'+id,data);
@@ -738,5 +751,6 @@ export default {
     ReceivedDemandeRh,
     DeleteDemandeRh,
     addPayImport,
-    validateAvavnce
+    validateAvavnce,
+    PayExport
 };
