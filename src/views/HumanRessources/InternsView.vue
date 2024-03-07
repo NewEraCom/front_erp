@@ -4,10 +4,10 @@ import { ref, computed, onMounted ,watch} from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { InternsTable, AddNewInternsModal } from './components';
-
+import {EditStgModal,DeleteDocModal,ValidatePot} from './components/modals';
 
 const rhStore = useRhStore();
-
+const isLoading = ref(false);
 const interns = ref(computed(() => rhStore.interns));
 let data = ref({
   interns: null,
@@ -22,6 +22,37 @@ onMounted(async () => {
 watch(interns, () => {
   data.value.interns = interns.value;
 }, { deep: true });
+
+const deleteStg = async () => {
+  isLoading.value = true;
+  await rhService.deleteIntern(rhStore.ItemId).then(() => {
+    $('#delete-doc').modal('hide');
+  }).catch((error) => {
+    console.error('Error during action execution', error);
+  }).finally(() => {
+    isLoading.value = false;
+  });
+};
+const ValidatePotfunc = async () => {
+    isLoading.value = true;
+    const formData = new FormData();
+    formData.append('potentiel', 1);
+    await rhService.potentielIntern(rhStore.ItemId, formData).then(() => {
+        isLoading.value = false;
+        
+        $('#add-potentiel').modal('hide');
+    });
+};
+const RemovePotfunc = async () => {
+    isLoading.value = true;
+    const formData = new FormData();
+    formData.append('potentiel', 0);
+    await rhService.potentielIntern(rhStore.ItemId, formData).then(() => {
+        isLoading.value = false;
+        $('#remove-potentiel').modal('hide');
+    });
+};
+
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
@@ -66,6 +97,30 @@ watch(interns, () => {
       </div>
     </div>
     <AddNewInternsModal />
+    <EditStgModal :stg="rhStore.Item"/>
+    <DeleteDocModal id="delete-doc" :isLoading="isLoading"
+                :method="deleteStg"
+                :itemid="rhStore.ItemId"
+                title="Supprimer le document"
+                message="Êtes-vous sûr de supprimer ce document ?"
+                />
+                <ValidatePot
+                    id="add-potentiel"
+                    :isLoading="isLoading"
+                    :method="ValidatePotfunc"
+                    :itemid="rhStore.ItemId"
+                    title="Ajout à liste de potentiels"
+                    message="Êtes-vous sûr d'ajouter ce stagiaire à la liste de potentiels"
+                />
+                <ValidatePot
+                    id="remove-potentiel"
+                    :isLoading="isLoading"
+                    :method="RemovePotfunc"
+                    :itemid="rhStore.ItemId"
+                    title="Retirer de la liste de potentiels"
+                    message="Êtes-vous sûr de retirer ce stagiaire de la liste de potentiels"
+                />
+
   </div>
 </template>
 

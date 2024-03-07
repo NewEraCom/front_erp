@@ -332,7 +332,8 @@ watch(() => props.pageSize, () => {
                             :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
                             :disabled="action.type == 'delete' ? (item.status != disabled) : false">
-                            <i :class="action.icon"></i>
+                            <i v-if="action.type == 'potential'" :class="item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark'"></i>
+                            <i v-else :class="action.icon"></i>
                         </button>
                     </td>
                     <td v-else class="text-center">

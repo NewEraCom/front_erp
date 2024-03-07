@@ -4,8 +4,10 @@ import { DataTable, Modal } from '@/ui';
 import { formater, helpers } from '@/utils';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 const rhStore = useRhStore();
+const router = useRouter();
 const props = defineProps({
     leaves: {
         type: Array,
@@ -25,28 +27,43 @@ const headers = [
 
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    
 ];
 if( localStorage.getItem('role') === helpers.roles.RH){
     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         showValidationModal(item);
-    } });
+    } },
+    { icon: 'ti ti-ban', class: 'btn btn-warning btn-sm', onClick: (item: any) => RejectItem(item) },
+    { icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    );
 }
 
 const detailsItem = (item: any) => {
     console.log(item);
+    rhStore.setItem(item);
+    $('#showLeave').modal('show');
+    // router.push({ name: 'ProfileEmployee', params: { id: item.employe.id } });
+
 };
-const isLoading = ref(false);
 
 const showValidationModal = (item: any) => {
-    rhStore.setItemId(item.id)
+    rhStore.setItemId(item.id);
 
-    $("#validate-modal").modal("show");
+    $('#validate-modal').modal('show');
 
 };
 
+const RejectItem = (item: any) => {
+    console.log('Delete item', item);
+    rhStore.setItemId(item.id);
+
+    $('#reject-modal').modal('show');
+};
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
+    rhStore.setItemId(item.id);
+
+    $('#delete-leave').modal('show');
 };
 
 const filteredData = ref(props.leaves);

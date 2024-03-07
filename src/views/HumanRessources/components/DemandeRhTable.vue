@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater, exportToExcel } from '@/utils';
+import { useRhStore } from '@/store';
 
 const props = defineProps({
     demandes: {
@@ -9,7 +10,7 @@ const props = defineProps({
         required: true,
     },
 });
-
+const rhStore = useRhStore();
 const headers = [
     { text: 'Employe', value: 'employe', isComplex: true, type: 'leave' },
     { text: 'Titre', value: 'titre', type: 'text' },
@@ -20,14 +21,27 @@ const headers = [
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => ReceivedItem(item) },
 ];
 
 const detailsItem = (item: any) => {
-    console.log(item);
+    rhStore.Item = item;
+    $('#showDemandeRh').modal('show');
 };
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
+    rhStore.setItemId(item.id);
+
+$('#delete-modal').modal('show');
+};
+
+const ReceivedItem = (item: any) => {
+    
+    console.log('Received item', item);
+    rhStore.setItemId(item.id);
+
+    $('#receive-modal').modal('show');
 };
 
 const filteredData = ref(props.demandes);

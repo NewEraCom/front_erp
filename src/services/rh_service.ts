@@ -76,6 +76,7 @@ const getRecrutement = async () => {
     }
 };
 
+
 const getDemandeRh = async () => {
     try {
         const response = await api().get('/dmnd/get');
@@ -270,6 +271,30 @@ const addEmployee = async (data: any) => {
         console.log(error);
     }
 }
+async function deleteLeave(id) {
+    try {
+
+
+        const response = await api().delete('conge/delete/' + id);
+        if (response.status == 200) {
+            console.log(response.data);
+            const rhStore = useRhStore();
+
+
+            rhStore.leaves.data = rhStore.leaves.data.filter(w => w.id !== id);
+            const dmndIndex = rhStore.leaves.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.leaves.data.splice(dmndIndex, 1);
+            }
+            
+            await getLeaves();
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 async function ValidateRecruite(id:number) {
     try {
 
@@ -317,6 +342,26 @@ const addWorker = async (data:any) => {
         return error;
     }
 };
+const deleteWorker = async (id:any) => {
+    try {
+        const response = await api().delete('/tiers/delete-worker/'+ id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            // rhStore.setWorkers(response.data.workers);
+            // rhStore.workers.data = response.data.worker;
+            rhStore.workers.data = rhStore.workers.data.filter(w => w.id !== id);
+            const dmndIndex = rhStore.workers.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.workers.data.splice(dmndIndex, 1);
+            }
+            return;
+        }
+        throw new Error('Get workers failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 
 const getSousTaraitant = async () => {
     try {
@@ -337,7 +382,43 @@ const addDemandeRh = async (data:any) => {
         const response = await api().post('/dmnd/insert',data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            rhStore.demandeRh.data = response.data.demande;
+            rhStore.demandeRh.data.push(response.data.demande) ;
+            return;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const ReceivedDemandeRh = async (id:any) => {
+    try {
+        const response = await api().post('/dmnd/valider/'+id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            const dmnd = rhStore.demandeRh.data.find((item) => item.id === id);
+            if (dmnd) {
+                Object.assign(dmnd, response.data.demande);
+            }
+            return;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const DeleteDemandeRh = async (id:any) => {
+    try {
+        const response = await api().delete('/dmnd/delete/'+id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            const dmndIndex = rhStore.demandeRh.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.demandeRh.data.splice(dmndIndex, 1);
+            }
+
+
             return;
         }
         throw new Error('Get demande RH failed with status: ' + response.status);
@@ -525,6 +606,97 @@ async function RuptureContractEmployee(id, req) {
         console.log(error);
     }
 }
+async function updateIntern(id, req) {
+    try {
+
+
+        const response = await api().post('stg/update/' + id, req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+            const stg = rhStore.interns.data.find((item) => item.id === id);
+            if (stg) {
+                Object.assign(stg, response.data.stg);
+            }
+            console.log(response.data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function deleteIntern(id) {
+    try {
+
+
+        const response = await api().delete('stg/delete/' + id);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+            rhStore.interns.data = rhStore.interns.data.filter(i => i.id !== id);
+            const dmndIndex = rhStore.interns.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.interns.data.splice(dmndIndex, 1);
+            }
+            console.log(response.data);
+            
+            // rhStore.interns.data = rhStore.interns.data.filter(stg => stg.id !== id);
+            getInterns();
+
+            console.log(response.data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+ async function potentielIntern(id, req) {
+    try {
+        const response = await api().post('stg/potentiel/' + id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+            const rhStore = useRhStore();
+
+            const stg = rhStore.interns.data.find((item) => item.id === id);
+            if (stg) {
+                Object.assign(stg, response.data.stg);
+            }
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const addPayImport = async (data:any) => {
+    try {
+        const response = await api().post('/pay/prime/import',data);
+        if (response.status === 200) {
+            getPaies();
+            return;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const validateAvavnce = async (id,data:any) => {
+    try {
+        const response = await api().post('/pay/avance/valider/'+id,data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+
+            const avance = rhStore.salaryAdvances.data.find((item) => item.id === id);
+            if (avance) {
+                Object.assign(avance, response.data.avance);
+            }
+            return;
+        }
+        throw new Error('Get demande RH failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 
 export default {
     getEmployees,
@@ -557,5 +729,14 @@ export default {
     UploadDocEmployee,
     DeleteDocEmployee,
     EditEmployee,
-    RuptureContractEmployee
+    RuptureContractEmployee,
+    updateIntern,
+    deleteIntern,
+    potentielIntern,
+    deleteWorker,
+    deleteLeave,
+    ReceivedDemandeRh,
+    DeleteDemandeRh,
+    addPayImport,
+    validateAvavnce
 };

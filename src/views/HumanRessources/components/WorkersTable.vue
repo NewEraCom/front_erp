@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
+import { DataTable } from '@/ui';
 import { formater } from '@/utils';
+import { useRhStore } from '@/store';
+
 const props = defineProps({
     workers: {
         type: Array,
         required: true,
     },
 });
+const rhStore = useRhStore();
 
 const headers = [
     { text: 'Employe', value: 'fullname', isComplex: true, type: 'workers' },
@@ -24,11 +27,15 @@ const actionsConfig = [
 ];
 
 const detailsItem = (item: any) => {
+    rhStore.setItem(item);
+    $('#showWorker').modal('show');
     console.log(item);
 };
 
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
+    rhStore.setItemId(item.id);
+    $('#delete-doc').modal('show');
 };
 
 const filteredData = ref(props.workers);
@@ -91,7 +98,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"  button-type="simple"/>
     </div>
 </template>
 <style>

@@ -5,16 +5,18 @@ defineProps({
     id: String,
     isLoading: Boolean,
     method: Function,
-    itemid: String
+    itemid: String,
+    title: String,
+    message: String,
 });
 </script>
 
 <template>
-    <Modal :id="id" title="Supprimer Document">
+    <Modal :id="id" :title="title">
         <form @submit.prevent="method">
             <div class="modal-body">
                 <input type="text" id="validateInput" hidden :value="itemid" />
-                <p>Êtes-vous sûr de supprimer ce document</p>
+                <p> {{ message }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">

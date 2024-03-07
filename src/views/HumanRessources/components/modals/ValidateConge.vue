@@ -5,22 +5,25 @@ defineProps({
     id: String,
     isLoading: Boolean,
     method: Function,
-    itemid: String
+    itemid: String,
+    title: String,
+    message: String,
+    severity: String,
 });
 </script>
 
 <template>
-    <Modal :id="id" title="Valider congé">
+    <Modal :id="id" :title="title">
         <form @submit.prevent="method">
             <div class="modal-body">
                 <input type="text" id="validateInput" hidden :value="itemid" />
-                <p>Êtes-vous sûr de valider ce congé</p>
+                <p>Ê{{ message }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>
-                <button type="submit" class="btn btn-success me-0" :disabled="isLoading">
+                <button type="submit" :class="severity == 'success' ? 'btn btn-success me-0' : 'btn btn-danger me-0'" :disabled="isLoading">
                     <span v-if="isLoading" class="d-flex align-items-center">
                         <div class="spinner-border spinner-border-sm text-white" role="status">
                             <span class="visually-hidden">Loading...</span>

@@ -21,6 +21,8 @@ onMounted(async () => {
   await rhService.getEmployees();
   data.value.salaryAdvances = salaryAdvances.value.data;
   data.value.stats = salaryAdvances.value.stats;
+  console.log('data', data.value);
+  
 });
 
 watch(() => salaryAdvances, () => {

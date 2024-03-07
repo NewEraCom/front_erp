@@ -633,7 +633,10 @@ const DeleteDoc = async()=>{
             <AddDocumentModal :id="employee.id"/>
             <DeleteDocModal id="delete-doc" :isLoading="isLoading"
                 :method="DeleteDoc"
-                :itemid="rhStore.ItemId"/>
+                :itemid="rhStore.ItemId"
+                title="Supprimer le document"
+                message="Êtes-vous sûr de supprimer ce document ?"
+                />
             <ResumptionContractModal :id="employee.id" />
             <EditEmployeeModal :employee="employee" />
             <RuptureContractModal :id="employee.id" />

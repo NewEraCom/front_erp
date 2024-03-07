@@ -4,15 +4,25 @@ import { ref, computed, onMounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { WorkersTable, AddNewWorkersModal } from './components';
+import { DeleteDocModal ,WorkerDetailsModal} from './components/modals';
 
 const rhStore = useRhStore();
-
+const isLoading = ref(false);
 const workers = ref(computed(() => rhStore.workers));
 
 onMounted(async () => {
   await rhService.getWorkers();
 });
+const DeleteWorker = async()=>{
+    console.log('delete' , rhStore.ItemId);
+    isLoading.value = true;
 
+    await rhService.deleteWorker(rhStore.ItemId).then(() => {
+     isLoading.value = false;
+      $('#delete-doc').modal('hide');
+    
+   });
+};
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
@@ -85,6 +95,13 @@ onMounted(async () => {
       </div>
     </div>
     <AddNewWorkersModal />
+    <DeleteDocModal id="delete-doc" :isLoading="isLoading"
+                :method="DeleteWorker"
+                :itemid="rhStore.ItemId"
+                title="Supprimer cet employé ?"
+                message="Êtes-vous sûr de supprimer cet employé ?"
+                />
+    <WorkerDetailsModal />
   </div>
 </template>
 
