@@ -5,16 +5,17 @@ import { rhService } from '@/services';
 
 const props = defineProps({
     id: {
-        type: String,
+        type: Number,
         required: true,
     }
 });
 const isLoading = ref(false);
 
 const formData = ref({
-    employee_id: 0,
-    attachement: null,
-    title: '-',
+    stg: props.id,
+    file: null,
+    title: '',
+    type: '',
     otherTitle: '',
 
 });
@@ -26,9 +27,10 @@ const submit = async () => {
     if (formData.value.title === 'Autre') {
         formData.value.title = formData.value.otherTitle;
     }
+
     console.log(formData.value);
     isLoading.value = true;
-    await rhService.UploadDocEmployee(props.id,formData.value).then(() => {
+    await rhService.UploadDocIntern(formData.value).then(() => {
         $('#upload-documents').modal('hide');
     }).catch((error) => {
         console.error('Error during action execution', error);
@@ -46,15 +48,13 @@ const submit = async () => {
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Type de document <span
+                            <label for="nameEx" class="form-label">Titre de document <span
                                     class="text-danger">*</span></label>
                             <select name="" id="" class="form-select" required v-model="formData.title">
                                 <option value="-">Choisir un type</option>
-                                <option value="Attestation de travail">Attestation de travail</option>
                                 <option value="Attestation de stage">Attestation de stage</option>
                                 <option value="Attestation de salaire">Attestation de salaire</option>
                                 <option value="Attestation de congé">Attestation de congé</option>
-                                <option value="Solde de tout compte">Solde de tout compte</option>
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>
@@ -69,12 +69,22 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
+                            <label for="copie_rib" class="form-label">Type d'Attachement
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input id="type"  class="form-control" placeholder="Saisir le type de document"
+                                type="text" tabindex="0" name="copietype_cnss" required
+                                v-model="formData.type" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
                             <label for="copie_rib" class="form-label">Copie Attachement
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="copie_rib" ref="copie_cnss" class="form-control" placeholder="Choisir le fichier"
                                 type="file" tabindex="0" name="copie_cnss" required
-                                @change="e => handleFileChange(e, 'attachement')" />
+                                @change="e => handleFileChange(e, 'file')" />
                         </div>
                     </div>
                 </div>

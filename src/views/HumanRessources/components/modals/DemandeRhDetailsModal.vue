@@ -54,7 +54,7 @@ watch(() => rhStore.Item, () => {
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    <div v-if="formData.employee" class="col-sm-12">
+                    <div v-if="formData.employee" class="col-sm-6">
                         <div class="mb-3">
                             <label for="avance" class="form-label">Employé <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" placeholder="Entrez le total des salaires" tabindex="0"
@@ -62,7 +62,7 @@ watch(() => rhStore.Item, () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="avance" class="form-label">Titre <span
                                     class="text-danger">*</span></label>

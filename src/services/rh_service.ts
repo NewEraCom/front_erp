@@ -151,6 +151,34 @@ const getWorkers = async () => {
         return error;
     }
 };
+const getWorkerById = async (id) => {
+    try {
+        const response = await api().get('/tiers/get-worker/'+id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.worker = response.data.worker;
+            return;
+        }
+        throw new Error('Get workers failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+const getInternById = async (id) => {
+    try {
+        const response = await api().get('/stg/get/'+id);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.intern = response.data.stagiaire;
+            return;
+        }
+        throw new Error('Get workers failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 
 // ----------------- POST -----------------
 
@@ -709,6 +737,44 @@ const validateAvavnce = async (id,data:any) => {
         return error;
     }
 };
+async function UploadDocIntern(req) {
+    try {
+
+
+        const response = await api().post('stg/uploadDoc', req);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.intern = response.data.stagiaire;
+            
+            // await getEmployeeById(id);
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function DeleteDocIntern(id) {
+    try {
+
+
+        const response = await api().delete('stg/deleteDoc/' + id);
+        if (response.status == 200) {
+            const rhStore = useRhStore();
+
+            console.log(response.data);
+
+            rhStore.intern.documents = rhStore.intern.documents.filter(doc => doc.id !== id);
+            
+            
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 
 export default {
@@ -752,5 +818,9 @@ export default {
     DeleteDemandeRh,
     addPayImport,
     validateAvavnce,
-    PayExport
+    PayExport,
+    getWorkerById,
+    getInternById,
+    UploadDocIntern,
+    DeleteDocIntern
 };

@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 import { useRhStore } from '@/store';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     workers: {
@@ -11,7 +12,7 @@ const props = defineProps({
     },
 });
 const rhStore = useRhStore();
-
+const router = useRouter();
 const headers = [
     { text: 'Employe', value: 'fullname', isComplex: true, type: 'workers' },
     { text: 'Soustraitant', value: 'soustraitant', type: 'soustraitant' },
@@ -27,8 +28,10 @@ const actionsConfig = [
 ];
 
 const detailsItem = (item: any) => {
-    rhStore.setItem(item);
-    $('#showWorker').modal('show');
+    // rhStore.setItem(item);
+    // $('#showWorker').modal('show');
+     router.push({ name: 'WorkerEmployee', params: { id: item.id } });
+
     console.log(item);
 };
 

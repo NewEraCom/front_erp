@@ -26,6 +26,7 @@ import DemandeRhDetailsModal from './DemandeRhDetailsModal.vue';
 import RecruitementDetailsModal from './RecruitementDetailsModal.vue';
 import LeaveDetailsModal from './LeaveDetailsModal.vue';
 import WorkerDetailsModal from './WorkerDetailsModal.vue';
+import AddDocsInternModal from './AddDocsInternModal.vue';
 
 export {
     AddNewEmployeeModal,
@@ -55,6 +56,7 @@ export {
     DemandeRhDetailsModal,
     RecruitementDetailsModal,
     LeaveDetailsModal,
-    WorkerDetailsModal
+    WorkerDetailsModal,
+    AddDocsInternModal
     
 };

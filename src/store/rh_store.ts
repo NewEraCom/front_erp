@@ -6,6 +6,8 @@ export const useRhStore = defineStore('RhStore', {
         contractsExpiredThisMonth: null,
         employees: null,
         employee: null,
+        worker: null,
+        intern:null,
         interns: {
             data: null,
             stats: null,

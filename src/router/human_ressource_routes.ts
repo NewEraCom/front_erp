@@ -121,4 +121,24 @@ export const hrRoutes = [
             role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
+    {
+        path: '/worker/profile/:id',
+        name: 'WorkerEmployee',
+        component: () => import('@/views/HumanRessources/ProfileSousTraitantEmlpoye.vue'),
+        props: true,
+        meta: {
+            title: 'Profil de l\'employé',
+            role: [helpers.roles.RH, helpers.roles.DS]
+        },
+    },
+    {
+        path: '/stg/profile/:id',
+        name: 'StagiaireProfile',
+        component: () => import('@/views/HumanRessources/ProfileStagiaireView.vue'),
+        props: true,
+        meta: {
+            title: 'Profil du Stagiaire',
+            role: [helpers.roles.RH, helpers.roles.DS]
+        },
+    },
 ];

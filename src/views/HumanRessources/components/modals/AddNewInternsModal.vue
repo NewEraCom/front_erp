@@ -22,6 +22,7 @@ const formData = {
     cv: null,
     copie_diplome:null,
     assurance_copie:null,
+    attestaion_stage:null,
 
 };
 
@@ -35,8 +36,11 @@ const handleFileChange = (e, value) => {
         formData.cv = e.target.files[0];
     }if(value == 'copie_diplome'){
         formData.copie_diplome = e.target.files[0];
-    }else{
+    }if(value == 'assurance_copie'){
         formData.assurance_copie = e.target.files[0];
+    }
+    if(value == 'attestaion_stage'){
+        formData.attestaion_stage = e.target.files[0];
     }
 };
 
@@ -160,16 +164,16 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="copie_cv" class="form-label">Copie Diplome<span class="text-danger">*</span></label>
+                            <label for="copie_diplome" class="form-label">Copie Diplome<span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cin" @change="e => handleFileChange(e, 'copie_diplome')" required />
+                                name="copie_diplome" @change="e => handleFileChange(e, 'copie_diplome')" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="copie_cv" class="form-label">Copie CV <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cin" @change="e => handleFileChange(e, 'cv')" required />
+                                name="copie_cv" @change="e => handleFileChange(e, 'cv')" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -177,7 +181,15 @@ const submit = async () => {
                             <label for="assurance" class="form-label">Fiche d'assurance <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
-                                name="copie_cin" @change="e => handleFileChange(e, 'assurance_copie')" required />
+                                name="assurance" @change="e => handleFileChange(e, 'assurance_copie')" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="assurance" class="form-label">Attestation de Stage <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
+                                name="assurance" @change="e => handleFileChange(e, 'attestaion_stage')" required />
                         </div>
                     </div>
                 </div>

@@ -122,14 +122,14 @@ watch(() => props.pageSize, () => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'fullname'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'StagiaireProfile', params: { id: item.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.prenom + ' ' + item.nom }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Email : {{ item.email }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'workers'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'WorkerEmployee', params: { id: item.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.first_name + ' ' + item.last_name }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>

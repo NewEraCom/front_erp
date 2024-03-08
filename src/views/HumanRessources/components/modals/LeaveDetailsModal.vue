@@ -60,7 +60,7 @@ const getFileUrl = (attachment) => {
 
 </script>
 <template>
-    <Modal id="showLeave" title="Details de l'avance sur salaire" size="modal-md">
+    <Modal id="showLeave" title="Details de l'avance sur salaire" size="modal-xl">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
@@ -72,7 +72,7 @@ const getFileUrl = (attachment) => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="Type" class="form-label">Type <span
                                     class="text-danger">*</span></label>
@@ -81,7 +81,7 @@ const getFileUrl = (attachment) => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="deduction" class="form-label">Durée <span
                                     class="text-danger">*</span></label>
@@ -89,7 +89,7 @@ const getFileUrl = (attachment) => {
                                 tabindex="0" id="Type" v-model="formData.duree" disabled>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="deduction" class="form-label">Date debut <span
                                     class="text-danger">*</span></label>
@@ -97,7 +97,7 @@ const getFileUrl = (attachment) => {
                                 tabindex="0" id="Type" v-model="formData.date_start" disabled>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="deduction" class="form-label">Date fin <span
                                     class="text-danger">*</span></label>

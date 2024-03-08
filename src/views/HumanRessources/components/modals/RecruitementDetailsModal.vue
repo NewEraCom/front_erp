@@ -52,11 +52,11 @@ watch(() => sharedStore.selectedItem, () => {
 
 </script>
 <template>
-    <Modal id="showRecruitement" title="Details de l'avance sur salaire" size="modal-md">
+    <Modal id="showRecruitement" title="Details de l'avance sur salaire" size="modal-xl">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    <div v-if="formData.user" class="col-sm-12">
+                    <div v-if="formData.user" class="col-sm-6">
                         <div class="mb-3">
                             <label for="avance" class="form-label">Employé <span class="text-danger">*</span></label>
                             <input class="form-control" type="text"  tabindex="0"
@@ -64,7 +64,7 @@ watch(() => sharedStore.selectedItem, () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="post" class="form-label">Poste <span
                                     class="text-danger">*</span></label>
@@ -73,16 +73,10 @@ watch(() => sharedStore.selectedItem, () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description <span
-                                    class="text-danger">*</span></label>
-                                <textarea name="" id="" cols="30" rows="10" class="form-control" v-model="formData.description" disabled></textarea>
-                        </div>
-                    </div>
+                    
 
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="diplome" class="form-label">Diplome <span
                                     class="text-danger">*</span></label>
@@ -90,12 +84,19 @@ watch(() => sharedStore.selectedItem, () => {
                                 id="diplome" v-model="formData.displome" disabled>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="experience" class="form-label">Experience <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" type="text" tabindex="0"
                                 id="experience" v-model="formData.experience" disabled>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description <span
+                                    class="text-danger">*</span></label>
+                                <textarea name="" id="" cols="30" rows="10" class="form-control" v-model="formData.description" disabled></textarea>
                         </div>
                     </div>
                     <div class="col-sm-12">
