@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { helpers ,formater} from '@/utils';
-import {AddDocsInternModal,DeleteDocModal} from './components/modals';
+import {AddDocsInternModal,DeleteDocModal,EditStgModal} from './components/modals';
 
 const props = defineProps({
     id: {
@@ -53,7 +53,7 @@ const DeleteDoc = async()=>{
         <div class="d-flex align-items-center justify-content-between mb-4" >
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / Profile / <span class="text-dark"> {{ intern.prenom + ' ' + intern.nom }}</span> </h5>
             <div >
-                <button class="btn btn-warning" data-bs-target="#" data-bs-toggle="modal">
+                <button class="btn btn-warning" data-bs-target="#edit-stg" data-bs-toggle="modal" @click="rhStore.setItem(intern)">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
@@ -373,6 +373,8 @@ const DeleteDoc = async()=>{
         </div>
             </div>
             <AddDocsInternModal :id="intern.id"/>
+            <EditStgModal :stg="rhStore.Item"/>
+
             <DeleteDocModal id="delete-doc" :isLoading="isLoading"
                 :method="DeleteDoc"
                 :itemid="rhStore.ItemId"
