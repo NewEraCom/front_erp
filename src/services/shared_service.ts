@@ -101,6 +101,10 @@ const deleteRecruitment = async () => {
         const response = await api().delete('/dmnd/delete-recruitement/' + id);
         if (response.status == 200) {
             sharedStore.deleteRecruitment(id);
+            // const dmndIndex = sharedStore.recruitment.data.findIndex((item) => item.id === id);
+            // if (dmndIndex !== -1) {
+            //     sharedStore.recruitment.data.splice(dmndIndex, 1);
+            // }
         }
     } catch (error) {
         return Promise.reject(error);

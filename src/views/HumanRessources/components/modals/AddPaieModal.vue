@@ -1,25 +1,36 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
 const formData = ref({
-    month: '-',
+    mois: '-',
     year: '-',
-    total_salary: null,
-    total_prime: null,
-    total_employee: null,
-    copie_paie: null,
+    file: null,
 
 });
 
 const submit = async () => {
     console.log('submit');
+    isLoading.value = true;
+    if (formData.value.mois === '-' || formData.value.year === '-' || formData.value.file === null) {
+        isLoading.value = false;
+        return;
+    }
+    await rhService.addPayImport(formData.value).then(() => {
+        console.log('Employee added');
+        $('#addPaie').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
+        isLoading.value = false;
+    });
 };
 
 const handleFileChange = (e) => {
-    formData.value.copie_paie = e.target.files[0];
+    formData.value.file = e.target.files[0];
 };
 
 const year = ref(new Date().getFullYear());
@@ -33,7 +44,7 @@ const year = ref(new Date().getFullYear());
                     <div class="col-sm-7">
                         <div class="mb-3">
                             <label for="month" class="form-label">Mois <span class="text-danger">*</span></label>
-                            <select id="month" class="form-select" required v-model="formData.month">
+                            <select id="month" class="form-select" required v-model="formData.mois">
                                 <option value="-">Choisir un mois</option>
                                 <option value="Janvier">Janvier</option>
                                 <option value="Février">Février</option>
@@ -61,7 +72,7 @@ const year = ref(new Date().getFullYear());
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <!-- <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="total_salary" class="form-label">Mass salarial <span
                                     class="text-danger">*</span></label>
@@ -84,7 +95,7 @@ const year = ref(new Date().getFullYear());
                             <input class="form-control" type="number" placeholder="Entrez le total des employees"
                                 id="total_employee" v-model="formData.total_employee" required>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="col-sm-12">
                         <div class="mb-3">

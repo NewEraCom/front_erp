@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
+import { rhService } from '@/services';
 
 const props = defineProps({
     paies: {
@@ -19,17 +20,17 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-download', class: 'btn bg-label-primary btn-sm', onClick: (item: any) => PrintPay(item.mounth) },
+    // { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 const detailsItem = (item: any) => {
     console.log(item);
 };
 
-const deleteItem = (item: any) => {
-    console.log('Delete item', item);
-};
+// const deleteItem = (item: any) => {
+//     console.log('Delete item', item);
+// };
 
 const filteredData = ref(props.paies);
 
@@ -46,6 +47,51 @@ const filter = () => {
     });
 
 };
+const PrintPay = async (mounth) => {
+    const monthNames = {
+        Janvier: 'January',
+        Février: 'February',
+        Mars: 'March',
+        Avril: 'April',
+        Mai: 'May',
+        Juin: 'June',
+        Juillet: 'July',
+        Août: 'August',
+        Septembre: 'September',
+        Octobre: 'October',
+        Novembre: 'November',
+        Décembre: 'December'
+    };
+    const [monthName, year] = mounth.split(' ');
+    const englishMonthName = monthNames[monthName];
+    const date = new Date(`${englishMonthName} 1 ${year}`);
+    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    console.log(formattedDate);
+
+    try {
+        let data = {
+            date: formattedDate,
+            mounth: mounth
+        };
+        await rhService.PayExport(data)
+            .then((res) => {
+                let blob;
+                if (res instanceof Blob) {
+                    blob = res;
+                } else {
+                    blob = new Blob([res]);
+                }
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = `Pay_${formattedDate}.xlsx`;
+                link.click();
+            })
+            .catch(() => {
+                isLoading.value = false;
+            });
+    } catch (error) {}
+};
+
 
 </script>
 <template>
@@ -78,7 +124,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" button-type="simple"/>
     </div>
 </template>
 <style>

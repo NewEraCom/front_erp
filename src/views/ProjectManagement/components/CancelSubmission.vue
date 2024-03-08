@@ -3,12 +3,31 @@ import { ref } from 'vue';
 import { pmService } from '@/services';
 
 
+const isLoading = ref(false);
+const motif = ref('');
+
+const submit = async () => {
+    isLoading.value = true;
+
+    const formData = new FormData();
+    formData.append('motif', motif.value);
+    formData.append('id', props.id);
+
+    await pmService.cancel(formData)
+        .then(() => {
+            isLoading.value = false;
+            $('#cancel-submission').modal('hide');
+        })
+        .catch(() => {
+            console.log('error');
+        });
+};
 </script>
 
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
-            <p>Etes-vous sûr de vouloir annuler la soumission pour cet avant-projet ?</p>
+            <p>Etes-vous sûr de vouloir annuler la soumission pour cet avant-projet ?</p>
             <textarea v-model="motif" class="form-control" rows="3" placeholder="Motif de l'annulation"></textarea>
         </div>
         <div class="modal-footer m-0 p-0 mt-2">

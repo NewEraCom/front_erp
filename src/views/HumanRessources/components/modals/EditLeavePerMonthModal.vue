@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
@@ -19,12 +20,21 @@ const props = defineProps({
 const dayPerMonth = ref(null);
 
 
-const submit = () => {
+const submit = async() => {
     isLoading.value = true;
     console.log(props.id);
-    setTimeout(() => {
+    
+    const formData = {
+        conge_mois: dayPerMonth.value,
+
+    };
+    await rhService.EditLeaveEmployee(props.id,formData).then(() => {
+        $('#editLeavePerMonth').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
         isLoading.value = false;
-    }, 2000);
+    });
 };
 
 watch(() => props.oldDayPerMonth, (value) => {

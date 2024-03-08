@@ -5,7 +5,10 @@ import { useRhStore } from '@/store';
 import { Modal } from '@/ui';
 import { helpers, formater } from '@/utils';
 import { PointageTable } from './components';
-
+import {EditSalaryModal ,AugementationSalaryModal ,EditLeavePerMonthModal,
+    AddCongeModal ,EditBanInfoModal,EditCnssModal,
+    AddDocumentModal ,DeleteDocModal,AddPointageModal, 
+    EditEmployeeModal,RuptureContractModal} from './components/modals';
 const props = defineProps({
     id: {
         type: String,
@@ -14,16 +17,17 @@ const props = defineProps({
 });
 
 const rhStore = useRhStore();
+const isLoading = ref(false);
 
-const data = ref(computed(() => rhStore.employee));
+// const data = ref(computed(() => rhStore.employee));
 
-const employee = ref(null);
+const employee = ref(computed(() => rhStore.employee));
 
 const showSalary = ref(false);
 
 onMounted(async () => {
     await rhService.getEmployeeById(props.id);
-    employee.value = data.value;
+    // employee.value = data.value;
 });
 
 onUnmounted(() => {
@@ -31,9 +35,23 @@ onUnmounted(() => {
 });
 
 
-watch(data, () => {
-    employee.value = data;
+watch(rhStore.employee, (newValue) => {
+    employee.value = newValue;
 }, { deep: true });
+
+const getFileUrl = (attachment) => {
+  return helpers.baseUrl() + `uploads/employe/${attachment}`;
+};
+const DeleteDoc = async()=>{
+    console.log('delete' , rhStore.ItemId);
+    isLoading.value = true;
+
+    await rhService.DeleteDocEmployee(rhStore.ItemId).then(() => {
+     isLoading.value = false;
+      $('#delete-doc').modal('hide');
+    
+   });
+};
 
 </script>
 <template>
@@ -418,7 +436,8 @@ watch(data, () => {
                                                             <i class="ti ti-file-filled"></i>
                                                         </div>
                                                         <div class="ms-2">
-                                                            <h6 class="mb-2">
+                                                            <a :href="getFileUrl(employee.copie_cin)" target="_blank">
+                                                                <h6 class="mb-2">
                                                                 {{
                                                                     formater.limitText(
                                                                         employee.copie_cin,
@@ -426,6 +445,8 @@ watch(data, () => {
                                                                     )
                                                                 }}
                                                             </h6>
+                                                            </a>
+                                                            
                                                             <small class="mt-auto">Créé le
                                                                 {{
                                                                     formater.date(
@@ -445,6 +466,8 @@ watch(data, () => {
                                                             <i class="ti ti-file-filled"></i>
                                                         </div>
                                                         <div class="ms-2">
+                                                            <a :href="getFileUrl(item.attachement)" target="_blank">
+
                                                             <h6 class="mb-2">
                                                                 {{
                                                                     formater.limitText(
@@ -453,6 +476,7 @@ watch(data, () => {
                                                                     )
                                                                 }}
                                                             </h6>
+                                                            </a>
                                                             <small class="mt-auto">Créé le
                                                                 {{
                                                                     formater.date(
@@ -461,6 +485,7 @@ watch(data, () => {
                                                                 }}</small>
                                                         </div>
                                                         <button class="ms-auto btn btn-danger btn-sm m-0"
+                                                        @click="rhStore.setItemId(item.id)"
                                                             data-bs-toggle="modal" data-bs-target="#delete-doc">
                                                             <i class="ti ti-trash-filled"></i>
                                                         </button>
@@ -605,8 +630,16 @@ watch(data, () => {
             <AddCongeModal :id="employee.id" />
             <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :old-bank="employee.bank_name" />
             <EditCnssModal :id="employee.id" :old-cnss="employee.cnss" />
+            <AddDocumentModal :id="employee.id"/>
+            <DeleteDocModal id="delete-doc" :isLoading="isLoading"
+                :method="DeleteDoc"
+                :itemid="rhStore.ItemId"
+                title="Supprimer le document"
+                message="Êtes-vous sûr de supprimer ce document ?"
+                />
             <ResumptionContractModal :id="employee.id" />
             <EditEmployeeModal :employee="employee" />
+            <RuptureContractModal :id="employee.id" />
         </div>
         <AddPointageModal source="simple" :id="id" />
     </div>

@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { helpers } from '@/utils';
-import { useRhStore } from '@/store';
+import { useSharedStore} from '@/store';
 
 const props = defineProps({
     recruitments: {
@@ -10,7 +10,7 @@ const props = defineProps({
         required: true,
     },
 });
-const rhStore = useRhStore();
+const sharedStore = useSharedStore();
 const headers = [
     { text: 'Créé par', value: 'created_by', isComplex: true, type: 'recrute' },
     { text: 'Poste', value: 'post_name', type: 'text' },
@@ -27,11 +27,14 @@ const actionsConfig = [
 
 
 const editItem = (item: any) => {
+    sharedStore.selectedItem = item;
+    $('#showRecruitement').modal('show');
     console.log('Edit item', item);
 };
 
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    sharedStore.setSelectedItem(item);
+    $('#delete-doc').modal('show');
 };
 
 const filteredData = ref(props.recruitments);

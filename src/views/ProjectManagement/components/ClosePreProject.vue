@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { pmService } from '@/services';
+import {pmService} from '@/services';
 
 const props = defineProps({
     id: {
@@ -9,6 +9,27 @@ const props = defineProps({
 });
 
 
+const isLoading = ref(false);
+
+const method = async () => {
+    isLoading.value = true;
+    const formData = {
+        id: props.id,
+        client: client.value,
+        montantMarche: montant.value,
+        comment: commentaire.value
+    };
+    await pmService.clotureLostProject(formData)
+        .then((result) => {
+            isLoading.value = false;
+            if (result === 200) {
+                $('#close').modal('hide');
+            }
+        })
+        .catch((err) => {
+            isLoading.value = false;
+        });
+};
 </script>
 
 <template>

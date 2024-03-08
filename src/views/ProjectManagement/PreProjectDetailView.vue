@@ -1,58 +1,4 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue' ;
-import  { usePMStore } from '@/store';
-import { pmService   om '@/services    t { helpers }     utils';
-// impo   Modal, DataTableDevis, Da  bleBordereau, DetailsPreProjectSk     from '@/ui';
-import { Modal } from '@/ui';
-import { D    Bordereau ,DataTableDevis} from './components';
-
-import    ddLots,
-    ImportAssets,
-    EditPreProjec    etFileNumber,
-    SetFileNumberDone,
-    ValidatePre    
-    RefuserPreProject,
-    CloturePreProject,
-       frage,
-    DeleteChiffrage,
-    Import    e,
-    CloseChiffrage,
-    ImportBordereau,
-    ePreProject,
-    CancelSubmission
-} from './components    t props = defineProps({
-  id: {
-    type: String,
-    default: '0'
-      onst PMStore = usePMStore();
-const preProject = computed(() =>     preprojectDetail);
-let user = ref(null);
-
-const projectM     ref(computed(() => PMStore.projectManager));
-
-    d(async () => {
-  await pmService.getPreProjectById(props.id).then(()      user.value = JSON.parse(localStorage.getItem('us     });
-});
-
-const fillInputIdDoc = (id) => {
-  $('#docID').val(id);
-};
-
-const     rd = (id) => {
-  $('#' + id).toggleClass('hide-card');
-};
-
-const sumCau    stimation = (lots) => {
-  let caution = 0;
-  let estimation = 0;
-
-  lots.    (lot) => {
-    caution += lot.montant_caution;
-    estimation += lot.es    _marche;
-  });
-
-  return [caution, estimation];
-};
 </script>
 
 <template>
@@ -75,9 +21,9 @@ const sumCau    stimation = (lots) => {
       </div>
 
       <div v-if="(helpers.dateDiff(preProject.date_depot)[1] != 'Offre expirée' &&
-      preProject.status == 'En attente' &&
-      user?.roles[0]?.name === 'Business development manager' &&
-      preProject.type_project != 'special') ||
+    preProject.status == 'En attente' &&
+    user?.roles[0]?.name === 'Business development manager' &&
+    preProject.type_project != 'special') ||
     (preProject.status == 'En attente' &&
       user?.roles[0]?.name === 'Business development manager' &&
       preProject.type_project == 'special' &&

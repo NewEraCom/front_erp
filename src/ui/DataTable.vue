@@ -122,14 +122,14 @@ watch(() => props.pageSize, () => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'fullname'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'StagiaireProfile', params: { id: item.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.prenom + ' ' + item.nom }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Email : {{ item.email }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'workers'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link to="/">
+                            <router-link :to="{ name: 'WorkerEmployee', params: { id: item.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.first_name + ' ' + item.last_name }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>
@@ -332,7 +332,8 @@ watch(() => props.pageSize, () => {
                             :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
                             :disabled="action.type == 'delete' ? (item.status != disabled) : false">
-                            <i :class="action.icon"></i>
+                            <i v-if="action.type == 'potential'" :class="item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark'"></i>
+                            <i v-else :class="action.icon"></i>
                         </button>
                     </td>
                     <td v-else class="text-center">

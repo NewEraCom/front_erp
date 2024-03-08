@@ -1,19 +1,34 @@
 <script setup lang="ts">
 import { CardOne } from '@/ui';
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted ,watch} from 'vue';
 import { RecruitmentTable, AddNewRecruitmentModal } from './components';
-import { rhService } from '@/services';
-import { useRhStore } from '@/store';
+import { rhService ,sharedService} from '@/services';
+import { useRhStore ,useSharedStore} from '@/store';
+import { DeleteDocModal ,RecruitementDetailsModal} from './components/modals';
 
 
+const isLoading = ref(false);
 const rhStore = useRhStore();
+const sharedStore = useSharedStore();
+
 const recrutement = ref(computed(() => rhStore.recrutement));
 
 onMounted(async () => {
   await rhService.getRecrutement();
 });
 
+const DeleteLeave = async () => {
+     isLoading.value = true;
 
+    await sharedService.deleteRecruitment(rhStore.ItemId).then(() => {
+     isLoading.value = false;
+      $('#delete-doc').modal('hide');
+    
+   });
+};
+watch(() => rhStore.recrutement, (newValue) => {
+  recrutement.value = newValue;
+    },{ deep: true });
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
@@ -54,6 +69,12 @@ onMounted(async () => {
       </div>
     </div>
     <AddNewRecruitmentModal />
+    <DeleteDocModal id="delete-doc" :isLoading="isLoading"
+                :method="DeleteLeave"
+                title="Supprimer Ce Recrutement"
+                message="Êtes-vous sûr de supprimer ce Recrutement ?"
+                />
+    <RecruitementDetailsModal />
    
   </div>
 </template>

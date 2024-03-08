@@ -3,6 +3,7 @@ import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
 import { useRhStore } from '@/store';
 import { helpers } from '@/utils';
+import { rhService } from '@/services';
 
 const rhStore = useRhStore();
 
@@ -15,6 +16,7 @@ const formData = ref({
     deduction: null,
     date_start: null,
     status: null,
+    approval_rh: null,
 });
 
 watch(() => rhStore.salaryAdvanceSelected, () => {
@@ -25,11 +27,28 @@ watch(() => rhStore.salaryAdvanceSelected, () => {
         formData.value.deduction = rhStore.salaryAdvanceSelected.deduction;
         formData.value.date_start = rhStore.salaryAdvanceSelected.start_payment;
         formData.value.status = rhStore.salaryAdvanceSelected.status;
+        formData.value.approval_rh = rhStore.salaryAdvanceSelected.approval_rh;
     }
 });
 
 const submit = async () => {
     isLoading.value = true;
+    if (formData.value.employee_id === '-' || formData.value.employee === null || formData.value.avance === null || 
+    formData.value.deduction === null || formData.value.date_start === null || formData.value.status === null || 
+    formData.value.approval_rh === null ) {
+        isLoading.value = false;
+        return;
+    }
+    const data = { status: 1,};
+    await rhService.validateAvavnce(rhStore.salaryAdvanceSelected.id,data).then(() => {
+        console.log('Employee added');
+        rhStore.salaryAdvanceSelected = null;
+        $('#showSalaryAdvance').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
+        isLoading.value = false;
+    });
 };
 
 
@@ -89,7 +108,7 @@ const submit = async () => {
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>
-                <button v-if="formData.status == 'pending'" type="submit" :disabled="isLoading" class="btn btn-success">
+                <button v-if="formData.approval_rh == '0'" type="submit" :disabled="isLoading" class="btn btn-success">
                     <span v-if="isLoading" class="d-flex align-items-center">
                         <div class="spinner-border spinner-border-sm text-white me-2" role="status">
                             <span class="visually-hidden">Loading...</span>

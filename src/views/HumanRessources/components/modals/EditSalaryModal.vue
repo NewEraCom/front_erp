@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
+import { rhService } from '@/services';
 
 const isLoading = ref(false);
 
@@ -19,12 +20,21 @@ const props = defineProps({
 const newSalary = ref(null);
 
 
-const submit = () => {
+const submit = async() => {
     isLoading.value = true;
     console.log(props.id);
-    setTimeout(() => {
+    isLoading.value = true;
+    const formData = {
+        salary: newSalary.value
+    };
+    await rhService.UpdateSalaire(props.id,formData).then(() => {
+        console.log('Employee added');
+        $('#editSalary').modal('hide');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+    }).finally(() => {
         isLoading.value = false;
-    }, 2000);
+    });
 };
 
 watch(() => props.oldSalary, (value) => {

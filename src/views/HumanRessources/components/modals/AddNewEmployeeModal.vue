@@ -47,7 +47,7 @@ const submit = async () => {
         console.error('Error during action execution', error);
     }).finally(() => {
         isLoading.value = false;
-    });
+    });    
 };
 </script>
 <template>
@@ -127,7 +127,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="rib" v-model="formData.rib" class="form-control"
-                                placeholder="Entrer le numero de rib" type="text" tabindex="0" required />
+                                placeholder="Entrer le numero de rib" type="number" tabindex="0" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -266,7 +266,7 @@ const submit = async () => {
                             <label for="conge" class="form-label">Conge Jours par Mois <span class="text-danger">*</span>
                             </label>
                             <input id="conge" v-model="formData.conge" class="form-control"
-                                placeholder="Entre le nombre de jours de congé" type="text" tabindex="0" required />
+                                placeholder="Entre le nombre de jours de congé" type="number" tabindex="0" required />
                         </div>
                     </div>
                 </div>

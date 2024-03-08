@@ -6,6 +6,8 @@ export const useRhStore = defineStore('RhStore', {
         contractsExpiredThisMonth: null,
         employees: null,
         employee: null,
+        worker: null,
+        intern:null,
         interns: {
             data: null,
             stats: null,
@@ -35,7 +37,12 @@ export const useRhStore = defineStore('RhStore', {
             data: null,
             stats: null,
         },
+        sousTraitants: {
+            data: null,
+            stats: null,
+        },
         ItemId: null,
+        Item: null,
 
         salaryAdvanceSelected: null
     }),
@@ -76,6 +83,9 @@ export const useRhStore = defineStore('RhStore', {
         psuhOneEmployee(data: any) {
             this.employee = data;
         },
+        pushIntern(data: any) {
+            this.interns.data.push(data);
+        },
         pushPointageToUser(data: any) {
             this.employee.pointages.push(data);
             console.log(this.employee.pointages);
@@ -98,7 +108,7 @@ export const useRhStore = defineStore('RhStore', {
                 total: data.length,
                 actif: data.filter((e: any) => e.status === '1').length,
                 inactif: data.filter((e: any) => e.status === '0').length,
-                potentialHiring: data.filter((e: any) => e.status === '1' && e.potential === '1').length,
+                potentialHiring: data.filter((e: any) => e.status === '1' && e.potentiel === '1').length,
             };
         },
         setLeaves(data: any) {
@@ -141,14 +151,14 @@ export const useRhStore = defineStore('RhStore', {
             this.salaryAdvances.stats = {
                 total: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
-                    if (current.status === 'approved') {
+                    if (current.approval_responsable === 'approved' && current.approval_rh === '1') {
                         total = accumulator + Number(current.avance);
                     }
                     return total;
                 }, 0),
                 remaining: this.salaryAdvances.data.reduce((accumulator: number, current: any) => {
                     let total = 0;
-                    if (current.status === 'approved') {
+                    if (current.approval_responsable === 'approved' && current.approval_rh === '1') {
                         total = accumulator + Number(current.restant);
                     }
                     return total;
@@ -202,6 +212,14 @@ export const useRhStore = defineStore('RhStore', {
                 totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
             };
         },
+        setSousTraitants(data: any) {
+            this.sousTraitants.data = data;
+            // this.sousTraitants.stats = {
+            //     actif: data.filter((e: any) => e.status === 1).length,
+            //     inactif: data.filter((e: any) => e.status === 0).length,
+            //     totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
+            // };
+        },
         pushPointage(data: any) {
             this.pointages.push(data);
             console.log('pointage pushed');
@@ -209,6 +227,9 @@ export const useRhStore = defineStore('RhStore', {
         },
         setItemId(id: number) {
             this.ItemId = id;
+        },
+        setItem(data: any) {
+            this.Item= data;
         },
 
     }

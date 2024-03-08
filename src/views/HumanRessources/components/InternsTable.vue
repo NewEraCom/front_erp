@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
+import { useRhStore } from '@/store';
 
 const props = defineProps({
     interns: {
@@ -8,6 +9,7 @@ const props = defineProps({
         required: true,
     },
 });
+const rhStore = useRhStore();
 
 const headers = [
     { text: 'Stagiaires', value: 'nom', isComplex: true, type: 'fullname' },
@@ -18,15 +20,36 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => deleteItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) }
+    { icon: 'ti ti-pencil', class: 'btn btn-warning btn-sm', onClick: (item: any) => UpdateStg(item) },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { 
+
+        icon: (item: any) => item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark',
+        class: 'btn bg-label-primary btn-sm',
+        onClick: (item: any) => {
+            rhStore.setItemId(item.id);
+            if (item.potentiel === '1') {
+                $('#remove-potentiel').modal('show');
+            } else {
+                $('#add-potentiel').modal('show');
+            }
+        },
+        type: 'potential'
+    }
 ];
 
 
 
+const UpdateStg = (item: any) => {
+    rhStore.setItem(item);
+    $('#edit-stg').modal('show');
+};
 const deleteItem = (item: any) => {
     console.log('Delete item', item);
+    rhStore.setItemId(item.id);
+    $('#delete-doc').modal('show');
 };
+
 
 const filteredData = ref(props.interns);
 
@@ -36,7 +59,7 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.interns.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom}`.toLowerCase();
+        const combinedFields = `${item.nom} ${item.prenom} ${item.poste} ${item.diplome} ${item.status}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value);

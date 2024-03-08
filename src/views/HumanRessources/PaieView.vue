@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { PaieCard, PaieTable, AddPaieModal } from './components';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
@@ -7,11 +7,17 @@ import { useRhStore } from '@/store';
 
 const rhStore = useRhStore();
 
-const paies = ref(computed(() => rhStore.paies));
+const paies = ref( rhStore.paies);
 
 onMounted(async () => {
   await rhService.getPaies();
 });
+watch(
+  () => rhStore.paies,
+  (newValue) => {
+    paies.value = newValue;
+  }
+);
 
 </script>
 <template>

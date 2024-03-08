@@ -117,7 +117,17 @@ const getProjectById = async (id: string) => {
     return Promise.reject(error);
   }
 };
-
+const getProjects = async () => {
+  try {
+    const response = await api().get('projects/get');
+    if (response.status === 200) {
+      const PMStore = usePMStore();
+      PMStore.projects = response.data.projects;
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 const deleteDemande = async () => {
   try {
     const PMStore = usePMStore();
@@ -424,5 +434,6 @@ export default {
   importChiffrage,
   create,
   refuser,
-  validate
+  validate,
+  getProjects
 };

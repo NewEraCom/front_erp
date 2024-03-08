@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
 
@@ -17,10 +17,8 @@ const formData = ref({
     last_name: null,
     poste: null,
     departement: null,
-    city: null,
     adresse: null,
     sexe: null,
-    matricule: null,
     phone_no: null,
     flotte: null,
     email: null,
@@ -28,35 +26,54 @@ const formData = ref({
     birthdate: null,
     situation_familiale: null,
     children: null,
-    date_embauche: null,
+    ville: null,
 });
 
-watch(() => props.employee, (employee) => {
-    formData.value = {
-        first_name: employee.first_name,
-        last_name: employee.last_name,
-        poste: employee.poste,
-        departement: employee.departement,
-        city: employee.ville,
-        adresse: employee.adresse,
-        sexe: employee.sexe,
-        matricule: employee.matricule,
-        phone_no: employee.phone_no,
-        flotte: employee.flotte,
-        email: employee.email,
-        cin: employee.cin,
-        birthdate: employee.birthdate,
-        situation_familiale: employee.situation_familiale,
-        children: employee.num_personne_charge,
-        date_embauche: employee.date_embauche,
-    };
+// watchEffect(() => props.employee, (employee) => {
+//     formData.value = {
+//         first_name: employee.first_name,
+//         last_name: employee.last_name,
+//         poste: employee.poste,
+//         departement: employee.departement,
+//         sexe: employee.sexe,
+//         ville: employee.ville,
+//         adresse: employee.adresse,
+//         phone_no: employee.phone_no,
+//         flotte: employee.flotte,
+//         email: employee.email,
+//         cin: employee.cin,
+//         birthdate: employee.birthdate,
+//         situation_familiale: employee.situation_familiale,
+//         children: employee.num_personne_charge,
+        
+//     };
+// });
+watchEffect(() => {
+    if (props.employee) {
+        formData.value = {
+            first_name: props.employee.first_name,
+            last_name: props.employee.last_name,
+            poste: props.employee.poste,
+            departement: props.employee.departement,
+            sexe: props.employee.sexe,
+            ville: props.employee.ville,
+            adresse: props.employee.adresse,
+            phone_no: props.employee.phone_no,
+            flotte: props.employee.flotte,
+            email: props.employee.email,
+            cin: props.employee.cin,
+            birthdate: props.employee.birthdate,
+            situation_familiale: props.employee.situation_familiale,
+            children: props.employee.num_personne_charge,
+        };
+    }
 });
 
 const submit = async () => {
     isLoading.value = true;
-    await rhService.addEmployee(formData.value).then(() => {
-        console.log('Employee added');
-        $('#addNewEmployee').modal('hide');
+    await rhService.EditEmployee(props.employee.id,formData.value).then(() => {
+        console.log('Employee Updated Successfully!');
+        $('#editNewEmployee').modal('hide');
     }).catch((error) => {
         console.error('Error during action execution', error);
     }).finally(() => {
@@ -109,7 +126,7 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="city" class="form-label">Ville <span class="text-danger">*</span>
                             </label>
-                            <input id="city" v-model="formData.city" class="form-control" placeholder="Entre la ville"
+                            <input id="city" v-model="formData.ville" class="form-control" placeholder="Entre la ville"
                                 type="text" tabindex="0" required />
                         </div>
                     </div>
@@ -135,15 +152,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="matricule" class="form-label">Matricule
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input id="matricule" v-model="formData.matricule" class="form-control"
-                                placeholder="Entre la ville" type="number" tabindex="0" disabled />
-                        </div>
-                    </div>
+                   
 
                     <div class="col-sm-6">
                         <div class="mb-3">
@@ -161,8 +170,8 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="flotte" v-model="formData.flotte" class="form-control"
-                                placeholder="Entre le numéro de téléphone de flotte" type="tel" maxlength="10"
-                                minlength="10" tabindex="0" />
+                                placeholder="Entre le numéro de téléphone de flotte" type="tel" maxlength="4"
+                                minlength="4" tabindex="0" />
                         </div>
                     </div>
 
@@ -192,7 +201,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="birthdate" v-model="formData.birthdate" class="form-control"
-                                placeholder="date de naissance" type="email" tabindex="0" required />
+                                placeholder="date de naissance" type="date" tabindex="0" required />
                         </div>
                     </div>
 
@@ -201,8 +210,12 @@ const submit = async () => {
                             <label for="situation" class="form-label">Situation Familiale
                                 <span class="text-danger">*</span>
                             </label>
-                            <input id="situation" v-model="formData.situation_familiale" class="form-control"
-                                placeholder="Entre la situation familiale" type="text" tabindex="0" required />
+                           
+                                <select id="situation_familiale" v-model="formData.situation_familiale" class="form-select" required>
+                                <option value="-">Selectionner la situation qui vous convienne</option>
+                                <option value="Celibataire">Celibataire</option>
+                                <option value="Marié">Marié</option>
+                            </select>
                         </div>
                     </div>
 
@@ -216,16 +229,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
-                        <div class="mb-3">
-                            <label for="date_embauche" class="form-label">Date d'embauche
-                                <span class="text-danger">*</span>
-                            </label>
-                            <input id="date_embauche" v-model="formData.date_embauche" class="form-control" type="date"
-                                tabindex="0" required />
-                        </div>
-                    </div>
-
+                    
                 </div>
             </div>
             <div class="modal-footer">

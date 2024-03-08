@@ -1,31 +1,35 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Modal, CustomSelect } from '@/ui';
+import { Modal } from '@/ui';
 import { rhService } from '@/services';
 
-defineProps({
-    employees: {
-        type: Object,
-        default: () => ({})
+const props = defineProps({
+    id: {
+        type: String,
+        required: true,
     }
 });
 const isLoading = ref(false);
 
 const formData = ref({
-    employee_id: '-',
-    otherTitle: null,
-    description: null,
+    employee_id: 0,
+    attachement: null,
     title: '-',
+    otherTitle: '',
 
 });
+const handleFileChange = (e, type) => {
+    formData.value[type] = e.target.files[0];
+};
 
 const submit = async () => {
-
-    formData.value.employee_id = formData.value.employee_id.key;
+    if (formData.value.title === 'Autre') {
+        formData.value.title = formData.value.otherTitle;
+    }
     console.log(formData.value);
     isLoading.value = true;
-    await rhService.addDemandeRh(formData.value).then(() => {
-        $('#addDemandeRh').modal('hide');
+    await rhService.UploadDocEmployee(props.id,formData.value).then(() => {
+        $('#upload-documents').modal('hide');
     }).catch((error) => {
         console.error('Error during action execution', error);
     }).finally(() => {
@@ -34,22 +38,15 @@ const submit = async () => {
 };
 </script>
 <template>
-    <Modal id="addDemandeRh" title="Ajouter une demande RH" size="modal-md">
+    <Modal id="upload-documents" title="Ajouter un document" size="modal-md">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    <div v-if="employees != null" class="col-12 mb-3">
-                        <CustomSelect v-model="formData.employee_id" placeholder="Choisir un employee" label="Employee"
-                            :data="employees.filter(item => item.status == 1).map((item) => ({
-                                key: item.id,
-                                value: item.first_name + ' ' + item.last_name
-                            }))
-                                " />
-                    </div>
+                    
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Type d'attestation <span
+                            <label for="nameEx" class="form-label">Type de document <span
                                     class="text-danger">*</span></label>
                             <select name="" id="" class="form-select" required v-model="formData.title">
                                 <option value="-">Choisir un type</option>
@@ -64,7 +61,7 @@ const submit = async () => {
                     </div>
                     <div v-if="formData.title === 'Autre'" class="col-sm-12">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Titre d'attestation <span
+                            <label for="nameEx" class="form-label">Titre de document <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entrez le titre de l'attestation" tabindex="0"
                                 id="nameEx" v-model="formData.otherTitle" required>
@@ -72,9 +69,12 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="assurance" class="form-label">Description <span class="text-danger">*</span></label>
-                            <textarea class="form-control" placeholder="Entrez la description du poste" tabindex="0"
-                                id="assurance" v-model="formData.description" required></textarea>
+                            <label for="copie_rib" class="form-label">Copie Attachement
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input id="copie_rib" ref="copie_cnss" class="form-control" placeholder="Choisir le fichier"
+                                type="file" tabindex="0" name="copie_cnss" required
+                                @change="e => handleFileChange(e, 'attachement')" />
                         </div>
                     </div>
                 </div>
