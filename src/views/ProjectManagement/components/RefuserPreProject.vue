@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -16,7 +16,7 @@ const submit = async () => {
     const formData = new FormData();
     formData.append('id', props.id);
     formData.append('remarque', comment.value);
-    await PMService.refuser(formData)
+    await pmService.refuser(formData)
         .then(() => {
             isLoading.value = false;
             $('#refuse-project').modal('hide');
@@ -26,6 +26,7 @@ const submit = async () => {
         });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -34,12 +35,7 @@ const submit = async () => {
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label id="remaqure" class="form-label">Remarque</label>
-                        <textarea
-                            id="remaqure"
-                            v-model="comment"
-                            class="form-control"
-                            rows="3"
-                        ></textarea>
+                        <textarea id="remaqure" v-model="comment" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 
 const props = defineProps({
     id: {
@@ -12,7 +12,7 @@ const isLoading = ref(false);
 
 const submit = async () => {
     isLoading.value = true;
-    await PMService.markChiffrageDone(props.id)
+    await pmService.markChiffrageDone(props.id)
         .then(() => {
             isLoading.value = false;
             $('#close-chiffrage').modal('hide');
@@ -22,6 +22,7 @@ const submit = async () => {
         });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">

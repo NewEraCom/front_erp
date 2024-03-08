@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     label: {
@@ -59,6 +59,7 @@ const search = (word) => {
     filterData.value = value;
 };
 </script>
+
 <template>
     <div class="input-wrapper">
         <div class="relative">
@@ -67,9 +68,10 @@ const search = (word) => {
                 :placeholder="placeholder" aria-hidden="true" :value="modelValue.value" v-bind="$attrs"
                 @input="$emit('update:modelValue', $event.target.value)" @click="toggle" />
             <div v-if="show" class="bg">
-                <input :id="label" class="form-select" :class="error ? 'is-invalid' : ''" tabindex="-1" autocomplete="off"
-                    :placeholder="placeholder" aria-hidden="true" :value="`${props.modelValue.length} item(s) selected`"
-                    v-bind="$attrs" @keyup="search($event.target.value)" readonly>
+                <input :id="label" class="form-select" :class="error ? 'is-invalid' : ''" tabindex="-1"
+                    autocomplete="off" :placeholder="placeholder" aria-hidden="true"
+                    :value="`${props.modelValue.length} item(s) selected`" v-bind="$attrs"
+                    @keyup="search($event.target.value)" readonly>
                 <ul role="list" class="select2-results__options">
                     <li v-for="item of filterData" :key="item.key" class="select2-results__option" role="option"
                         @click="choose(item)"
@@ -84,6 +86,7 @@ const search = (word) => {
         </div>
     </div>
 </template>
+
 <style scoped>
 .bg {
     position: absolute;

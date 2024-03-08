@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -17,7 +17,7 @@ const submit = async () => {
     formData.append('id', props.id);
     formData.append('is_caution_auto', isCautionAuto.value == true ? 1 : 0);
 
-    await PMService.validate(formData)
+    await pmService.validate(formData)
         .then(() => {
             isLoading.value = false;
             $('#validate-project').modal('hide');
@@ -27,6 +27,7 @@ const submit = async () => {
         });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -34,13 +35,8 @@ const submit = async () => {
             <div class="row mb-4">
                 <div class="col-12">
                     <div class="form-check mt-3">
-                        <input
-                            id="defaultCheck1"
-                            v-model="isCautionAuto"
-                            class="form-check-input"
-                            type="checkbox"
-                            value="true"
-                        />
+                        <input id="defaultCheck1" v-model="isCautionAuto" class="form-check-input" type="checkbox"
+                            value="true" />
                         <label class="form-check-label" for="defaultCheck1">
                             Demander la caution provisoire automatique
                         </label>

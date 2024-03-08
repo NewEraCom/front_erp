@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { sharedService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
     type: {
@@ -30,11 +33,26 @@ const isLoading = ref(false);
 const submit = async () => {
     isLoading.value = true;
 
-    await sharedService.createEvent(formData.value);
-    $('#addEventModal').modal('hide');
-    isLoading.value = false;
+    await sharedService.createEvent(formData.value).then(() => {
+        isLoading.value = false;
+        formData.value = {
+            event: '',
+            date: '',
+            start: '',
+            end: '',
+            comment: '',
+            shared: true,
+            type: props.type
+        };
+        $('#addEventModal').modal('hide');
+        toast.success('Evénement ajouté avec succès');
+    }).catch((error) => {
+        isLoading.value = false;
+        toast.error(error.response.data.message);
+    });
 };
 </script>
+
 <template>
     <Modal id="addEventModal" :title="title">
         <form @submit.prevent="submit">
@@ -49,14 +67,16 @@ const submit = async () => {
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="eventDate" class="form-label">Date d'événement <span class="text-danger">*</span>
+                            <label for="eventDate" class="form-label">Date d'événement <span
+                                    class="text-danger">*</span>
                             </label>
                             <input v-model="formData.date" type="date" class="form-control" id="eventDate" />
                         </div>
                     </div>
                     <div class=" col-6">
                         <div class="mb-3">
-                            <label for="evenetDateStart" class="form-label">Date debut <span class="text-danger">*</span>
+                            <label for="evenetDateStart" class="form-label">Date debut <span
+                                    class="text-danger">*</span>
                             </label>
                             <input v-model="formData.start" type="time" class="form-control" id="evenetDateStart" />
                         </div>
@@ -88,7 +108,8 @@ const submit = async () => {
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">Fermer</button>
                 <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                    <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status"
+                        aria-hidden="true"></span>
                     <span v-else>Ajouter</span>
                 </button>
             </div>

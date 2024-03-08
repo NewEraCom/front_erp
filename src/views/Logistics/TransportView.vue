@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { logisticsService } from '@/services';
-import { useSalesStore } from '@/store';
-import { CardTwo } from '@/ui';
+import { useLogisticsStore } from '@/store';
+import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { TransportTable } from './components';
 
-const salesStore = useSalesStore();
+const logisticsStore = useLogisticsStore();
 
-const stats = ref(computed(() => salesStore.purchaseOrders.stats));
-const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
+const stats = ref(computed(() => logisticsStore.delivery.stats));
+const delivery = ref(computed(() => logisticsStore.delivery.data));
+
 
 onMounted(async () => {
     await logisticsService.getTransport();
 });
 
 onUnmounted(() => {
-    salesStore.clearPurchaseOrders();
+    logisticsStore.clearDelivery();
 });
 </script>
 
@@ -25,19 +26,33 @@ onUnmounted(() => {
         <div v-if="stats" class="row g-3">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
                 <CardTwo title="Total Demande de transport" :count="String(stats.total)" color="bg-label-primary"
-                    icon="ti-shopping-cart" card-color="card-border-shadow-primary" />
+                    icon="ti-truck-delivery" card-color="card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-                <CardTwo title="Demande en attente" :count="String(stats.waiting)" color="bg-label-warning"
-                    icon="ti-shopping-cart" card-color="card-border-shadow-warning" />
+                <CardTwo title="Demande en attente" :count="String(stats.pending)" color="bg-label-warning"
+                    icon="ti-truck-delivery" card-color="card-border-shadow-warning" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
                 <CardTwo title="Demande sur la route" :count="String(stats.onroad)" color="bg-label-info"
-                    icon="ti-shopping-cart" card-color="card-border-shadow-info" />
+                    icon="ti-truck-delivery" card-color="card-border-shadow-info" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-                <CardTwo title="Demande livrée" :count="String(stats.completed)" color="bg-label-success"
-                    icon="ti-shopping-cart" card-color="card-border-shadow-success" />
+                <CardTwo title="Demande livrée" :count="String(stats.done)" color="bg-label-success"
+                    icon="ti-truck-delivery" card-color="card-border-shadow-success" />
+            </div>
+        </div>
+        <div v-else class="row g-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+                <CardTwoSkeleton />
             </div>
         </div>
         <div class="row mt-4">
@@ -52,8 +67,8 @@ onUnmounted(() => {
                                 </div>
                             </div>
                         </div>
-                        <div v-if="purchaseOrders != null" class="card-body border-top pt-4">
-                            <TransportTable :purchase-orders="purchaseOrders" />
+                        <div v-if="delivery != null" class="card-body border-top pt-4">
+                            <TransportTable :delivery="delivery" />
                         </div>
                     </div>
                 </div>

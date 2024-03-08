@@ -3,7 +3,11 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardTwo } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { LouerTable, DetailsLouerModal } from './components';
+import {
+    LouerTable,
+    DetailsLouerModal,
+    NewLouerModal,
+} from './components';
 import { formater } from '@/utils';
 
 const logisticsStore = useLogisticsStore();
@@ -30,8 +34,8 @@ onUnmounted(() => {
                     icon="ti ti-building" card-color=" card-border-shadow-warning" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardTwo title="Villa" :count="formater.number(stats.villa)" color="bg-label-success" icon="ti ti-building"
-                    card-color="card-border-shadow-success" />
+                <CardTwo title="Villa" :count="formater.number(stats.villa)" color="bg-label-success"
+                    icon="ti ti-building" card-color="card-border-shadow-success" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
                 <CardTwo title="Magasin" :count="formater.number(stats.magasin)" color="bg-label-danger"
@@ -59,7 +63,7 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des louers</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des louers en stock</small>
                             </div>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" data-bs-target="#newLouer" data-bs-toggle="modal">
                                 <i class="ti ti-plus me-2"></i>
                                 Ajouter un louer
                             </button>
@@ -73,5 +77,6 @@ onUnmounted(() => {
             </div>
         </div>
         <DetailsLouerModal />
+        <NewLouerModal />
     </div>
 </template>

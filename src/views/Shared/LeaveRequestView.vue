@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useRhStore } from '@/store';
 import { rhService } from '@/services';
@@ -7,10 +7,11 @@ import { LeavesRequestTable, AddLeaveRequest } from './components';
 
 const rhStore = useRhStore();
 
-const user = ref(computed(() => rhStore.employee));
+let user = ref(computed(() => rhStore.employee));
 
 let totalApprovedDays = ref(0);
 let totalSickleaves = ref(0);
+let data = ref(null);
 
 onMounted(async () => {
     await rhService.getEmployeeById(JSON.parse(localStorage.getItem('user')).employee_id).then(() => {
@@ -18,6 +19,7 @@ onMounted(async () => {
         totalApprovedDays.value = approvedConges.reduce((total, conge) => total + conge.duree, 0);
         const sickLeaves = rhStore.employee.conges.filter((conge) => conge.type === 'Maladie');
         totalSickleaves.value = sickLeaves.reduce((total, conge) => total + conge.duree, 0);
+        data.value = user.value;
     });
 });
 
@@ -25,13 +27,18 @@ onUnmounted(() => {
     rhStore.clearEmployee();
 });
 
+watch(user, () => {
+    data.value = user.value;
+}, { deep: true });
+
 </script>
+
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
         <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Demande de congé</span></h5>
-        <div v-if="user" class="row">
+        <div v-if="data" class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardTwo title="Solde de congé" :count="(user.solde_conge ?? 0) + ' Jrs'" color="bg-label-primary"
+                <CardTwo title="Solde de congé" :count="(data.solde_conge ?? 0) + ' Jrs'" color="bg-label-primary"
                     icon="ti ti-plane-inflight" card-color=" card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
@@ -69,7 +76,7 @@ onUnmounted(() => {
                             </button>
                         </div>
                         <div v-if="user != null" class="card-body border-top pt-4">
-                            <LeavesRequestTable :leaves="user.conges" />
+                            <LeavesRequestTable :leaves="data.conges" />
                         </div>
                         <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
                             style="height: 650px;">

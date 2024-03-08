@@ -1,14 +1,19 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { Modal } from '@/ui';
 import IamLogo from '@/assets/img/iam.jpg';
 import InwiLogo from '@/assets/img/inwi.png';
 import OrangeLogo from '@/assets/img/orange.png';
 import { logisticsService } from '@/services';
+import { useLogisticsStore } from '@/store';
 import { useToast } from 'vue-toastification';
 
 
 const toast = useToast();
+
+const logisticsStore = useLogisticsStore();
+
+let data = ref(computed(() => logisticsStore.selectedItem));
 
 const formData = ref({
     operator: '',
@@ -18,6 +23,17 @@ const formData = ref({
     price: '',
     description: ''
 });
+
+watch(data, () => {
+    formData.value = {
+        operator: data.value.operator,
+        type: data.value.type,
+        num: data.value.num,
+        date_activation: data.value.date_activation,
+        price: data.value.price,
+        description: data.value.description
+    };
+}, { deep: true });
 
 
 const message = ref(null);
@@ -31,24 +47,18 @@ const OPERATEUR = [
 const submit = async () => {
     isLoading.value = true;
 
-    await logisticsService.newSubscription(formData.value)
+    console.log(formData.value);
+
+    await logisticsService.editSubscription(formData.value)
         .then(() => {
             isLoading.value = false;
             message.value = null;
-            formData.value = {
-                operator: '',
-                type: '-',
-                num: '',
-                date_activation: '',
-                price: '',
-                description: ''
-            };
-            $('#newSubscription').modal('hide');
-            toast.success('Abonnement ajouté avec succès');
+            $('#editSubscription').modal('hide');
+            toast.success('Abonnement modifié avec succès');
         })
         .catch((error) => {
             isLoading.value = false;
-            message.value = error.response.data.message;
+            console.log(error);
         });
 };
 
@@ -56,7 +66,7 @@ const submit = async () => {
 
 
 <template>
-    <Modal id="newSubscription" title="Nouvel abonnement" size="modal-md">
+    <Modal id="editSubscription" title="Modifier abonnement" size="modal-md">
         <form class="needs-validation" @submit.prevent="submit">
             <div class="modal-body">
                 <label class="mb-3" for="">Operateur :</label>

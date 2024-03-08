@@ -25,6 +25,7 @@ onMounted(async () => {
 });
 
 </script>
+
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
     <div class="d-flex align-items-center justify-content-between">

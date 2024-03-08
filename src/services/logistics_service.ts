@@ -92,6 +92,17 @@ const getVehicules = async () => {
     }
 };
 
+const getVehiculeById = async (id: number) => {
+    try {
+        const response = await api().get('/logistics/vehicule/getById/' + id);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setVehicule(response.data.vehicule);
+    }
+    catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const getTransport = async () => {
     try {
         const response = await api().get('/logistics/transport');
@@ -103,15 +114,9 @@ const getTransport = async () => {
 };
 async function validateCaisse(id: number) {
     try {
-
-
         const response = await api().post('logistics/caisse/validate/' + id);
         if (response.status == 200) {
-            console.log(response.data);
-
-
             await getOperationCaisse();
-
             return response.data;
         }
     } catch (error) {
@@ -190,6 +195,82 @@ const deleteCaisseOperation = async () => {
     }
 };
 
+const newSubscription = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/pacgsm', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const editSubscription = async (data: any) => {
+    try {
+        const response = await api().put('/logistics/pacgsm/' + data.id, data);
+        if (response.status == 200) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const affectSubscription = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/pacgsm/affect', data);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            logisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const deleteSubscription = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const id = logisticsStore.selectedItem.id;
+        const response = await api().delete('/logistics/pacgsm/' + id);
+        if (response.status == 200) {            
+            logisticsStore.deleteSubscription(id);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const recoverSubscription = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/pacgsm/desaffect', data);
+        const LogisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            LogisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createLouer = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/louer', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushLouer(response.data.louer);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+
+
+
 export default {
     getStock,
     getCaisse,
@@ -208,7 +289,14 @@ export default {
     getJawazById,
     deleteCaisseOperation,
     validateCaisse,
-    getDemandeSortie
+    getDemandeSortie,
+    newSubscription,
+    editSubscription,
+    deleteSubscription,
+    recoverSubscription,
+    affectSubscription,
+    createLouer,
+    getVehiculeById
 };
 
 

@@ -115,6 +115,24 @@ export const useSharedStore = defineStore('ShareStore', {
             this.fournisseurs.stats = null;
             this.fournisseurs.loading = false;
         },
+        pushFournisseur(data: any) {
+            console.log(data);
+            this.fournisseurs.data.push(data);        
+        },
+        deleteSoustraitant(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.fournisseurs.data.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.fournisseurs.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+            this.fournisseurs.stats = {
+                total: this.fournisseurs.data.length,
+                actif: this.fournisseurs.data.filter((item: any) => item.is_active === 1).length,
+                inactif: this.fournisseurs.data.filter((item: any) => item.is_active === 0).length,
+            };
+        },
         setStock(data: any) {
             this.stock.data = data;
             this.stock.stats = {

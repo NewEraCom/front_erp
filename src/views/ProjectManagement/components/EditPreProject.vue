@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 
 const props = defineProps({
     preProject: {
@@ -82,7 +82,7 @@ const submit = async () => {
     formData.append('created_by', JSON.parse(localStorage.getItem('user')).id);
 
 
-    await PMService.update(formData)
+    await pmService.update(formData)
         .then((response) => {
             if (response.status == 200) {
                 resetFormFields();
@@ -110,16 +110,8 @@ const resetFormFields = () => {
                             Numéro de l'offre
                             <span class="text-danger font-18">*</span>
                         </label>
-                        <input
-                            id="nameEx"
-                            v-model="offreNum"
-                            class="form-control"
-                            placeholder="Entrez le numéro de l'offre"
-                            type="text"
-                            tabindex="0"
-                            autofocus
-                            required
-                        />
+                        <input id="nameEx" v-model="offreNum" class="form-control"
+                            placeholder="Entrez le numéro de l'offre" type="text" tabindex="0" autofocus required />
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -127,15 +119,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Objet <span class="text-danger font-18">*</span>
                         </label>
-                        <input
-                            id="nameEx"
-                            v-model="objet"
-                            class="form-control"
-                            placeholder="Entrez l'objet d'avant projet"
-                            type="text"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="nameEx" v-model="objet" class="form-control"
+                            placeholder="Entrez l'objet d'avant projet" type="text" tabindex="0" required />
                     </div>
                 </div>
                 <div class="col-sm-6">
@@ -143,13 +128,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Exigences majeures
                         </label>
-                        <textarea
-                            id="exigencesMajeures"
-                            v-model="exigencesMajeures"
-                            class="form-control"
-                            placeholder="Entre les exigences majeures"
-                            rows="3"                            
-                        >
+                        <textarea id="exigencesMajeures" v-model="exigencesMajeures" class="form-control"
+                            placeholder="Entre les exigences majeures" rows="3">
                         </textarea>
                     </div>
                 </div>
@@ -158,13 +138,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Qualification demandé
                         </label>
-                        <textarea
-                            id="qualificationDemande"
-                            v-model="qualificationDemande"
-                            class="form-control"
-                            placeholder="Entre les qualification demandé"
-                            rows="3"                            
-                        >
+                        <textarea id="qualificationDemande" v-model="qualificationDemande" class="form-control"
+                            placeholder="Entre les qualification demandé" rows="3">
                         </textarea>
                     </div>
                 </div>
@@ -174,15 +149,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Localite <span class="text-danger font-18">*</span>
                         </label>
-                        <input
-                            id="nameEx"
-                            v-model="localite"
-                            class="form-control"
-                            placeholder="Ex : Rabat"
-                            type="text"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="nameEx" v-model="localite" class="form-control" placeholder="Ex : Rabat" type="text"
+                            tabindex="0" required />
                     </div>
                 </div>
 
@@ -191,15 +159,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Estimation du marché <span class="text-danger font-18">*</span>
                         </label>
-                        <input
-                            id="nameEx"
-                            v-model="mtMarche"
-                            class="form-control"
-                            placeholder="Entre l'estimation du marché"
-                            type="number"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="nameEx" v-model="mtMarche" class="form-control"
+                            placeholder="Entre l'estimation du marché" type="number" tabindex="0" required />
                     </div>
                 </div>
 
@@ -208,41 +169,24 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Date de dépôt <span class="text-danger font-18">*</span>
                         </label>
-                        <input
-                            id="nameEx"
-                            v-model="dateDepot"
-                            class="form-control"
-                            type="datetime-local"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="nameEx" v-model="dateDepot" class="form-control" type="datetime-local" tabindex="0"
+                            required />
                     </div>
                 </div>
 
                 <div class="col-sm-6">
                     <div class="mb-3">
                         <label class="form-label">Date de visite</label>
-                        <input
-                            id="nameEx"
-                            v-model="dateVisit"
-                            class="form-control"
-                            type="datetime-local"
-                            tabindex="0"
-                        />
+                        <input id="nameEx" v-model="dateVisit" class="form-control" type="datetime-local"
+                            tabindex="0" />
                     </div>
                 </div>
 
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label class="form-label">Date d'echantillion</label>
-                        <input
-                            id="nameEx"
-                            v-model="dateEchantillion"
-                            class="form-control"
-                            placeholder="Entre le montant de marché"
-                            type="datetime-local"
-                            tabindex="0"
-                        />
+                        <input id="nameEx" v-model="dateEchantillion" class="form-control"
+                            placeholder="Entre le montant de marché" type="datetime-local" tabindex="0" />
                     </div>
                 </div>
 
@@ -251,12 +195,8 @@ const resetFormFields = () => {
                         <label class="form-label">
                             Description <span class="text-danger font-18">*</span>
                         </label>
-                        <textarea
-                            id="exampleFormControlTextarea1"
-                            v-model="description"
-                            class="form-control"
-                            rows="3"
-                        />
+                        <textarea id="exampleFormControlTextarea1" v-model="description" class="form-control"
+                            rows="3" />
                     </div>
                 </div>
 
@@ -267,17 +207,9 @@ const resetFormFields = () => {
                 <div class="row d-flex justify-content-between">
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp1"
-                            >
-                                <input
-                                    id="customCheckTemp1"
-                                    v-model="dossiers[0]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="true"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp1">
+                                <input id="customCheckTemp1" v-model="dossiers[0]" class="form-check-input"
+                                    type="checkbox" value="true" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Dossier Administratif</span>
                                 </span>
@@ -286,16 +218,9 @@ const resetFormFields = () => {
                     </div>
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp2"
-                            >
-                                <input
-                                    id="customCheckTemp2"
-                                    v-model="dossiers[1]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp2">
+                                <input id="customCheckTemp2" v-model="dossiers[1]" class="form-check-input"
+                                    type="checkbox" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Dossier Financier</span>
                                 </span>
@@ -304,17 +229,9 @@ const resetFormFields = () => {
                     </div>
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp3"
-                            >
-                                <input
-                                    id="customCheckTemp3"
-                                    v-model="dossiers[2]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="true"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp3">
+                                <input id="customCheckTemp3" v-model="dossiers[2]" class="form-check-input"
+                                    type="checkbox" value="true" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Dossier Technique</span>
                                 </span>
@@ -323,17 +240,9 @@ const resetFormFields = () => {
                     </div>
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp4"
-                            >
-                                <input
-                                    id="customCheckTemp4"
-                                    v-model="dossiers[3]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="true"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp4">
+                                <input id="customCheckTemp4" v-model="dossiers[3]" class="form-check-input"
+                                    type="checkbox" value="true" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Dossier Additif</span>
                                 </span>
@@ -342,17 +251,9 @@ const resetFormFields = () => {
                     </div>
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp5"
-                            >
-                                <input
-                                    id="customCheckTemp5"
-                                    v-model="dossiers[4]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="true"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp5">
+                                <input id="customCheckTemp5" v-model="dossiers[4]" class="form-check-input"
+                                    type="checkbox" value="true" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Offre Technique</span>
                                 </span>
@@ -361,17 +262,9 @@ const resetFormFields = () => {
                     </div>
                     <div class="col-2">
                         <div class="form-check custom-option custom-option-basic checked">
-                            <label
-                                class="form-check-label custom-option-content"
-                                for="customCheckTemp6"
-                            >
-                                <input
-                                    id="customCheckTemp6"
-                                    v-model="dossiers[5]"
-                                    class="form-check-input"
-                                    type="checkbox"
-                                    value="true"
-                                />
+                            <label class="form-check-label custom-option-content" for="customCheckTemp6">
+                                <input id="customCheckTemp6" v-model="dossiers[5]" class="form-check-input"
+                                    type="checkbox" value="true" />
                                 <span class="custom-option-header">
                                     <span class="h6 mb-0">Autres documents</span>
                                 </span>

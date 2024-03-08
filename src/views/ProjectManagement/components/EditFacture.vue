@@ -117,7 +117,7 @@ const submit = async () => {
     formData.append('project_id', payload.project_id);
     formData.append('facture_id', payload.facture_id);
     try {
-        await PMService.updateFacture(formData)
+        await pmService.updateFacture(formData)
             .then((response) => {
                 console.log(response);
             })
@@ -127,51 +127,28 @@ const submit = async () => {
     } catch (error) {}
 };
 </script>
+
 <template>
     <Modal id="edit-facture" title="Edit Attachements de la Facture" class-name="modal-xl">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="d-flex flex-wrap">
-                    <div
-                        class="col-sm-6"
-                        v-for="(comp, index) in OldData.facture_attachement"
-                        :key="comp.id"
-                    >
+                    <div class="col-sm-6" v-for="(comp, index) in OldData.facture_attachement" :key="comp.id">
                         <div class="mb-3 m-1">
                             <label :for="`input-${comp.composent.id}`">{{
-                                comp.composent.label
-                            }}</label>
-                            <input
-                                v-if="
-                                    comp.composent.type !== 'select' &&
-                                    comp.composent.type !== 'file'
-                                "
-                                :type="comp.composent.type"
-                                :id="`input-${comp.composent.id}`"
-                                name="myfile"
-                                class="form-control"
-                                v-model="comp.value"
-                            />
-                            <input
-                                v-else-if="comp.composent.type === 'file'"
-                                type="file"
-                                :id="`input-${comp.composent.id}`"
-                                name="myfile"
-                                class="form-control"
-                                @change="handleFileChange($event, index)"
-                            />
-                            <select
-                                v-else
-                                :id="`input-${comp.composent.id}`"
-                                class="form-select"
-                                v-model="comp.value"
-                            >
+            comp.composent.label
+        }}</label>
+                            <input v-if="comp.composent.type !== 'select' &&
+            comp.composent.type !== 'file'
+            " :type="comp.composent.type" :id="`input-${comp.composent.id}`" name="myfile"
+                                class="form-control" v-model="comp.value" />
+                            <input v-else-if="comp.composent.type === 'file'" type="file"
+                                :id="`input-${comp.composent.id}`" name="myfile" class="form-control"
+                                @change="handleFileChange($event, index)" />
+                            <select v-else :id="`input-${comp.composent.id}`" class="form-select" v-model="comp.value">
                                 <option selected disabled>Selectionner un choix</option>
-                                <option
-                                    v-for="option in comp.composent.options.split(',')"
-                                    :key="option"
-                                    :value="option"
-                                >
+                                <option v-for="option in comp.composent.options.split(',')" :key="option"
+                                    :value="option">
                                     {{ option }}
                                 </option>
                             </select>
@@ -206,22 +183,14 @@ const submit = async () => {
                                 <div class="col-md-4 col-12 mb-md-0 mb-3">
                                     <div class="mb-3">
                                         <label for="input1">Article titre</label>
-                                        <input
-                                            id="input1"
-                                            disabled
-                                            class="form-control item-details mb-3"
-                                            :value="card.article.article"
-                                        />
+                                        <input id="input1" disabled class="form-control item-details mb-3"
+                                            :value="card.article.article" />
                                     </div>
                                 </div>
 
                                 <div class="col-md-4 col-12 text-center mb-md-0 mb-3">
                                     <div class="mb-3">
-                                        <input
-                                            type="checkbox"
-                                            id="checkbox"
-                                            v-model="card.checkboxChecked"
-                                        />
+                                        <input type="checkbox" id="checkbox" v-model="card.checkboxChecked" />
                                         <label for="checkbox">Changer Noms Article</label>
                                     </div>
                                 </div>
@@ -230,21 +199,13 @@ const submit = async () => {
                                     <div class="mb-3">
                                         <label for="input2">Nouveau titre</label>
                                         <!-- Render this input field when card.article.article is not null or empty -->
-                                        <input
-                                            id="input2"
-                                            class="form-control"
-                                            :disabled="
-                                                !card.article.article || !card.checkboxChecked
-                                            "
-                                            v-model="card.titre_article"
-                                        />
+                                        <input id="input2" class="form-control" :disabled="!card.article.article || !card.checkboxChecked
+            " v-model="card.titre_article" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div
-                                class="d-flex flex-column align-items-center justify-content-between border-start p-2"
-                            >
+                            <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                 <i class="ti ti-x cursor-pointer" @click="removeCard(index)"></i>
                             </div>
                         </div>

@@ -36,7 +36,6 @@ const getRecruitment = async () => {
     try {
         const response = await api().get('/dmnd/get-recruitement-by-id');
         const sharedStore = useSharedStore();
-        console.log(response.data);
         sharedStore.setRecruitment(response.data.recruitments);
     } catch (error) {
         return Promise.reject(error);
@@ -120,6 +119,31 @@ const addNewRecruitment = async (data: any) => {
     }
 };
 
+const createTier = async (data: any) => {
+    try {
+        const response = await api().post('/tiers/insert', data);
+        if (response.status == 201) {
+            const sharedStore = useSharedStore();
+            sharedStore.pushFournisseur(response.data.tier);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const deleteSoustraitant = async () => {
+    try {
+        const sharedStore = useSharedStore();
+        const id = sharedStore.selectedItem;
+        const response = await api().delete('/tiers/delete/' + id);
+        if (response.status == 200) {
+            sharedStore.deleteSoustraitant(id);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 export default {
     createEvent,
     getEvent,
@@ -131,5 +155,7 @@ export default {
     getClients,
     getDashboard,
     deleteRecruitment,
-    addNewRecruitment
+    addNewRecruitment,
+    createTier,
+    deleteSoustraitant
 };

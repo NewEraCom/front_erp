@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 import {usePMStore} from '@/store';
 
 import { CustomSelect } from '@/ui';
@@ -44,7 +44,7 @@ const ClotureSimple = async () => {
     formData.append('project_manager', projectManagerSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
-    await PMService.clotureSimple(formData).then(() => {
+    await pmService.clotureSimple(formData).then(() => {
         isLoading.value = false;
         $('#cloture').modal('hide');
     });
@@ -64,7 +64,7 @@ const ClotureComplex = async () => {
     formData.append('project_manager', projectManagerSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
-    await PMService.clotureComplex(formData).then(() => {
+    await pmService.clotureComplex(formData).then(() => {
         isLoading.value = false;
         $('#cloture').modal('hide');
     });
@@ -78,50 +78,31 @@ const toggleLot = (id) => {
     }
 };
 </script>
+
 <template>
     <div>
         <form v-if="typeProject == 'simple'" @submit.prevent="ClotureSimple">
             <div class="modal-body ">
                 <p>Êtes-vous sûr de vouloir marquer ce projet comme projet gagné ?</p>
                 <div class="mb-3">
-                    <CustomSelect
-                        v-if="projectManager != null"
-                        v-model="projectManagerSelect"
-                        placeholder="Choisir un employee"
-                        label="Chef de projet"
-                        :data="
-                            projectManager.map((item) => ({
-                                key: item.id,
-                                value: item.employee.first_name + ' ' + item.employee.last_name
-                            }))
-                        "
-                    />
+                    <CustomSelect v-if="projectManager != null" v-model="projectManagerSelect"
+                        placeholder="Choisir un employee" label="Chef de projet" :data="projectManager.map((item) => ({
+            key: item.id,
+            value: item.employee.first_name + ' ' + item.employee.last_name
+        }))
+            " />
                 </div>
                 <div class="mb-3">
                     <label id="cautionDefinitif" class="form-label mb-2">Caution définitif</label>
-                    <input
-                        id="cautionDefinitif"
-                        v-model="cautionDefinitif"
-                        class="form-control"
-                        placeholder="Entrez le montant de caution définitif"
-                        type="number"
-                        tabindex="0"
-                        required
-                    />
+                    <input id="cautionDefinitif" v-model="cautionDefinitif" class="form-control"
+                        placeholder="Entrez le montant de caution définitif" type="number" tabindex="0" required />
                 </div>
                 <div class="mb-3">
                     <label id="duration" class="form-label mb-2">
                         Durée du projet <span class="text-muted">(Jours)</span>
                     </label>
-                    <input
-                        id="duration"
-                        v-model="duration"
-                        class="form-control"
-                        placeholder="Entrez la durée du projet"
-                        type="number"
-                        tabindex="0"
-                        required
-                    />
+                    <input id="duration" v-model="duration" class="form-control" placeholder="Entrez la durée du projet"
+                        type="number" tabindex="0" required />
                 </div>
             </div>
             <div class="modal-footer ">
@@ -141,44 +122,24 @@ const toggleLot = (id) => {
         <form v-else @submit.prevent="ClotureComplex">
             <div class="modal-body ">
                 <div class="mb-3">
-                    <CustomSelect
-                        v-if="projectManager != null"
-                        v-model="projectManagerSelect"
-                        placeholder="Choisir un employee"
-                        label="Chef de projet"
-                        :data="
-                            projectManager.map((item) => ({
-                                key: item.id,
-                                value: item.employee.first_name + ' ' + item.employee.last_name
-                            }))
-                        "
-                    />
+                    <CustomSelect v-if="projectManager != null" v-model="projectManagerSelect"
+                        placeholder="Choisir un employee" label="Chef de projet" :data="projectManager.map((item) => ({
+            key: item.id,
+            value: item.employee.first_name + ' ' + item.employee.last_name
+        }))
+            " />
                 </div>
                 <div class="mb-3">
                     <label id="cautionDefinitif" class="form-label mb-2">Caution définitif</label>
-                    <input
-                        id="cautionDefinitif"
-                        v-model="cautionDefinitif"
-                        class="form-control"
-                        placeholder="Entrez le montant de caution définitif"
-                        type="number"
-                        tabindex="0"
-                        required
-                    />
+                    <input id="cautionDefinitif" v-model="cautionDefinitif" class="form-control"
+                        placeholder="Entrez le montant de caution définitif" type="number" tabindex="0" required />
                 </div>
                 <div class="mb-3">
                     <label id="duration" class="form-label mb-2">
                         Durée du projet <span class="text-muted">(Jours)</span>
                     </label>
-                    <input
-                        id="duration"
-                        v-model="duration"
-                        class="form-control"
-                        placeholder="Entrez la durée du projet"
-                        type="number"
-                        tabindex="0"
-                        required
-                    />
+                    <input id="duration" v-model="duration" class="form-control" placeholder="Entrez la durée du projet"
+                        type="number" tabindex="0" required />
                 </div>
                 <div class="mb-2 mt-1">
                     <label for="" class="form-label">Choisissez un lot</label>
@@ -187,13 +148,8 @@ const toggleLot = (id) => {
                     <div class="d-flex border rounded p-2">
                         <span> Lot N° {{ key + 1 }} : {{ item.localite }} </span>
                         <div class="ms-auto form-check">
-                            <input
-                                class="form-check-input"
-                                type="checkbox"
-                                :value="item.id"
-                                :checked="lots?.includes(item.id)"
-                                @change="toggleLot(item.id)"
-                            />
+                            <input class="form-check-input" type="checkbox" :value="item.id"
+                                :checked="lots?.includes(item.id)" @change="toggleLot(item.id)" />
                         </div>
                     </div>
                 </div>

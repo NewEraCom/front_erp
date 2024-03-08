@@ -20,6 +20,7 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         louer: {
             data: null,
             stats: null,
+            graph: null,
             loading: false,
         },
         parcGsm: {
@@ -61,6 +62,7 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         gasoil: null,
         selectedJawaz: null,
         selectedItem: null,
+        selectedVehicule: null,
     }),
     actions: {
         setStock(data: any) {
@@ -145,10 +147,68 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
                 }, 0),
             };
             this.louer.loading = true;
+            this.louer.graph = {
+                labels: ['Appartement', 'Villa', 'Dépôt', 'Magasin', 'Autre'],
+                datasets: [
+                    {
+                        label: 'Nombre',
+                        data: [
+                            data.louers.reduce((acc: any, item: any) => {
+                                if (item.type == 'Appartement' && item.a_payer == 1) {
+                                    acc++;
+                                }
+                                return acc;
+                            }, 0),
+                            data.louers.reduce((acc: any, item: any) => {
+                                if (item.type == 'Villa' && item.a_payer == 1) {
+                                    acc++;
+                                }
+                                return acc;
+                            }, 0),
+                            data.louers.reduce((acc: any, item: any) => {
+                                if (item.type == 'Dépôt' && item.a_payer == 1) {
+                                    acc++;
+                                }
+                                return acc;
+                            }, 0),
+                            data.louers.reduce((acc: any, item: any) => {
+                                if (item.type == 'Magasin' && item.a_payer == 1) {
+                                    acc++;
+                                }
+                                return acc;
+                            }, 0),
+                            data.louers.reduce((acc: any, item: any) => {
+                                if (item.type == 'Autre' && item.a_payer == 1) {
+                                    acc++;
+                                }
+                                return acc;
+                            }, 0),
+                        ],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1,
+                    },
+                ],
+            };
         },
         clearLouer() {
             this.louer.data = null;
             this.louer.loading = false;
+        },
+        pushLouer(data: any) {
+            this.louer.data.unshift(data);
         },
         setParcGsm(data: any) {
             this.parcGsm.data = data;
@@ -293,6 +353,12 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.vehicules.stats = null;
             this.vehicules.loading = false;
         },
+        setVehicule(data: any) {
+            this.selectedVehicule = data;
+        },
+        clearVehicule() {
+            this.selectedVehicule = null;
+        },
         setOutOfStockRequests(data: any) {
             this.outOfStockRequests.data = data;
             this.outOfStockRequests.stats = {
@@ -315,11 +381,55 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
                 done: data.filter((item: any) => item.status == 'done').length,
             };
         },
+        clearDelivery() {
+            this.delivery.data = null;
+            this.delivery.stats = null;
+            this.delivery.loading = false;
+        },
         setSubscription(data: any) {
             this.subscription = data;
         },
         clearSubscription() {
             this.subscription = null;
+        },
+        deleteSubscription(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.parcGsm.data.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.parcGsm.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+
+        },
+        pushSubscription(data: any) {
+            this.parcGsm.data.unshift(data);
+            this.parcGsm.stats = {
+                iam: this.parcGsm.data.reduce((acc: any, item: any) => {
+                    if (item.operator == 'IAM') {
+                        acc++;
+                    }
+                    return acc;
+                }, 0),
+                orange: this.parcGsm.data.reduce((acc: any, item: any) => {
+                    if (item.operator == 'ORANGE') {
+                        acc++;
+                    }
+                    return acc;
+                }, 0),
+                inwi: this.parcGsm.data.reduce((acc: any, item: any) => {
+                    if (item.operator == 'INWI') {
+                        acc++;
+                    }
+                    return acc;
+                }, 0),
+                total_to_payer: this.parcGsm.data.reduce((acc: any, item: any) => {
+
+                    acc += Number(item.price);
+
+                    return acc;
+                }, 0),
+            };
         },
         setGasoil(data: any) {
             this.gasoil = data;

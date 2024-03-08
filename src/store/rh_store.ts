@@ -73,6 +73,9 @@ export const useRhStore = defineStore('RhStore', {
         pushEmployee(data: any) {
             this.employees.push(data);
         },
+        psuhOneEmployee(data: any) {
+            this.employee = data;
+        },
         pushPointageToUser(data: any) {
             this.employee.pointages.push(data);
             console.log(this.employee.pointages);

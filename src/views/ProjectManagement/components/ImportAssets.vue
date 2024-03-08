@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -23,12 +23,13 @@ const submit = async () => {
     formData.append('rc_file', rc.value.files[0]);
     formData.append('others', others.value.files[0]);
 
-    await PMService.uploadFiles(formData).then(() => {
+    await pmService.uploadFiles(formData).then(() => {
         isLoading.value = false;
         $('#import-assets').modal('hide');
     });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -36,27 +37,17 @@ const submit = async () => {
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nameEx" class="form-label mb-2">CPS</label>
-                        <input
-                            id="formFile"
-                            ref="cps"
-                            class="form-control"
-                            type="file"
-                            accept=".pdf,.doc,.xlsx,.xls,.csv"
-                        />
+                        <input id="formFile" ref="cps" class="form-control" type="file"
+                            accept=".pdf,.doc,.xlsx,.xls,.csv" />
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nameEx" class="form-label mb-2">RC</label>
-                        <input
-                            id="formFile"
-                            ref="rc"
-                            class="form-control"
-                            type="file"
-                            accept=".pdf,.doc,.xlsx,.xls,.csv"
-                        />
+                        <input id="formFile" ref="rc" class="form-control" type="file"
+                            accept=".pdf,.doc,.xlsx,.xls,.csv" />
                     </div>
-                </div>                
+                </div>
             </div>
         </div>
         <div class="modal-footer ">
@@ -74,4 +65,5 @@ const submit = async () => {
         </div>
     </form>
 </template>
+
 <style></style>

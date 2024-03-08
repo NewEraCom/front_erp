@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import{PMService} from '@/services';
+import{pmService} from '@/services';
 
 const props = defineProps({
     id: {
@@ -20,13 +20,14 @@ const submit = async () => {
     formData.append('doc_id', $('#docID').val());
     formData.append('number_file_done', nomberDocs.value);
 
-    await PMService.setFilesDone(formData).then(() => {
+    await pmService.setFilesDone(formData).then(() => {
         isLoading.value = false;
         nomberDocs.value = '';
         $('#set-number_file_done').modal('hide');
     });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -35,15 +36,8 @@ const submit = async () => {
                 <label for="numberDoc" class="form-label">
                     Nombre de documents<span class="text-danger font-18">*</span>
                 </label>
-                <input
-                    id="numberDoc"
-                    v-model="nomberDocs"
-                    class="form-control"
-                    placeholder="Entre le nomber de documents"
-                    type="number"
-                    tabindex="0"
-                    required
-                />
+                <input id="numberDoc" v-model="nomberDocs" class="form-control"
+                    placeholder="Entre le nomber de documents" type="number" tabindex="0" required />
             </div>
         </div>
         <div class="modal-footer ">

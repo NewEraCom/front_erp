@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { sharedService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 
 const isLoading = ref(false);
@@ -20,9 +23,11 @@ const submit = async () => {
     await sharedService.addNewRecruitment(formData.value).then(() => {
         isLoading.value = false;
         $('#addNewRecruitment').modal('hide');
+        toast.success('Demande de recrutement ajoutée avec succès');
     });
 };
 </script>
+
 <template>
     <Modal id="addNewRecruitment" title="Ajouter une demande de recrutement" size="modal-lg">
         <form @submit.prevent="submit" enctype="multipart/form-data">
@@ -65,7 +70,8 @@ const submit = async () => {
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="assurance" class="form-label">Description <span class="text-danger">*</span></label>
+                            <label for="assurance" class="form-label">Description <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control" placeholder="Entrez la description du poste" tabindex="0"
                                 id="assurance" v-model="formData.description" required></textarea>
                         </div>

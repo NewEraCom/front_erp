@@ -2,7 +2,7 @@
 function number(value: number | undefined | null): string {
     if (value === 0) return '0';
     if (!value) return '-';
-    if (isNaN(value)) return '-';
+    if (isNaN(value)) return value;
 
     const roundedValue = Math.round(value * 100) / 100;
 

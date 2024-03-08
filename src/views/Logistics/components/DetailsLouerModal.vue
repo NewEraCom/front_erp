@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { Modal } from '@/ui';
 import { useLogisticsStore } from '@/store';
-import { formater, helpers } from '@/utils';
+import { formater } from '@/utils';
 
 const logisticsStore = useLogisticsStore();
 

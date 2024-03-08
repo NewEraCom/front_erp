@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 import { onMounted, ref, computed } from 'vue';
-import { PMService } from '@/services';
+import { pmService } from '@/services';
 import { usePMStore } from '@/store';
 import { CardOne, CardTwo } from '@/ui';
 import { PreProjectTable } from './components';
@@ -12,7 +12,7 @@ const preProject = ref(computed(() => PMStore.preproject.data));
 const stats = ref(computed(() => PMStore.preproject.stats));
 
 onMounted(async () => {
-  await PMService.getPreProject(); 
+  await pmService.getPreProject();
 });
 
 
@@ -21,27 +21,27 @@ onMounted(async () => {
 
 
 <template>
-    <div class="flex-grow-1 container-fluid mt-3">
-      <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Avant Projet</span> </h5>
-      <div v-if="stats" class="row g-3">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-          <CardTwo title="Avant Projet En attente de validation" :count="String(stats.total_waiting)"
-            color="bg-label-warning" icon="ti ti-bolt" card-color="card-border-shadow-warning" />
-        </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-          <CardTwo title="Avant Projet En soumission" :count="String(stats.total_in_progress)" color="bg-label-info"
-            icon="ti ti-bolt" card-color="card-border-shadow-info" />
-        </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-          <CardTwo title="Avant Projet Gagné" :count="String(stats.total_win)" color="bg-label-successs"
-            icon="ti ti-bolt" card-color="card-border-shadow-successs" />
-        </div>
-        <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
-          <CardTwo title="Avant Projet Perdu" :count="String(stats.total_lost)" color="bg-label-danger"
-            icon="ti ti-bolt" card-color="card-border-shadow-danger" />
-        </div>
+  <div class="flex-grow-1 container-fluid mt-3">
+    <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Avant Projet</span> </h5>
+    <div v-if="stats" class="row g-3">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardTwo title="Avant Projet En attente de validation" :count="String(stats.total_waiting)"
+          color="bg-label-warning" icon="ti ti-bolt" card-color="card-border-shadow-warning" />
       </div>
-      <div class="row mt-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
+        <CardTwo title="Avant Projet En soumission" :count="String(stats.total_in_progress)" color="bg-label-info"
+          icon="ti ti-bolt" card-color="card-border-shadow-info" />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
+        <CardTwo title="Avant Projet Gagné" :count="String(stats.total_win)" color="bg-label-successs" icon="ti ti-bolt"
+          card-color="card-border-shadow-successs" />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-3">
+        <CardTwo title="Avant Projet Perdu" :count="String(stats.total_lost)" color="bg-label-danger" icon="ti ti-bolt"
+          card-color="card-border-shadow-danger" />
+      </div>
+    </div>
+    <div class="row mt-4">
       <div class="col-12">
         <div class="card">
           <div class="card card-border-shadow-primary">
@@ -61,5 +61,5 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    </div>
-    </template>
+  </div>
+</template>

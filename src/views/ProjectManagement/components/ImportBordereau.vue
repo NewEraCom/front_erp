@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService} from '@/services';
+import {pmService} from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -34,7 +34,7 @@ const submit = async () => {
         formData.append('lot', lot.value);
     }
 
-    await PMService.importBordereau(formData)
+    await pmService.importBordereau(formData)
         .then(() => {
             isLoading.value = false;
             $('#import-bordereau').modal('hide');
@@ -45,6 +45,7 @@ const submit = async () => {
         });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -52,13 +53,8 @@ const submit = async () => {
                 <div v-if="lots.length != 0" class="col-sm-12">
                     <div class="mb-3">
                         <label id="lots" class="form-label mb-2">Lot</label>
-                        <select
-                            id="lots"
-                            v-model="lot"
-                            class="form-select"
-                            aria-label="Default select example"
-                            required
-                        >
+                        <select id="lots" v-model="lot" class="form-select" aria-label="Default select example"
+                            required>
                             <option value="-">Choisissez un lot</option>
                             <option v-for="item in lots" :key="item.id" :value="item.id">
                                 {{ item.lot + ' - ' + item.localite }}

@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
     user_id: {
@@ -33,11 +36,13 @@ const submit = async () => {
     await rhService.addLeave(formData.value).then(() => {
         isLoading.value = false;
         $('#addNewLeave').modal('hide');
+        toast.success('Demande de congé ajoutée avec succès');
     }).catch(() => {
         isLoading.value = false;
     });
 };
 </script>
+
 <template>
     <Modal id="addNewLeave" title="Ajouter un demande de congé" size="modal-lg">
         <form @submit.prevent="submit" enctype="multipart/form-data">
@@ -53,14 +58,16 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="end" class="form-label">Date fin de congé <span class="text-danger">*</span></label>
+                            <label for="end" class="form-label">Date fin de congé <span
+                                    class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="date" tabindex="0" id="end"
                                 v-model="formData.date_end" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="type" class="form-label">Type de congé <span class="text-danger">*</span></label>
+                            <label for="type" class="form-label">Type de congé <span
+                                    class="text-danger">*</span></label>
                             <select name="" id="type" class="form-select" required v-model="formData.type">
                                 <option value="-">Choisir un type</option>
                                 <option value="Congé">Congé</option>
@@ -70,15 +77,17 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="duree" class="form-label">Durée de congé <span class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="Entre le nombre de jours" type="number" tabindex="0"
-                                id="duree" v-model="formData.duree" required />
+                            <label for="duree" class="form-label">Durée de congé <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre le nombre de jours" type="number"
+                                tabindex="0" id="duree" v-model="formData.duree" required />
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="attachemet" class="form-label">Attachement (Certificat médical, Email de demande,
+                            <label for="attachemet" class="form-label">Attachement (Certificat médical, Email de
+                                demande,
                                 etc.) <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="attachemet"
                                 name="attachemet" @change="handleFileChange" required />

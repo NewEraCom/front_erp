@@ -29,9 +29,11 @@ watch(data, () => {
 
 
 </script>
+
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
-        <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Demande de recrutement</span></h5>
+        <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Demande de recrutement</span>
+        </h5>
         <div v-if="stats" class="row">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
                 <CardTwo title="Total Demande" :count="String(stats.total)" color="bg-label-primary"
@@ -99,7 +101,8 @@ watch(data, () => {
         </div>
         <DetailsRecruitementModal />
         <DeleteModal title="Supprimer un Demande" text="Voulez-vous vraiment supprimer cette demande ?"
-            textButton="Oui, Supprimer" :action="() => sharedService.deleteRecruitment()" />
+            textButton="Oui, Supprimer" :action="() => sharedService.deleteRecruitment()"
+            message="La demande a été supprimée avec succès" />
         <AddNewRecruitmentModal />
     </div>
 </template>

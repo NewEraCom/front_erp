@@ -173,9 +173,8 @@ const addLeave = async (data: any) => {
     try {
         const response = await api().post('/rh/add-conge', data);
         if (response.status === 200) {
-            const rhStore = useRhStore();
-            rhStore.pushLeave(response.data.conge);
-            return;
+            const rhStore = useRhStore();            
+            rhStore.psuhOneEmployee(response.data.employee);            
         }
     }
     catch (error) {

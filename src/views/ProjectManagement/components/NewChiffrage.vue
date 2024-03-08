@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {PMService } from '@/services';
+import {pmService } from '@/services';
 const props = defineProps({
     id: {
         type: Number,
@@ -25,7 +25,7 @@ const isLoading = ref(false);
 
 const submit = async () => {
     isLoading.value = true;
-    await PMService.create(formData.value)
+    await pmService.create(formData.value)
         .then(() => {
             formData.value = {
                 projectId: props.id,
@@ -48,6 +48,7 @@ const submit = async () => {
         });
 };
 </script>
+
 <template>
     <form @submit.prevent="submit">
         <div class="modal-body ">
@@ -55,70 +56,36 @@ const submit = async () => {
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="nameItem" class="form-label mb-2">Nom d'article</label>
-                        <input
-                            id="nameItem"
-                            v-model="formData.article"
-                            class="form-control"
-                            placeholder="Entrez le nom d'article"
-                            type="text"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="nameItem" v-model="formData.article" class="form-control"
+                            placeholder="Entrez le nom d'article" type="text" tabindex="0" required />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="purchasePrice" class="form-label mb-2">Prix d'achat</label>
-                        <input
-                            id="purchasePrice"
-                            v-model="formData.purchasePrice"
-                            class="form-control"
-                            placeholder="Entrez le prix d'achat"
-                            type="number"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="purchasePrice" v-model="formData.purchasePrice" class="form-control"
+                            placeholder="Entrez le prix d'achat" type="number" tabindex="0" required />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="sellingPrice" class="form-label mb-2">Prix de vente</label>
-                        <input
-                            id="sellingPrice"
-                            v-model="formData.sellingPrice"
-                            class="form-control"
-                            placeholder="Entrez le prix de vente"
-                            type="number"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="sellingPrice" v-model="formData.sellingPrice" class="form-control"
+                            placeholder="Entrez le prix de vente" type="number" tabindex="0" required />
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="mb-3">
                         <label for="extraFees" class="form-label mb-2">Frais supplémentaires</label>
-                        <input
-                            id="extraFees"
-                            v-model="formData.extraFees"
-                            class="form-control"
-                            placeholder="Entrez les frais supplémentaires (transport..)"
-                            type="number"
-                            tabindex="0"
-                        />
+                        <input id="extraFees" v-model="formData.extraFees" class="form-control"
+                            placeholder="Entrez les frais supplémentaires (transport..)" type="number" tabindex="0" />
                     </div>
                 </div>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="quantity" class="form-label mb-2">Quantite</label>
-                        <input
-                            id="quantity"
-                            v-model="formData.quantity"
-                            class="form-control"
-                            placeholder="Entrez la quantité"
-                            type="number"
-                            tabindex="0"
-                            required
-                        />
+                        <input id="quantity" v-model="formData.quantity" class="form-control"
+                            placeholder="Entrez la quantité" type="number" tabindex="0" required />
                     </div>
                 </div>
                 <div class="col-6">
@@ -142,29 +109,16 @@ const submit = async () => {
                 <div class="col-12">
                     <div class="mb-3">
                         <label for="fournisseur" class="form-label mb-2">Fournisseur</label>
-                        <input
-                            id="fournisseur"
-                            v-model="formData.fournisseur"
-                            class="form-control"
-                            placeholder="Entrez le nom du fournisseur"
-                            type="text"
-                            tabindex="0"
-                            unite
-                        />
+                        <input id="fournisseur" v-model="formData.fournisseur" class="form-control"
+                            placeholder="Entrez le nom du fournisseur" type="text" tabindex="0" unite />
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="mb-3">
                         <label for="comment" class="form-label mb-2">Remarque</label>
-                        <textarea
-                            id="comment"
-                            v-model="formData.description"
-                            class="form-control"
-                            placeholder="Entrez votre remque ici"
-                            type="number"
-                            tabindex="0"
-                        ></textarea>
+                        <textarea id="comment" v-model="formData.description" class="form-control"
+                            placeholder="Entrez votre remque ici" type="number" tabindex="0"></textarea>
                     </div>
                 </div>
             </div>
@@ -185,4 +139,5 @@ const submit = async () => {
         </div>
     </form>
 </template>
+
 <style></style>

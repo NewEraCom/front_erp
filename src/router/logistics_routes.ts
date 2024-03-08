@@ -146,6 +146,17 @@ export const logisticsRoutes = [
         },
     },
     {
+        path: '/vehicules/details/:id',
+        name: 'DetailsVehicle',
+        component: () => import('@/views/Logistics/DetailsVehiculesView.vue'),
+        props : true,
+        meta: {
+            title: 'Details Vehicules',
+            requiresAuth: true,
+            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
+    {
         path: '/transports',
         name: 'Transports',
         component: () => import('@/views/Logistics/TransportView.vue'),

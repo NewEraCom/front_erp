@@ -20,17 +20,19 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            console.log(item);
+        }
+    },
+    {
+        icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
+            console.log(item);
+        }
+    },
 ];
 
-const detailsItem = (item: any) => {
-    console.log(item);
-};
 
-const deleteItem = (item: any) => {
-    console.log('Delete item', item);
-};
 
 const filteredData = ref(props.leaves);
 
@@ -52,13 +54,14 @@ const filter = () => {
 };
 
 </script>
+
 <template>
     <div>
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
 
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
@@ -74,19 +77,19 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
-                            <option value="15">5</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -94,11 +97,10 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" />
-        <Modal title="Importation des données" id="details-modal" size="modal-lg" class-name="bring-to-front">
-        </Modal>
+            buttonType="simple" disabled="pending" />
     </div>
 </template>
+
 <style>
 .w-240 {
     width: 240px;
