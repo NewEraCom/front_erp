@@ -9,18 +9,15 @@ import {EditStgModal,DeleteDocModal,ValidatePot} from './components/modals';
 const rhStore = useRhStore();
 const isLoading = ref(false);
 const interns = ref(computed(() => rhStore.interns));
-let data = ref({
-  interns: null,
-  stats: null,
-});
+
 onMounted(async () => {
   await rhService.getInterns();
 });
 
 
 
-watch(interns, () => {
-  data.value.interns = interns.value;
+watch(interns, (newValue) => {
+  interns.value = newValue;
 }, { deep: true });
 
 const deleteStg = async () => {

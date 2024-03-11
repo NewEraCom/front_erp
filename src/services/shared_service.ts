@@ -139,6 +139,26 @@ const addNewRecruitment = async (data: any) => {
     }
 };
 
+async function updateSousTraitants(id, req) {
+    try {
+
+
+        const response = await api().post('stg/update/' + id, req);
+        if (response.status == 200) {
+            const sharedStore = useSharedStore();
+
+            console.log(response.data);
+            const Soustraitant = sharedStore.soustraitants.data.find((item) => item.id === id);
+            if (Soustraitant) {
+                Object.assign(Soustraitant, response.data.tier);
+            }
+            console.log(response.data);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const createTier = async (data: any) => {
     try {
         const response = await api().post('/tiers/insert', data);
@@ -178,5 +198,6 @@ export default {
     addNewRecruitment,
     createTier,
     deleteSoustraitant,
-    deleteRhRequest
+    deleteRhRequest,
+    updateSousTraitants
 };

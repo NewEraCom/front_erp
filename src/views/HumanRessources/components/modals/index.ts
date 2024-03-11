@@ -57,6 +57,6 @@ export {
     RecruitementDetailsModal,
     LeaveDetailsModal,
     WorkerDetailsModal,
-    AddDocsInternModal
+    AddDocsInternModal,
     
 };

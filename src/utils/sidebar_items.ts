@@ -150,7 +150,7 @@ const RHMenu = [
     },
     {
         id: 5,
-        name: 'Soustraitant',
+        name: 'Soustraitant Employés',
         route: '/soustraitant-rh',
         icon: 'ti ti-settings',
         path: 'SoustraitantRh'

@@ -13,6 +13,7 @@ import PaieTable from './PaieTable.vue';
 import WorkersTable from './WorkersTable.vue';
 
 
+
 export * from './modals';
 
 export {
@@ -28,5 +29,5 @@ export {
     SalaryAdvancesTable,
     PointageTable,
     PaieTable,
-    WorkersTable
+    WorkersTable,
 };
