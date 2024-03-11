@@ -149,16 +149,16 @@ const returnBadge = (item: any): any[] => {
 			return ['badge bg-info', 'Simple'];
 		case 'special':
 			return ['badge bg-info', 'Special'];
-			case 'En attente':
-				return ['bg-label-warning', 'En attente', 'ti-clock'];
-			case 'En soumission':
-				return ['bg-label-info', 'En soumission', 'ti-clock'];
-			case 'Perdu':
-				return ['bg-label-danger', 'Perdu', 'ti-thumb-down'];
-			case 'Gagné':
-				return ['bg-label-success', 'Gagné', 'ti-circle-check'];
-			case 'Non Validé':
-				return ['bg-label-dark', 'Non Validé', 'ti-circle-x'];
+		case 'En attente':
+			return ['bg-label-warning', 'En attente', 'ti-clock'];
+		case 'En soumission':
+			return ['bg-label-info', 'En soumission', 'ti-clock'];
+		case 'Perdu':
+			return ['bg-label-danger', 'Perdu', 'ti-thumb-down'];
+		case 'Gagné':
+			return ['bg-label-success', 'Gagné', 'ti-circle-check'];
+		case 'Non Validé':
+			return ['bg-label-dark', 'Non Validé', 'ti-circle-x'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}
@@ -267,167 +267,173 @@ function init() {
 
 }
 function limitedClientName(props) {
-    if (props === null) return '-';
-    if (props.length > 35) {
-        return props.substring(0, 35) + '...';
-    }
-    return props;
+	if (props === null) return '-';
+	if (props.length > 35) {
+		return props.substring(0, 35) + '...';
+	}
+	return props;
 }
 function dateDiff(date) {
-    const today = new Date();
+	const today = new Date();
 
-    const otherDate = new Date(date);
-    const diffTime = Math.abs(today - otherDate);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    let result;
+	const otherDate = new Date(date);
+	const diffTime = Math.abs(today - otherDate);
+	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+	let result;
 
-    if (otherDate < today) {
-        result = ['bg-label-danger', 'Offre expirée', '1', 'border-danger'];
-    } else {
-        switch (true) {
-            case diffDays === 0:
-                result = ['bg-label-warning', 'Aujourd\'hui', '1', diffDays, 'border-warning'];
-                break;
-            case diffDays >= 1 && diffDays <= 7:
-                result = ['bg-label-success', 'Cette semaine', '1', diffDays, 'border-success'];
-                break;
-            default:
-                result = ['bg-label-danger', 'Plus de 30 jours', '0', diffDays, 'border-danger'];
-        }
-    }
-    return result;
+	if (otherDate < today) {
+		result = ['bg-label-danger', 'Offre expirée', '1', 'border-danger'];
+	} else {
+		switch (true) {
+			case diffDays === 0:
+				result = ['bg-label-warning', 'Aujourd\'hui', '1', diffDays, 'border-warning'];
+				break;
+			case diffDays >= 1 && diffDays <= 7:
+				result = ['bg-label-success', 'Cette semaine', '1', diffDays, 'border-success'];
+				break;
+			default:
+				result = ['bg-label-danger', 'Plus de 30 jours', '0', diffDays, 'border-danger'];
+		}
+	}
+	return result;
 }
 function formattedDate(props) {
-    if (props === null) return 'Aucune date.';
-    const date = new Date(props);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+	if (props === null) return 'Aucune date.';
+	const date = new Date(props);
+	const day = String(date.getDate()).padStart(2, '0');
+	const month = String(date.getMonth() + 1).padStart(2, '0');
+	const year = date.getFullYear();
+	return `${day}-${month}-${year}`;
 }
 function calculatePercentage(current, total) {
-    if (typeof current !== 'number' || typeof total !== 'number' || total === 0) {
-        return 0; // Handle invalid input
-    }
+	if (typeof current !== 'number' || typeof total !== 'number' || total === 0) {
+		return 0; // Handle invalid input
+	}
 
-    const widthPercentage = (current / total) * 100;
-    return {
-        width: `${widthPercentage}%`
-    };
+	const widthPercentage = (current / total) * 100;
+	return {
+		width: `${widthPercentage}%`
+	};
 }
 function formatNumber(value) {
-    if (!value) return '-';
+	if (!value) return '-';
 
-    // Round the value to two decimal places
-    const roundedValue = Math.round(value * 100) / 100;
+	// Round the value to two decimal places
+	const roundedValue = Math.round(value * 100) / 100;
 
-    // Convert to string and format
-    const formattedValue = roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-    return formattedValue;
+	// Convert to string and format
+	const formattedValue = roundedValue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+	return formattedValue;
 }
 function formattedDateTime(props) {
-    if (props === null) return 'Aucune date.';
+	if (props === null) return 'Aucune date.';
 
-    // Create a Date object from the input string
-    const inputDate = new Date(props);
+	// Create a Date object from the input string
+	const inputDate = new Date(props);
 
-    // Extract year, month, day, hours, and minutes from the Date object
-    const year = inputDate.getFullYear();
-    const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-    const day = String(inputDate.getDate()).padStart(2, '0');
-    const hours = String(inputDate.getHours()).padStart(2, '0');
-    const minutes = String(inputDate.getMinutes()).padStart(2, '0');
+	// Extract year, month, day, hours, and minutes from the Date object
+	const year = inputDate.getFullYear();
+	const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+	const day = String(inputDate.getDate()).padStart(2, '0');
+	const hours = String(inputDate.getHours()).padStart(2, '0');
+	const minutes = String(inputDate.getMinutes()).padStart(2, '0');
 
-    // Construct the formatted date string
-    return `${day}-${month}-${year} ${hours}:${minutes}`;
+	// Construct the formatted date string
+	return `${day}-${month}-${year} ${hours}:${minutes}`;
 }
 function formattedText(paragraph) {
-    return paragraph.replace(/\n/g, '<br>');
+	return paragraph.replace(/\n/g, '<br>');
 }
 export function dateRegex(date) {
-    const selectedDateTime = new Date(date);
-    const currentDateTime = new Date();
-    let result;
+	const selectedDateTime = new Date(date);
+	const currentDateTime = new Date();
+	let result;
 
-    if (selectedDateTime <= currentDateTime) {
-        result = false;
-    } else {
-        result = true;
-    }
-    return result;
+	if (selectedDateTime <= currentDateTime) {
+		result = false;
+	} else {
+		result = true;
+	}
+	return result;
 }
 export function numberToTextMAD(number) {
-    const units = ['', 'mille', 'million', 'milliard', 'billion'];
-    const baseNumbers = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
-    const tens = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-', 'quatre-vingt', 'quatre-vingt-'];
+	const units = ['', 'mille', 'million', 'milliard', 'billion'];
+	const baseNumbers = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];
+	const tens = ['', '', 'vingt', 'trente', 'quarante', 'cinquante', 'soixante', 'soixante-', 'quatre-vingt', 'quatre-vingt-'];
 
-    const toFrenchWords = (num, unitIndex = 0) => {
-        if (num === 0) {
-            return '';
-        }
+	const toFrenchWords = (num, unitIndex = 0) => {
+		if (num === 0) {
+			return '';
+		}
 
-        let result = '';
-        const thousands = Math.floor(num / 1000);
-        const remainder = num % 1000;
+		let result = '';
+		const thousands = Math.floor(num / 1000);
+		const remainder = num % 1000;
 
-        if (thousands > 0) {
-            result += toFrenchWords(thousands, unitIndex + 1) + ' ';
-        }
+		if (thousands > 0) {
+			result += toFrenchWords(thousands, unitIndex + 1) + ' ';
+		}
 
-        if (remainder > 0) {
-            const hundreds = Math.floor(remainder / 100);
-            const tensAndOnes = remainder % 100;
+		if (remainder > 0) {
+			const hundreds = Math.floor(remainder / 100);
+			const tensAndOnes = remainder % 100;
 
-            if (hundreds > 0) {
-                result += baseNumbers[hundreds] + ' cent ';
-            }
+			if (hundreds > 0) {
+				result += baseNumbers[hundreds] + ' cent ';
+			}
 
-            if (tensAndOnes > 0) {
-                if (tensAndOnes < 20) {
-                    result += baseNumbers[tensAndOnes];
-                } else {
-                    const tensDigit = Math.floor(tensAndOnes / 10);
-                    const onesDigit = tensAndOnes % 10;
+			if (tensAndOnes > 0) {
+				if (tensAndOnes < 20) {
+					result += baseNumbers[tensAndOnes];
+				} else {
+					const tensDigit = Math.floor(tensAndOnes / 10);
+					const onesDigit = tensAndOnes % 10;
 
-                    if (tensDigit === 2 && onesDigit === 0) {
-                        result += 'vingt';
-                    } else {
-                        result += tens[tensDigit];
-                        if (tensDigit > 1 && onesDigit > 0) {
-                            result += `-${baseNumbers[onesDigit]}`;
-                        } else {
-                            result += baseNumbers[onesDigit];
-                        }
-                    }
-                }
-            }
-        }
+					if (tensDigit === 2 && onesDigit === 0) {
+						result += 'vingt';
+					} else {
+						result += tens[tensDigit];
+						if (tensDigit > 1 && onesDigit > 0) {
+							result += `-${baseNumbers[onesDigit]}`;
+						} else {
+							result += baseNumbers[onesDigit];
+						}
+					}
+				}
+			}
+		}
 
-        result += ' ' + units[unitIndex];
+		result += ' ' + units[unitIndex];
 
-        return result.trim();
-    };
+		return result.trim();
+	};
 
-    const [integerPart, decimalPart] = number.toFixed(2).split('.').map(part => parseInt(part, 10) || 0);
+	const [integerPart, decimalPart] = number.toFixed(2).split('.').map(part => parseInt(part, 10) || 0);
 
-    if (isNaN(integerPart) || isNaN(decimalPart)) {
-        return 'Invalid input';
-    }
+	if (isNaN(integerPart) || isNaN(decimalPart)) {
+		return 'Invalid input';
+	}
 
-    let result = toFrenchWords(integerPart) + ' DIRHAMS';
+	let result = toFrenchWords(integerPart) + ' DIRHAMS';
 
-    if (integerPart > 1) {
-        result += ' TTC';
-    } else {
-        result += ' HT';
-    }
+	if (integerPart > 1) {
+		result += ' TTC';
+	} else {
+		result += ' HT';
+	}
 
-    if (decimalPart > 0) {
-        result += ` et ${toFrenchWords(decimalPart)} centimes`;
-    }
+	if (decimalPart > 0) {
+		result += ` et ${toFrenchWords(decimalPart)} centimes`;
+	}
 
-    return result.toUpperCase();
+	return capitalizeFirst(result);
 }
+
+const capitalizeFirst = (value: string) => {
+	if (!value) return '';
+	value = value.toString();
+	return value.charAt(0).toUpperCase() + value.slice(1);
+};
 
 export const helpers = {
 	isActiveRoute,

@@ -191,43 +191,19 @@ onUnmounted(() => {
       </div>
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
         <div class="card card-border-shadow-primary mb-4">
-          <div v-if="purchase.status == 'pending'" class="card-body">
-            <button v-if="purchase.status == 'pending' && role == 'Responsable achat'"
+          <div class="card-body">
+            <button v-if="purchase.status == 'pending' && role == 'Responsable d\'achats'"
               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
             </button>
-            <button disabled v-if="purchase.status == 'pending'" href="./app-invoice-edit.html"
-              class="btn btn-label-secondary d-grid w-100 mb-2 waves-effect d-flex">
+            <button class="btn d-grid w-100 mb-2 waves-effect d-flex" :disabled="purchase.status != 'pending'"
+              :class="purchase.status != 'pending' ? 'btn-secondary' : 'btn-warning'" href=". /app-invoice-edit.html">
               <i class="ti ti-pencil me-2"></i> Modifier la demande
             </button>
-            <button v-if="purchase.status != 'pending'" class="btn btn-primary d-grid w-100 waves-effect waves-light"
-              data-bs-toggle="offcanvas" data-bs-target="#addPaymentOffcanvas">
-              <span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                  class="ti ti-download ti-xs me-2"></i>
-                Télécharger le bon de commande</span>
-            </button>
-            <router-link class="btn btn-outline-primary d-grid w-100 waves-effect waves-light" :to="{
-      name: 'Detail-bonCommande',
-      params: {
-        id: props.id
-                }
-              }">
-              <span class="d-flex align-items-center justify-content-center text-nowrap"><i
-                  class="ti ti-download ti-xs me-2"></i>
-                Télécharger le bon de commande</span>
+            <router-link :to="{ name:'DetailBonCommande', params : { id:purchase.id} }"
+              v-if="purchase.status == 'on going'" class="btn btn-primary d-grid w-100 mb-2 waves-effect d-flex">
+              <i class="ti ti-download me-2"></i> Télécharger le bon de commande
             </router-link>
-
-          </div>
-          <div v-if="purchase.status=='need validation'">
-            <div class="card-header">
-              <h5 class="fw-bold mb-0">Message</h5>
-            </div>
-            <div class="card-body d-flex justify-content-center align-items-start">
-              <i class="ti ti-exclamation-circle text-danger f-36 me-3"></i>
-              <h6>
-                Cette demande d'achat nécessite une validation
-              </h6>
-            </div>
           </div>
         </div>
       </div>

@@ -14,7 +14,7 @@ const isLoading = ref(false);
 const formData = ref({
     date_depart: 0,
     attachement: null,
-    commentaire: '-',
+    commentaire: '',
 
 
 });
@@ -23,10 +23,10 @@ const handleFileChange = (e, type) => {
 };
 
 const submit = async () => {
-   
+
     console.log(formData.value);
     isLoading.value = true;
-    await rhService.RuptureContractEmployee(props.id,formData.value).then(() => {
+    await rhService.RuptureContractEmployee(props.id, formData.value).then(() => {
         $('#ruptureContrat').modal('hide');
     }).catch((error) => {
         console.error('Error during action execution', error);
@@ -36,11 +36,11 @@ const submit = async () => {
 };
 </script>
 <template>
-    <Modal id="ruptureContrat" title="Ajouter un document" size="modal-md">
+    <Modal id="ruptureContrat" title="Rupture de contrat" size="modal-md">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    
+
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Date de depart <span
@@ -48,14 +48,7 @@ const submit = async () => {
                             <input type="date" class="form-control" v-model="formData.date_depart">
                         </div>
                     </div>
-                    <div class="col-sm-12">
-                        <div class="mb-3">
-                            <label for="nameEx" class="form-label">Motif de depart <span
-                                    class="text-danger">*</span></label>
-                            <textarea class="form-control" id="" cols="30" rows="10" v-model="formData.commentaire"></textarea>
-                        </div>
-                    </div>
-                    
+
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="copie_rib" class="form-label">Attachement
@@ -66,6 +59,15 @@ const submit = async () => {
                                 @change="e => handleFileChange(e, 'attachement')" />
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Motif de depart <span
+                                    class="text-danger">*</span></label>
+                            <textarea class="form-control" id="" cols="30" rows="3"
+                                v-model="formData.commentaire"></textarea>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">

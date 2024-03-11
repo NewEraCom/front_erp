@@ -1,3 +1,4 @@
+import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useSalesStore = defineStore('SalesStore', {
@@ -12,6 +13,7 @@ export const useSalesStore = defineStore('SalesStore', {
             stats: null,
             chart: null,
         },
+        selectedBonDeCommande: null,
         invoices: {
             data: null,
             stats: null,
@@ -58,6 +60,12 @@ export const useSalesStore = defineStore('SalesStore', {
             this.bonDeCommande.data = null;
             this.bonDeCommande.stats = null;
             this.bonDeCommande.chart = null;
+        },
+        setOneBonDeCommande(data: any) {
+            this.selectedBonDeCommande = data;
+        },
+        clearOneBonDeCommande() {
+            this.selectedBonDeCommande = null;
         },
         setInvoices(data: any) {
             this.invoices.data = data;

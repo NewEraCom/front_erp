@@ -5,10 +5,12 @@ import { useRhStore } from '@/store';
 import { Modal } from '@/ui';
 import { helpers, formater } from '@/utils';
 import { PointageTable } from './components';
-import {EditSalaryModal ,AugementationSalaryModal ,EditLeavePerMonthModal,
-    AddCongeModal ,EditBanInfoModal,EditCnssModal,
-    AddDocumentModal ,DeleteDocModal,AddPointageModal, 
-    EditEmployeeModal,RuptureContractModal} from './components/modals';
+import {
+    EditSalaryModal, AugementationSalaryModal, EditLeavePerMonthModal,
+    AddCongeModal, EditBanInfoModal, EditCnssModal,
+    AddDocumentModal, DeleteDocModal, AddPointageModal,
+    EditEmployeeModal, RuptureContractModal
+} from './components/modals';
 const props = defineProps({
     id: {
         type: String,
@@ -40,17 +42,17 @@ watch(rhStore.employee, (newValue) => {
 }, { deep: true });
 
 const getFileUrl = (attachment) => {
-  return helpers.baseUrl() + `uploads/employe/${attachment}`;
+    return helpers.baseUrl() + `uploads/employe/${attachment}`;
 };
-const DeleteDoc = async()=>{
-    console.log('delete' , rhStore.ItemId);
+const DeleteDoc = async () => {
+    console.log('delete', rhStore.ItemId);
     isLoading.value = true;
 
     await rhService.DeleteDocEmployee(rhStore.ItemId).then(() => {
-     isLoading.value = false;
-      $('#delete-doc').modal('hide');
-    
-   });
+        isLoading.value = false;
+        $('#delete-doc').modal('hide');
+
+    });
 };
 
 </script>
@@ -76,13 +78,14 @@ const DeleteDoc = async()=>{
                     <div class="card-body">
                         <div class="user-avatar-section border-bottom pb-4">
                             <div class=" d-flex align-items-center flex-column">
-                                <img class="img-fluid rounded mb-3 pt-1 mt-4" src="../../assets/img/avatars/user_avatar.png"
-                                    height="100" width="100" alt="User avatar">
+                                <img class="img-fluid rounded mb-3 pt-1 mt-4"
+                                    src="../../assets/img/avatars/user_avatar.png" height="100" width="100"
+                                    alt="User avatar">
                                 <div class="user-info text-center">
                                     <h4 class="mb-2">{{ employee.first_name + ' ' + employee.last_name }}</h4>
                                     <span class="badge mt-1" :class="helpers.returnBadge(employee.status)[0]">{{
-                                        helpers.returnBadge(employee.status)[1]
-                                    }}</span>
+                helpers.returnBadge(employee.status)[1]
+            }}</span>
                                 </div>
                             </div>
                         </div>
@@ -116,9 +119,10 @@ const DeleteDoc = async()=>{
                                 <li class="mb-2 pt-1">
                                     <span class="fw-medium me-1">Type de contrat:</span>
                                     <span>
-                                        <span class="badge mt-1" :class="helpers.returnBadge(employee.type_contrat)[0]">{{
-                                            helpers.returnBadge(employee.type_contrat)[1]
-                                        }}</span>
+                                        <span class="badge mt-1"
+                                            :class="helpers.returnBadge(employee.type_contrat)[0]">{{
+                helpers.returnBadge(employee.type_contrat)[1]
+            }}</span>
                                     </span>
                                 </li>
                                 <li class="mb-2 pt-1">
@@ -183,14 +187,14 @@ const DeleteDoc = async()=>{
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#documents"
-                            aria-controls="documents" aria-selected="false" tabindex="-1">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                            data-bs-target="#documents" aria-controls="documents" aria-selected="false" tabindex="-1">
                             Documents
                         </button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#pointage"
-                            aria-controls="pointage" aria-selected="false" tabindex="-1">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                            data-bs-target="#pointage" aria-controls="pointage" aria-selected="false" tabindex="-1">
                             Pointage
                         </button>
                     </li>
@@ -202,7 +206,8 @@ const DeleteDoc = async()=>{
                         <div class="row mb-3 g-3">
                             <div class="col-xxl-6">
                                 <div class="card card-border-shadow-primary">
-                                    <div class="card-body" @mouseover="showSalary = true" @mouseleave="showSalary = false">
+                                    <div class="card-body" @mouseover="showSalary = true"
+                                        @mouseleave="showSalary = false">
                                         <div class="d-flex align-items-center mb-2 pb-1">
                                             <div class="avatar me-2">
                                                 <span class="avatar-initial rounded bg-label-primary"><i
@@ -255,8 +260,8 @@ const DeleteDoc = async()=>{
                                                 data-bs-target="#historicConge" data-bs-toggle="modal">
                                                 Historique
                                             </button>
-                                            <button class="btn btn-warning btn-sm ms-2" data-bs-target="#editLeavePerMonth"
-                                                data-bs-toggle="modal">
+                                            <button class="btn btn-warning btn-sm ms-2"
+                                                data-bs-target="#editLeavePerMonth" data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
 
@@ -300,17 +305,17 @@ const DeleteDoc = async()=>{
                                                 <h6 class="mb-3 fw-bold text-dark">
                                                     Agence :
                                                     {{
-                                                        helpers.bankName(employee.bank_name)[1] ??
-                                                        'N/A'
-                                                    }}
+                helpers.bankName(employee.bank_name)[1] ??
+                'N/A'
+            }}
                                                 </h6>
                                             </div>
                                             <div v-if="employee.copie_rib">
                                                 <a :href="'/uploads/employee/' +
-                                                    employee.dossier +
-                                                    '/' +
-                                                    employee.copie_rib
-                                                    " target="_blank">
+                employee.dossier +
+                '/' +
+                employee.copie_rib
+                " target="_blank">
                                                     <i class="ti ti-file-download bg-label-info p-3 rounded"></i>
                                                 </a>
                                             </div>
@@ -323,11 +328,11 @@ const DeleteDoc = async()=>{
                                     <div class="card-body">
                                         <div class="d-flex align-items-center mb-2 pb-1">
                                             <div class="me-2">
-                                                <img src="@/assets/img/brands/logo_cnss.jpeg" height="89px" width="100px"
-                                                    style="object-fit: contain" />
+                                                <img src="@/assets/img/brands/logo_cnss.jpeg" height="89px"
+                                                    width="100px" style="object-fit: contain" />
                                             </div>
-                                            <button class="ms-auto btn btn-sm btn-primary" data-bs-target="#editInfoCnss"
-                                                data-bs-toggle="modal">
+                                            <button class="ms-auto btn btn-sm btn-primary"
+                                                data-bs-target="#editInfoCnss" data-bs-toggle="modal">
                                                 <i class="ti ti-pencil"></i>
                                             </button>
                                         </div>
@@ -364,20 +369,21 @@ const DeleteDoc = async()=>{
                             <div class="card-header align-items-center">
                                 <h5 class="card-action-title mb-0">Historique</h5>
                             </div>
-                            <div v-if="employee.projects != null && employee.projects.length != 0" class="card-body pb-0">
+                            <div v-if="employee.projects != null && employee.projects.length != 0"
+                                class="card-body pb-0">
                                 <ul class="timeline pt-3">
                                     <li v-for="(item, index) in employee.projects" :key="item.id" :class="index !== employee.projects.length - 1
-                                        ? 'border-left-dashed timeline-item-warning pb-4'
-                                        : 'border-transparent timeline-item-primary pb-0'
-                                        " class="timeline-item">
+                ? 'border-left-dashed timeline-item-warning pb-4'
+                : 'border-transparent timeline-item-primary pb-0'
+                " class="timeline-item">
                                         <span :class="index !== employee.projects.length - 1
-                                            ? 'timeline-indicator-warning'
-                                            : 'timeline-indicator-primary'
-                                            " class="timeline-indicator-advanced">
+                ? 'timeline-indicator-warning'
+                : 'timeline-indicator-primary'
+                " class="timeline-indicator-advanced">
                                             <i class="rounded-circle scaleX-n1-rtl" :class="index !== employee.projects.length - 1
-                                                ? 'ti ti-circle-filled'
-                                                : 'ti ti-circle-dashed'
-                                                "></i>
+                ? 'ti ti-circle-filled'
+                : 'ti ti-circle-dashed'
+                "></i>
                                         </span>
                                         <div class="timeline-event">
                                             <div class="timeline-header border-bottom pb-3 mb-3">
@@ -385,10 +391,10 @@ const DeleteDoc = async()=>{
                                                 <span class="text-muted">
                                                     {{ item.pivot.date_debut }}
                                                     {{
-                                                        item.pivot.date_fin !== null
-                                                        ? '- ' + item.pivot.date_fin
-                                                        : '- Présent'
-                                                    }}
+                item.pivot.date_fin !== null
+                    ? '- ' + item.pivot.date_fin
+                    : '- Présent'
+            }}
                                                 </span>
                                             </div>
                                             <div class="d-flex justify-content-between flex-wrap mb-2">
@@ -438,21 +444,21 @@ const DeleteDoc = async()=>{
                                                         <div class="ms-2">
                                                             <a :href="getFileUrl(employee.copie_cin)" target="_blank">
                                                                 <h6 class="mb-2">
-                                                                {{
-                                                                    formater.limitText(
-                                                                        employee.copie_cin,
-                                                                        45
-                                                                    )
-                                                                }}
-                                                            </h6>
+                                                                    {{
+                formater.limitText(
+                    employee.copie_cin,
+                    45
+                )
+            }}
+                                                                </h6>
                                                             </a>
-                                                            
+
                                                             <small class="mt-auto">Créé le
                                                                 {{
-                                                                    formater.date(
-                                                                        employee.created_at
-                                                                    )
-                                                                }}</small>
+                    formater.date(
+                        employee.created_at
+                    )
+                }}</small>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -468,25 +474,25 @@ const DeleteDoc = async()=>{
                                                         <div class="ms-2">
                                                             <a :href="getFileUrl(item.attachement)" target="_blank">
 
-                                                            <h6 class="mb-2">
-                                                                {{
-                                                                    formater.limitText(
-                                                                        item.title,
-                                                                        55
-                                                                    )
-                                                                }}
-                                                            </h6>
+                                                                <h6 class="mb-2">
+                                                                    {{
+                formater.limitText(
+                    item.title,
+                    55
+                )
+            }}
+                                                                </h6>
                                                             </a>
                                                             <small class="mt-auto">Créé le
                                                                 {{
-                                                                    formater.date(
-                                                                        item.created_at
-                                                                    )
-                                                                }}</small>
+                    formater.date(
+                        item.created_at
+                    )
+                }}</small>
                                                         </div>
                                                         <button class="ms-auto btn btn-danger btn-sm m-0"
-                                                        @click="rhStore.setItemId(item.id)"
-                                                            data-bs-toggle="modal" data-bs-target="#delete-doc">
+                                                            @click="rhStore.setItemId(item.id)" data-bs-toggle="modal"
+                                                            data-bs-target="#delete-doc">
                                                             <i class="ti ti-trash-filled"></i>
                                                         </button>
                                                     </div>
@@ -495,8 +501,8 @@ const DeleteDoc = async()=>{
                                         </div>
                                         <div v-else class="row mb-4">
                                             <div class="col-12 text-center">
-                                                <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md" alt=""
-                                                    height="180px" width="180px" style="object-fit: contain" />
+                                                <img src="/src/assets/img/No_Results.png" class="empty_stats_img_md"
+                                                    alt="" height="180px" width="180px" style="object-fit: contain" />
                                                 <h6 class="text-center mt-3 fw-bold">
                                                     Aucun document trouvé
                                                 </h6>
@@ -597,8 +603,7 @@ const DeleteDoc = async()=>{
                                             {{ formater.date(item.date_end) }}
                                         </td>
                                         <td class="text-center">
-                                            {{ item.duree ? item.duree > 1 ? item.duree + ' Jours' : item.duree + ' Jour' :
-                                                'N/A' }}
+                                            {{ item.duree ? item.duree > 1 ? item.duree + ' Jours' : item.duree + ' Jour' : 'N/A' }}
                                         </td>
                                         <td class="text-center">
                                             <small class="fw-bold" :class="helpers.returnBadge(String(item.type))[0]">{{
@@ -606,7 +611,8 @@ const DeleteDoc = async()=>{
                                             </small>
                                         </td>
                                         <td class="text-center">
-                                            <small class="fw-bold" :class="helpers.returnBadge(String(item.status))[0]">{{
+                                            <small class="fw-bold"
+                                                :class="helpers.returnBadge(String(item.status))[0]">{{
                                                 helpers.returnBadge(String(item.status))[1] }}
                                             </small>
                                         </td>
@@ -630,18 +636,15 @@ const DeleteDoc = async()=>{
             <AddCongeModal :id="employee.id" />
             <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :old-bank="employee.bank_name" />
             <EditCnssModal :id="employee.id" :old-cnss="employee.cnss" />
-            <AddDocumentModal :id="employee.id"/>
-            <DeleteDocModal id="delete-doc" :isLoading="isLoading"
-                :method="DeleteDoc"
-                :itemid="rhStore.ItemId"
-                title="Supprimer le document"
-                message="Êtes-vous sûr de supprimer ce document ?"
-                />
+            <AddDocumentModal :id="employee.id" />
+            <DeleteDocModal id="delete-doc" :isLoading="isLoading" :method="DeleteDoc" :itemid="rhStore.ItemId"
+                title="Supprimer le document" message="Êtes-vous sûr de supprimer ce document ?" />
             <ResumptionContractModal :id="employee.id" />
             <EditEmployeeModal :employee="employee" />
             <RuptureContractModal :id="employee.id" />
+            <AddPointageModal source="simple" :id="Number(id)" />
+
         </div>
-        <AddPointageModal source="simple" :id="id" />
     </div>
 </template>
 

@@ -42,6 +42,16 @@ const getBonDeCommande = async () => {
     }
 };
 
+const getBonDeCommandeById = async (id: number) => {
+    try {
+        const response = await api().get('/logistics/bon-commande/details/' + id);
+        const salesStore = useSalesStore();
+        salesStore.setOneBonDeCommande(response.data.bonCommande);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const getFacturesClient = async () => {
     try {
         const response = await api().get('/facture/client/get');
@@ -120,5 +130,6 @@ export default {
     commande,
     editArticle,
     createExecutionOrder,
-    createPurchaseOrder
+    createPurchaseOrder,
+    getBonDeCommandeById
 };

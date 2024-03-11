@@ -69,13 +69,13 @@ export const salesRoutes = [
     },
     {
         path: '/details/bon-commande/:id',
-        name: 'Detail-bonCommande',
+        name: 'DetailBonCommande',
         component: () => import('../views/Sales/components/DetailBonCommande.vue'),
+        props: true,
         meta: {
-            title: 'Detail-bonCommande',
+            title: 'Detail Bon de commande',
 
         },
-        props: (route) => ({ id: route.params.id })
     },
     {
         path: '/invoices-sales',
