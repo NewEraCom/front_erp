@@ -1,21 +1,31 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { CardTwo, CardTwoSkeleton } from '@/ui';
+import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
+import { CardTwo, CardTwoSkeleton, DeleteModal } from '@/ui';
 import { useSharedStore } from '@/store';
 import { sharedService } from '@/services';
-import { RhRequestTable } from './components';
+import { RhRequestTable, DemandeRhRequestModal } from './components';
 
 const sharedStore = useSharedStore();
 
 const rhRequest = ref(computed(() => sharedStore.rhRequest.data));
 const stats = ref(computed(() => sharedStore.rhRequest.stats));
 
+let data = ref(null);
+
+
+let user = JSON.parse(localStorage.getItem('user')).employee_id;
+
 onMounted(async () => {
     await sharedService.getRhRequest();
+    data.value = rhRequest.value;
 });
 
 onUnmounted(() => {
     sharedStore.clearRhRequest();
+});
+
+watch(rhRequest, () => {
+    data.value = rhRequest.value;
 });
 
 </script>
@@ -32,12 +42,12 @@ onUnmounted(() => {
                     icon="ti ti-plane-inflight" card-color="card-border-shadow-warning" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
-                <CardTwo title="Demande traitée" :count="stats.done" color="bg-label-success" icon="ti ti-plane-inflight"
-                    card-color="card-border-shadow-success" />
+                <CardTwo title="Demande traitée" :count="stats.done" color="bg-label-success"
+                    icon="ti ti-plane-inflight" card-color="card-border-shadow-success" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
-                <CardTwo title="Demande livrée" :count="stats.delivered" color="bg-label-info" icon="ti ti-plane-inflight"
-                    card-color="card-border-shadow-info" />
+                <CardTwo title="Demande livrée" :count="stats.delivered" color="bg-label-info"
+                    icon="ti ti-plane-inflight" card-color="card-border-shadow-info" />
             </div>
         </div>
         <div v-else class="row g-3">
@@ -63,9 +73,9 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des demandes RH</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des demandes RH demandées par vous</small>
                             </div>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#requestRh">
                                 <i class="ti ti-square-rounded-plus-filled me-2"></i>
-                                Ajouter un congé
+                                Ajouter un demande
                             </button>
                         </div>
                         <div v-if="rhRequest != null" class="card-body border-top pt-4">
@@ -86,6 +96,10 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <DemandeRhRequestModal v-if="user != null" :user_id="user" />
+        <DeleteModal title="Supprimer une demande RH" text="Voulez-vous vraiment supprimer cette demande RH ?"
+            text-button="Oui, supprimer" message="La demande RH a été supprimée avec succès"
+            :action="() => sharedService.deleteRhRequest()" />
     </div>
 </template>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed, watch } from 'vue';
-import { CardTwo, CardTwoSkeleton } from '@/ui';
+import { CardTwo, CardTwoSkeleton, DeleteModal } from '@/ui';
 import { useRhStore } from '@/store';
 import { rhService } from '@/services';
 import { LeavesRequestTable, AddLeaveRequest } from './components';
@@ -94,6 +94,9 @@ watch(user, () => {
             </div>
         </div>
         <AddLeaveRequest v-if="user != null" :user_id="user.id" />
+        <DeleteModal title="Supprimer un demande de congé"
+            text="Voulez-vous vraiment supprimer cette demande de congé ?" textButton="Oui, Supprimer"
+            :action="() => console.log('delete')" message="La demande de congé a été supprimée avec succès" />
     </div>
 </template>
 

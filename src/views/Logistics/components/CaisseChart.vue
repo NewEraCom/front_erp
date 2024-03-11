@@ -7,11 +7,14 @@ const logisticsStore = useLogisticsStore();
 const state = ref(computed(() => logisticsStore.opertationCaisse.data));
 const year = new Date().getFullYear();
 
+
 const generateBarChart = () => {
     const labels = {};
     const dataEntree = Array.from({ length: 12 }, (v, i) => 0);
     const dataSortie = Array.from({ length: 12 }, (v, i) => 0);
+
     const caisseOperation = state.value;
+
     for (let i = 1; i < 13; i++) {
         labels[`${i}-${year}`] = true;
     }
@@ -111,11 +114,15 @@ const generateBarChart = () => {
         }
     });
 };
+
 watch(state, async () => {
     generateBarChart();
 });
 
-onMounted(() => { });
+onMounted(() => {
+    generateBarChart();
+
+});
 </script>
 
 <template>

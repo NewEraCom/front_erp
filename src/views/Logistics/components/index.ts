@@ -19,6 +19,7 @@ import PreviewDemandeSortie from './PreviewDemandeSortie.vue';
 import CaisseChart from './CaisseChart.vue';
 import EditSubscriptionModal from './EditSubscriptionModal.vue';
 import NewLouerModal from './NewLouerModal.vue';
+import DetailsParcGsmTable from './DetailsParcGSMTable.vue';
 
 export {
     StockTable,
@@ -41,5 +42,6 @@ export {
     PreviewDemandeSortie,
     CaisseChart,
     EditSubscriptionModal,
-    NewLouerModal
+    NewLouerModal,
+    DetailsParcGsmTable
 };

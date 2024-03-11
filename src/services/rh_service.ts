@@ -1,5 +1,5 @@
 import { api } from '@/utils';
-import { useRhStore } from '@/store';
+import { useRhStore, useSharedStore } from '@/store';
 
 const getEmployees = async () => {
     try {
@@ -153,7 +153,7 @@ const getWorkers = async () => {
 };
 const getWorkerById = async (id) => {
     try {
-        const response = await api().get('/tiers/get-worker/'+id);
+        const response = await api().get('/tiers/get-worker/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.worker = response.data.worker;
@@ -167,7 +167,7 @@ const getWorkerById = async (id) => {
 };
 const getInternById = async (id) => {
     try {
-        const response = await api().get('/stg/get/'+id);
+        const response = await api().get('/stg/get/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.intern = response.data.stagiaire;
@@ -282,7 +282,7 @@ const addEmployee = async (data: any) => {
         return error;
     }
 };
- async function Confirmation(id, req) {
+async function Confirmation(id, req) {
     try {
 
 
@@ -290,7 +290,7 @@ const addEmployee = async (data: any) => {
         if (response.status == 200) {
             console.log(response.data);
 
-            
+
             await getLeaves();
 
             // return response.data;
@@ -299,22 +299,18 @@ const addEmployee = async (data: any) => {
         console.log(error);
     }
 }
+
 async function deleteLeave(id) {
     try {
-
-
         const response = await api().delete('conge/delete/' + id);
         if (response.status == 200) {
             console.log(response.data);
             const rhStore = useRhStore();
-
-
             rhStore.leaves.data = rhStore.leaves.data.filter(w => w.id !== id);
             const dmndIndex = rhStore.leaves.data.findIndex((item) => item.id === id);
             if (dmndIndex !== -1) {
                 rhStore.leaves.data.splice(dmndIndex, 1);
             }
-            
             await getLeaves();
 
             // return response.data;
@@ -323,7 +319,7 @@ async function deleteLeave(id) {
         console.log(error);
     }
 }
-async function ValidateRecruite(id:number) {
+async function ValidateRecruite(id: number) {
     try {
 
 
@@ -331,7 +327,7 @@ async function ValidateRecruite(id:number) {
         if (response.status == 200) {
             console.log(response.data);
 
-            
+
             await getLeaves();
 
             return response.data;
@@ -355,9 +351,10 @@ const addInterns = async (data: any) => {
         return error;
     }
 };
-const addWorker = async (data:any) => {
+
+const addWorker = async (data: any) => {
     try {
-        const response = await api().post('/tiers/add-worker',data);
+        const response = await api().post('/tiers/add-worker', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
             // rhStore.setWorkers(response.data.workers);
@@ -370,9 +367,10 @@ const addWorker = async (data:any) => {
         return error;
     }
 };
-const deleteWorker = async (id:any) => {
+
+const deleteWorker = async (id: any) => {
     try {
-        const response = await api().delete('/tiers/delete-worker/'+ id);
+        const response = await api().delete('/tiers/delete-worker/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
             // rhStore.setWorkers(response.data.workers);
@@ -405,12 +403,17 @@ const getSousTaraitant = async () => {
         return error;
     }
 };
-const addDemandeRh = async (data:any) => {
+const addDemandeRh = async (data: any, src: string = 'rh') => {
     try {
-        const response = await api().post('/dmnd/insert',data);
+        const response = await api().post('/dmnd/insert', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            rhStore.demandeRh.data.push(response.data.demande) ;
+            const sharedStore = useSharedStore();
+            if (src === 'rh') {
+                rhStore.demandeRh.data.push(response.data.demande);
+            }
+            console.log(response.data.demande);
+            sharedStore.pushRhRequest(response.data.demande);
             return;
         }
         throw new Error('Get demande RH failed with status: ' + response.status);
@@ -419,9 +422,9 @@ const addDemandeRh = async (data:any) => {
         return error;
     }
 };
-const ReceivedDemandeRh = async (id:any) => {
+const ReceivedDemandeRh = async (id: any) => {
     try {
-        const response = await api().post('/dmnd/valider/'+id);
+        const response = await api().post('/dmnd/valider/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
             const dmnd = rhStore.demandeRh.data.find((item) => item.id === id);
@@ -436,9 +439,9 @@ const ReceivedDemandeRh = async (id:any) => {
         return error;
     }
 };
-const DeleteDemandeRh = async (id:any) => {
+const DeleteDemandeRh = async (id: any) => {
     try {
-        const response = await api().delete('/dmnd/delete/'+id);
+        const response = await api().delete('/dmnd/delete/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
             const dmndIndex = rhStore.demandeRh.data.findIndex((item) => item.id === id);
@@ -506,7 +509,7 @@ async function EditLeaveEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -527,7 +530,7 @@ async function EditBankEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -547,7 +550,7 @@ async function EditCnssEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -567,7 +570,7 @@ async function UploadDocEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -587,8 +590,8 @@ async function DeleteDocEmployee(id) {
             console.log(response.data);
 
             rhStore.employee.documents = rhStore.employee.documents.filter(doc => doc.id !== id);
-            
-            
+
+
         }
     } catch (error) {
         console.log(error);
@@ -605,7 +608,7 @@ async function EditEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -625,7 +628,7 @@ async function RuptureContractEmployee(id, req) {
             console.log(response.data);
 
             rhStore.employee = response.data.employee;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -666,7 +669,7 @@ async function deleteIntern(id) {
                 rhStore.interns.data.splice(dmndIndex, 1);
             }
             console.log(response.data);
-            
+
             // rhStore.interns.data = rhStore.interns.data.filter(stg => stg.id !== id);
             getInterns();
 
@@ -676,7 +679,7 @@ async function deleteIntern(id) {
         console.log(error);
     }
 }
- async function potentielIntern(id, req) {
+async function potentielIntern(id, req) {
     try {
         const response = await api().post('stg/potentiel/' + id, req);
         if (response.status == 200) {
@@ -693,9 +696,9 @@ async function deleteIntern(id) {
     }
 }
 
-const addPayImport = async (data:any) => {
+const addPayImport = async (data: any) => {
     try {
-        const response = await api().post('/pay/prime/import',data);
+        const response = await api().post('/pay/prime/import', data);
         if (response.status === 200) {
             getPaies();
             return;
@@ -706,11 +709,11 @@ const addPayImport = async (data:any) => {
         return error;
     }
 };
-const PayExport = async (data:any) => {
+const PayExport = async (data: any) => {
     try {
-        const response = await api().post('/pay/prime/export',data, { responseType: 'blob' });
+        const response = await api().post('/pay/prime/export', data, { responseType: 'blob' });
         if (response.status === 200) {
-            
+
             return response.data;
         }
         throw new Error('Get demande RH failed with status: ' + response.status);
@@ -719,9 +722,9 @@ const PayExport = async (data:any) => {
         return error;
     }
 };
-const validateAvavnce = async (id,data:any) => {
+const validateAvavnce = async (id, data: any) => {
     try {
-        const response = await api().post('/pay/avance/valider/'+id,data);
+        const response = await api().post('/pay/avance/valider/' + id, data);
         if (response.status === 200) {
             const rhStore = useRhStore();
 
@@ -748,7 +751,7 @@ async function UploadDocIntern(req) {
             console.log(response.data);
 
             rhStore.intern = response.data.stagiaire;
-            
+
             // await getEmployeeById(id);
 
             // return response.data;
@@ -768,8 +771,8 @@ async function DeleteDocIntern(id) {
             console.log(response.data);
 
             rhStore.intern.documents = rhStore.intern.documents.filter(doc => doc.id !== id);
-            
-            
+
+
         }
     } catch (error) {
         console.log(error);

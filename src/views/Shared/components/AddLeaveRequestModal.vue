@@ -13,6 +13,8 @@ const props = defineProps({
     }
 });
 const isLoading = ref(false);
+const message = ref('');
+
 
 const formData = ref({
     date_start: null,
@@ -30,8 +32,11 @@ const handleFileChange = (e) => {
 };
 
 const submit = async () => {
+    if (formData.value.type === '-') {
+        message.value = 'Veuillez choisir un type de congé';
+        return;
+    }
     isLoading.value = true;
-
 
     await rhService.addLeave(formData.value).then(() => {
         isLoading.value = false;
@@ -96,6 +101,7 @@ const submit = async () => {
                 </div>
             </div>
             <div class="modal-footer">
+                <p class="text-danger">{{ message }}</p>
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>

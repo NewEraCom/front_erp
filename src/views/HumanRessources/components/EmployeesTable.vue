@@ -55,13 +55,14 @@ const filter = () => {
 
 
 </script>
+
 <template>
     <div>
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
                     <div class="d-flex align-items-center ms-2">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
@@ -69,16 +70,17 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
-                    <div class="d-flex align-items-center ms-0">
+                    <div class="d-flex align-items-center ms-auto">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
                             <option value="1">Actif</option>
                             <option value="0">Non Actif</option>
                         </select>
                     </div>
-                    <div class="d-flex align-items-center ms-auto">
+                    <div class="d-flex align-items-center ms-2">
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
                             <option :value=15>15</option>
                             <option :value=30>30</option>
@@ -94,9 +96,10 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
-            button-type="simple" disabled=1 />
+            button-type="simple" disabled=0 />
     </div>
 </template>
+
 <style>
 .w-240 {
     width: 240px;

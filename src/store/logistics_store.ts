@@ -437,6 +437,15 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         clearGasoil() {
             this.gasoil = null;
         },
+        removecardsCarburant(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.cardsCarburant.data.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.cardsCarburant.data.splice(indexToDelete, 1);
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
         setSelectedJawaz(data: any) {
             this.selectedJawaz = data;
         },

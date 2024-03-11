@@ -3,7 +3,8 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { useLogisticsStore, useRhStore } from '@/store';
 import { logisticsService, rhService } from '@/services';
 import { formater, helpers } from '@/utils';
-import { Modal, CustomSelect } from '@/ui';
+import { Modal, CustomSelect, DeleteModal } from '@/ui';
+import { DetailsParcGsmTable } from './components';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
@@ -83,6 +84,7 @@ const affectSubscription = async () => {
 };
 
 watch(data, () => {
+    console.log('data', data.value);
     subscription.value = data.value;
 }, { deep: true });
 
@@ -224,38 +226,7 @@ watch(data, () => {
                         </button>
                     </div>
                     <div class="card-body">
-                        <table class="table">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="fw-bold">Employee</th>
-                                    <th class="fw-bold">Date d'affectation</th>
-                                    <th class="fw-bold">Date de retour</th>
-                                    <th class="fw-bold">Commentaire</th>
-                                </tr>
-                            </thead>
-                            <tbody v-if="subscription?.historiques.length != 0">
-                                <tr v-for="(item, idx) in subscription?.historiques" :key="idx">
-                                    <td>
-                                        <h6 class="mb-1 fw-bold">
-                                            {{ item?.first_name + ' ' + item?.last_name }}
-                                        </h6>
-                                        <span class="text-small text-muted fw-bold">{{
-            item.employee?.email
-        }}</span>
-                                    </td>
-                                    <td>{{ formater.date(item.pivot.date_debut) }}</td>
-                                    <td>{{ formater.date(item.pivot.date_fin) }}</td>
-                                    <td>{{ item.comment ?? '-' }}</td>
-                                </tr>
-                            </tbody>
-                            <tbody v-else>
-                                <tr>
-                                    <td colspan="4" class="text-center">
-                                        <span class="fw-bold">Aucun historique</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <DetailsParcGsmTable :items="subscription?.historiques" />
                     </div>
                 </div>
             </div>
@@ -271,7 +242,7 @@ watch(data, () => {
             key: item.id,
             value: item.first_name + ' ' + item.last_name
         }))
-            " />
+                  " />
                         </div>
 
                         <div class="col-12 mb-3">
@@ -326,5 +297,9 @@ watch(data, () => {
                 </div>
             </form>
         </Modal>
+
+        <DeleteModal title="Supprimer un enregistrement" text="Voulez-vous vraiment supprimer cet enregistrement ?"
+            textButton="Oui, Supprimer" :action="() => logisticsService.deleteEmployee()"
+            message="Employé supprimé avec succès" />
     </div>
 </template>

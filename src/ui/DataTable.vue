@@ -111,8 +111,8 @@ watch(() => props.pageSize, () => {
                 </tr>
             </thead>
             <tbody v-if="paginatedItems.length > 0">
-                <tr v-for="item in   paginatedItems  " :key="item.id">
-                    <template v-for="(header, index) in   headers  " :key="header.value">
+                <tr v-for="item in paginatedItems" :key="item.id">
+                    <template v-for="(header, index) in headers" :key="header.value">
                         <td v-if="header.isComplex && header.type === 'employee'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
                             <router-link :to="{ name: 'ProfileEmployee', params: { id: item.id } }">
@@ -140,24 +140,18 @@ watch(() => props.pageSize, () => {
                             <small class="fw-bold text-muted">Code : {{ item.project.code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'preProjects'">
-                            <router-link
-                                        :to="{
-                                            name: 'PreProjectDetail',
-                                            params: { id: item.id }
-                                        }"
-                                    >
-                                    <h6 class=" fw-bold">{{ item.maitre_ouvrage}}</h6>
-                             </router-link>
-                            <small class="fw-bold text-muted">  
-                                    Code : {{ helpers.limitedClientName(item.project_code) }}
-                                        <i
-                                            v-if="
-                                                item.type_project != 'simple' &&
-                                                item.lots.length == 0
-                                            "
-                                            class="ti ti-alert-circle-filled text-danger"
-                                        />
-                                </small>
+                            <router-link :to="{
+                        name: 'PreProjectDetail',
+                        params: { id: item.id }
+                    }">
+                                <h6 class=" fw-bold">{{ item.maitre_ouvrage }}</h6>
+                            </router-link>
+                            <small class="fw-bold text-muted">
+                                Code : {{ helpers.limitedClientName(item.project_code) }}
+                                <i v-if="item.type_project != 'simple' &&
+                        item.lots.length == 0
+                        " class="ti ti-alert-circle-filled text-danger" />
+                            </small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
@@ -168,8 +162,8 @@ watch(() => props.pageSize, () => {
                             :class="index == 0 ? 'text-start' : 'text-center'">
                             <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
-                                    item.employe.last_name
-                                }}</h6>
+                        item.employe.last_name
+                                    }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
                         </td>
@@ -177,17 +171,23 @@ watch(() => props.pageSize, () => {
                             :class="index == 0 ? 'text-start' : 'text-center'">
 
                             <h6 class="mb-1 fw-bold">{{ item.user.employee.first_name + ' '
-                                + item.user.employee.last_name }}</h6>
+                        + item.user.employee.last_name }}</h6>
                         </td>
                         <td v-if="!header.isComplex" :class="index == 0 ? 'text-start' : 'text-center'">
                             <span v-if="header.type == 'badge'">
                                 <small class="fw-bold" :class="helpers.returnBadge(String(item[header.value]))[0]">{{
-                                    helpers.returnBadge(String(item[header.value]))[1] }}
+                        helpers.returnBadge(String(item[header.value]))[1] }}
                                 </small>
                             </span>
                             <small v-else>
                                 <span v-if="header.type === 'datetime'">
                                     {{ formater.dateTime(item[header.value]) }}
+                                </span>
+                                <span v-if="header.type === 'gsm' && header.value === 'date_affectation'">
+                                    {{ item.pivot.date_debut }}
+                                </span>
+                                <span v-if="header.type === 'gsm' && header.value === 'date_retour'">
+                                    {{ item.pivot.date_fin ?? 'N/A' }}
                                 </span>
                                 <span v-if="header.type === 'date'">
                                     {{ formater.date(item[header.value]) }}
@@ -211,7 +211,8 @@ watch(() => props.pageSize, () => {
                                     {{ formater.number(item[header.value]) }}
                                 </span>
                                 <span v-if="header.type === 'days'">
-                                    {{ item[header.value] > 1 ? item[header.value] + ' Jours' : item[header.value] + ' Jour'
+                                    {{ item[header.value] > 1 ? item[header.value] + ' Jours' :
+                        item[header.value] + 'Jour'
                                     }}
                                 </span>
                                 <span v-if="header.type === 'time'">
@@ -272,19 +273,20 @@ watch(() => props.pageSize, () => {
                                     </span>
                                     <span v-else>
                                         <h6 class="mb-1 fw-bold">{{ item.recepteur.first_name + ' ' +
-                                            item.recepteur.last_name }}</h6>
+                        item.recepteur.last_name }}</h6>
                                         <small>Matricule : NEC-{{ item.recepteur.matricule }}</small>
                                     </span>
                                 </span>
                                 <span v-if="header.type == 'project_manager'">
                                     {{ item.preproject.project_manager.employee.first_name + ' ' +
-                                        item.preproject.project_manager.employee.last_name
+                        item.preproject.project_manager.employee.last_name
                                     }}
                                 </span>
                                 <span v-if="header.type == 'client'">
                                     <router-link to="/">
-                                        <h6 class="mb-1 fw-bold text-primary">{{ formater.limitText(item.raison_social, 30)
-                                        }}
+                                        <h6 class="mb-1 fw-bold text-primary">{{ formater.limitText(item.raison_social,
+                        30)
+                                            }}
                                         </h6>
                                     </router-link>
                                     <small class="fw-bold text-muted">Numéro RC : {{ item.num_rc ?? 'N/A' }}</small>
@@ -306,33 +308,24 @@ watch(() => props.pageSize, () => {
                             <small class="fw-bold text-muted">RIB : {{ item.carnet.compte_bancaire.rib }}</small>
                         </td>
                         <td class="text-center" v-if="header.isComplex && header.type === 'date_echantillion'">
-                                <i
-                                    v-if="item.date_echantillion != null"
-                                    class="ti ti-square-rounded-check-filled text-success f-26"
-                                ></i>
-                                <i
-                                    v-else
-                                    class="ti ti-square-rounded-x-filled text-danger f-26"
-                                ></i>
-                            </td>
-                            <td class="text-center" v-if="header.isComplex && header.type === 'date_visite'">
-                                <i
-                                    v-if="item.date_visite != null"
-                                    class="ti ti-square-rounded-check-filled text-success f-26"
-                                ></i>
-                                <i
-                                    v-else
-                                    class="ti ti-square-rounded-x-filled text-danger f-26"
-                                ></i>
-                            </td>
+                            <i v-if="item.date_echantillion != null"
+                                class="ti ti-square-rounded-check-filled text-success f-26"></i>
+                            <i v-else class="ti ti-square-rounded-x-filled text-danger f-26"></i>
+                        </td>
+                        <td class="text-center" v-if="header.isComplex && header.type === 'date_visite'">
+                            <i v-if="item.date_visite != null"
+                                class="ti ti-square-rounded-check-filled text-success f-26"></i>
+                            <i v-else class="ti ti-square-rounded-x-filled text-danger f-26"></i>
+                        </td>
                     </template>
 
                     <td v-if="buttonType == 'simple'" class="text-center">
-                        <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
+                        <button v-for="  action   in   actionsConfig  " :key="action.icon" class="btn me-2"
                             :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
                             :disabled="action.type == 'delete' ? (item.status != disabled) : false">
-                            <i v-if="action.type == 'potential'" :class="item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark'"></i>
+                            <i v-if="action.type == 'potential'"
+                                :class="item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark'"></i>
                             <i v-else :class="action.icon"></i>
                         </button>
                     </td>
@@ -343,7 +336,7 @@ watch(() => props.pageSize, () => {
                                 <i class="ti ti-dots-vertical ti-sm text-muted"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsId" style="">
-                                <button v-for="action in actionsConfig" :key="action.icon" class="dropdown-item"
+                                <button v-for="  action   in   actionsConfig  " :key="action.icon" class="dropdown-item"
                                     :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'text-secondary') : action.class"
                                     @click="action.onClick(item)"
                                     :disabled="action.type == 'delete' ? (item.status != disabled) : false">
@@ -368,7 +361,7 @@ watch(() => props.pageSize, () => {
                         <i class="ti ti-chevrons-left"></i>
                     </a>
                 </li>
-                <li class="page-item" v-for="  page  in  visiblePageNumbers  " :key="page"
+                <li class="page-item" v-for="    page    in    visiblePageNumbers    " :key="page"
                     :class="{ active: page === currentPage }">
                     <a class="page-link" href="#" @click.prevent="changePage(page)">{{ page }}</a>
                 </li>

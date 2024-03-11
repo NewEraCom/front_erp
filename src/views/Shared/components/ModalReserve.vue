@@ -97,10 +97,12 @@ const submit = async () => {
                         </div>
                     </div>
                     <div v-if="type === 'event'" class="col-12">
-                        <div class="mb-3 d-flex align-items-center">
-                            <input v-model="formData.shared" :value=1 type="checkbox" class="form-check-input me-2"
-                                id="sharedEvent" />
-                            <label for="sharedEvent" class="form-check-label">Partager avec tout le monde</label>
+                        <div class="mb-3">
+                            <div class="mb-3 d-flex align-items-center">
+                                <input v-model="formData.shared" :value=1 type="checkbox" class="form-check-input me-2"
+                                    id="sharedEvent" />
+                                <label for="sharedEvent" class="form-check-label">Partager avec tout le monde</label>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -236,7 +236,7 @@ const deleteSubscription = async () => {
         const logisticsStore = useLogisticsStore();
         const id = logisticsStore.selectedItem.id;
         const response = await api().delete('/logistics/pacgsm/' + id);
-        if (response.status == 200) {            
+        if (response.status == 200) {
             logisticsStore.deleteSubscription(id);
         }
     } catch (error) {
@@ -256,12 +256,38 @@ const recoverSubscription = async (data: any) => {
     }
 };
 
+const deleteSubscriptionById = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const id = logisticsStore.selectedItem;
+        const response = await api().delete('/logistics/pacgsm/affect/' + id);
+        if (response.status == 200) {
+            logisticsStore.deleteSubscription(id);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const createLouer = async (data: any) => {
     try {
         const response = await api().post('/logistics/louer', data);
         if (response.status == 201) {
             const logisticsStore = useLogisticsStore();
             logisticsStore.pushLouer(response.data.louer);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const removecardsCarburant = async () => {
+    try {
+        const logisticsStore = useLogisticsStore();
+        const id = logisticsStore.selectedItem;
+        const response = await api().delete('/logistics/carte-gasoil/' + id);
+        if (response.status == 200) {
+            logisticsStore.removecardsCarburant(id);
         }
     } catch (error) {
         return Promise.reject(error);
@@ -296,7 +322,9 @@ export default {
     recoverSubscription,
     affectSubscription,
     createLouer,
-    getVehiculeById
+    getVehiculeById,
+    deleteSubscriptionById,
+    removecardsCarburant
 };
 
 

@@ -6,7 +6,6 @@ import { formater, helpers } from '@/utils';
 import { ValidateArticleModal } from './components';
 
 const salesStore = useSalesStore();
-const isLoading = ref(false);
 const purchase = ref(computed(() => salesStore.purchase));
 const role = ref(localStorage.getItem('role'));
 
@@ -25,12 +24,7 @@ onUnmounted(() => {
   salesStore.clearPurchase();
 });
 
-const ValidationArticle = async (id: number) => {
-  isLoading.value = true;
-  await salesService.ValidateArticle(id);
-  isLoading.value = false;
-  salesService.getPurchaseOrderById(Number(props.id));
-};
+
 
 
 </script>
@@ -102,12 +96,17 @@ const ValidationArticle = async (id: number) => {
                   <td class="text-center">{{ article.unity }}</td>
                   <td class="text-center">{{ article.quantity }}</td>
                   <td class="text-center">
-
-                    <button
-                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations')"
-                      class="btn rounded btn-success btn-sm">
-                      <i class="ti ti-check"></i>
-                    </button>
+                    <div class="btn-group"
+                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations')">
+                      <button type="button" class="btn btn-sm btn-success waves-effect waves-light"
+                        data-bs-toggle="modal" data-bs-target="#validateArticle">
+                        <i class="ti ti-check"></i>
+                      </button>
+                      <button type="button" class="btn btn-sm btn-danger waves-effect waves-light"
+                        data-bs-toggle="modal" data-bs-target="#refuseArticle">
+                        <i class="ti ti-x"></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
               </tbody>
@@ -192,15 +191,11 @@ const ValidationArticle = async (id: number) => {
       </div>
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
         <div class="card card-border-shadow-primary mb-4">
-          <div class="card-body">
+          <div v-if="purchase.status == 'pending'" class="card-body">
             <button v-if="purchase.status == 'pending' && role == 'Responsable achat'"
               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
             </button>
-            <a class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" target="_blank"
-              href="./app-invoice-print.html">
-              <i class="ti ti-printer me-2"></i> Imprimer la demande
-            </a>
             <button disabled v-if="purchase.status == 'pending'" href="./app-invoice-edit.html"
               class="btn btn-label-secondary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-pencil me-2"></i> Modifier la demande
@@ -211,12 +206,36 @@ const ValidationArticle = async (id: number) => {
                   class="ti ti-download ti-xs me-2"></i>
                 Télécharger le bon de commande</span>
             </button>
+            <router-link class="btn btn-outline-primary d-grid w-100 waves-effect waves-light" :to="{
+      name: 'Detail-bonCommande',
+      params: {
+        id: props.id
+                }
+              }">
+              <span class="d-flex align-items-center justify-content-center text-nowrap"><i
+                  class="ti ti-download ti-xs me-2"></i>
+                Télécharger le bon de commande</span>
+            </router-link>
+
+          </div>
+          <div v-if="purchase.status=='need validation'">
+            <div class="card-header">
+              <h5 class="fw-bold mb-0">Message</h5>
+            </div>
+            <div class="card-body d-flex justify-content-center align-items-start">
+              <i class="ti ti-exclamation-circle text-danger f-36 me-3"></i>
+              <h6>
+                Cette demande d'achat nécessite une validation
+              </h6>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <ValidateArticleModal />
+    <ValidateArticleModal id="refuseArticle" type="refuse" title="Refuser l'article hors bordereau"
+      message="Êtes-vous sûr de refuser cet Article ?" buttonText="Oui, Refuser" />
   </div>
-
 </template>
 
 <style>

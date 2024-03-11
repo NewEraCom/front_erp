@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const isLoading = ref(false);
 
@@ -43,13 +46,15 @@ const submit = async () => {
     await rhService.addEmployee(formData.value).then(() => {
         console.log('Employee added');
         $('#addNewEmployee').modal('hide');
+        toast.success('Employé ajouté avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
     }).finally(() => {
         isLoading.value = false;
-    });    
+    });
 };
 </script>
+
 <template>
     <Modal id="addNewEmployee" title="Ajouter un employé" size="modal-xl">
         <form @submit.prevent="submit" enctype="multipart/form-data">
@@ -60,8 +65,8 @@ const submit = async () => {
                             <label for="nom" class="form-label">Nom de famille
                                 <span class="text-danger">*</span>
                             </label>
-                            <input id="nom" v-model="formData.last_name" class="form-control" placeholder="Entrez le nom"
-                                type="text" tabindex="0" autofocus required />
+                            <input id="nom" v-model="formData.last_name" class="form-control"
+                                placeholder="Entrez le nom" type="text" tabindex="0" autofocus required />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -263,7 +268,8 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="conge" class="form-label">Conge Jours par Mois <span class="text-danger">*</span>
+                            <label for="conge" class="form-label">Conge Jours par Mois <span
+                                    class="text-danger">*</span>
                             </label>
                             <input id="conge" v-model="formData.conge" class="form-control"
                                 placeholder="Entre le nombre de jours de congé" type="number" tabindex="0" required />

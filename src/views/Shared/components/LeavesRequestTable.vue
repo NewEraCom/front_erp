@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
+import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 
 const props = defineProps({
@@ -27,7 +27,7 @@ const actionsConfig = [
     },
     {
         icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
-            console.log(item);
+            $('#deleteModal').modal('show');
         }
     },
 ];
@@ -60,17 +60,7 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
-                        placeholder="Rechercher..." @input="filter" />
-
-                    <div class="d-flex align-items-center ms-0">
-                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
-                            <option value="-">Tout</option>
-                            <option value="Congé">Congé</option>
-                            <option value="Maladie">Maladie</option>
-                        </select>
-                    </div>
-                    <div class="d-flex align-items-center ms-2">
+                    <div class="d-flex align-items-center">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
                             @change="filter" />
@@ -79,6 +69,13 @@ const filter = () => {
                         <label for="end">à</label>
                         <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
                             @change="filter" />
+                    </div>
+                    <div class="d-flex align-items-center ms-2">
+                        <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
+                            <option value="-">Tout</option>
+                            <option value="Congé">Congé</option>
+                            <option value="Maladie">Maladie</option>
+                        </select>
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>

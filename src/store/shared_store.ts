@@ -86,6 +86,9 @@ export const useSharedStore = defineStore('ShareStore', {
             this.rhRequest.stats = null;
             this.rhRequest.loading = false;
         },
+        pushRhRequest(data: any) {
+            this.rhRequest.data.unshift(data);
+        },
         setRecruitment(data: any) {
             this.recruitment.data = data;
             this.recruitment.stats = {
@@ -117,7 +120,7 @@ export const useSharedStore = defineStore('ShareStore', {
         },
         pushFournisseur(data: any) {
             console.log(data);
-            this.fournisseurs.data.push(data);        
+            this.fournisseurs.data.push(data);
         },
         deleteSoustraitant(id: number) {
             const itemIdToDelete = id;

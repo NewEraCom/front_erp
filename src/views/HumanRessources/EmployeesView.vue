@@ -35,6 +35,7 @@ watch(employees, () => {
 
 
 </script>
+
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
     <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employés</span> </h5>
@@ -81,7 +82,7 @@ watch(employees, () => {
     </div>
     <AddNewEmployeeModal />
     <DeleteModal title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?"
-      textButton="Oui, Supprimer" :action="() => rhService.deleteEmployee()" />
+      textButton="Oui, Supprimer" :action="() => rhService.deleteEmployee()" message="Employé supprimé avec succès" />
   </div>
 </template>
 

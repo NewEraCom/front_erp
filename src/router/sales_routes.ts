@@ -70,10 +70,10 @@ export const salesRoutes = [
     {
         path: '/details/bon-commande/:id',
         name: 'Detail-bonCommande',
-        component: () => import('../views/Sales/components/Detail.vue'),
+        component: () => import('../views/Sales/components/DetailBonCommande.vue'),
         meta: {
             title: 'Detail-bonCommande',
-            
+
         },
         props: (route) => ({ id: route.params.id })
     },

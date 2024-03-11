@@ -32,6 +32,22 @@ const getRhRequest = async () => {
     }
 };
 
+const deleteRhRequest = async () => {
+    try {
+        const sharedStore = useSharedStore();
+        const id = sharedStore.selectedItem;
+        const response = await api().delete('rh/document-rh/delete/' + id);
+        if (response.status == 200) {
+            const dmndIndex = sharedStore.rhRequest.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                sharedStore.rhRequest.data.splice(dmndIndex, 1);
+            }
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const getRecruitment = async () => {
     try {
         const response = await api().get('/dmnd/get-recruitement-by-id');
@@ -161,5 +177,6 @@ export default {
     deleteRecruitment,
     addNewRecruitment,
     createTier,
-    deleteSoustraitant
+    deleteSoustraitant,
+    deleteRhRequest
 };
