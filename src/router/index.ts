@@ -4,7 +4,7 @@ import { helpers } from '@/utils';
 import { landingRoutes, authRoutes, hrRoutes, projectManagerRoutes, sharedRoutes, financeRoutes, salesRoutes, logisticsRoutes } from './export';
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/erp'),
     routes: [
         ...landingRoutes,
         ...authRoutes,
