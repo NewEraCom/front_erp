@@ -2,7 +2,6 @@
 import { onMounted, ref, computed, onUnmounted } from 'vue';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
-import { Modal } from '@/ui';
 import { formater, helpers } from '@/utils';
 import html2pdf from 'html2pdf.js';
 
@@ -12,10 +11,14 @@ const props = defineProps({
   id: Number
 });
 
+const loading = ref(false);
+
 const order = ref(computed(() => salesStore.selectedBonDeCommande));
 
 onMounted(async () => {
   await salesService.getBonDeCommandeById(props.id);
+  loading.value = true;
+  generatePDF();
 });
 
 onUnmounted(() => {
@@ -35,14 +38,19 @@ const priceFromSelectedSupplier = (item) => {
 const pdfUrl = ref('');
 
 const generatePDF = () => {
-  console.log('PRINTING');
   const element = document.getElementById('printSection');
   const childElement = element.querySelector('.card');
   const iframe = document.getElementById('pdfPreview');
 
+  const body = document.getElementById('body');
+
   // Remove the classes before printing
   element.classList.replace('col-9', 'col-12');
-  element.classList.add('p-5');
+  element.classList.add('m-0');
+  element.classList.add('p-0');
+  body.classList.add('ps-5');
+  body.classList.add('pe-5');
+  body.classList.add('mn-0');
   if (childElement) {
     childElement.classList.remove('card');
     childElement.classList.remove('card-border-shadow-primary');
@@ -73,46 +81,41 @@ const generatePDF = () => {
       }
     });
 };
-
-
-
-
 </script>
 
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
     <div class="d-flex justify-content-between align-items-center">
       <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Bon de commande</span></h5>
-      <button class="btn btn-primary ms-auto" data-bs-target="#detailsBdc" data-bs-toggle="modal" @click="generatePDF">
-        <i class="ti ti-download me-2"></i> Télécharger
-      </button>
     </div>
     <div class="row">
-      <div class="col-12" id="printSection">
-        <div class="card card-border-shadow-primary" v-if="order && !pdfUrl">
-          <div class="card-body">
-            <div class="row justify-content-between align-items-center mb-4 header">
-              <div class="col-12">
-                <img class="img-thumbnail h-px-100 w-px-250" src="@/assets/img/Logo_Neweracom.png"
-                  style="object-fit: contain;" />
-              </div>
+      <div class="col-12 p-0" id="printSection">
+        <div class="card card-border-shadow-primary p-9 m-0" style="height: 90vh;" v-if="order && !pdfUrl">
+          <img class="img-thumbnail" src="@/assets/img/Header.png" width="100%" height="100%"
+            style="object-fit: contain;" />
+          <div class="card-body m-0 p-0" id="body">
+            <div class="row justify-content-between align-items-center mb-2 mt-4 header">
+
               <div class="col-6 p-3">
                 <p class="mb-1"><strong class="text-dark">Bon de commande N° : </strong> {{ order.bon_commande[0].num }}
                 </p>
                 <p class="mb-1"><strong class="text-dark">Date : </strong> {{
-        formater.date(order.bon_commande[0].created_at) }}</p>
+          formater.date(order.bon_commande[0].created_at) }}</p>
                 <p class="mb-1"><strong class="text-dark">Affaire : </strong> {{ order.project.code }}</p>
                 <p class="mb-1"><strong class="text-dark">Projet : </strong> {{ order.project.code }}</p>
               </div>
-              <div class="col-6 border border-dark p-3">
-                <h6>{{ order.bon_commande[0].soustraitant.raison_social }}</h6>
-                <p>{{ order.bon_commande[0].soustraitant.adresse }}</p>
+              <div class="col-6 border border-primary rounded p-2">
+                <h6 class="font-bold text-dark mb-1" style="font-size: 11px;">{{
+          order.bon_commande[0].soustraitant.raison_social }}</h6>
+                <h6 class="font-bold text-dark mb-1" style="font-size: 11px;">ICE : {{
+          order.bon_commande[0].soustraitant.num_ice }}</h6>
+                <p class="mb-1">{{ order.bon_commande[0].soustraitant.adresse }}</p>
               </div>
             </div>
-            <div class="row">
-              <table class="table table-bordered mt-3 my-2">
+            <div class="row table-responsive text-nowrap">
+              <table class="table striped-table mt-3 my-2">
                 <thead>
-                  <tr>
+                  <tr style="background-color: #4e96de !important;">
                     <th scope="col" class="text-start">Désignation</th>
                     <th scope="col">Unite</th>
                     <th scope="col">Quantité</th>
@@ -121,12 +124,13 @@ const generatePDF = () => {
                   </tr>
                 </thead>
                 <tbody>
+
                   <tr v-for="item in order.purchase_article" :key="item.id">
-                    <td class="text-start">{{ item.designation }}</td>
-                    <td class="text-center">{{ item.unity }}</td>
-                    <td class="text-center">{{ item.quantity }}</td>
-                    <td class="text-center">{{ formater.number(priceFromSelectedSupplier(item)) }} MAD</td>
-                    <td class="text-center">
+                    <td class="text-dark text-start">{{ item.designation }}</td>
+                    <td class="text-dark text-center">{{ item.unity }}</td>
+                    <td class="text-dark text-center">{{ item.quantity }}</td>
+                    <td class="text-dark text-center">{{ formater.number(priceFromSelectedSupplier(item)) }} MAD</td>
+                    <td class="text-dark text-center">
                       {{ formater.number(priceFromSelectedSupplier(item) * item.quantity) }}
                       MAD
                     </td>
@@ -137,12 +141,12 @@ const generatePDF = () => {
                     </td>
                     <td class="text-center">
                       {{
-        formater.number(order.purchase_article.reduce((total, item) => {
-          const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-          const unitPrice = item[priceProperty]
-          return total + item.quantity * unitPrice
-        }, 0))
-      }}
+          formater.number(order.purchase_article.reduce((total, item) => {
+            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+            const unitPrice = item[priceProperty]
+            return total + item.quantity * unitPrice
+          }, 0))
+        }}
                       MAD
                     </td>
                   </tr>
@@ -152,12 +156,12 @@ const generatePDF = () => {
                     </td>
                     <td class="text-center">
                       {{
-          formater.number(order.purchase_article.reduce((total, item) => {
-            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-            const unitPrice = item[priceProperty]
-            return total + item.quantity * unitPrice * 0.2
-          }, 0))
-        }}
+            formater.number(order.purchase_article.reduce((total, item) => {
+              const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+              const unitPrice = item[priceProperty]
+              return total + item.quantity * unitPrice * 0.2
+            }, 0))
+          }}
                       MAD
                     </td>
                   </tr>
@@ -167,12 +171,12 @@ const generatePDF = () => {
                     </td>
                     <td class="text-center">
                       {{
-          formater.number(order.purchase_article.reduce((total, item) => {
-            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
-            const unitPrice = item[priceProperty]
-            return total + item.quantity * unitPrice * 1.2
-          }, 0)
-          ) }}
+            formater.number(order.purchase_article.reduce((total, item) => {
+              const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+              const unitPrice = item[priceProperty]
+              return total + item.quantity * unitPrice * 1.2
+            }, 0)
+            ) }}
                       MAD
                     </td>
                   </tr>
@@ -184,10 +188,10 @@ const generatePDF = () => {
                 <p>Arret du present bon de commande toutes taxes comprises a la somme de :</p>
                 <p class="text-dark font-bold">
                   {{ helpers.numberToTextMAD(
-        order.purchase_article.reduce((total, item) => {
-                  const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
+          order.purchase_article.reduce((total, item) => {
+            const priceProperty = `prix_fournisseur_${item.fournisseur_choisi}`
                   const unitPrice = item[priceProperty]
-                  return total + item.quantity * unitPrice
+                  return total + item.quantity * unitPrice * 1.2
                   }, 0))
                   }}
                 </p>
@@ -205,12 +209,27 @@ const generatePDF = () => {
 </template>
 
 <style scoped>
+p {
+  font-size: 12px;
+}
+
+thead>tr>th {
+  color: #fff !important;
+}
+
+.footer {
+  margin-top: auto;
+}
+
 .header {
-  /* ... your existing styles ... */
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
   width: 100% !important;
+}
+
+thead>tr>th {
+  font-size: 10px;
 }
 
 .img-fluid {
@@ -224,9 +243,44 @@ const generatePDF = () => {
   margin: 0 auto;
 }
 
-.table>thead>tr>th {
-  background-color: #0b2855 !important;
-  color: white !important;
-  text-align: center;
+
+.table {
+  font-size: 10px;
+}
+
+.striped-table {
+  width: 100%;
+  border-collapse: collapse;
+  /* Optional: Collapses the border to make it look neat */
+}
+
+.striped-table th,
+.striped-table td {
+
+  /* Optional: Adds a light border to each cell */
+  padding: 8px;
+  /* Adjust padding to your preference */
+  text-align: left;
+  /* Adjust text alignment as needed */
+}
+
+
+.striped-table tr {
+  align-items: center;
+}
+
+/* Stripe effect for table rows */
+.striped-table tr:nth-child(even) {
+  background-color: #dcecfd;
+  /* Lighter shade for even rows */
+}
+
+.striped-table tr:nth-child(odd) {
+  background-color: #fff;
+  /* White or any other color for odd rows */
+}
+
+#footer {
+  margin-top: auto !important;
 }
 </style>

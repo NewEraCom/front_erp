@@ -112,7 +112,7 @@ onUnmounted(() => {
               </tbody>
               <tbody v-else>
                 <tr>
-                  <td colspan="4" class="text-center">
+                  <td colspan="5" class="text-center">
                     <small>Aucun article</small>
                   </td>
                 </tr>
