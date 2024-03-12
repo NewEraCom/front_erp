@@ -12,7 +12,7 @@ COPY . .
 
 RUN npm install
 
-RUN npm run build
+RUN npm run dev
 
 RUN cp -a /app/dist/. /usr/share/nginx/html/
 
