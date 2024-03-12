@@ -45,7 +45,7 @@ export const useSharedStore = defineStore('ShareStore', {
         },
         event: null,
         selectedItem: null,
-        soustraitant : null,
+        Soustraitant: null,
     }),
     actions: {
         setEvents(data: any) {

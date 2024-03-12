@@ -118,6 +118,22 @@ const editArticle = async (id: number, data: any) => {
     }
 };
 
+const insertTableComperatif = async(data)=>{
+    try {
+        const res = await api().post('purchase/table-comperatif', data);
+        if (res.status === 200) {
+            console.log(res);
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+};
+
+
 
 
 export default {
@@ -131,5 +147,6 @@ export default {
     editArticle,
     createExecutionOrder,
     createPurchaseOrder,
-    getBonDeCommandeById
+    getBonDeCommandeById,
+    insertTableComperatif
 };

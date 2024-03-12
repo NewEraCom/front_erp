@@ -3,9 +3,9 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 import { useSharedStore } from '@/store';
-
+import {useRouter} from 'vue-router';
 const sharedStore = useSharedStore();
-
+const router = useRouter();
 const props = defineProps({
     fournisseurs: {
         type: Array,
@@ -14,7 +14,7 @@ const props = defineProps({
 });
 
 const headers = [
-    { text: 'Raison sociale', value: 'raison_social', type: 'text' },
+    { text: 'Raison sociale',  isComplex:true, type: 'SousTraitant' },
     { text: 'Ville', value: 'ville', type: 'text' },
     { text: 'Numéro de téléphone', value: 'phone_no_1', type: 'phone' },
     { text: 'Créé le', value: 'created_at', type: 'date' },
@@ -25,6 +25,8 @@ const actionsConfig = [
     {
         icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
             console.log(item);
+            router.push({ name: 'ProfileSoustraitant', params: { id: item.id } });
+            
         }
     },
     {

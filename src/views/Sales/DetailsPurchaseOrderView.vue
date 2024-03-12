@@ -4,11 +4,11 @@ import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
 import { formater, helpers } from '@/utils';
 import { ValidateArticleModal } from './components';
-
+import {useRouter} from 'vue-router';
 const salesStore = useSalesStore();
 const purchase = ref(computed(() => salesStore.purchase));
 const role = ref(localStorage.getItem('role'));
-
+const router = useRouter();
 const props = defineProps({
   id: {
     type: String,
@@ -23,6 +23,11 @@ onMounted(async () => {
 onUnmounted(() => {
   salesStore.clearPurchase();
 });
+
+const tabeComperatif = () => {
+  salesStore.article = purchase.value.purchase_article;
+  router.push({ name: 'PurchaseOrderTableComperatif', params: { id: props.id }});
+};
 
 
 
@@ -193,8 +198,8 @@ onUnmounted(() => {
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">
             <button v-if="purchase.status == 'pending' && role == 'Responsable d\'achats'"
-              class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex">
-              <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
+              class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" @click="tabeComperatif">             
+                <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative            
             </button>
             <button class="btn d-grid w-100 mb-2 waves-effect d-flex" :disabled="purchase.status != 'pending'"
               :class="purchase.status != 'pending' ? 'btn-secondary' : 'btn-warning'" href=". /app-invoice-edit.html">

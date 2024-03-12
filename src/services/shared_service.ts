@@ -143,7 +143,7 @@ async function updateSousTraitants(id, req) {
     try {
 
 
-        const response = await api().post('stg/update/' + id, req);
+        const response = await api().post('tiers/update/' + id, req);
         if (response.status == 200) {
             const sharedStore = useSharedStore();
 
@@ -183,6 +183,34 @@ const deleteSoustraitant = async () => {
         return Promise.reject(error);
     }
 };
+   const getFournisseur = async() => {
+    try {
+        const sharedStore = useSharedStore();
+
+        const response = await api().get('tiers/getFournisseur');
+        if (response.status == 200) {
+            // sharedStore.fournisseurs.data = response.data.fournisseur;
+            sharedStore.setFournisseurs(response.data.fournisseur);
+            return response.data.fournisseur;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+const getSoustraitantById = async(id) => {
+    try {
+        const sharedStore = useSharedStore();
+
+        const response = await api().get('tiers/get/'+id);
+        if (response.status == 200) {
+            sharedStore.Soustraitant = response.data.soustraitant;
+            return response.data.soustraitant;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
 export default {
     createEvent,
@@ -199,5 +227,7 @@ export default {
     createTier,
     deleteSoustraitant,
     deleteRhRequest,
-    updateSousTraitants
+    updateSousTraitants,
+    getFournisseur,
+    getSoustraitantById
 };

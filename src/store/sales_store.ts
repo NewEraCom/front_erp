@@ -1,4 +1,3 @@
-import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useSalesStore = defineStore('SalesStore', {
@@ -23,6 +22,7 @@ export const useSalesStore = defineStore('SalesStore', {
         print_commande: null,
         print_bonCommande: null,
         commande: null,
+        article: null
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
