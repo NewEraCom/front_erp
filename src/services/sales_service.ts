@@ -21,6 +21,15 @@ const getPurchaseOrdersByProjectManager = async (type: string) => {
         return Promise.reject(error);
     }
 };
+const getCaisseOperation = async () => {
+    try {
+        const response = await api().get('/logistics/caisse/operation');
+        const salesStore = useSalesStore();
+        salesStore.setDemandeCaisse(response.data.caisse);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 const getPurchaseOrderById = async (id: number) => {
     try {
@@ -148,5 +157,6 @@ export default {
     createExecutionOrder,
     createPurchaseOrder,
     getBonDeCommandeById,
-    insertTableComperatif
+    insertTableComperatif,
+    getCaisseOperation
 };

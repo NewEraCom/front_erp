@@ -3,15 +3,15 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { salesService } from '@/services';
 import { useSalesStore } from '@/store';
 import { CardOne } from '@/ui';
-import PurchaseOrderTable from '../Sales/components/PurchaseOrderTable.vue';
+import { CaisseTable } from '../Logistics/components';
 
 const salesStore = useSalesStore();
 
-const stats = ref(computed(() => salesStore.purchaseOrders.stats));
-const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
+const stats = ref(computed(() => salesStore.demande_caisse.stats));
+const caisse = ref(computed(() => salesStore.demande_caisse.data));
 
 onMounted(async () => {
-    await salesService.getPurchaseOrdersByProjectManager('Service');
+    await salesService.getCaisseOperation();
 });
 
 onUnmounted(() => {
@@ -49,8 +49,8 @@ onUnmounted(() => {
                                 </div>
                             </div>
                         </div>
-                        <div v-if="purchaseOrders != null" class="card-body border-top pt-4">
-                            <PurchaseOrderTable :purchase-orders="purchaseOrders" />
+                        <div v-if="caisse != null" class="card-body border-top pt-4">
+                            <CaisseTable :caisse="caisse" />
                         </div>
                     </div>
                 </div>

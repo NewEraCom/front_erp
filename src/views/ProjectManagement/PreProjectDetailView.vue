@@ -1,5 +1,70 @@
 <script setup>
+import { computed, onMounted, ref } from 'vue';
+import { usePMStore } from '@/store';
+import { pmService } from '@/services';
+import { helpers } from '@/utils';
+// import { Modal, DataTableDevis, DataTableBordereau, DetailsPreProjectSkeleton } from '@/ui';
+import { Modal } from '@/ui';
+import { DataTableBordereau ,DataTableDevis} from './components';
+
+import {
+    AddLots,
+    ImportAssets,
+    EditPreProject,
+    SetFileNumber,
+    SetFileNumberDone,
+    ValidatePreProject,
+    RefuserPreProject,
+    CloturePreProject,
+    NewChiffrage,
+    DeleteChiffrage,
+    ImportChiffrage,
+    CloseChiffrage,
+    ImportBordereau,
+    ClosePreProject,
+    CancelSubmission
+} from './components';
+
+const props = defineProps({
+  id: {
+    type: String,
+    default: '0'
+  }
+});
+
+const PMStore = usePMStore();
+const preProject = computed(() => PMStore.preprojectDetail);
+let user = ref(null);
+
+const projectManager = ref(computed(() => PMStore.projectManager));
+
+onMounted(async () => {
+  await pmService.getPreProjectById(props.id).then(() => {
+    user.value = JSON.parse(localStorage.getItem('user'));
+  });
+});
+
+const fillInputIdDoc = (id) => {
+  $('#docID').val(id);
+};
+
+const toggleCard = (id) => {
+  $('#' + id).toggleClass('hide-card');
+};
+
+const sumCautionAndEstimation = (lots) => {
+  let caution = 0;
+  let estimation = 0;
+
+  lots.forEach((lot) => {
+    caution += lot.montant_caution;
+    estimation += lot.estimation_marche;
+  });
+
+  return [caution, estimation];
+};
 </script>
+
 
 <template>
   <div v-if="preProject != null" class="flex-grow-1 container-fluid mt-3">

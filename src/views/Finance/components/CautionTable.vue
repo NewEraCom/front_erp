@@ -22,7 +22,7 @@ const headers = [
 const actionsConfig = [
     {
         icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
-            financeService.recover(item.id)
+            financeService.recover(item.id);
         },
         condition: (item:any) => item.status != 1
     },
@@ -90,7 +90,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" button-type="simple" />
     </div>
 </template>
 <style>

@@ -17,6 +17,10 @@ export const useSalesStore = defineStore('SalesStore', {
             data: null,
             stats: null,
         },
+        demande_caisse: {
+            data: null,
+            stats: null,
+        },
         purchase: null,
         ItemId: null,
         print_commande: null,
@@ -88,6 +92,15 @@ export const useSalesStore = defineStore('SalesStore', {
         },
         setPrintBonCommande(data) {
             this.print_bonCommande = data;
-        }
+        },
+        setDemandeCaisse(data: any) {
+            this.demande_caisse.data = data;
+            this.demande_caisse.stats = {
+                total: data.length,
+                pending: data.filter((p: any) => p.status === 'pending').length,
+                ongoing: data.filter((p: any) => p.status === 'on going').length,
+                completed: data.filter((p: any) => p.status === 'done').length,
+            };
+        },
     }
 });

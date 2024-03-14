@@ -36,6 +36,7 @@ const roles = {
 	RH: 'Responsable ressources humaines',
 	DG: 'Directeur general',
 	DS: 'Directeur support',
+	DO: 'Directeur des opérations',
 	RAP: 'Responsable d\'avant projet',
 	MAGASINIER: 'Magasinier',
 	FINANCE: 'Responsable financier',
@@ -58,6 +59,8 @@ const initialDashboard = (role: string): string => {
 			return 'DashboardAdmin';
 		case roles.FINANCE:
 			return 'FnFacture';
+		case roles.DO:
+			return 'DashboardPM';
 		// return 'DashboardAdmin';
 		default:
 			return '404';
@@ -81,6 +84,8 @@ const returnSideBarItems = (): any => {
 			return sideBar.FinanceMenu;
 		case roles.DS:
 			return sideBar.SupportMenu;
+		case roles.DO:
+			return sideBar.DOMenu;
 		default:
 			return [];
 	}

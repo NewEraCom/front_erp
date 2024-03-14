@@ -7,7 +7,7 @@ export const projectManagerRoutes = [
         component: () => import('@/views/ProjectManagement/DirecteurOperation.vue'),
         meta: {
             title: 'Dashboard',
-            role: [helpers.roles.CF]
+            role: [helpers.roles.CF, helpers.roles.DO]
         },
     },
     {

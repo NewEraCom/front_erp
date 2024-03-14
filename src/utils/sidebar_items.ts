@@ -636,6 +636,67 @@ const FinanceMenu = [
         path: 'FnCaution'
     }
 ];
+const DOMenu = [
+    {
+        id: 1,
+        name: 'Dashboard',
+        route: '/dashboard-pm',
+        icon: 'ti ti-smart-home',
+        path: 'DashboardPM'
+    },
+    {
+        id: 2,
+        name: 'Projets',
+        route: '/projects',
+        icon: 'ti ti-package',
+        path: 'Projects'
+    },
+    {
+        id: 3,
+        name: 'Demande d\'achat',
+        route: '/project/purchase_order',
+        icon: 'ti ti-shopping-cart',
+        path: 'PurchaseOrderProject'
+    },
+    {
+        id: 3,
+        name: 'Demande d\'exécution',
+        route: '/project/executation_order',
+        icon: 'ti ti-settings',
+        path: 'ExecutionOrderProject'
+    },
+    {
+        id: 4,
+        name: 'Factures',
+        route: '/facture',
+        icon: 'ti ti-file-invoice',
+        path: 'DashboardPM'
+    },
+    {
+        id: 5,
+        name: 'Demande DSS',
+        route: '/project/out-of-stock',
+        icon: 'ti ti-transfer-out',
+        path: 'OutOfStockProject'
+    },
+    {
+        id: 6,
+        name: 'Sous-traitants',
+        route: '/soustraitant',
+        icon: 'ti ti-forklift',
+        path: 'Soustraitant'
+    },
+    {
+        id: 7,
+        name: 'Demande de caisse',
+        route: '/project/caisse-request',
+        icon: 'ti ti-transfer-out',
+        path: 'CaisseRequest'
+    },
+
+    ...sharedMenu2,
+    ...sharedMenu
+];
 
 export const sideBar = {
     DGMenu,
@@ -644,5 +705,6 @@ export const sideBar = {
     SalesMenu,
     LogisticsMenu,
     SupportMenu,
-    FinanceMenu
+    FinanceMenu,
+    DOMenu
 };

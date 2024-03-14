@@ -6,6 +6,7 @@ import { sharedService } from '@/services';
 import { ProjectsDisplay } from './components';
 
 const sharedStore = useSharedStore();
+const role = localStorage.getItem('role');
 
 const projects = ref(computed(() => sharedStore.projects.data));
 const stats = ref(computed(() => sharedStore.projects.stats));
