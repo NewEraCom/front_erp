@@ -1,8 +1,15 @@
 <script setup lang="ts">
-import { ref ,onMounted, computed} from 'vue';
+import { ref, watchEffect ,computed,onMounted} from 'vue';
 import { Modal ,CustomSelect} from '@/ui';
 import { pmService, rhService } from '@/services';
 import { usePMStore, useRhStore } from '@/store';
+
+const props = defineProps({
+    worker: {
+        type: Object,
+        required: true,
+    },
+});
 
 const isLoading = ref(false);
 const pmStore = usePMStore();
@@ -16,7 +23,6 @@ const formData = ref({
     copie_cin: null,
     sexe: '-',
     email: null,
-    adresse: null,
     bank_name: null,
     type_transcation: '-',
     cnss :null,
@@ -60,15 +66,45 @@ const handleFileChange = (e, value) => {
     // }
 };
 
+
+watchEffect(() => {
+    if (props.worker) {
+        formData.value = {
+            first_name: props.worker.first_name,
+    last_name: props.worker.last_name ,
+    phone_no:  props.worker.phone_no,
+    matricule: props.worker.matricule ,
+    cin:  props.worker.cin,
+    copie_cin:  props.worker.copie_cin,
+    sexe:  props.worker.sexe,
+    email:  props.worker.email,
+    bank_name: props.worker.bank_name, 
+    type_transcation: props.worker.type_transcation, 
+    cnss : props.worker.cnss,
+    copie_cnss : props.worker.copie_cnss,
+    rib  : props.worker.rib,
+    copie_rib : props.worker.copie_rib,
+    date_start: props.worker.date_start,
+    date_end: props.worker.date_end,
+    status: props.worker.status,
+    poste: props.worker.poste,
+    project_id: props.worker.project_id,
+    copie_contract: props.worker.copie_contract,
+    tier_id: props.worker.tier_id,
+    salary: props.worker.salary,
+        };
+    }
+});
+
 const submit = async () => {
     console.log('submit');
     formData.value.tier_id = formData.value.tier_id.key;
     formData.value.project_id = formData.value.project_id.key;
     console.log(formData.value);
     isLoading.value = true;
-    await rhService.addWorker(formData.value).then(() => {
-        console.log('Employee added');
-        $('#addNewWorkers').modal('hide');
+    await rhService.updateWorker(formData.value,props.worker.id).then(() => {
+        console.log('Worker updated');
+        $('#EditWorker').modal('hide');
     }).catch((error) => {
         console.error('Error during action execution', error);
     }).finally(() => {
@@ -77,8 +113,9 @@ const submit = async () => {
     
 };
 </script>
+
 <template>
-    <Modal id="addNewWorkers" title="Ajouter un employé d'un sous-traitant" size="modal-xl">
+    <Modal id="EditWorker" title="Edit un employé d'un sous-traitant" size="modal-xl">
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
@@ -244,18 +281,12 @@ const submit = async () => {
                             <label for="nameEx" class="form-label">Sexe <span class="text-danger">*</span></label>
                             <select name="" id="" class="form-select" required v-model="formData.sexe">
                                 <option value="-">Choisir le sexe</option>
-                                <option value="Homme">Homme</option>
-                                <option value="Femme">Femme</option>
+                                <option value="homme">Homme</option>
+                                <option value="femme">Femme</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="nameEx" class="form-label">Adresse <span class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
-                                id="nameEx" v-model="formData.adresse" required />
-                        </div>
-                    </div>
+                    
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Date debut  <span
@@ -272,21 +303,7 @@ const submit = async () => {
                                 v-model="formData.date_end" required />
                         </div>
                     </div>
-                    <!-- <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="copie_cv" class="form-label">Copie CV <span class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cin" @change="e => handleFileChange(e, 'cv')" required />
-                        </div>
-                    </div> -->
-                    <!-- <div class="col-sm-6">
-                        <div class="mb-3">
-                            <label for="assurance" class="form-label">Fiche d'assurance <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="" type="file" tabindex="0" id="assurance"
-                                name="copie_cin" @change="e => handleFileChange(e, 'assurance')" required />
-                        </div>
-                    </div> -->
+                    
                     
                 </div>
             </div>

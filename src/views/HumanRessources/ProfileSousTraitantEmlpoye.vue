@@ -2,8 +2,8 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { Modal } from '@/ui';
 import { helpers ,formater} from '@/utils';
+import {EditWorkerModal} from './components/modals';
 
 const props = defineProps({
     id: {
@@ -43,7 +43,7 @@ const getFileUrl = (attachment) => {
         <div class="d-flex align-items-center justify-content-between mb-4" >
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe de {{ worker.soustraitant.raison_social }}</span> </h5>
             <div >
-                <button class="btn btn-warning" data-bs-target="#" data-bs-toggle="modal">
+                <button class="btn btn-warning" data-bs-target="#EditWorker" data-bs-toggle="modal">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
@@ -258,6 +258,6 @@ const getFileUrl = (attachment) => {
         </div>
         </div>
         
-       
+       <EditWorkerModal :worker="worker" />
     </div>
 </template>

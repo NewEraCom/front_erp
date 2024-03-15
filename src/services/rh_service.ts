@@ -388,6 +388,21 @@ const deleteWorker = async (id: any) => {
         return error;
     }
 };
+const updateWorker = async (data: any,id:any) => {
+    try {
+        const response = await api().post('/tiers/update-worker/'+id, data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            // rhStore.setWorkers(response.data.workers);
+            rhStore.worker = response.data.worker;
+            return;
+        }
+        throw new Error('Update worker failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 
 const getSousTaraitant = async () => {
     try {
@@ -825,5 +840,6 @@ export default {
     getWorkerById,
     getInternById,
     UploadDocIntern,
-    DeleteDocIntern
+    DeleteDocIntern,
+    updateWorker
 };
