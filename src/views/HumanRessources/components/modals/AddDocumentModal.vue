@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
     id: {
@@ -28,10 +31,12 @@ const submit = async () => {
     }
     console.log(formData.value);
     isLoading.value = true;
-    await rhService.UploadDocEmployee(props.id,formData.value).then(() => {
+    await rhService.UploadDocEmployee(props.id, formData.value).then(() => {
         $('#upload-documents').modal('hide');
+        toast.success('Document ajouté avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Erreur lors de l\'ajout du document');
     }).finally(() => {
         isLoading.value = false;
     });
@@ -42,7 +47,7 @@ const submit = async () => {
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    
+
 
                     <div class="col-sm-12">
                         <div class="mb-3">

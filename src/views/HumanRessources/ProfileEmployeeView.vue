@@ -4,13 +4,18 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { Modal } from '@/ui';
 import { helpers, formater } from '@/utils';
-import { PointageTable } from './components';
+import { PointageTable, EmployeeSkeleton } from './components';
 import {
     EditSalaryModal, AugementationSalaryModal, EditLeavePerMonthModal,
     AddCongeModal, EditBanInfoModal, EditCnssModal,
     AddDocumentModal, DeleteDocModal, AddPointageModal,
     EditEmployeeModal, RuptureContractModal
 } from './components/modals';
+
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
 const props = defineProps({
     id: {
         type: String,
@@ -28,7 +33,7 @@ const employee = ref(computed(() => rhStore.employee));
 const showSalary = ref(false);
 
 onMounted(async () => {
-    await rhService.getEmployeeById(props.id);
+    await rhService.getEmployeeById(Number(props.id));
     // employee.value = data.value;
 });
 
@@ -51,7 +56,11 @@ const DeleteDoc = async () => {
     await rhService.DeleteDocEmployee(rhStore.ItemId).then(() => {
         isLoading.value = false;
         $('#delete-doc').modal('hide');
-
+        toast.success('Document supprimé avec succès');
+    }).catch((error) => {
+        isLoading.value = false;
+        console.error('Error during action execution', error);
+        toast.error('Erreur lors de la suppression du document');
     });
 };
 
@@ -59,7 +68,7 @@ const DeleteDoc = async () => {
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe</span> </h5>
+            <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employés</span> </h5>
             <div v-if="employee">
                 <button class="btn btn-warning" data-bs-target="#editNewEmployee" data-bs-toggle="modal">
                     <i class="ti ti-pencil me-2"></i>
@@ -200,9 +209,9 @@ const DeleteDoc = async () => {
                     </li>
                 </ul>
 
-                <div class="tab-content p-0" style="background-color: transparent; !important">
+                <div class="tab-content p-0" style="background-color: transparent !important">
                     <div id="employee_dossier" class="tab-pane fade show active bg-none"
-                        style="background-color: transparent; !important" role="tabpanel">
+                        style="background-color: transparent !important" role="tabpanel">
                         <div class="row mb-3 g-3">
                             <div class="col-xxl-6">
                                 <div class="card card-border-shadow-primary">
@@ -283,7 +292,7 @@ const DeleteDoc = async () => {
                             </div>
                         </div>
 
-                        <div class="row mb-3 ">
+                        <div class="row mb-3 g-3">
                             <div class="col-xxl-6">
                                 <div class="card card-border-shadow-info">
                                     <div class="card-body">
@@ -603,7 +612,9 @@ const DeleteDoc = async () => {
                                             {{ formater.date(item.date_end) }}
                                         </td>
                                         <td class="text-center">
-                                            {{ item.duree ? item.duree > 1 ? item.duree + ' Jours' : item.duree + ' Jour' : 'N/A' }}
+                                            {{ item.duree ?
+                                            item.duree > 1 ? item.duree + ' Jours' :
+                                            item.duree + ' Jour' : 'N/A' }}
                                         </td>
                                         <td class="text-center">
                                             <small class="fw-bold" :class="helpers.returnBadge(String(item.type))[0]">{{
@@ -630,20 +641,24 @@ const DeleteDoc = async () => {
                     </div>
                 </div>
             </Modal>
+
             <EditSalaryModal :id="employee.id" :old-salary="employee.salary" />
             <AugementationSalaryModal :id="employee.id" />
             <EditLeavePerMonthModal :id="employee.id" :old-day-per-month="employee.conge_mois" />
             <AddCongeModal :id="employee.id" />
-            <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :old-bank="employee.bank_name" />
+            <EditBanInfoModal :id="employee.id" :old-rib="employee.rib" :date-virement="employee.date_virement"
+                :old-bank="employee.bank_name" />
             <EditCnssModal :id="employee.id" :old-cnss="employee.cnss" />
             <AddDocumentModal :id="employee.id" />
             <DeleteDocModal id="delete-doc" :isLoading="isLoading" :method="DeleteDoc" :itemid="rhStore.ItemId"
                 title="Supprimer le document" message="Êtes-vous sûr de supprimer ce document ?" />
-            <ResumptionContractModal :id="employee.id" />
             <EditEmployeeModal :employee="employee" />
             <RuptureContractModal :id="employee.id" />
             <AddPointageModal source="simple" :id="Number(id)" />
 
+        </div>
+        <div v-else>
+            <EmployeeSkeleton />
         </div>
     </div>
 </template>

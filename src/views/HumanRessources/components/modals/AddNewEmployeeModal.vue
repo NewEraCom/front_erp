@@ -21,7 +21,7 @@ const formData = ref({
     adresse: null,
     date_embauche: null,
     salary: null,
-    conge: null,
+    conge_mois: null,
     poste: null,
     departement: null,
     type_contrat: '-',
@@ -271,8 +271,8 @@ const submit = async () => {
                             <label for="conge" class="form-label">Conge Jours par Mois <span
                                     class="text-danger">*</span>
                             </label>
-                            <input id="conge" v-model="formData.conge" class="form-control"
-                                placeholder="Entre le nombre de jours de congé" type="number" tabindex="0" required />
+                            <input id="conge" v-model="formData.conge_mois" class="form-control"
+                                placeholder="Entre le nombre de jours de congé" type="string" tabindex="0" required />
                         </div>
                     </div>
                 </div>

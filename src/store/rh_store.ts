@@ -7,7 +7,7 @@ export const useRhStore = defineStore('RhStore', {
         employees: null,
         employee: null,
         worker: null,
-        intern:null,
+        intern: null,
         interns: {
             data: null,
             stats: null,
@@ -131,6 +131,20 @@ export const useRhStore = defineStore('RhStore', {
                 accepted: data.filter((e: any) => e.status === 'accepted').length,
             };
         },
+        deleteRecruitment(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.recrutement.data.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.recrutement.data.splice(indexToDelete, 1);
+                this.recrutement.stats = {
+                    total: this.recrutement.data.length,
+                    pending: this.recrutement.data.filter((e: any) => e.status === 'pending').length,
+                    accepted: this.recrutement.data.filter((e: any) => e.status === 'accepted').length,
+                };
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
         setDemandeRh(data: any) {
             this.demandeRh.data = data;
             this.demandeRh.stats = {
@@ -229,7 +243,7 @@ export const useRhStore = defineStore('RhStore', {
             this.ItemId = id;
         },
         setItem(data: any) {
-            this.Item= data;
+            this.Item = data;
         },
 
     }

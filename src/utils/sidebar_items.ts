@@ -151,9 +151,9 @@ const RHMenu = [
     {
         id: 5,
         name: 'Soustraitant',
-        route: '/soustraitant-rh',
+        route: '/rh-soustraitant',
         icon: 'ti ti-settings',
-        path: 'SoustraitantRh'
+        path: 'RhSoustraitant'
     },
     {
         id: 6,
@@ -419,8 +419,8 @@ const SupportMenu = [
             {
                 id: 2,
                 name: 'Employés sous-traitants',
-                route: '/soustraitant-rh',
-                path: 'SoustraitantRh'
+                route: '/rh-soustraitant',
+                path: 'RhSoustraitant'
             },
             {
                 id: 3,

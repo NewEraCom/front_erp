@@ -187,10 +187,8 @@ const addPointage = async (data: any) => {
         const response = await api().post('rh/add-pointage', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            // rhStore.pushPointage(response.data.pointage);
+            rhStore.employee.pointages.push(response.data.pointage);
             rhStore.pointages.push(response.data.pointage);
-
-
             return;
         }
         throw new Error('Add pointage failed with status: ' + response.status);

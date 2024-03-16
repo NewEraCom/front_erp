@@ -2,6 +2,9 @@
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const isLoading = ref(false);
 
@@ -18,13 +21,17 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    dateVirement: {
+        type: String,
+        required: true,
+    }
 });
 
 
 const formData = ref({
-    rib: null,
-    bank_name: null,
-    date_virement: null,
+    rib: props.oldRib,
+    bank_name: props.oldBank,
+    date_virement: props.dateVirement,
     rib_copie: null,
 });
 
@@ -32,14 +39,16 @@ const handleFileChange = (e, type) => {
     formData.value[type] = e.target.files[0];
 };
 
-const submit = async() => {
+const submit = async () => {
     isLoading.value = true;
     console.log(props.id);
-    
-    await rhService.EditBankEmployee(props.id,formData.value).then(() => {
+
+    await rhService.EditBankEmployee(props.id, formData.value).then(() => {
         $('#editInfoBank').modal('hide');
+        toast.success('Informations bancaires modifiées avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Une erreur est survenue');
     }).finally(() => {
         isLoading.value = false;
     });

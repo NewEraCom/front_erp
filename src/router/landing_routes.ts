@@ -9,7 +9,7 @@ export const landingRoutes = [
 		},
 	},
 	{
-		path: '/demande-conge',
+		path: '/conge-public',
 		name: 'LeaveRequest',
 		component: () => import('@/views/Landing/LeaveRequestView.vue'),
 		meta: {
@@ -23,6 +23,15 @@ export const landingRoutes = [
 		component: () => import('@/views/Landing/DocumentRequestView.vue'),
 		meta: {
 			title: 'Demande de document administratif',
+			requiresAuth: false
+		},
+	},
+	{
+		path: '/conge',
+		name: 'Leave',
+		component: () => import('@/views/Landing/LeaveRequestView.vue'),
+		meta: {
+			title: 'Congé',
 			requiresAuth: false
 		},
 	},

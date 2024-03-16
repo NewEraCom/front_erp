@@ -2,6 +2,9 @@
 import { ref, watchEffect } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
     employee: {
@@ -29,25 +32,6 @@ const formData = ref({
     ville: null,
 });
 
-// watchEffect(() => props.employee, (employee) => {
-//     formData.value = {
-//         first_name: employee.first_name,
-//         last_name: employee.last_name,
-//         poste: employee.poste,
-//         departement: employee.departement,
-//         sexe: employee.sexe,
-//         ville: employee.ville,
-//         adresse: employee.adresse,
-//         phone_no: employee.phone_no,
-//         flotte: employee.flotte,
-//         email: employee.email,
-//         cin: employee.cin,
-//         birthdate: employee.birthdate,
-//         situation_familiale: employee.situation_familiale,
-//         children: employee.num_personne_charge,
-        
-//     };
-// });
 watchEffect(() => {
     if (props.employee) {
         formData.value = {
@@ -71,11 +55,13 @@ watchEffect(() => {
 
 const submit = async () => {
     isLoading.value = true;
-    await rhService.EditEmployee(props.employee.id,formData.value).then(() => {
+    await rhService.EditEmployee(props.employee.id, formData.value).then(() => {
         console.log('Employee Updated Successfully!');
         $('#editNewEmployee').modal('hide');
+        toast.success('Employé modifié avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Erreur lors de la modification de l\'employé');
     }).finally(() => {
         isLoading.value = false;
     });
@@ -91,8 +77,8 @@ const submit = async () => {
                             <label for="nom" class="form-label">Nom de famille
                                 <span class="text-danger">*</span>
                             </label>
-                            <input id="nom" v-model="formData.last_name" class="form-control" placeholder="Entrez le nom"
-                                type="text" tabindex="0" autofocus required />
+                            <input id="nom" v-model="formData.last_name" class="form-control"
+                                placeholder="Entrez le nom" type="text" tabindex="0" autofocus required />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -152,7 +138,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                   
+
 
                     <div class="col-sm-6">
                         <div class="mb-3">
@@ -190,8 +176,8 @@ const submit = async () => {
                             <label for="cin" class="form-label">Numéro CIN
                                 <span class="text-danger">*</span>
                             </label>
-                            <input id="cin" v-model="formData.cin" class="form-control" placeholder="Entre le numéro CIN"
-                                type="text" tabindex="0" required />
+                            <input id="cin" v-model="formData.cin" class="form-control"
+                                placeholder="Entre le numéro CIN" type="text" tabindex="0" required />
                         </div>
                     </div>
 
@@ -210,8 +196,9 @@ const submit = async () => {
                             <label for="situation" class="form-label">Situation Familiale
                                 <span class="text-danger">*</span>
                             </label>
-                           
-                                <select id="situation_familiale" v-model="formData.situation_familiale" class="form-select" required>
+
+                            <select id="situation_familiale" v-model="formData.situation_familiale" class="form-select"
+                                required>
                                 <option value="-">Selectionner la situation qui vous convienne</option>
                                 <option value="Celibataire">Celibataire</option>
                                 <option value="Marié">Marié</option>
@@ -229,7 +216,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
             <div class="modal-footer">

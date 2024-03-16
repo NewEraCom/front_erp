@@ -2,6 +2,10 @@
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
 
 defineProps({
     employees: {
@@ -26,8 +30,10 @@ const submit = async () => {
     isLoading.value = true;
     await rhService.addDemandeRh(formData.value).then(() => {
         $('#addDemandeRh').modal('hide');
+        toast.success('Demande ajoutée avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Une erreur est survenue');
     }).finally(() => {
         isLoading.value = false;
     });
@@ -41,10 +47,10 @@ const submit = async () => {
                     <div v-if="employees != null" class="col-12 mb-3">
                         <CustomSelect v-model="formData.employee_id" placeholder="Choisir un employee" label="Employee"
                             :data="employees.filter(item => item.status == 1).map((item) => ({
-                                key: item.id,
-                                value: item.first_name + ' ' + item.last_name
-                            }))
-                                " />
+            key: item.id,
+            value: item.first_name + ' ' + item.last_name
+        }))
+            " />
                     </div>
 
                     <div class="col-sm-12">
@@ -72,7 +78,8 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="assurance" class="form-label">Description <span class="text-danger">*</span></label>
+                            <label for="assurance" class="form-label">Description <span
+                                    class="text-danger">*</span></label>
                             <textarea class="form-control" placeholder="Entrez la description du poste" tabindex="0"
                                 id="assurance" v-model="formData.description" required></textarea>
                         </div>

@@ -1,5 +1,5 @@
 import { api } from '@/utils';
-import { useSharedStore } from '@/store';
+import { useRhStore, useSharedStore } from '@/store';
 
 const createEvent = async (data: any) => {
     try {
@@ -113,14 +113,11 @@ const getDashboard = async () => {
 const deleteRecruitment = async () => {
     try {
         const sharedStore = useSharedStore();
+        const rhStore = useRhStore();
         const id = sharedStore.selectedItem.id;
         const response = await api().delete('/dmnd/delete-recruitement/' + id);
         if (response.status == 200) {
-            sharedStore.deleteRecruitment(id);
-            // const dmndIndex = sharedStore.recruitment.data.findIndex((item) => item.id === id);
-            // if (dmndIndex !== -1) {
-            //     sharedStore.recruitment.data.splice(dmndIndex, 1);
-            // }
+            rhStore.deleteRecruitment(id);
         }
     } catch (error) {
         return Promise.reject(error);

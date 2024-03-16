@@ -30,8 +30,9 @@ onUnmounted(() => {
     <RHStatsCard v-if="stats != null && demandeRh != null" :stats="stats" :pending="demandeRh.pending" />
     <div v-if="stats" class="row mt-2 g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
-        <EmployeeChart title="Statistique des employés" subtitle="Nombre d'employés par mois en" color="rgb(37, 144, 250)"
-          :data="stats.employee_per_month" pin="total_employee" legened="Employees" type="line" />
+        <EmployeeChart title="Statistique des employés" subtitle="Nombre d'employés par mois en"
+          color="rgb(37, 144, 250)" :data="stats.employee_per_month" pin="total_employee" legened="Employees"
+          type="line" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
         <EmployeeChart title="Statistique des salaires" subtitle="Mass salarial par mois en" color="rgb(103, 52, 235)"

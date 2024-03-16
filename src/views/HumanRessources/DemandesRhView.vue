@@ -5,7 +5,9 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { DemandeRhTable, AddDemandeRhModal } from './components';
 import { Validate, DeleteDocModal, DemandeRhDetailsModal } from './components/modals';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const rhStore = useRhStore();
 const isLoading = ref(false);
 const demandeRh = ref(rhStore.demandeRh.data);
@@ -34,8 +36,14 @@ const ReceivedDmnd = async () => {
   await rhService.ReceivedDemandeRh(rhStore.ItemId).then(() => {
     isLoading.value = false;
     $('#receive-modal').modal('hide');
+    toast.success('Demande Recuperée avec succès');
+  }).catch((error) => {
+    console.error('Error during action execution', error);
+    toast.error('Une erreur est survenue');
   });
 };
+
+
 const DeleteDmnd = async () => {
   isLoading.value = true;
   await rhService.DeleteDemandeRh(rhStore.ItemId).then(() => {

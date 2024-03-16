@@ -41,8 +41,8 @@ export const hrRoutes = [
         },
     },
     {
-        path: '/soustraitant-rh',
-        name: 'SoustraitantRh',
+        path: '/rh-soustraitant',
+        name: 'RhSoustraitant',
         component: () => import('@/views/HumanRessources/SoustraitantView.vue'),
         meta: {
             title: 'Employés soustraitants',

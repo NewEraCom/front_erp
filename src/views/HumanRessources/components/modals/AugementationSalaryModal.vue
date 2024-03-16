@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const isLoading = ref(false);
 
 const props = defineProps({
@@ -18,18 +20,20 @@ const newSalary = ref(null);
 const commentaire = ref(null);
 
 
-const submit = async() => {
+const submit = async () => {
     isLoading.value = true;
     console.log(props.id);
-    
+
     const formData = {
         new_salary: newSalary.value,
         comment: commentaire.value
     };
-    await rhService.AugmentationSalaire(props.id,formData).then(() => {
+    await rhService.AugmentationSalaire(props.id, formData).then(() => {
         $('#augemntSalary').modal('hide');
+        toast.success('Salaire modifié avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Une erreur est survenue');
     }).finally(() => {
         isLoading.value = false;
     });

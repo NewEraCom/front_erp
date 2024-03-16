@@ -192,6 +192,7 @@ export const useSharedStore = defineStore('ShareStore', {
             this.clients.loading = false;
         },
         setDashboardStats(data: any) {
+            console.log(data);
             this.dashboard.stats = {
                 total_employees: data.total_employee.filter((item: any) => item.status == 1).length,
                 male: data.total_employee.filter((e: any) => e.status === '1' && e.sexe === 'Homme').length,

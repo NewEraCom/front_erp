@@ -21,8 +21,7 @@ onMounted(async () => {
   await rhService.getEmployees();
   data.value.salaryAdvances = salaryAdvances.value.data;
   data.value.stats = salaryAdvances.value.stats;
-  console.log('data', data.value);
-  
+
 });
 
 watch(() => salaryAdvances, () => {
@@ -62,8 +61,9 @@ watch(() => salaryAdvances, () => {
     </div>
     <AddSalaryAdvanceModal v-if="employees" :employees="employees" />
     <SalaryAdvancesDetailsModal />
-    <DeleteModal title="Supprimer un avance sur salaire" text="Voulez-vous vraiment supprimer cette avance sur salaire ?"
-      textButton="Oui, Supprimer" :action="() => rhService.deleteSalaryAdvance()" />
+    <DeleteModal title="Supprimer un avance sur salaire"
+      text="Voulez-vous vraiment supprimer cette avance sur salaire ?" textButton="Oui, Supprimer"
+      :action="() => rhService.deleteSalaryAdvance()" message="Avance sur salaire supprimée avec succès" />
   </div>
 </template>
 

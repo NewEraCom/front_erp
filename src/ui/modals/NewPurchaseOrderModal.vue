@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { salesService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const isLoading = ref(false);
 const isStock = ref('Stock');
@@ -44,7 +47,7 @@ const addItemHors = () => {
 const removeItem = (index) => {
     if (formData.value.items.length > 1) {
         formData.value.items?.splice(index - 1, 1);
-        formData.value.article?.splice(index - 1, 1);
+        formData.value.service?.splice(index - 1, 1);
         formData.value.qty?.splice(index - 1, 1);
     }
 };
@@ -83,6 +86,10 @@ const checkItem = (value) => {
 const submit = async () => {
     isLoading.value = true;
 
+    if (!checkArticles(formData.value.service)) {
+        return;
+    }
+
     await salesService.createPurchaseOrder({
         project_id: props.id,
         items: formData.value.items,
@@ -101,10 +108,36 @@ const submit = async () => {
     }).then(() => {
         isLoading.value = false;
         $('#newPurchaseOrder').modal('hide');
+        toast.success('Demande d\'achat envoyé avec succès');
     }).catch(() => {
         isLoading.value = false;
+        toast.error('Une erreur est survenue');
     });
 };
+
+const checkArticles = (articles) => {
+    let uniqueArticles = new Set();
+    for (const article of articles) {
+        // Check if the article is null or '-'
+        if (article === null || article === '-') {
+            isLoading.value = false;
+            toast.error('Veuillez sélectionner un article');
+            return false;
+        }
+
+        // Check for duplicates
+        if (uniqueArticles.has(article)) {
+            isLoading.value = false;
+            toast.error('Les articles ne doivent pas être dupliqués');
+            return false; // Duplicate found, return false
+        } else {
+            uniqueArticles.add(article);
+        }
+    }
+    return true; // No nulls, '-', or duplicates found
+};
+
+
 
 </script>
 <template>
@@ -134,10 +167,12 @@ const submit = async () => {
                                         <p class="mb-2 repeater-title">Qty</p>
                                         <input id="qteInput" v-model="formData.qty[item]" type="number"
                                             class="form-control invoice-item-qty" placeholder="1" min="1"
-                                            :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)" />
+                                            :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)"
+                                            required />
                                         <small class="text-muted" v-if="formData.service[item]?.qte_restant">Quantite
                                             restante:
-                                            {{ formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant : 0
+                                            {{ formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant
+            : 0
                                             }}</small>
                                     </div>
                                     <div class="col-md-2 col-12 pe-0">
@@ -147,17 +182,18 @@ const submit = async () => {
                                     <div class="col-md-2 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Prix Unitaire</p>
                                         <p class="mb-0" v-html="(formData.price[item] ? formData.price[item] : '0') + ' MAD'
-                                            "></p>
+            "></p>
                                     </div>
                                     <div class="col-md-2 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Prix Total</p>
                                         <p class="mb-0" v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'
-                                            "></p>
+            "></p>
                                     </div>
 
 
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                     <i class="ti ti-x cursor-pointer" @click="removeItem(item)"></i>
                                 </div>
                             </div>
@@ -186,7 +222,8 @@ const submit = async () => {
                                             class="form-control" placeholder="M2" />
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                     <i class="ti ti-x cursor-pointer" @click="removeItemHors(item)"></i>
                                 </div>
                             </div>
@@ -220,7 +257,8 @@ const submit = async () => {
                                             <small>(Livraison au chantier)</small>
                                         </span>
                                         <input id="customCheckTemp2" v-model="isStock" name="customRadioIcon"
-                                            class="form-check-input" type="radio" value="Chantier" style="display: none" />
+                                            class="form-check-input" type="radio" value="Chantier"
+                                            style="display: none" />
                                     </label>
                                 </div>
                             </div>

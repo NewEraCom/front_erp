@@ -56,12 +56,13 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
 
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
+                            <option value="need validation">Besoin de validation</option>
                             <option value="pending">En attente</option>
                             <option value="on going">En cours</option>
                             <option value="done">Traité</option>
@@ -75,7 +76,8 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>

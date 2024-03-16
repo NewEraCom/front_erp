@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 defineProps({
     employees: {
@@ -27,8 +30,10 @@ const submit = async () => {
     await rhService.addSalaryAdvance(formData.value).then(() => {
         isLoading.value = false;
         $('#addSalaryAdvance').modal('hide');
+        toast.success('Avance sur salaire ajoutée avec succès');
     }).catch(() => {
         isLoading.value = false;
+        toast.error('Une erreur est survenue');
     });
 };
 
@@ -43,10 +48,10 @@ const submit = async () => {
                     <div v-if="employees != null" class="col-12 mb-3">
                         <CustomSelect v-model="formData.employee_id" placeholder="Choisir un employee" label="Employee"
                             :data="employees.filter(item => item.status == 1).map((item) => ({
-                                key: item.id,
-                                value: item.first_name + ' ' + item.last_name
-                            }))
-                                " />
+            key: item.id,
+            value: item.first_name + ' ' + item.last_name
+        }))
+            " />
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
@@ -71,8 +76,8 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="date_start" class="form-label">Date de début <span
                                     class="text-danger">*</span></label>
-                            <input class="form-control" type="date" placeholder="Entrez le total des salaires" tabindex="0"
-                                id="date_start" v-model="formData.date_start" required>
+                            <input class="form-control" type="date" placeholder="Entrez le total des salaires"
+                                tabindex="0" id="date_start" v-model="formData.date_start" required>
                         </div>
                     </div>
                 </div>
