@@ -214,14 +214,13 @@ async function cancel(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response.status;
   }
 }
 export async function markChiffrageDone(req: string) {
   try {
     const PMStore = usePMStore();
 
-    const response = await API().post('chiffrage/close/' + req);
+    const response = await api().post('chiffrage/close/' + req);
     if (response.status == 200) {
       PMStore.closeChiffratePreProject(response.data.chiffrage_status);
     }
@@ -237,7 +236,7 @@ async function clotureLostProject(req: any) {
     const response = await api().post('chiffrage/mark', req);
     console.log(response.data);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
       return response.status;
     }
@@ -280,7 +279,10 @@ async function remove(req: string) {
     const PMStore = usePMStore();
 
     const response = await api().delete('chiffrage/delete/' + req);
-    await PMStore.removeChiffragePreProject(req);
+    if (response.status == 200) {
+      
+      await PMStore.removeChiffragePreProject(req);
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -290,7 +292,7 @@ async function update(req: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await API().put('preprojects/update', req);
+    const response = await api().put('preprojects/update', req);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.setPreProject(response.data.preProject);
@@ -309,7 +311,7 @@ async function uploadFiles(req: any) {
 
     const response = await api().post('preprojects/upload-files', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
     return response.status;
@@ -324,7 +326,7 @@ async function setFiles(req: any) {
 
     const response = await api().post('preprojects/set-files', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
   } catch (error) {
@@ -339,7 +341,7 @@ async function setFilesDone(req: any) {
 
     const response = await api().post('preprojects/set-files-done', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
   } catch (error) {
@@ -402,7 +404,6 @@ async function refuser(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response.status;
   }
 }
 async function validate(req: any) {
@@ -418,7 +419,6 @@ async function validate(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response;
   }
 }
 export default {
