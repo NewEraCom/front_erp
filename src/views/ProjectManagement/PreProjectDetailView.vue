@@ -6,6 +6,7 @@ import { helpers } from '@/utils';
 // import { Modal, DataTableDevis, DataTableBordereau, DetailsPreProjectSkeleton } from '@/ui';
 import { Modal } from '@/ui';
 import { DataTableBordereau ,DataTableDevis} from './components';
+import { DeleteDocModal } from '../HumanRessources/components';
 
 import {
     AddLots,
@@ -31,6 +32,7 @@ const props = defineProps({
     default: '0'
   }
 });
+const isLoading = ref(false);
 
 const PMStore = usePMStore();
 const preProject = computed(() => PMStore.preprojectDetail);
@@ -62,6 +64,19 @@ const sumCautionAndEstimation = (lots) => {
   });
 
   return [caution, estimation];
+};
+const getFileUrl = (attachment,path) => {
+  return helpers.baseUrl() + `${path}/${attachment}`;
+};
+const deleteArticles = async () => {
+  isLoading.value = true;
+  await pmService.deleteArticle(PMStore.ItemId).then(() => {
+    $('#deleteArticle').modal('hide');
+  }).catch((error) => {
+    console.error('Error during action execution', error);
+  }).finally(() => {
+    isLoading.value = false;
+  });
 };
 </script>
 
@@ -486,7 +501,7 @@ const sumCautionAndEstimation = (lots) => {
                                   </div>
                                   <div
                                     class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end pe-4">
-                                    <a :href="env.ASSETS_URL + '/uploads/cps/' + preProject.cps_file"
+                                    <a :href="getFileUrl(preProject.cps_file,'/uploads/cps') "
                                       class="badge bg-label-primary fw-bold">
                                       <i class="ti ti-download me-2"></i>
                                       Télécharger
@@ -510,7 +525,7 @@ const sumCautionAndEstimation = (lots) => {
                                   </div>
                                   <div
                                     class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end pe-4">
-                                    <a :href="env.ASSETS_URL + '/uploads/rc/' + preProject.rc_file"
+                                    <a :href="getFileUrl(preProject.rc_file,'/uploads/rc')"
                                       class="badge bg-label-primary fw-bold">
                                       <i class="ti ti-download me-2"></i>
                                       Télécharger
@@ -673,6 +688,12 @@ const sumCautionAndEstimation = (lots) => {
     <Modal id="import-bordereau" title="Importer bordereau" extra-class="modal-md">
       <ImportBordereau :id="preProject.id" :lots="preProject.lots" />
     </Modal>
+    <DeleteDocModal id="deleteArticle" :isLoading="isLoading"
+                :method="deleteArticles"
+                :itemid="PMStore.ItemId"
+                title="Supprimer l'Article"
+                message="Êtes-vous sûr de supprimer cet article ?"
+                />
   </div>
   <DetailsPreProjectSkeleton v-else />
 
