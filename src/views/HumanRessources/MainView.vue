@@ -5,12 +5,16 @@ import { RHStatsCard, EmployeeChart } from './components';
 
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
+import { formater } from '@/utils';
 
 const RhStore = useRhStore();
 
 
 const stats = ref(computed(() => RhStore.stats));
 const demandeRh = ref(computed(() => RhStore.demandeRh.stats));
+
+
+const employeeExpire = ref(computed(() => RhStore.employeeExpire));
 
 
 onMounted(async () => {
@@ -44,7 +48,8 @@ onUnmounted(() => {
         <div class="card card-border-shadow-primary">
           <div class="card-header">
             <h5 class="fw-bold mb-1">Employés CDD</h5>
-            <small class="fw-bold mb-1 text-muted">0 employées expirés ce mois</small>
+            <small class="fw-bold mb-1 text-muted" v-if="employeeExpire">{{ employeeExpire.length }} employées expirés
+              ce mois</small>
           </div>
           <div class="card-body border-top pt-4">
             <div class="table-responsive">
@@ -58,17 +63,34 @@ onUnmounted(() => {
                     <th class="fw-bold text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>John Doe</td>
-                    <td class="text-center">John Doe</td>
-                    <td class="text-center">John Doe</td>
-                    <td class="text-center">John Doe</td>
-                    <td class="text-center">
-                      <button class="btn btn-sm btn-primary">
-                        <i class="ti ti-eye"></i>
-                      </button>
+                <tbody v-if="employeeExpire && employeeExpire.length > 0">
+                  <tr v-for="item in employeeExpire" :key="item.id">
+                    <td>
+                      <router-link :to="{ name: 'ProfileEmployee', params: { id: item.id } }">
+                        <h6 class="mb-1 fw-bold text-primary">{{ item.first_name + ' ' + item.last_name }}</h6>
+                      </router-link>
+                      <small class="fw-bold text-muted">Matricule : {{ item.matricule }}</small>
                     </td>
+                    <td class="text-center">
+                      <small>{{ formater.date(item.date_embauche) }}</small>
+                    </td>
+                    <td class="text-center">
+                      <small>{{ formater.date(item.fin_contrat) }}</small>
+                    </td>
+                    <td class="text-center">
+                      <small>{{ item.poste }}</small>
+                    </td>
+                    <td class="text-center">
+                      <router-link target="_blank" :to="{ name: 'ProfileEmployee', params: { id: item.id } }"
+                        class="btn btn-sm btn-primary">
+                        <i class="ti ti-eye"></i>
+                      </router-link>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="5" class="text-center">Aucun employé expiré ce mois</td>
                   </tr>
                 </tbody>
               </table>

@@ -124,12 +124,17 @@ const deleteRecruitment = async () => {
     }
 };
 
-const addNewRecruitment = async (data: any) => {
+const addNewRecruitment = async (data: any, from: string | null) => {
     try {
         const response = await api().post('rh/recrute/request', data);
         if (response.status == 200) {
-            const sharedStore = useSharedStore();
-            sharedStore.pushRecruitment(response.data.recrutement);
+            if (from === 'rh') {
+                const rhStore = useRhStore();
+                rhStore.pushRecruitment(response.data.recrutement);
+            } else {
+                const sharedStore = useSharedStore();
+                sharedStore.pushRecruitment(response.data.recrutement);
+            }
         }
     } catch (error) {
         return Promise.reject(error);

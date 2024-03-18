@@ -1,21 +1,26 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { salesService } from '@/services';
-import { useSalesStore } from '@/store';
-import { CardOne } from '@/ui';
-import PurchaseOrderTable from '../Sales/components/PurchaseOrderTable.vue';
+import { logisticsService, sharedService } from '@/services';
+import { useLogisticsStore, useSharedStore } from '@/store';
+import { CardOne, CardOneSkeleton } from '@/ui';
+import { DemandeCaisseModal, DemandeCaisseOutOfStockTable } from './components';
 
-const salesStore = useSalesStore();
+const logisticsStore = useLogisticsStore();
+const sharedStore = useSharedStore();
 
-const stats = ref(computed(() => salesStore.purchaseOrders.stats));
-const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
+const caisse = ref(computed(() => logisticsStore.opertationCaisse.data));
+const stats = ref(computed(() => logisticsStore.opertationCaisse.stats));
+const projects = ref(computed(() => sharedStore.projects.data));
+
 
 onMounted(async () => {
-    await salesService.getPurchaseOrdersByProjectManager('Service');
+    await logisticsService.getOperationCaisse('chef');
+    await sharedService.getProjects();
 });
 
 onUnmounted(() => {
-    salesStore.clearPurchaseOrders();
+    sharedStore.clearProjects();
+
 });
 </script>
 
@@ -37,6 +42,17 @@ onUnmounted(() => {
                     icon="ti-shopping-cart" card-color="card-border-shadow-success" />
             </div>
         </div>
+        <div v-else class="row g-3 mb-5">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardOneSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardOneSkeleton />
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+                <CardOneSkeleton />
+            </div>
+        </div>
         <div class="row mt-4">
             <div class="col-12">
                 <div class="card">
@@ -47,14 +63,32 @@ onUnmounted(() => {
                                     <h5 class="fw-bold mb-1">Demande de caisse</h5>
                                     <small class="fw-bold mb-1 text-muted">Liste des demandes de caisse</small>
                                 </div>
+                                <button class="btn btn-primary" data-bs-target="#newDemandeCaisse"
+                                    data-bs-toggle="modal">
+                                    <i class="ti ti-plus me-2"></i>
+                                    Nouveau demande de caisse
+                                </button>
                             </div>
+
                         </div>
-                        <div v-if="purchaseOrders != null" class="card-body border-top pt-4">
-                            <PurchaseOrderTable :purchase-orders="purchaseOrders" />
+                        <div v-if="caisse != null" class="card-body border-top pt-4">
+                            <DemandeCaisseOutOfStockTable :caisse="caisse" />
+                        </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <DemandeCaisseModal :projects="projects" />
     </div>
 </template>

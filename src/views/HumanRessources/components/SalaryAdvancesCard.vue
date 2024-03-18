@@ -61,7 +61,7 @@ defineProps({
                             </div>
                             <div class="col-sm-6 col-lg-4">
                                 <div
-                                    class="d-flex justify-content-between align-items-start card-widget-1 border-end pb-3 pb-sm-0">
+                                    class="d-flex justify-content-between align-items-start card-widget-1  pb-3 pb-sm-0">
                                     <div>
                                         <h6 class="fw-bold mb-2">{{ itemThree[0] }}</h6>
                                         <h5 class="fw-bold mb-2">

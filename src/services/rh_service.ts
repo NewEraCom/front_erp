@@ -355,8 +355,7 @@ const addWorker = async (data: any) => {
         const response = await api().post('/tiers/add-worker', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            // rhStore.setWorkers(response.data.workers);
-            rhStore.workers.data = response.data.worker;
+            rhStore.pushWorker(response.data.worker);
             return;
         }
         throw new Error('Get workers failed with status: ' + response.status);
@@ -366,18 +365,13 @@ const addWorker = async (data: any) => {
     }
 };
 
-const deleteWorker = async (id: any) => {
+const deleteWorker = async () => {
     try {
+        const rhStore = useRhStore();
+        const id = rhStore.ItemId;
         const response = await api().delete('/tiers/delete-worker/' + id);
         if (response.status === 200) {
-            const rhStore = useRhStore();
-            // rhStore.setWorkers(response.data.workers);
-            // rhStore.workers.data = response.data.worker;
-            rhStore.workers.data = rhStore.workers.data.filter(w => w.id !== id);
-            const dmndIndex = rhStore.workers.data.findIndex((item) => item.id === id);
-            if (dmndIndex !== -1) {
-                rhStore.workers.data.splice(dmndIndex, 1);
-            }
+            rhStore.deleteWorker(id);
             return;
         }
         throw new Error('Get workers failed with status: ' + response.status);
@@ -442,13 +436,7 @@ const DeleteDemandeRh = async (id: any) => {
         const response = await api().delete('/dmnd/delete/' + id);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            const dmndIndex = rhStore.demandeRh.data.findIndex((item) => item.id === id);
-            if (dmndIndex !== -1) {
-                rhStore.demandeRh.data.splice(dmndIndex, 1);
-            }
-
-
-            return;
+            rhStore.deleteDemandeRh(id);
         }
         throw new Error('Get demande RH failed with status: ' + response.status);
     } catch (error) {

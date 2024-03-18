@@ -46,6 +46,17 @@ watch(pointages, (value) => {
                         <div v-if="pointages" class="card-body border-top pt-4">
                             <PointageTable :pointages="pointages" :custom="true" />
                         </div>
+                        <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+                            style="height: 650px;">
+                            <div class="row mt-5">
+                                <div class="col-12 text-center">
+                                    <h5>Chargement des données...</h5>
+                                    <div class="spinner-border text-primary mt-4" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

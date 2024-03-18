@@ -106,6 +106,9 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.caisse.stats = null;
             this.caisse.loading = false;
         },
+        pushOperationCaisse(data: any) {
+            this.opertationCaisse.data.unshift(data);
+        },
         setLouer(data: any) {
             this.louer.data = data.louers;
             this.louer.stats = {

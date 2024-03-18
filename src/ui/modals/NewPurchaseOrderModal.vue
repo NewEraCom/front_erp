@@ -214,7 +214,7 @@ const checkArticles = (articles) => {
                                     <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Qty</p>
                                         <input id="qteInput" v-model="formData.qtyHors[item]" type="number"
-                                            class="form-control" placeholder="1" min="1" max="50" />
+                                            class="form-control" placeholder="1" min="1" />
                                     </div>
                                     <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Unite</p>

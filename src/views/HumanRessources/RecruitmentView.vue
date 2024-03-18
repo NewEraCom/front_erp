@@ -5,7 +5,7 @@ import { RecruitmentTable, AddNewRecruitmentModal } from './components';
 import { rhService, sharedService } from '@/services';
 import { useRhStore } from '@/store';
 import { RecruitementDetailsModal } from './components/modals';
-import { DeleteModal } from '@/ui';
+import { DeleteModal, CardOneSkeleton } from '@/ui';
 
 
 const rhStore = useRhStore();
@@ -39,6 +39,17 @@ watch(() => rhStore.recrutement, (newValue) => {
           icon="ti-zoom-filled" card-color="card-border-shadow-danger" />
       </div>
     </div>
+    <div v-else class="row g-3 mb-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+    </div>
     <div class="row mt-4">
       <div class="col-12">
         <div class="card">
@@ -55,6 +66,17 @@ watch(() => rhStore.recrutement, (newValue) => {
             </div>
             <div v-if="recrutement.data != null" class="card-body border-top pt-4">
               <RecruitmentTable :recruitments="recrutement.data" />
+            </div>
+            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+              style="height: 650px;">
+              <div class="row mt-5">
+                <div class="col-12 text-center">
+                  <h5>Chargement des données...</h5>
+                  <div class="spinner-border text-primary mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

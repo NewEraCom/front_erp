@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
-import { CardOne } from '@/ui';
+import { CardOne, CardOneSkeleton } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { DemandeRhTable, AddDemandeRhModal } from './components';
@@ -49,8 +49,13 @@ const DeleteDmnd = async () => {
   await rhService.DeleteDemandeRh(rhStore.ItemId).then(() => {
     isLoading.value = false;
     $('#delete-modal').modal('hide');
+    toast.success('Demande supprimée avec succès');
+  }).catch((error) => {
+    console.error('Error during action execution', error);
+    toast.error('Une erreur est survenue');
   });
 };
+
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
@@ -75,6 +80,20 @@ const DeleteDmnd = async () => {
           card-color="card-border-shadow-info" />
       </div>
     </div>
+    <div v-else class="row g-3 mb-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+    </div>
     <div class="row mt-4">
       <div class="col-12">
         <div class="card">
@@ -91,6 +110,17 @@ const DeleteDmnd = async () => {
             </div>
             <div v-if="data" class="card-body border-top pt-4">
               <DemandeRhTable :demandes="data" />
+            </div>
+            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+              style="height: 650px;">
+              <div class="row mt-5">
+                <div class="col-12 text-center">
+                  <h5>Chargement des données...</h5>
+                  <div class="spinner-border text-primary mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -67,7 +67,7 @@ const search = (word) => {
 <template>
     <div class="input-wrapper">
         <div class="relative">
-            <label for="select2Basic" class="form-label">{{ label }}
+            <label for="select2Basic" class="mb-2">{{ label }}
                 <span class="text-danger">*</span>
             </label>
             <input :id="label" class="form-select" :class="error ? 'is-invalid' : ''" tabindex="-1" autocomplete="off"

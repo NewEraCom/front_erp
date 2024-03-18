@@ -2,32 +2,33 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { useSharedStore } from '@/store';
-
-const sharedStore = useSharedStore();
 
 const props = defineProps({
-    fournisseurs: {
+    caisse: {
         type: Array,
         required: true,
     },
 });
-
 const headers = [
-    { text: 'Raison sociale', value: 'raison_social', type: 'text' },
-    { text: 'Ville', value: 'ville', type: 'text' },
-    { text: 'Numéro de téléphone', value: 'phone_no_1', type: 'phone' },
-    { text: 'Créé le', value: 'created_at', type: 'date' },
-    { text: 'Status', value: 'is_active', type: 'badge' },
+    { text: 'Montant', value: 'montant', type: 'currency' },
+    { text: 'Projet', value: 'projet', type: 'text' },
+    { text: 'Date d\'opération', value: 'date_operation', type: 'date' },
+    { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-   
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+
+        }
+    },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 
 
-const filteredData = ref(props.fournisseurs);
+
+const filteredData = ref(props.caisse);
 
 const searchQuery = ref('');
 const statusQuery = ref('-');
@@ -36,18 +37,16 @@ const endQuery = ref();
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.fournisseurs.filter((item: any) => {
-        const combinedFields = `${item.raison_social} ${item.ville}`.toLowerCase();
+    filteredData.value = props.caisse.filter((item: any) => {
+        const combinedFields = `${item.emetteur} ${item.type} ${item.recepteur?.first_name} ${item.recepteur?.last_name} ${item.recepteur?.matricule}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.is_active == statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
+            (statusQuery.value === '-' || item.status == statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
             (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
-
 };
 
 </script>
-
 <template>
     <div>
         <div class="row mb-4">
@@ -59,8 +58,9 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
-                            <option value="1">Actif</option>
-                            <option value="0">Inactif</option>
+                            <option value="pending">En attente</option>
+                            <option value="on going">En cours</option>
+                            <option value="done">Terminé</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-2">
@@ -90,10 +90,9 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" disabled="actif" />
+            buttonType="simple" />
     </div>
 </template>
-
 <style>
 .w-240 {
     width: 240px;

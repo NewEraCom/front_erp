@@ -1,14 +1,9 @@
-
 import { routerViewLocationKey } from 'vue-router';
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 
 const props = defineProps({
-    id: {
-        type: Number,
-        required: true
-    },
     project: {
         type: Object,
         required: true
@@ -47,6 +42,11 @@ const changeQuantity = (index) => {
     }
 };
 
+
+const removeItem = (index) => {
+    
+};
+
 const handleFileChange = (event, index) => {
     const fileInput = event.target;
     const file = fileInput.files[0];
@@ -56,37 +56,42 @@ const handleFileChange = (event, index) => {
     }
 };
 
-const removeItem = (index) => {
-    if (items.value.length > 1) {
-        items?.value.splice(index - 1, 1);
-        article?.value.splice(index - 1, 1);
-        qty?.value.splice(index - 1, 1);
-    }
-};
-
 const submit = async () => {
+    const formData = new FormData();
+
+    const idAttachs = [];
+
+    props.project.facture_composante.forEach((item) => {
+        idAttachs.push([item.id, item.type]);
+    });
+
+    formData.append('attach', JSON.stringify(idAttachs));
+    formData.append('inputs', JSON.stringify(inputs.value));
+    formData.append('prices', JSON.stringify(total.value));
+    formData.append('project_id', props.project.id);
+    formData.append('article', JSON.stringify(article.value));
+    formData.append('qte', JSON.stringify(qty.value));
 
 };
 
 </script>
 <template>
-    <Modal id="invoiceUpload" title="Attachements de la Facture" size="modal-xl">
+    <Modal id="invoiceUpload" title="Attachements de la facture" size="modal-xl">
         <form enctype="multipart/form-data" @submit.prevent="submit">
-            <div class="modal-body">
+            <div class="modal-body m-0 p-0">
                 <div class="row p-2 border rounded m-1">
                     <div v-for="(comp, index) in project.facture_composante" :key="comp.id" class="col-sm-6">
                         <div class="mb-3">
                             <label :for="`input-${comp.id}`" class="mb-2">{{ comp.label }} <span
                                     class="text-danger fw-bold">*</span>
                             </label>
-                            <input v-if="comp.type != 'file'" v-model="inputs[index]" :type="comp.type" class="form-control"
-                                required />
+                            <input v-if="comp.type != 'file'" v-model="inputs[index]" :type="comp.type"
+                                class="form-control" required />
                             <input v-else :type="comp.type" class="form-control" required
                                 @change="handleFileChange($event, index)" />
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div v-for="item in items" :key="item" class="col-12">
                         <div class="repeater-wrapper pt-0 pt-md-4">
@@ -98,14 +103,16 @@ const submit = async () => {
                                         </p>
                                         <select v-model="article[item]" class="form-select item-details mb-3"
                                             @change="changeValue(article[item], item)">
-                                            <option selected="" disabled="">
+                                            <option>
                                                 Sélectionner un article
                                             </option>
-                                            <option
-                                                v-for="(art, index) in project.pre_project.articles.filter(item => item.status === 1)"
-                                                @change="changeValue(art, item)" :key="index">{{ art.article }}</option>
+                                            <option v-for="(art, index) in project.pre_project.articles" :key="index"
+                                                :value="art">
+                                                {{ art.article }}
+                                            </option>
                                         </select>
                                     </div>
+
                                     <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Qty</p>
                                         <input id="qteInput" v-model="qty[item]" type="number"
@@ -125,7 +132,8 @@ const submit = async () => {
                                         <p class="mb-0" v-html="(total[item] ? total[item] : '0') + ' MAD'"></p>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                     <i class="ti ti-x cursor-pointer" @click="removeItem(item)"></i>
                                 </div>
                             </div>
@@ -138,7 +146,7 @@ const submit = async () => {
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer m-0 p-0">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>

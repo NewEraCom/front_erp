@@ -61,7 +61,7 @@ onMounted(async () => {
     await logisticsService.getVehicules();
     await logisticsService.getCarteCarburant();
     await logisticsService.getOutOfStockRequests();
-    await logisticsService.getOperationCaisse();
+    await logisticsService.getOperationCaisse('logistics');
     await logisticsService.getTransport();
     await logisticsService.getLouer();
     await logisticsService.getCachets();

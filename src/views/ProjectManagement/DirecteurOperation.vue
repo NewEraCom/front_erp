@@ -1,23 +1,25 @@
 <script setup lang="ts">
 
 import { onMounted, ref, computed, onUnmounted } from 'vue';
-import { pmService } from '@/services';
-import { usePMStore } from '@/store';
+import { pmService, salesService } from '@/services';
+import { usePMStore, useSalesStore } from '@/store';
 import { CardOne } from '@/ui';
 import { helpers } from '@/utils';
 
 const PMStore = usePMStore();
+const salesStore = useSalesStore();
 
-const demande_achat = ref(computed(() => PMStore.purchase));
+const demande_achat = ref(computed(() => salesStore.purchaseOrders.data));
+
 const data = ref(computed(() => PMStore.stats));
 
 onMounted(async () => {
   await pmService.getDataManager();
-  await pmService.getPurchasesOrder('Achats');
+  await salesService.getPurchaseOrdersByProjectManager('Achats');
 });
 
 onUnmounted(() => {
-  PMStore.clearPurchase();
+  salesStore.clearPurchaseOrders();
   PMStore.clearStats();
 });
 

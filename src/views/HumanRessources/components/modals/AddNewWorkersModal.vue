@@ -144,8 +144,8 @@ const submit = async () => {
                         <div class="mb-3">
 
                             <div v-if="soustraitants != null">
-                                <CustomSelect v-model="formData.tier_id" placeholder="Choisir un projet"
-                                    label="Sous-triatants" :data="soustraitants.filter(item => item.is_active == 1).map((item) => ({
+                                <CustomSelect v-model="formData.tier_id" placeholder="Choisir un sous-traitant"
+                                    label="Sous-traitants" :data="soustraitants.filter(item => item.is_active == 1).map((item) => ({
             key: item.id,
             value: item.raison_social
         }))
