@@ -32,9 +32,9 @@ onUnmounted(() => {
 });
 const Validate = async () => {
      isLoading.value = true;
-    await logisticsService.validateCaisse(logisticsStore.ItemId).then(() => {
+    await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
      isLoading.value = false;
-      $("#validate-caisse-modal").modal("hide");
+      $('#validate-caisse-modal').modal('hide');
     
    });
   // console.log($('#validateInput').val());

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
 import router from '@/router';
 
 const props = defineProps({
@@ -21,13 +21,26 @@ const headers = [
 
 const actionsConfig = [
     {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+        icon: 'ti ti-eye',class: 'btn btn-primary btn-sm', onClick: (item: any) => {
             router.push(`/purchase-order/details/${item.id}`);
         }
     },
 ];
 
-
+// if ([helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO ].includes(localStorage.getItem('role'))) {
+//     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+//         console.log(item);
+        
+//     },type: 'validate'});
+// }
+// <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"
+//                             :class="['delete', 'validate'].includes(action.type) && item.status != 'on going' ? 'btn btn-secondary btn-sm' : action.class"
+//                             @click="action.onClick(item)"
+//                             :disabled="['delete', 'validate'].includes(action.type) && item.status != 'on going'">
+//                             <i v-if="action.type == 'potential'"
+//                                 :class="item.potentiel === '1' ? 'ti ti-bookmark-filled' : 'ti ti-bookmark'"></i>
+//                             <i v-else :class="action.icon"></i>
+//                         </button>
 
 
 
@@ -94,7 +107,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" disabled="done" />
+            buttonType="simple" disabled="on going" />
     </div>
 </template>
 <style>

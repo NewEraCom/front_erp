@@ -96,6 +96,16 @@ export const salesRoutes = [
             role: [helpers.roles.SALES]
         },
     },
+    {
+        path: '/purchase-order/valider/:id',
+        name: 'PurchaseOrderValidation',
+        component: () => import('@/views/Sales/ValidateTableComperatif.vue'),
+        props: true,
+        meta: {
+            title: 'Valider la demande d\'achat',
+            role: [helpers.roles.SALES, helpers.roles.CF]
+        },
+    },
 
 ];
 

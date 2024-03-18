@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { salesService } from '@/services';
-import { useSalesStore } from '@/store';
+import { logisticsService, salesService } from '@/services';
+import { useLogisticsStore, useSalesStore } from '@/store';
 import { CardOne } from '@/ui';
-import { CaisseTable } from '../Logistics/components';
+import { CaisseTable ,DetailsCaisseOperation} from '../Logistics/components';
+import { ValidateCaisse } from '../Logistics/components';
+
 
 const salesStore = useSalesStore();
+const logisticsStore = useLogisticsStore();
+
 
 const stats = ref(computed(() => salesStore.demande_caisse.stats));
 const caisse = ref(computed(() => salesStore.demande_caisse.data));
-
+const isLoading = ref(false);
 onMounted(async () => {
     await salesService.getCaisseOperation();
 });
@@ -17,6 +21,15 @@ onMounted(async () => {
 onUnmounted(() => {
     salesStore.clearPurchaseOrders();
 });
+const Validate = async () => {
+     isLoading.value = true;
+    await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
+     isLoading.value = false;
+      $('#validate-caisse-modal').modal('hide');
+    
+   });
+  // console.log($('#validateInput').val());
+};
 </script>
 
 <template>
@@ -56,5 +69,13 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <DetailsCaisseOperation />
+
+        <ValidateCaisse 
+        id="validate-caisse-modal"
+        :isLoading="isLoading"
+      :method="Validate"
+      :itemid="logisticsStore.ItemId"
+        />
     </div>
 </template>

@@ -155,15 +155,17 @@ const returnBadge = (item: any): any[] => {
 		case 'special':
 			return ['badge bg-info', 'Special'];
 		case 'En attente':
-			return ['bg-label-warning', 'En attente', 'ti-clock'];
+			return [' badge bg-label-warning', 'En attente', 'ti-clock'];
 		case 'En soumission':
-			return ['bg-label-info', 'En soumission', 'ti-clock'];
+			return ['badge bg-label-info', 'En soumission', 'ti-clock'];
 		case 'Perdu':
-			return ['bg-label-danger', 'Perdu', 'ti-thumb-down'];
+			return ['badge bg-label-danger', 'Perdu', 'ti-thumb-down'];
 		case 'Gagné':
-			return ['bg-label-success', 'Gagné', 'ti-circle-check'];
+			return ['badge bg-label-success', 'Gagné', 'ti-circle-check'];
 		case 'Non Validé':
-			return ['bg-label-dark', 'Non Validé', 'ti-circle-x'];
+			return ['badge bg-label-dark', 'Non Validé', 'ti-circle-x'];
+		case 'valide':
+			return ['badge bg-label-success', 'Validé', 'ti-circle-x'];
 		default:
 			return ['badge bg-secondary', 'Autre'];
 	}

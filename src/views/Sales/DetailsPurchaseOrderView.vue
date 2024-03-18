@@ -201,6 +201,10 @@ const tabeComperatif = () => {
               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" @click="tabeComperatif">             
                 <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative            
             </button>
+            <router-link :to="{ name:'PurchaseOrderValidation', params : { id:purchase.id} }"
+              v-if="purchase.status == 'on going' && [helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO ].includes(role)" class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex">
+              <i class="ti ti-check me-2"></i> Valider la demande d'achats
+            </router-link>
             <button class="btn d-grid w-100 mb-2 waves-effect d-flex" :disabled="purchase.status != 'pending'"
               :class="purchase.status != 'pending' ? 'btn-secondary' : 'btn-warning'" href=". /app-invoice-edit.html">
               <i class="ti ti-pencil me-2"></i> Modifier la demande
