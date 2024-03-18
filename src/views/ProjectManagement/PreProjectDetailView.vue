@@ -501,7 +501,7 @@ const deleteArticles = async () => {
                                   </div>
                                   <div
                                     class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end pe-4">
-                                    <a :href="getFileUrl(preProject.cps_file,'/uploads/cps') "
+                                    <a :href="getFileUrl(preProject.cps_file,'uploads/cps') "
                                       class="badge bg-label-primary fw-bold">
                                       <i class="ti ti-download me-2"></i>
                                       Télécharger
@@ -525,7 +525,7 @@ const deleteArticles = async () => {
                                   </div>
                                   <div
                                     class="col-sm-4 col-lg-12 col-xxl-4 d-flex justify-content-sm-end justify-content-md-start justify-content-xxl-end pe-4">
-                                    <a :href="getFileUrl(preProject.rc_file,'/uploads/rc')"
+                                    <a :href="getFileUrl(preProject.rc_file,'uploads/rc')"
                                       class="badge bg-label-primary fw-bold">
                                       <i class="ti ti-download me-2"></i>
                                       Télécharger
