@@ -101,7 +101,7 @@ export const usePMStore = defineStore('PMStore', {
             this.outOfStock.stats = null;
         },
 
-    },
+    
     setPreProject(data: any) {
         this.preproject.data = data.preProjects;
         this.preproject.stats = data.stats;
@@ -159,4 +159,5 @@ export const usePMStore = defineStore('PMStore', {
             res.stats.pre_projects_in_submission
         ];
     },
+},
 });

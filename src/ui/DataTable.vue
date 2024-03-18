@@ -167,6 +167,14 @@ watch(() => props.pageSize, () => {
                             </router-link>
                             <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
                         </td>
+                        <td v-if="header.isComplex && header.type === 'SousTraitant'"
+                            :class="index == 0 ? 'text-start' : 'text-center'">
+                            <router-link :to="{ name: 'ProfileSoustraitant', params: { id: item.id } }">
+                                <h6 class="mb-1 fw-bold text-primary">{{ item.raison_social 
+                                    }}</h6>
+                            </router-link>
+                            
+                        </td>
                         <td v-if="header.isComplex && header.type === 'recrute'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
 

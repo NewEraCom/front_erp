@@ -12,6 +12,7 @@ import DetailsRecruitementModal from './DetailsRecruitementModal.vue';
 import ValidateRecruitementModal from './ValidateRecruitementModal.vue';
 import AddSoustraitantModal from './AddSoustraitantModal.vue';
 import DemandeRhRequestModal from './DemandeRhRequestModal.vue';
+import EditSousTraitantModal from './EditSousTraitantsModal.vue';
 
 export {
     ModalReserve,
@@ -27,5 +28,6 @@ export {
     DetailsRecruitementModal,
     ValidateRecruitementModal,
     AddSoustraitantModal,
-    DemandeRhRequestModal
+    DemandeRhRequestModal,
+    EditSousTraitantModal,
 };

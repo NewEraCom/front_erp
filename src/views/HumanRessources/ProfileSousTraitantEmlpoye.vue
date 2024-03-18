@@ -4,6 +4,7 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { helpers, formater } from '@/utils';
 import { EmployeeSkeleton } from './components';
+import { EditWorkerModal } from './components/modals';
 
 const props = defineProps({
     id: {
@@ -42,12 +43,12 @@ const getFileUrl = (attachment) => {
 </script>
 
 <template>
-    <div class="flex-grow-1 container-fluid mt-3">
+    <div class="flex-grow-1 container-fluid mt-3" v-if="worker">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h5 v-if="worker" class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe de {{
-                worker.soustraitant.raison_social }}</span> </h5>
-            <div v-if="worker">
-                <button class="btn btn-warning" data-bs-target="#" data-bs-toggle="modal">
+            <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Employe de {{
+        worker.soustraitant.raison_social }}</span> </h5>
+            <div>
+                <button class="btn btn-warning" data-bs-target="#EditWorker" data-bs-toggle="modal">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
@@ -66,8 +67,8 @@ const getFileUrl = (attachment) => {
                                 <div class="user-info text-center">
                                     <h4 class="mb-2">{{ worker.first_name + ' ' + worker.last_name }}</h4>
                                     <span class="badge mt-1" :class="helpers.returnBadge(String(worker.status))[0]">{{
-                helpers.returnBadge(String(worker.status))[1]
-            }}</span>
+        helpers.returnBadge(String(worker.status))[1]
+    }}</span>
                                 </div>
                             </div>
                         </div>
@@ -211,9 +212,9 @@ const getFileUrl = (attachment) => {
                                                 <h6 class="mb-3 fw-bold text-dark">
                                                     Agence :
                                                     {{
-                helpers.bankName(worker.bank_name)[1] ??
-                'N/A'
-            }}
+        helpers.bankName(worker.bank_name)[1] ??
+        'N/A'
+    }}
                                                 </h6>
                                             </div>
                                             <div v-if="worker.copie_rib">
@@ -307,9 +308,9 @@ const getFileUrl = (attachment) => {
                     </div>
                 </div>
             </div>
+            <EditWorkerModal :worker="worker" />
+
         </div>
         <EmployeeSkeleton v-else />
-
-
     </div>
 </template>

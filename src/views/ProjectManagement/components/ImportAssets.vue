@@ -21,7 +21,7 @@ const submit = async () => {
     formData.append('id', props.id);
     formData.append('cps_file', cps.value.files[0]);
     formData.append('rc_file', rc.value.files[0]);
-    formData.append('others', others.value.files[0]);
+    // formData.append('others', others.value.files[0]);
 
     await pmService.uploadFiles(formData).then(() => {
         isLoading.value = false;

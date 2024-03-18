@@ -26,7 +26,7 @@ export const financeRoutes = [
         component: () => import('../views/Finance/CautionView.vue'),
         meta: {
             title: 'Caution',
-            role : [helpers.roles.FINANCE]
+            // role : [helpers.roles.FINANCE]
 
         }
     },

@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
+import { log } from 'console';
+import { pmService } from '@/services';
+import { usePMStore } from '@/store';
 
 const props = defineProps({
     data: {
@@ -9,6 +12,7 @@ const props = defineProps({
         required: true,
     },
 });
+const PMStore = usePMStore();
 
 const headers = [
     { text: 'Article', value: 'article', type: 'text' },
@@ -22,12 +26,17 @@ const headers = [
 
 const actionsConfig = [
     {
-        icon: 'ti ti-recycle', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
+        icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
+            deleteBordereaux(item);
         },
     },
 ];
 
-
+const deleteBordereaux=(item)=>{
+    console.log(item); 
+    PMStore.ItemId = item.id;
+     $('#deleteArticle').modal('show');
+};
 
 
 const filteredData = ref(props.data);

@@ -1,4 +1,3 @@
-import { clear } from 'console';
 import { defineStore } from 'pinia';
 
 export const useSalesStore = defineStore('SalesStore', {
@@ -18,11 +17,16 @@ export const useSalesStore = defineStore('SalesStore', {
             data: null,
             stats: null,
         },
+        demande_caisse: {
+            data: null,
+            stats: null,
+        },
         purchase: null,
         ItemId: null,
         print_commande: null,
         print_bonCommande: null,
         commande: null,
+        article: null
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -88,6 +92,15 @@ export const useSalesStore = defineStore('SalesStore', {
         },
         setPrintBonCommande(data) {
             this.print_bonCommande = data;
-        }
+        },
+        setDemandeCaisse(data: any) {
+            this.demande_caisse.data = data;
+            this.demande_caisse.stats = {
+                total: data.length,
+                pending: data.filter((p: any) => p.status === 'pending').length,
+                ongoing: data.filter((p: any) => p.status === 'on going').length,
+                completed: data.filter((p: any) => p.status === 'done').length,
+            };
+        },
     }
 });

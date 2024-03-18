@@ -286,11 +286,11 @@ export const useRhStore = defineStore('RhStore', {
         },
         setSousTraitants(data: any) {
             this.sousTraitants.data = data;
-            // this.sousTraitants.stats = {
-            //     actif: data.filter((e: any) => e.status === 1).length,
-            //     inactif: data.filter((e: any) => e.status === 0).length,
-            //     totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
-            // };
+            this.sousTraitants.stats = {
+                actif: data.filter((e: any) => e.status === 1).length,
+                inactif: data.filter((e: any) => e.status === 0).length,
+                totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
+            };
         },
         pushPointage(data: any) {
             this.pointages.push(data);

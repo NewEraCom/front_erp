@@ -31,6 +31,16 @@ export const salesRoutes = [
         },
     },
     {
+        path: '/purchase-order/table-comperatif/:id',
+        name: 'PurchaseOrderTableComperatif',
+        component: () => import('@/views/Sales/TableComperatifView.vue'),
+        props: true,
+        meta: {
+            title: 'Details de la demande d\'achat',
+            role: [helpers.roles.SALES, helpers.roles.CF]
+        },
+    },
+    {
         path: '/edit/purchase-order/details/:id',
         name: 'EditPurchaseOrder',
         component: () => import('@/views/Sales/EditPurchaseOrder.vue'),

@@ -47,7 +47,6 @@ async function getFacture() {
     return Promise.reject(error);
   }
 }
-
 async function getBorderaux(id) {
   try {
     const PMStore = usePMStore();
@@ -60,7 +59,7 @@ async function getBorderaux(id) {
     return Promise.reject(e);
   }
 }
-async function updateFacture(req) {
+async function updateFacture(req: any) {
   try {
     // const FactureStore = useFactureStore();
     const response = await api().post('facture/update', req);
@@ -78,7 +77,6 @@ async function updateFacture(req) {
     return Promise.reject(error);
   }
 }
-
 async function deleteFacture(id) {
   try {
     const response = await api().delete('facture/delete/' + id);
@@ -154,7 +152,7 @@ const getOutOfStockRequests = async () => {
   }
 };
 
-async function getPreProjectById(req) {
+async function getPreProjectById(req: string) {
   try {
     const PMStore = usePMStore();
 
@@ -175,8 +173,21 @@ async function getPreProjectById(req) {
     router.push('/*');
   }
 }
+async function deleteArticle(id:number) {
+  try {
+    const PMStore = usePMStore();
 
-async function addLots(req) {
+    const response = await api().delete('preprojects/delete-article/'+id);
+    console.log(response.data);
+    if (response.status == 200) {
+      PMStore.preprojectDetail.articles_lot = PMStore.preprojectDetail.articles_lot.filter((doc: { id: number; }) => doc.id !== id);
+    }
+  } catch (error) {
+    return error;
+  }
+}
+
+async function addLots(req: any) {
   try {
     const PMStore = usePMStore();
 
@@ -190,7 +201,7 @@ async function addLots(req) {
     return error;
   }
 }
-async function cancel(req) {
+async function cancel(req: any) {
   try {
     const PMStore = usePMStore();
 
@@ -201,14 +212,13 @@ async function cancel(req) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response.status;
   }
 }
-export async function markChiffrageDone(req) {
+export async function markChiffrageDone(req: string) {
   try {
     const PMStore = usePMStore();
 
-    const response = await API().post('chiffrage/close/' + req);
+    const response = await api().post('chiffrage/close/' + req);
     if (response.status == 200) {
       PMStore.closeChiffratePreProject(response.data.chiffrage_status);
     }
@@ -217,14 +227,14 @@ export async function markChiffrageDone(req) {
     throw error;
   }
 }
-async function clotureLostProject(req) {
+async function clotureLostProject(req: any) {
   try {
     const PMStore = usePMStore();
 
     const response = await api().post('chiffrage/mark', req);
     console.log(response.data);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
       return response.status;
     }
@@ -234,7 +244,7 @@ async function clotureLostProject(req) {
   }
 }
 
-async function clotureComplex(req) {
+async function clotureComplex(req: any) {
   try {
     const PMStore = usePMStore();
 
@@ -249,7 +259,7 @@ async function clotureComplex(req) {
   }
 }
 
-async function clotureSimple(req) {
+async function clotureSimple(req: any) {
   try {
     const PMStore = usePMStore();
 
@@ -262,22 +272,25 @@ async function clotureSimple(req) {
     return error;
   }
 }
-async function remove(req) {
+async function remove(req: string) {
   try {
     const PMStore = usePMStore();
 
     const response = await api().delete('chiffrage/delete/' + req);
-    await PMStore.removeChiffragePreProject(req);
+    if (response.status == 200) {
+      
+      await PMStore.removeChiffragePreProject(req);
+    }
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
-async function update(req) {
+async function update(req: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await API().put('preprojects/update', req);
+    const response = await api().put('preprojects/update', req);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.setPreProject(response.data.preProject);
@@ -289,14 +302,14 @@ async function update(req) {
   }
 }
 
-async function uploadFiles(req) {
+async function uploadFiles(req: any) {
 
   try {
     const PMStore = usePMStore();
 
     const response = await api().post('preprojects/upload-files', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
     return response.status;
@@ -305,13 +318,13 @@ async function uploadFiles(req) {
   }
 }
 
-async function setFiles(req) {
+async function setFiles(req: any) {
   try {
     const PMStore = usePMStore();
 
     const response = await api().post('preprojects/set-files', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
   } catch (error) {
@@ -320,13 +333,13 @@ async function setFiles(req) {
   }
 }
 
-async function setFilesDone(req) {
+async function setFilesDone(req: any) {
   try {
     const PMStore = usePMStore();
 
     const response = await api().post('preprojects/set-files-done', req);
     if (response.status == 200) {
-      PMStore.preProject = null;
+      PMStore.preprojectDetail = null;
       PMStore.setPreProject(response.data[0]);
     }
   } catch (error) {
@@ -334,7 +347,7 @@ async function setFilesDone(req) {
     return error;
   }
 }
-async function importBordereau(req) {
+async function importBordereau(req: any) {
 
   try {
     const PMStore = usePMStore();
@@ -350,7 +363,7 @@ async function importBordereau(req) {
   }
 }
 
-async function importChiffrage(req) {
+async function importChiffrage(req: any) {
 
   try {
     const PMStore = usePMStore();
@@ -363,7 +376,7 @@ async function importChiffrage(req) {
   }
 }
 
-async function create(req) {
+async function create(req: any) {
 
   try {
     const PMStore = usePMStore();
@@ -376,7 +389,7 @@ async function create(req) {
   }
 }
 
-async function refuser(req) {
+async function refuser(req: any) {
 
   try {
     const PMStore = usePMStore();
@@ -389,10 +402,9 @@ async function refuser(req) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response.status;
   }
 }
-async function validate(req) {
+async function validate(req: any) {
 
   try {
     const PMStore = usePMStore();
@@ -405,17 +417,7 @@ async function validate(req) {
     return response.status;
   } catch (error) {
     console.log(error);
-  }
-};
-
-async function createFactureComposant(data: any) {
-  try {
-    const response = await api().post('facture/comp/store', data);
-    if (response.status === 200) {
-      return response.data;
-    }
-  } catch (error) {
-    console.log(error);
+    return response;
   }
 };
 
@@ -446,6 +448,5 @@ export default {
   create,
   refuser,
   validate,
-  getProjects,
-  createFactureComposant
+  getProjects
 };

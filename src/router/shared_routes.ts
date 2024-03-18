@@ -91,6 +91,16 @@ export const sharedRoutes = [
         },
     },
     {
+        path: '/soustraitant/:id',
+        name: 'ProfileSoustraitant',
+        component: () => import('@/views/Shared/ProfilSousTraitantView.vue'),
+        meta: {
+            title: 'Sous-traitant',
+            requiresAuth: true
+        },
+        props:true,
+    },
+    {
         path: '/projects',
         name: 'Projects',
         component: () => import('@/views/Shared/ProjectsView.vue'),
