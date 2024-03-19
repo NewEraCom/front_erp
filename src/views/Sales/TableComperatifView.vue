@@ -46,6 +46,7 @@ const Submit = async () => {
         await salesService.insertTableComperatif(payload)
             .then((res) => {
                 console.log(res);
+                router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
                
             })
             .catch((e) => {

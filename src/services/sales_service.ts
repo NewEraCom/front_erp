@@ -141,6 +141,20 @@ const insertTableComperatif = async(data)=>{
         return false;
     }
 };
+const ValidateTableComperatif = async(id,data)=>{
+    try {
+        const res = await api().post('purchase/valid-demande-achat/'+id, data);
+        if (res.status === 200) {
+            console.log(res);
+            return true;
+        } else {
+            return false;
+        }
+    } catch (e) {
+        console.log(e);
+        return false;
+    }
+};
 
 
 
@@ -158,5 +172,6 @@ export default {
     createPurchaseOrder,
     getBonDeCommandeById,
     insertTableComperatif,
-    getCaisseOperation
+    getCaisseOperation,
+    ValidateTableComperatif
 };

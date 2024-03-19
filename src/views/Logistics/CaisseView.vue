@@ -32,9 +32,9 @@ onUnmounted(() => {
 });
 const Validate = async () => {
     isLoading.value = true;
-    await logisticsService.validateCaisse(logisticsStore.ItemId).then(() => {
+    await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
         isLoading.value = false;
-        $("#validate-caisse-modal").modal("hide");
+        $('#validate-caisse-modal').modal('hide');
 
     });
     // console.log($('#validateInput').val());
@@ -95,6 +95,6 @@ const Validate = async () => {
         <DeleteModal title="Supprimer un opération" text="Voulez-vous vraiment supprimer cette opération ?"
             textButton="Oui, Supprimer" :action="() => logisticsService.deleteCaisseOperation()" />
         <ValidateCaisse id="validate-caisse-modal" :isLoading="isLoading" :method="Validate"
-            :itemid="logisticsStore.ItemId" />
+            :itemid="logisticsStore.selectedItem.id" />
     </div>
 </template>

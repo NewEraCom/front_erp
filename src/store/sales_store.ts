@@ -26,7 +26,8 @@ export const useSalesStore = defineStore('SalesStore', {
         print_commande: null,
         print_bonCommande: null,
         commande: null,
-        article: null
+        article: null,
+        table_comperatif: null,
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -102,5 +103,8 @@ export const useSalesStore = defineStore('SalesStore', {
                 completed: data.filter((p: any) => p.status === 'done').length,
             };
         },
+        setTableComperatif(data: any) {
+            this.table_comperatif = data;
+        }
     }
 });
