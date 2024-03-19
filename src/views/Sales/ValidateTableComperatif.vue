@@ -4,6 +4,8 @@ import { useSalesStore ,useSharedStore} from '@/store';
 import { salesService ,sharedService} from '@/services';
 import { formater, helpers } from '@/utils';
 import {CustomSelect} from '@/ui';
+import {useRouter} from 'vue-router';
+const router = useRouter();
 
 const salesStore = useSalesStore();
 const sharedStore = useSharedStore();
@@ -34,6 +36,8 @@ const submit = async () => {
     
     await salesService.ValidateTableComperatif(props.id, selectedFournisseurIds.value).then(() => {
         isLoading.value = false;
+        router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
+
         
     });
 };
