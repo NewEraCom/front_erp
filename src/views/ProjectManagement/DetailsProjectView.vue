@@ -121,7 +121,7 @@ watch(item, () => {
                         <div class="d-flex justify-content-between">
                             <small class="d-block mb-2 text-muted">Budget de projet</small>
                         </div>
-                        <h4 v-if="project.pre_project.montant_marche != null" class="card-title mb-1">
+                        <h4 v-if="project.budget != null" class="card-title mb-1">
                             {{ formater.number(project.budget) + ' MAD' }}
                         </h4>
                         <h4 v-else class="card-title mb-1">0 MAD</h4>
@@ -248,7 +248,7 @@ watch(item, () => {
                                                 <td>
                                                     {{
                         formater.number(
-                            project.pre_project.montant_marche
+                            project.budget
                         )
                     }}
                                                     MAD

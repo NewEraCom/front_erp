@@ -4,7 +4,7 @@ import { onMounted, ref, computed, onUnmounted } from 'vue';
 import { pmService, salesService } from '@/services';
 import { usePMStore, useSalesStore } from '@/store';
 import { CardOne } from '@/ui';
-import { helpers } from '@/utils';
+import { helpers, formater } from '@/utils';
 
 const PMStore = usePMStore();
 const salesStore = useSalesStore();
@@ -29,7 +29,7 @@ onUnmounted(() => {
     <h5 class="py-3 mb-4 fw-medium">Dashboard </h5>
     <div v-if="data" class="row g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Total Budget des Projets" :count="String(data.projects_budget_total) + ' MAD'"
+        <CardOne title="Total Budget des Projets" :count="String(formater.number(data.projects_budget_total)) + ' MAD'"
           color="bg-label-success" icon="ti-shopping-cart-copy" card-color="card-border-shadow-success" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">

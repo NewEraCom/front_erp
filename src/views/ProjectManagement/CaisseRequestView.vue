@@ -34,11 +34,11 @@ onUnmounted(() => {
                     icon="ti-shopping-cart" card-color="card-border-shadow-primary" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardOne title="Demande en cours" :count="String(stats.pending)" color="bg-label-warning"
+                <CardOne title="Demande en cours" :count="String(stats.ongoing)" color="bg-label-warning"
                     icon="ti-shopping-cart" card-color="card-border-shadow-warning" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
-                <CardOne title="Demande traitée" :count="String(stats.ongoing)" color="bg-label-success"
+                <CardOne title="Demande traitée" :count="String(stats.delivered)" color="bg-label-success"
                     icon="ti-shopping-cart" card-color="card-border-shadow-success" />
             </div>
         </div>

@@ -166,13 +166,13 @@ export const useSharedStore = defineStore('ShareStore', {
             this.stock.loading = false;
         },
         setProjects(data: any) {
+            console.log(data);
             this.projects.data = data;
             this.projects.stats = {
                 total: data.length,
-                ongoing: data.filter((item: any) => item.status === 'ongoing').length,
+                ongoing: data.filter((item: any) => item.status === 'on going').length,
                 completed: data.filter((item: any) => item.status === 'completed').length,
             };
-            console.log(this.projects.data);
         },
         clearProjects() {
             this.projects.data = null;

@@ -388,10 +388,10 @@ const LogisticsMenu = [
     },
     {
         id: 8,
-        name: 'Louer',
-        route: '/louer',
+        name: 'Loyer',
+        route: '/rent',
         icon: 'ti ti-building',
-        path: 'Louer'
+        path: 'Rent'
     },
     ...sharedMenu2,
     ...sharedMenu

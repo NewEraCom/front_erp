@@ -48,7 +48,6 @@ const submit = async () => {
         })
         .catch((error) => {
             isLoading.value = false;
-            message.value = error.response.data.message;
         });
 };
 

@@ -6,6 +6,7 @@ import { RHStatsCard, EmployeeChart } from './components';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { formater } from '@/utils';
+import { CardOneSkeleton } from '@/ui';
 
 const RhStore = useRhStore();
 
@@ -13,9 +14,7 @@ const RhStore = useRhStore();
 const stats = ref(computed(() => RhStore.stats));
 const demandeRh = ref(computed(() => RhStore.demandeRh.stats));
 
-
 const employeeExpire = ref(computed(() => RhStore.employeeExpire));
-
 
 onMounted(async () => {
   await rhService.getEmployees();
@@ -32,6 +31,11 @@ onUnmounted(() => {
   <div class="flex-grow-1 container-fluid mt-3">
     <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
     <RHStatsCard v-if="stats != null && demandeRh != null" :stats="stats" :pending="demandeRh.pending" />
+    <div v-else class="row g-3">
+      <div v-for="item in 8" :key="item" class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
+        <CardOneSkeleton />
+      </div>
+    </div>
     <div v-if="stats" class="row mt-2 g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
         <EmployeeChart title="Statistique des employés" subtitle="Nombre d'employés par mois en"
@@ -51,7 +55,7 @@ onUnmounted(() => {
             <small class="fw-bold mb-1 text-muted" v-if="employeeExpire">{{ employeeExpire.length }} employées expirés
               ce mois</small>
           </div>
-          <div class="card-body border-top pt-4">
+          <div class="card-body border-top pt-4" v-if="employeeExpire">
             <div class="table-responsive">
               <table class="table table-hover align-middle">
                 <thead class="table-light">
@@ -63,7 +67,7 @@ onUnmounted(() => {
                     <th class="fw-bold text-center">Action</th>
                   </tr>
                 </thead>
-                <tbody v-if="employeeExpire && employeeExpire.length > 0">
+                <tbody v-if="employeeExpire.length > 0">
                   <tr v-for="item in employeeExpire" :key="item.id">
                     <td>
                       <router-link :to="{ name: 'ProfileEmployee', params: { id: item.id } }">
@@ -94,6 +98,17 @@ onUnmounted(() => {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+            style="height: 650px;">
+            <div class="row mt-5">
+              <div class="col-12 text-center">
+                <h5>Chargement des données...</h5>
+                <div class="spinner-border text-primary mt-4" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -189,8 +189,6 @@ const checkArticles = (articles) => {
                                         <p class="mb-0" v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'
             "></p>
                                     </div>
-
-
                                 </div>
                                 <div
                                     class="d-flex flex-column align-items-center justify-content-between border-start p-2">
@@ -267,7 +265,7 @@ const checkArticles = (articles) => {
                     <div v-if="isStock == 'Chantier'" class="col-12 mb-2">
                         <div class="mb-3">
                             <label for="recepteur" class="mb-3">Récepteur</label>
-                            <input id="recepteur" v-model="recepteur" type="text" class="form-control"
+                            <input id="recepteur" v-model="formData.recepteur" type="text" class="form-control"
                                 placeholder="Entrez le nom du récepteur de la commande" />
                         </div>
                     </div>

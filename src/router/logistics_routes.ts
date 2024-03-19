@@ -42,11 +42,11 @@ export const logisticsRoutes = [
         },
     },
     {
-        path: '/louer',
-        name: 'Louer',
+        path: '/rent',
+        name: 'rent',
         component: () => import('@/views/Logistics/LouerView.vue'),
         meta: {
-            title: 'Louer',
+            title: 'Loyer',
             requiresAuth: true,
             role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },
