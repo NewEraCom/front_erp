@@ -61,6 +61,8 @@ const initialDashboard = (role: string): string => {
 			return 'FnFacture';
 		case roles.DO:
 			return 'DashboardPM';
+		case roles.BDM:
+			return 'DashboardPM';
 		// return 'DashboardAdmin';
 		default:
 			return '404';
@@ -86,6 +88,8 @@ const returnSideBarItems = (): any => {
 			return sideBar.SupportMenu;
 		case roles.DO:
 			return sideBar.DOMenu;
+		case roles.BDM:
+			return sideBar.BDMMenu;
 		default:
 			return [];
 	}
