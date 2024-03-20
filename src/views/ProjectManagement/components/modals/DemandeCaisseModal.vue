@@ -68,7 +68,7 @@ const submit = async () => {
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>
-                <button type="submit" class="btn btn-success" :disabled="isLoading">
+                <button type="submit" class="btn btn-primary" :disabled="isLoading">
                     <span v-if="isLoading" class="d-flex align-items-center">
                         <div class="spinner-border spinner-border-sm text-white" role="status">
                             <span class="visually-hidden">Loading...</span>
