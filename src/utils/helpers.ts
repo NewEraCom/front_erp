@@ -61,7 +61,8 @@ const initialDashboard = (role: string): string => {
 			return 'FnFacture';
 		case roles.DO:
 			return 'DashboardPM';
-		// return 'DashboardAdmin';
+		case roles.BDM:
+			return 'DashboardBDM';
 		default:
 			return '404';
 	}
@@ -284,7 +285,7 @@ function dateDiff(date) {
 	const today = new Date();
 
 	const otherDate = new Date(date);
-	const diffTime = Math.abs(today - otherDate);
+	const diffTime = Math.abs(Number(today) - Number(otherDate));
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 	let result;
 

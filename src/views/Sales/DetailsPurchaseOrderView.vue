@@ -4,7 +4,7 @@ import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
 import { formater, helpers } from '@/utils';
 import { ValidateArticleModal } from './components';
-import {useRouter} from 'vue-router';
+import { useRouter } from 'vue-router';
 const salesStore = useSalesStore();
 const purchase = ref(computed(() => salesStore.purchase));
 const role = ref(localStorage.getItem('role'));
@@ -26,7 +26,7 @@ onUnmounted(() => {
 
 const tabeComperatif = () => {
   salesStore.article = purchase.value.purchase_article;
-  router.push({ name: 'PurchaseOrderTableComperatif', params: { id: props.id }});
+  router.push({ name: 'PurchaseOrderTableComperatif', params: { id: props.id } });
 };
 
 
@@ -198,11 +198,12 @@ const tabeComperatif = () => {
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">
             <button v-if="purchase.status == 'pending' && role == 'Responsable d\'achats'"
-              class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" @click="tabeComperatif">             
-                <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative            
+              class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" @click="tabeComperatif">
+              <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
             </button>
-            <router-link :to="{ name:'PurchaseOrderValidation', params : { id:purchase.id} }"
-              v-if="purchase.status == 'on going' && [helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO ].includes(role)" class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex">
+            <router-link :to="{ name: 'PurchaseOrderValidation', params: { id: purchase.id } }"
+              v-if="purchase.status == 'on going' && [helpers.roles.DG, helpers.roles.DS, helpers.roles.DO].includes(role)"
+              class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-check me-2"></i> Valider la demande d'achats
             </router-link>
             <button class="btn d-grid w-100 mb-2 waves-effect d-flex" :disabled="purchase.status != 'pending'"
@@ -210,7 +211,7 @@ const tabeComperatif = () => {
               <i class="ti ti-pencil me-2"></i> Modifier la demande
             </button>
             <router-link :to="{ name:'DetailBonCommande', params : { id:purchase.id} }"
-              v-if="purchase.status == 'on going'" class="btn btn-primary d-grid w-100 mb-2 waves-effect d-flex">
+              v-if="purchase.status == 'valide'" class="btn btn-primary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-download me-2"></i> Télécharger le bon de commande
             </router-link>
           </div>

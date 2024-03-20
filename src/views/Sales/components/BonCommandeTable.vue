@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+import router from '@/router';
 
 const props = defineProps({
     bonCommande: {
@@ -19,14 +20,13 @@ const headers = [
 ];
 
 const actionsConfig = [
-    { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            console.log(item);
+            router.push({ name: 'DetailBonCommande', params: { id: item.achat.id } });
+        }
+    },
 ];
-
-const detailsItem = (item: any) => {
-    console.log(item);
-};
-
-
 
 const filteredData = ref(props.bonCommande);
 
@@ -53,8 +53,8 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
 
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
@@ -71,7 +71,8 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>

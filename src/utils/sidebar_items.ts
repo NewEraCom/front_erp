@@ -57,6 +57,16 @@ const DGMenu = [
     },
 ];
 
+const BDMenu = [
+    {
+        id: 1,
+        name: 'Dashboard',
+        route: '/dashboard',
+        icon: 'ti ti-smart-home',
+        path: 'DashboardDG'
+    },
+];
+
 const CFMenu = [
     {
         id: 1,
@@ -636,6 +646,7 @@ const FinanceMenu = [
         path: 'FnCaution'
     }
 ];
+
 const DOMenu = [
     {
         id: 1,
@@ -706,5 +717,6 @@ export const sideBar = {
     LogisticsMenu,
     SupportMenu,
     FinanceMenu,
-    DOMenu
+    DOMenu,
+    BDMenu
 };

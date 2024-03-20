@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { CardOne, CardTwo } from '@/ui';
+import { CardTwo } from '@/ui';
 import { useFinanceStore } from '@/store';
 import { financeService } from '@/services';
 import { FactureTable } from './components';
 
 
-const Prevmodal = 'preview-facture';
 const FinanceStore = useFinanceStore();
 const stats = ref(true);
 

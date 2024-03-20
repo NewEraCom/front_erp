@@ -316,18 +316,11 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         setOperationCaisse(data: any) {
             this.opertationCaisse.data = data;
             this.opertationCaisse.stats = {
-                requested: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'on going') {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
-                delivered: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'done') {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
+                requested: data.filter((item: any) => item.status == 'pending').length,
+                delivered: data.filter((item: any) => item.status == 'done').length,
+                total: data.length,
+                ongoing: data.filter((item: any) => item.status == 'on going').length,
+
             };
             this.opertationCaisse.loading = true;
         },

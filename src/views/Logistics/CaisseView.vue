@@ -94,7 +94,6 @@ const Validate = async () => {
         <DetailsCaisseOperation />
         <DeleteModal title="Supprimer un opération" text="Voulez-vous vraiment supprimer cette opération ?"
             textButton="Oui, Supprimer" :action="() => logisticsService.deleteCaisseOperation()" />
-        <ValidateCaisse id="validate-caisse-modal" :isLoading="isLoading" :method="Validate"
-            :itemid="logisticsStore.selectedItem.id" />
+
     </div>
 </template>
