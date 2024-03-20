@@ -52,7 +52,7 @@ export const projectManagerRoutes = [
         component: () => import('@/views/ProjectManagement/CaisseRequestView.vue'),
         meta: {
             title: 'Demande de caisse',
-            role: [helpers.roles.CF]
+            // role: [helpers.roles.CF]
         },
     },
     {

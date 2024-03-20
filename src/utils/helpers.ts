@@ -87,6 +87,8 @@ const returnSideBarItems = (): any => {
 			return sideBar.SupportMenu;
 		case roles.DO:
 			return sideBar.DOMenu;
+		case roles.BDM:
+			return sideBar.BDMenu;
 		default:
 			return [];
 	}

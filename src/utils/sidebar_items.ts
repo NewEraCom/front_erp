@@ -57,15 +57,6 @@ const DGMenu = [
     },
 ];
 
-const BDMenu = [
-    {
-        id: 1,
-        name: 'Dashboard',
-        route: '/dashboard',
-        icon: 'ti ti-smart-home',
-        path: 'DashboardDG'
-    },
-];
 
 const CFMenu = [
     {
@@ -697,6 +688,47 @@ const DOMenu = [
         icon: 'ti ti-forklift',
         path: 'Soustraitant'
     },
+    {
+        id: 7,
+        name: 'Demande de caisse',
+        route: '/project/caisse-request',
+        icon: 'ti ti-transfer-out',
+        path: 'CaisseRequest'
+    },
+
+    ...sharedMenu2,
+    ...sharedMenu
+];
+const BDMenu = [
+    {
+        id: 1,
+        name: 'Dashboard',
+        route: '/dashboard-pm',
+        icon: 'ti ti-smart-home',
+        path: 'DashboardPM'
+    },
+    {
+        id: 2,
+        name: 'Projets',
+        route: '/projects',
+        icon: 'ti ti-package',
+        path: 'Projects'
+    },
+    {
+        id: 2,
+        name: 'PreProject',
+        route: '/pre-project',
+        icon: 'ti ti-package',
+        path: 'Avant Projects'
+    },
+    {
+        id: 3,
+        name: 'Caution',
+        route: '/fn/Caution',
+        icon: 'ti ti-coins',
+        path: 'FnCaution'
+    },
+
     {
         id: 7,
         name: 'Demande de caisse',

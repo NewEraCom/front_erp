@@ -1,3 +1,5 @@
+import { helpers } from '@/utils';
+
 export const sharedRoutes = [
     {
         path: '/profile',
@@ -115,6 +117,16 @@ export const sharedRoutes = [
         component: () => import('@/views/Shared/ClientsView.vue'),
         meta: {
             title: 'Clients',
+            requiresAuth: true
+        },
+    },
+
+    {
+        path: '/caisse-request',
+        name: 'CaisseRequest',
+        component: () => import('@/views/ProjectManagement/CaisseRequestView.vue'),
+        meta: {
+            title: 'Demande de caisse',
             requiresAuth: true
         },
     },
