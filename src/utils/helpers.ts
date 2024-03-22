@@ -62,8 +62,7 @@ const initialDashboard = (role: string): string => {
 		case roles.DO:
 			return 'DashboardPM';
 		case roles.BDM:
-			return 'DashboardPM';
-		// return 'DashboardAdmin';
+			return 'DashboardBDM';
 		default:
 			return '404';
 	}
@@ -89,7 +88,7 @@ const returnSideBarItems = (): any => {
 		case roles.DO:
 			return sideBar.DOMenu;
 		case roles.BDM:
-			return sideBar.BDMMenu;
+			return sideBar.BDMenu;
 		default:
 			return [];
 	}
@@ -288,7 +287,7 @@ function dateDiff(date) {
 	const today = new Date();
 
 	const otherDate = new Date(date);
-	const diffTime = Math.abs(today - otherDate);
+	const diffTime = Math.abs(Number(today) - Number(otherDate));
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 	let result;
 

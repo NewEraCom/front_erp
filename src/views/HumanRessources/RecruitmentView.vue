@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { CardOne } from '@/ui';
-import { ref, computed, onMounted ,watch} from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 import { RecruitmentTable, AddNewRecruitmentModal } from './components';
-import { rhService ,sharedService} from '@/services';
-import { useRhStore ,useSharedStore} from '@/store';
-import { DeleteDocModal ,RecruitementDetailsModal} from './components/modals';
+import { rhService, sharedService } from '@/services';
+import { useRhStore } from '@/store';
+import { RecruitementDetailsModal } from './components/modals';
+import { DeleteModal, CardOneSkeleton } from '@/ui';
 
 
-const isLoading = ref(false);
 const rhStore = useRhStore();
-const sharedStore = useSharedStore();
 
 const recrutement = ref(computed(() => rhStore.recrutement));
 
@@ -17,18 +16,11 @@ onMounted(async () => {
   await rhService.getRecrutement();
 });
 
-const DeleteLeave = async () => {
-     isLoading.value = true;
 
-    await sharedService.deleteRecruitment(rhStore.ItemId).then(() => {
-     isLoading.value = false;
-      $('#delete-doc').modal('hide');
-    
-   });
-};
 watch(() => rhStore.recrutement, (newValue) => {
   recrutement.value = newValue;
-    },{ deep: true });
+}, { deep: true });
+
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
@@ -45,6 +37,17 @@ watch(() => rhStore.recrutement, (newValue) => {
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
         <CardOne title="Total Demande Non Traitée" :count="String(recrutement.stats.pending)" color="bg-label-danger"
           icon="ti-zoom-filled" card-color="card-border-shadow-danger" />
+      </div>
+    </div>
+    <div v-else class="row g-3 mb-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
       </div>
     </div>
     <div class="row mt-4">
@@ -64,18 +67,28 @@ watch(() => rhStore.recrutement, (newValue) => {
             <div v-if="recrutement.data != null" class="card-body border-top pt-4">
               <RecruitmentTable :recruitments="recrutement.data" />
             </div>
+            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+              style="height: 650px;">
+              <div class="row mt-5">
+                <div class="col-12 text-center">
+                  <h5>Chargement des données...</h5>
+                  <div class="spinner-border text-primary mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <AddNewRecruitmentModal />
-    <DeleteDocModal id="delete-doc" :isLoading="isLoading"
-                :method="DeleteLeave"
-                title="Supprimer Ce Recrutement"
-                message="Êtes-vous sûr de supprimer ce Recrutement ?"
-                />
+    <DeleteModal title="Supprimer une demande de recrutement"
+      text="Voulez-vous vraiment supprimer cette demande de recrutement ?" textButton="Oui, Supprimer"
+      :action="() => sharedService.deleteRecruitment()"
+      message="La demande de recrutement a été supprimée avec succès" />
     <RecruitementDetailsModal />
-   
+
   </div>
 </template>
 

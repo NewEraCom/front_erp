@@ -1,34 +1,35 @@
-
 <script setup lang="ts">
 
 import { onMounted, ref, computed, onUnmounted } from 'vue';
-import { pmService } from '@/services';
-import { usePMStore } from '@/store';
+import { pmService, salesService } from '@/services';
+import { usePMStore, useSalesStore } from '@/store';
 import { CardOne } from '@/ui';
-import { helpers } from '@/utils';
+import { helpers, formater } from '@/utils';
 
 const PMStore = usePMStore();
+const salesStore = useSalesStore();
 
-const demande_achat = ref(computed(() => PMStore.purchase));
+const demande_achat = ref(computed(() => salesStore.purchaseOrders.data));
+
 const data = ref(computed(() => PMStore.stats));
 
 onMounted(async () => {
   await pmService.getDataManager();
-  await pmService.getPurchasesOrder('Achats');
+  await salesService.getPurchaseOrdersByProjectManager('Achats');
 });
 
 onUnmounted(() => {
-  PMStore.clearPurchase();
+  salesStore.clearPurchaseOrders();
   PMStore.clearStats();
 });
 
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
-    <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / <span class="text-dark">Chef de projet</span> </h5>
+    <h5 class="py-3 mb-4 fw-medium">Dashboard </h5>
     <div v-if="data" class="row g-3">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Total Budget des Projets" :count="String(data.projects_budget_total) + ' MAD'"
+        <CardOne title="Total Budget des Projets" :count="String(formater.number(data.projects_budget_total)) + ' MAD'"
           color="bg-label-success" icon="ti-shopping-cart-copy" card-color="card-border-shadow-success" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
@@ -138,22 +139,15 @@ onUnmounted(() => {
     </div>
     <!-- /Last 10 Achats -->
     <div v-if="data" class="row mt-4">
-            <div class="col-6 h-50">
-                <ProjectChart
-                    title="Statistique des projets"
-                    subtitle="Budget des Projets"
-                    color="rgb(37, 144, 250)"
-                    :data="data.chart"
-                    pin="total_employee"
-                    legened="Budget en MAD"
-                    type="bar"
-                />
-            </div>
-            <div class="col-6 h-50 ">
-                <AchatPieChart :data="data.achatByProject" />
-            </div>
-        </div>
-    </div>  
+      <div class="col-6 h-50">
+        <ProjectChart title="Statistique des projets" subtitle="Budget des Projets" color="rgb(37, 144, 250)"
+          :data="data.chart" pin="total_employee" legened="Budget en MAD" type="bar" />
+      </div>
+      <div class="col-6 h-50 ">
+        <AchatPieChart :data="data.achatByProject" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped></style>

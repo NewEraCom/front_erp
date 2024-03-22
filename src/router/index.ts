@@ -4,7 +4,7 @@ import { helpers } from '@/utils';
 import { landingRoutes, authRoutes, hrRoutes, projectManagerRoutes, sharedRoutes, financeRoutes, salesRoutes, logisticsRoutes } from './export';
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory('/erp'),
     routes: [
         ...landingRoutes,
         ...authRoutes,
@@ -26,6 +26,7 @@ const router = createRouter({
         },
     ]
 });
+
 router.beforeEach((to, from, next) => {
     // Set document title based on the route's meta title or use a default title.
     document.title = to.meta.title ? `NewEraERP - ${to.meta.title}` : 'NewEraERP';

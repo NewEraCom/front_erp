@@ -108,11 +108,11 @@ const submit = async () => {
                     <div v-if="soustraitants != null" class="col-12 mb-2">
                         <CustomSelect v-model="formData.selectedSoustrait" placeholder="Choisir un sous-traitant"
                             label="Sous-traitant" :data="soustraitants
-                                .filter((item) => item.is_active == 1)
-                                .map((item) => ({
-                                    key: item.id,
-                                    value: item.raison_social
-                                }))" />
+            .filter((item) => item.is_active == 1)
+            .map((item) => ({
+                key: item.id,
+                value: item.raison_social
+            }))" />
                     </div>
                     <div v-for="item in formData.items" :key="item" class="col-12">
                         <div class="repeater-wrapper pt-0 pt-md-4">
@@ -139,7 +139,8 @@ const submit = async () => {
                                             :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)" />
                                         <small class="text-muted" v-if="formData.service[item]?.qte_restant">Quantite
                                             restante:
-                                            {{ formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant : 0
+                                            {{ formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant
+            : 0
                                             }}</small>
                                     </div>
                                     <div class="col-md-2 col-12 pe-0">
@@ -149,17 +150,18 @@ const submit = async () => {
                                     <div class="col-md-2 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Prix Unitaire</p>
                                         <p class="mb-0" v-html="(formData.price[item] ? formData.price[item] : '0') + ' MAD'
-                                            "></p>
+            "></p>
                                     </div>
                                     <div class="col-md-2 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Prix Total</p>
                                         <p class="mb-0" v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'
-                                            "></p>
+            "></p>
                                     </div>
 
 
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                     <i class="ti ti-x cursor-pointer" @click="removeItem(item)"></i>
                                 </div>
                             </div>
@@ -188,7 +190,8 @@ const submit = async () => {
                                             class="form-control" placeholder="M2" />
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
                                     <i class="ti ti-x cursor-pointer" @click="removeItemHors(item)"></i>
                                 </div>
                             </div>
@@ -212,7 +215,8 @@ const submit = async () => {
             </div>
             <div class="modal-footer">
                 <div v-if="formData.itemsArticle.length > 0" class="alert alert-danger me-auto" role="alert">
-                    Les services hors bordereau doit être validé avant la demande d'exécution envoyé au responsable d'achat.
+                    Les services hors bordereau doit être validé avant la demande d'exécution envoyé au responsable
+                    d'achat.
                 </div>
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer

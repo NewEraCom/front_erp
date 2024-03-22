@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { helpers } from '@/utils';
-import { useSharedStore} from '@/store';
+import { formater } from '@/utils';
+import { useSharedStore } from '@/store';
+import { c } from 'vite/dist/node/types.d-FdqQ54oU';
 
 const props = defineProps({
     recruitments: {
@@ -34,7 +35,7 @@ const editItem = (item: any) => {
 
 const deleteItem = (item: any) => {
     sharedStore.setSelectedItem(item);
-    $('#delete-doc').modal('show');
+    $('#deleteModal').modal('show');
 };
 
 const filteredData = ref(props.recruitments);
@@ -50,8 +51,8 @@ const filter = () => {
         const combinedFields = `${item.user.employee.first_name} ${item.user.employee.last_name} ${item.post_name} ${item.diploma} ${item.experience}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || helpers.startOfDay(item.created_at) >= helpers.startOfDay(startQuery.value)) &&
-            (!endQuery.value || helpers.startOfDay(item.created_at) <= helpers.startOfDay(endQuery.value));
+            (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
+            (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
 
 };
@@ -62,8 +63,8 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
 
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
@@ -80,7 +81,8 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
+                            @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
@@ -98,7 +100,8 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" button-type="simple"/>
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
+            button-type="simple" />
     </div>
 </template>
 <style>

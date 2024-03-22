@@ -22,7 +22,6 @@ const handleSubmit = async () => {
         try {
 
             await props.action().then(() => {
-                console.log('Deleted');
                 $('#deleteModal').modal('hide');
                 toast.success(props.message);
             });

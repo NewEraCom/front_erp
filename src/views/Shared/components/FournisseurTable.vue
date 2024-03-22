@@ -22,20 +22,10 @@ const headers = [
 ];
 
 const actionsConfig = [
-    {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
-            console.log(item);
-            router.push({ name: 'ProfileSoustraitant', params: { id: item.id } });
-            
-        }
-    },
-    {
-        icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
-            sharedStore.setSelectedItem(item.id);
-            $('#deleteModal').modal('show');
-        }
-    },
+   
 ];
+
+
 
 const filteredData = ref(props.fournisseurs);
 

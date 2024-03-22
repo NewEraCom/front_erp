@@ -89,7 +89,7 @@ const submit = async () => {
                         </div>
                     </div>
 
-                    <div class="col-sm-12">
+                    <div v-if="formData.type == 'Maladie'" class="col-sm-12">
                         <div class="mb-3">
                             <label for="attachemet" class="form-label">Attachement (Certificat médical, Email de
                                 demande,

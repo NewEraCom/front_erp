@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal, CustomSelect } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const porps = defineProps({
     employees: {
@@ -43,9 +46,15 @@ const submit = async () => {
         formData.value.employee_id = formData.value.employee_id.key;
     }
 
-    await rhService.addPointage(formData.value);
-    $('#addPointage').modal('hide');
-    isLoading.value = false;
+    await rhService.addPointage(formData.value).then(() => {
+        $('#addPointage').modal('hide');
+        toast.success('Pointage ajouté avec succès');
+    }).catch((error) => {
+        console.error('Error during action execution', error);
+        toast.error('Erreur lors de l\'ajout du pointage');
+    }).finally(() => {
+        isLoading.value = false;
+    });
 };
 
 </script>
@@ -57,10 +66,10 @@ const submit = async () => {
                     <div v-if="employees != null && source != 'simple'" class="col-12 mb-3">
                         <CustomSelect v-model="formData.employee_id" placeholder="Choisir un employee" label="Employee"
                             :data="employees.filter(item => item.status == 1).map((item) => ({
-                                key: item.id,
-                                value: item.first_name + ' ' + item.last_name
-                            }))
-                                " />
+            key: item.id,
+            value: item.first_name + ' ' + item.last_name
+        }))
+            " />
                     </div>
                     <div class="col-sm-12">
                         <div class="mb-3">

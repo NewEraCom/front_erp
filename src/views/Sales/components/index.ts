@@ -3,7 +3,6 @@ import BonCommandeTable from './BonCommandeTable.vue';
 import FacturesTable from './FacturesTable.vue';
 import DetailsPurchaseItemTable from './DetailsPurchaseItemTable.vue';
 import ValidateArticleModal from './ValidateArticleModal.vue';
-
 export * from './modals';
 
 
@@ -12,5 +11,5 @@ export {
     BonCommandeTable,
     FacturesTable,
     DetailsPurchaseItemTable,
-    ValidateArticleModal
+    ValidateArticleModal,
 };

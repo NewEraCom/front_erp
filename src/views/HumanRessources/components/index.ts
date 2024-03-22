@@ -11,6 +11,7 @@ import SalaryAdvancesTable from './SalaryAdvancesTable.vue';
 import PointageTable from './PointageTable.vue';
 import PaieTable from './PaieTable.vue';
 import WorkersTable from './WorkersTable.vue';
+import EmployeeSkeleton from './EmployeeSkeleton.vue';
 
 
 
@@ -30,4 +31,5 @@ export {
     PointageTable,
     PaieTable,
     WorkersTable,
+    EmployeeSkeleton
 };

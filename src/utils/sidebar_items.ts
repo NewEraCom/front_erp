@@ -57,6 +57,8 @@ const DGMenu = [
     },
 ];
 
+
+
 const CFMenu = [
     {
         id: 1,
@@ -150,10 +152,10 @@ const RHMenu = [
     },
     {
         id: 5,
-        name: 'Soustraitant Employés',
-        route: '/soustraitant-rh',
+        name: 'Soustraitant',
+        route: '/rh-soustraitant',
         icon: 'ti ti-settings',
-        path: 'SoustraitantRh'
+        path: 'RhSoustraitant'
     },
     {
         id: 6,
@@ -388,10 +390,10 @@ const LogisticsMenu = [
     },
     {
         id: 8,
-        name: 'Louer',
-        route: '/louer',
+        name: 'Loyer',
+        route: '/rent',
         icon: 'ti ti-building',
-        path: 'Louer'
+        path: 'Rent'
     },
     ...sharedMenu2,
     ...sharedMenu
@@ -419,8 +421,8 @@ const SupportMenu = [
             {
                 id: 2,
                 name: 'Employés sous-traitants',
-                route: '/soustraitant-rh',
-                path: 'SoustraitantRh'
+                route: '/rh-soustraitant',
+                path: 'RhSoustraitant'
             },
             {
                 id: 3,
@@ -636,6 +638,7 @@ const FinanceMenu = [
         path: 'FnCaution'
     }
 ];
+
 const DOMenu = [
     {
         id: 1,
@@ -697,7 +700,7 @@ const DOMenu = [
     ...sharedMenu2,
     ...sharedMenu
 ];
-const BDMMenu = [
+const BDMenu = [
     {
         id: 1,
         name: 'Dashboard',
@@ -748,5 +751,5 @@ export const sideBar = {
     SupportMenu,
     FinanceMenu,
     DOMenu,
-    BDMMenu
+    BDMenu
 };

@@ -2,7 +2,9 @@
 import { ref, watch } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const isLoading = ref(false);
 
 const props = defineProps({
@@ -19,7 +21,7 @@ const props = defineProps({
 
 
 const formData = ref({
-    cnss: null,
+    cnss: props.oldCnss,
     copie_cnss: null,
 });
 
@@ -27,14 +29,16 @@ const handleFileChange = (e, type) => {
     formData.value[type] = e.target.files[0];
 };
 
-const submit = async() => {
+const submit = async () => {
     isLoading.value = true;
     console.log(props.id);
-    
-    await rhService.EditCnssEmployee(props.id,formData.value).then(() => {
+
+    await rhService.EditCnssEmployee(props.id, formData.value).then(() => {
         $('#editInfoCnss').modal('hide');
+        toast.success('Informations CNSS modifiées avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Une erreur est survenue');
     }).finally(() => {
         isLoading.value = false;
     });

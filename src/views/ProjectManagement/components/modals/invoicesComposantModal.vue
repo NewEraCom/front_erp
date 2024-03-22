@@ -1,7 +1,11 @@
-
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { Modal } from '@/ui';
+import { pmService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
+
 
 const props = defineProps({
     id: {
@@ -9,17 +13,37 @@ const props = defineProps({
         required: true
     }
 });
+
+const isLoading = ref(false);
+
 let fields = ref([{ type: 'text', label: '', options: '' }]);
 
 function addField() {
     fields.value.push({ type: 'text', label: '', options: '' });
 }
 
-onMounted(async () => {
-});
-
 const submit = async () => {
+    isLoading.value = true;
+    let payload = {
+        facture: fields.value.map((field) => {
+            let fieldPayload = {
+                label: field.label,
+                type: field.type,
+                project_id: props.id,
+            };
 
+            return fieldPayload;
+        })
+    };
+
+    await pmService.createFactureComposant(payload)
+        .then(() => {
+            $('#invoicesComposant').modal('hide');
+            toast.success('Facture composant created with success');
+        })
+        .catch((e) => {
+            console.error(e);
+        });
 
 };
 </script>

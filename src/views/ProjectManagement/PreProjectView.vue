@@ -12,7 +12,7 @@ const preProject = ref(computed(() => PMStore.preproject.data));
 const stats = ref(computed(() => PMStore.preproject.stats));
 
 onMounted(async () => {
-  await pmService.getPreProject(); 
+  await pmService.getPreProject();
 });
 
 

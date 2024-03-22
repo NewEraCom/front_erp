@@ -4,7 +4,8 @@ import { ref, computed, onMounted } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { WorkersTable, AddNewWorkersModal } from './components';
-import { DeleteDocModal ,WorkerDetailsModal} from './components/modals';
+import { DeleteDocModal, WorkerDetailsModal } from './components/modals';
+import DeleteModal from '@/ui/modals/DeleteModal.vue';
 
 const rhStore = useRhStore();
 const isLoading = ref(false);
@@ -13,15 +14,15 @@ const workers = ref(computed(() => rhStore.workers));
 onMounted(async () => {
   await rhService.getWorkers();
 });
-const DeleteWorker = async()=>{
-    console.log('delete' , rhStore.ItemId);
-    isLoading.value = true;
+const DeleteWorker = async () => {
+  console.log('delete', rhStore.ItemId);
+  isLoading.value = true;
 
-    await rhService.deleteWorker(rhStore.ItemId).then(() => {
-     isLoading.value = false;
-      $('#delete-doc').modal('hide');
-    
-   });
+  await rhService.deleteWorker(rhStore.ItemId).then(() => {
+    isLoading.value = false;
+    $('#delete-doc').modal('hide');
+
+  });
 };
 </script>
 <template>
@@ -68,12 +69,12 @@ const DeleteWorker = async()=>{
           <div class="card card-border-shadow-primary">
             <div class="card-header d-flex align-items-center">
               <div class="me-auto">
-                <h5 class="fw-bold mb-1">Soustraitants Employés</h5>
-                <small class="fw-bold mb-1 text-muted">Liste des Employés</small>
+                <h5 class="fw-bold mb-1">Soustraitants</h5>
+                <small class="fw-bold mb-1 text-muted">Liste des soustraitants</small>
               </div>
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewWorkers">
                 <i class="ti ti-settings-plus me-2"></i>
-                Ajouter un employé
+                Ajouter un soustraitant
               </button>
             </div>
             <div v-if="workers.data != null" class="card-body border-top pt-4">
@@ -95,12 +96,8 @@ const DeleteWorker = async()=>{
       </div>
     </div>
     <AddNewWorkersModal />
-    <DeleteDocModal id="delete-doc" :isLoading="isLoading"
-                :method="DeleteWorker"
-                :itemid="rhStore.ItemId"
-                title="Supprimer cet employé ?"
-                message="Êtes-vous sûr de supprimer cet employé ?"
-                />
+    <DeleteModal title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?"
+      textButton="Oui, Supprimer" :action="() => rhService.deleteWorker()" message="Employé supprimé avec succès" />
     <WorkerDetailsModal />
   </div>
 </template>

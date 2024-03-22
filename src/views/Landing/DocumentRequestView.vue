@@ -7,14 +7,14 @@ const isError = ref(false);
 const isLoading = ref(false);
 
 const formData = ref({
-	matricule: '',
-	email: '',
-	type_document: '',
-	type_document_autre: '',
-	commentaire: '',
+  matricule: '',
+  email: '',
+  type_document: '-',
+  type_document_autre: '',
+  commentaire: '',
 });
 
-const submit = () => {};
+const submit = () => { };
 </script>
 
 <template>
@@ -41,10 +41,7 @@ const submit = () => {};
                 </p>
                 <div v-if="isMessage" class="row">
                   <div class="col-12">
-                    <div
-                      class="alert alert-success alert-dismissible d-flex align-items-baseline"
-                      role="alert"
-                    >
+                    <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
                       <span class="alert-icon alert-icon-lg text-danger me-2">
                         <i class="ti ti-x ti-sm"></i>
                       </span>
@@ -54,22 +51,14 @@ const submit = () => {};
                           Votre demande a été envoyée avec succès, vous recevrez une réponse dans
                           les plus brefs délais.
                         </p>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        ></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div v-if="isError" class="row">
                   <div class="col-12">
-                    <div
-                      class="alert alert-danger alert-dismissible d-flex align-items-baseline"
-                      role="alert"
-                    >
+                    <div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">
                       <span class="alert-icon alert-icon-lg text-danger me-2">
                         <i class="ti ti-x ti-sm"></i>
                       </span>
@@ -78,12 +67,7 @@ const submit = () => {};
                         <p class="mb-0">
                           Votre demande n'a pas été envoyée, veuillez réessayer plus tard.
                         </p>
-                        <button
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="alert"
-                          aria-label="Close"
-                        ></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                       </div>
                     </div>
                   </div>
@@ -92,23 +76,13 @@ const submit = () => {};
                   <div class="row g-3">
                     <div class="col-md-6">
                       <label class="form-label" for="matricule"> Matricule </label>
-                      <input
-                        id="matricule"
-                        v-model="formData.matricule"
-                        type="number"
-                        class="form-control"
-                        placeholder="Ex : 1"
-                      />
+                      <input id="matricule" v-model="formData.matricule" type="number" class="form-control"
+                        placeholder="Ex : 1" />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="address-email"> Adresse email </label>
-                      <input
-                        id="address-email"
-                        v-model="formData.email"
-                        type="email"
-                        class="form-control"
-                        placeholder="johndoe@neweracom.ma"
-                      />
+                      <input id="address-email" v-model="formData.email" type="email" class="form-control"
+                        placeholder="johndoe@neweracom.ma" />
                     </div>
                     <div class="col-md-12">
                       <label class="form-label" for="type-doc"> Type de document </label>
@@ -123,32 +97,18 @@ const submit = () => {};
                     </div>
                     <div v-if="formData.type_document == 'Autre'" class="col-md-12">
                       <label class="form-label" for="titre-doc"> Titre de document </label>
-                      <input
-                        id="titre-doc"
-                        v-model="formData.type_document_autre"
-                        type="email"
-                        class="form-control"
-                        placeholder="johndoe@neweracom.ma"
-                      />
+                      <input id="titre-doc" v-model="formData.type_document_autre" type="email" class="form-control"
+                        placeholder="johndoe@neweracom.ma" />
                     </div>
                     <div class="col-12">
                       <label class="form-label" for="message"> Message </label>
-                      <textarea
-                        id="message"
-                        v-model="formData.commentaire"
-                        class="form-control"
-                        rows="8"
-                        placeholder="Écrire un message"
-                      ></textarea>
+                      <textarea id="message" v-model="formData.commentaire" class="form-control" rows="8"
+                        placeholder="Écrire un message"></textarea>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary waves-effect waves-light">
-                        <span
-                          v-if="isLoading"
-                          class="spinner-border spinner-border-sm"
-                          role="status"
-                          aria-hidden="true"
-                        ></span>
+                        <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status"
+                          aria-hidden="true"></span>
                         <span v-else>Envoyer</span>
                       </button>
                     </div>

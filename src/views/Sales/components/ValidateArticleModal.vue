@@ -24,17 +24,16 @@ defineProps({
     id: {
         type: String,
         default: 'validateArticle'
-    }
+    },
+    method: Function,
 });
 
-const submit = async () => {
-    isLoading.value = true;
-};
+
 </script>
 
 <template>
     <Modal :id="id" :title="title">
-        <form @submit.prevent="submit">
+        <form @submit.prevent="method">
             <div class="modal-body">
                 <p>{{ message }}</p>
             </div>

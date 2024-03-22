@@ -144,6 +144,6 @@ onMounted(async () => {
 
 <style>
 .chart-height {
-    height: 450px !important;
+    height: 8% !important;
 }
 </style>

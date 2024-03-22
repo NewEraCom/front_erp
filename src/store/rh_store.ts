@@ -5,9 +5,10 @@ export const useRhStore = defineStore('RhStore', {
         stats: null,
         contractsExpiredThisMonth: null,
         employees: null,
+        employeeExpire: null,
         employee: null,
         worker: null,
-        intern:null,
+        intern: null,
         interns: {
             data: null,
             stats: null,
@@ -50,13 +51,13 @@ export const useRhStore = defineStore('RhStore', {
         setEmployees(data: any) {
             this.employees = data.employee;
             this.stats = {
-                total: data.employee.filter((e: any) => e.status === '1').length,
-                cdi: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'CDI').length,
-                cdd: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'CDD').length,
-                chantier: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'Chantier').length,
-                commercial: data.employee.filter((e: any) => e.status === '1' && e.type_contrat === 'COMMERCIALE').length,
-                male: data.employee.filter((e: any) => e.status === '1' && e.sexe === 'Homme').length,
-                female: data.employee.filter((e: any) => e.status === '1' && e.sexe === 'Femme').length,
+                total: data.employee.filter((e: any) => e.status == '1').length,
+                cdi: data.employee.filter((e: any) => e.status == '1' && e.type_contrat == 'CDI').length,
+                cdd: data.employee.filter((e: any) => e.status == 1 && e.type_contrat == 'CDD').length,
+                chantier: data.employee.filter((e: any) => e.status == '1' && e.type_contrat === 'Chantier').length,
+                commercial: data.employee.filter((e: any) => e.status == '1' && e.type_contrat === 'COMMERCIALE').length,
+                male: data.employee.filter((e: any) => e.status == '1' && e.sexe === 'Homme').length,
+                female: data.employee.filter((e: any) => e.status == '1' && e.sexe === 'Femme').length,
                 salaryMass: data.employee.reduce((accumulator: number, currentEmployee: any) => {
                     if (currentEmployee.status === '1') {
                         return accumulator + Number(currentEmployee.salary);
@@ -67,6 +68,17 @@ export const useRhStore = defineStore('RhStore', {
                 employee_per_month: data.employee_per_month,
                 mass_salariale_per_month: data.mass_salarial
             };
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            const currentMonth = currentDate.getMonth() + 1; // getMonth() returns 0-11, adding 1 adjusts to 1-12 format
+
+            this.employeeExpire = data.employee.filter((e: any) => {
+                const contractEndDate = new Date(e.fin_contrat);
+                const contractEndYear = contractEndDate.getFullYear();
+                const contractEndMonth = contractEndDate.getMonth() + 1; // Adjust month format to 1-12
+
+                return e.status === '1' && contractEndYear === currentYear && contractEndMonth === currentMonth;
+            });
         },
         deleteEmployee(id: number) {
             const itemIdToDelete = id;
@@ -131,6 +143,28 @@ export const useRhStore = defineStore('RhStore', {
                 accepted: data.filter((e: any) => e.status === 'accepted').length,
             };
         },
+        deleteRecruitment(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.recrutement.data.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.recrutement.data.splice(indexToDelete, 1);
+                this.recrutement.stats = {
+                    total: this.recrutement.data.length,
+                    pending: this.recrutement.data.filter((e: any) => e.status === 'pending').length,
+                    accepted: this.recrutement.data.filter((e: any) => e.status === 'accepted').length,
+                };
+            } else {
+                console.log('Item not found in array.');
+            }
+        },
+        pushRecruitment(data: any) {
+            this.recrutement.data.push(data);
+            this.recrutement.stats = {
+                total: this.recrutement.data.length,
+                pending: this.recrutement.data.filter((e: any) => e.status === 'pending').length,
+                accepted: this.recrutement.data.filter((e: any) => e.status === 'accepted').length,
+            };
+        },
         setDemandeRh(data: any) {
             this.demandeRh.data = data;
             this.demandeRh.stats = {
@@ -145,6 +179,21 @@ export const useRhStore = defineStore('RhStore', {
                 data: null,
                 stats: null,
             };
+        },
+        deleteDemandeRh(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.demandeRh.data.findIndex((item: any) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.demandeRh.data.splice(indexToDelete, 1);
+                this.demandeRh.stats = {
+                    total: this.demandeRh.data.length,
+                    pending: this.demandeRh.data.filter((e: any) => e.status === 'pending').length,
+                    done: this.demandeRh.data.filter((e: any) => e.status === 'done').length,
+                    delivered: this.demandeRh.data.filter((e: any) => e.status === 'delivered').length,
+                };
+            } else {
+                console.log('Item not found in array.');
+            }
         },
         setSalaryAdvances(data: any) {
             this.salaryAdvances.data = data;
@@ -207,10 +256,33 @@ export const useRhStore = defineStore('RhStore', {
         setWorkers(data: any) {
             this.workers.data = data;
             this.workers.stats = {
-                actif: data.filter((e: any) => e.status === 1).length,
-                inactif: data.filter((e: any) => e.status === 0).length,
+                actif: data.filter((e: any) => e.status == 1).length,
+                inactif: data.filter((e: any) => e.status == 0).length,
                 totalSoustraitant: new Set(data.map(item => item.tier_id)).size,
             };
+        },
+        pushWorker(data: any) {
+            this.workers.data.push(data);
+            console.log(this.workers.data);
+            this.workers.stats = {
+                actif: this.workers.data.filter((e: any) => e.status == 1).length,
+                inactif: this.workers.data.filter((e: any) => e.status == 0).length,
+                totalSoustraitant: new Set(this.workers.data.map(item => item.tier_id)).size,
+            };
+        },
+        deleteWorker(id: number) {
+            const itemIdToDelete = id;
+            const indexToDelete = this.workers.data.findIndex((item) => item.id == itemIdToDelete);
+            if (indexToDelete !== -1) {
+                this.workers.data.splice(indexToDelete, 1);
+                this.workers.stats = {
+                    actif: this.workers.data.filter((e: any) => e.status == 1).length,
+                    inactif: this.workers.data.filter((e: any) => e.status == 0).length,
+                    totalSoustraitant: new Set(this.workers.data.map(item => item.tier_id)).size,
+                };
+            } else {
+                console.log('Item not found in array.');
+            }
         },
         setSousTraitants(data: any) {
             this.sousTraitants.data = data;
@@ -229,7 +301,7 @@ export const useRhStore = defineStore('RhStore', {
             this.ItemId = id;
         },
         setItem(data: any) {
-            this.Item= data;
+            this.Item = data;
         },
 
     }

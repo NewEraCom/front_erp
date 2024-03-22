@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { rhService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const props = defineProps({
     id: {
@@ -28,8 +31,10 @@ const submit = async () => {
     isLoading.value = true;
     await rhService.RuptureContractEmployee(props.id, formData.value).then(() => {
         $('#ruptureContrat').modal('hide');
+        toast.success('Rupture de contrat effectuée avec succès');
     }).catch((error) => {
         console.error('Error during action execution', error);
+        toast.error('Erreur lors de la rupture de contrat');
     }).finally(() => {
         isLoading.value = false;
     });

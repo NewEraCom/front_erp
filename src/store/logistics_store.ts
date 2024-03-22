@@ -53,6 +53,11 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             stats: null,
             loading: false,
         },
+        transport:{
+            data: null,
+            stats: null,
+            loading: false,
+        },
         outOfStockRequests: {
             data: null,
             stats: null,
@@ -105,6 +110,9 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.caisse.data = null;
             this.caisse.stats = null;
             this.caisse.loading = false;
+        },
+        pushOperationCaisse(data: any) {
+            this.opertationCaisse.data.unshift(data);
         },
         setLouer(data: any) {
             this.louer.data = data.louers;
@@ -313,18 +321,11 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         setOperationCaisse(data: any) {
             this.opertationCaisse.data = data;
             this.opertationCaisse.stats = {
-                requested: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'on going') {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
-                delivered: data.reduce((acc: any, item: any) => {
-                    if (item.status == 'done') {
-                        acc++;
-                    }
-                    return acc;
-                }, 0),
+                requested: data.filter((item: any) => item.status == 'pending').length,
+                delivered: data.filter((item: any) => item.status == 'done').length,
+                total: data.length,
+                ongoing: data.filter((item: any) => item.status == 'on going').length,
+
             };
             this.opertationCaisse.loading = true;
         },
@@ -457,6 +458,14 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         },
         clearSelectedItem() {
             this.selectedItem = null;
-        }
+        },
+        setTransport(data: any) {
+            this.transport.data = data;
+            this.transport.stats = {
+                
+                total_achats: data.achats.length,
+            };
+            this.caisse.loading = true;
+        },
     }
 });

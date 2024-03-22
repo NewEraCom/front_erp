@@ -20,7 +20,7 @@ const formData = ref({
 const submit = async () => {
     isLoading.value = true;
 
-    await sharedService.addNewRecruitment(formData.value).then(() => {
+    await sharedService.addNewRecruitment(formData.value, 'rh').then(() => {
         isLoading.value = false;
         $('#addNewRecruitment').modal('hide');
         toast.success('Demande de recrutement ajoutée avec succès');

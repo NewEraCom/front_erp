@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CardOne, DataTable } from '@/ui';
+import { CardOne } from '@/ui';
 
 
 let myItems = [{ id: 1, name: 'Alexa Doe', matricule: 123, email: 'alexa@example.com' }];

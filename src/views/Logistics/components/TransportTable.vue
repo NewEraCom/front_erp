@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater } from '@/utils';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const props = defineProps({
     delivery: {
         type: Array,
@@ -24,6 +26,7 @@ const actionsConfig = [
 
 const detailsItem = (item: any) => {
     console.log(item);
+    router.push({name: 'DetailTransports',params: {id:item.id}});
 };
 
 

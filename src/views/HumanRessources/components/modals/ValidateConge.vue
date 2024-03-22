@@ -17,13 +17,14 @@ defineProps({
         <form @submit.prevent="method">
             <div class="modal-body">
                 <input type="text" id="validateInput" hidden :value="itemid" />
-                <p>Ê{{ message }}</p>
+                <p>{{ message }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
                     Fermer
                 </button>
-                <button type="submit" :class="severity == 'success' ? 'btn btn-success me-0' : 'btn btn-danger me-0'" :disabled="isLoading">
+                <button type="submit" :class="severity == 'success' ? 'btn btn-success me-0' : 'btn btn-danger me-0'"
+                    :disabled="isLoading">
                     <span v-if="isLoading" class="d-flex align-items-center">
                         <div class="spinner-border spinner-border-sm text-white" role="status">
                             <span class="visually-hidden">Loading...</span>

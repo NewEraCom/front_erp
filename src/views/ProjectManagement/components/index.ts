@@ -4,6 +4,8 @@ import FactureTable from './FactureTable.vue';
 import RequestSalesTable from './RequestSalesTable.vue';
 import StockProjectTable from './StockProjectTable.vue';
 import InvoiceProjectTable from './InvoicesProjectView.vue';
+import DemandeCaisseOutOfStockTable from '../../ProjectManagement/components/DemandeCaisseOutOfStockTable.vue';
+
 
 export * from './modals';
 
@@ -37,7 +39,6 @@ export {
     DataTableBordereau,
     DataTableDevis,
     AddLots,
-    CancelLots,
     CancelSubmission,
     CloseChiffrage,
     ClosePreProject,
@@ -46,12 +47,13 @@ export {
     EditPreProject,
     ImportAssets,
     ImportBordereau,
-    ImportChifrage,
-    NewChifrage,
     RefuserPreProject,
     SetFileNumber,
     SetFileNumberDone,
     ValidatePreProject,
-    ImportChiffrage,NewChiffrage,DetailsPreProjectSkeleton
-   
+    ImportChiffrage,
+    NewChiffrage,
+    DetailsPreProjectSkeleton,
+    DemandeCaisseOutOfStockTable
+
 };

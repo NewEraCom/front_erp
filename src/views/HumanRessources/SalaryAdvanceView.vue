@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue';
 import { SalaryAdvancesCard, SalaryAdvancesDetailsModal, SalaryAdvancesTable, AddSalaryAdvanceModal } from './components';
-import { DeleteModal } from '@/ui';
+import { DeleteModal, CardOneSkeleton } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { formater } from '@/utils';
@@ -21,8 +21,7 @@ onMounted(async () => {
   await rhService.getEmployees();
   data.value.salaryAdvances = salaryAdvances.value.data;
   data.value.stats = salaryAdvances.value.stats;
-  console.log('data', data.value);
-  
+
 });
 
 watch(() => salaryAdvances, () => {
@@ -38,7 +37,17 @@ watch(() => salaryAdvances, () => {
       :item-one="['Total Avance', formater.number(salaryAdvances.stats.total), 'currency', 'ti ti-coins', 'bg-label-primary']"
       :item-two="['Total Récupéré', formater.number(parseFloat(salaryAdvances.stats.total) - parseFloat(salaryAdvances.stats.remaining)), 'currency', 'ti ti-coins', 'bg-label-success']"
       :item-three="['Total Restant', formater.number(salaryAdvances.stats.remaining), 'currency', 'ti ti-coins', 'bg-label-warning']" />
-
+    <div v-else class="row g-3 mb-4">
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+      <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 col-xxl-4">
+        <CardOneSkeleton />
+      </div>
+    </div>
     <div class="row mt-2">
       <div class="col-12">
         <div class="card">
@@ -56,14 +65,26 @@ watch(() => salaryAdvances, () => {
             <div v-if="data.salaryAdvances" class="card-body border-top pt-4">
               <SalaryAdvancesTable :salaryAdvances="data.salaryAdvances" />
             </div>
+            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+              style="height: 650px;">
+              <div class="row mt-5">
+                <div class="col-12 text-center">
+                  <h5>Chargement des données...</h5>
+                  <div class="spinner-border text-primary mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <AddSalaryAdvanceModal v-if="employees" :employees="employees" />
     <SalaryAdvancesDetailsModal />
-    <DeleteModal title="Supprimer un avance sur salaire" text="Voulez-vous vraiment supprimer cette avance sur salaire ?"
-      textButton="Oui, Supprimer" :action="() => rhService.deleteSalaryAdvance()" />
+    <DeleteModal title="Supprimer un avance sur salaire"
+      text="Voulez-vous vraiment supprimer cette avance sur salaire ?" textButton="Oui, Supprimer"
+      :action="() => rhService.deleteSalaryAdvance()" message="Avance sur salaire supprimée avec succès" />
   </div>
 </template>
 

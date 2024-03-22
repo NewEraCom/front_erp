@@ -89,7 +89,7 @@ const PrintPay = async (mounth) => {
             .catch(() => {
                 isLoading.value = false;
             });
-    } catch (error) {}
+    } catch (error) { }
 };
 
 
@@ -99,8 +99,8 @@ const PrintPay = async (mounth) => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
@@ -116,15 +116,12 @@ const PrintPay = async (mounth) => {
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
-                    </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
-                        <i class="ti ti-file-type-csv me-2"></i>
-                        Exporter
-                    </button>
+                    </div> 
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig" button-type="simple"/>
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
+            button-type="simple" />
     </div>
 </template>
 <style>

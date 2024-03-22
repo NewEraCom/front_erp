@@ -22,9 +22,9 @@ const getCaisse = async () => {
     }
 };
 
-const getOperationCaisse = async () => {
+const getOperationCaisse = async (from: string) => {
     try {
-        const response = await api().get('/logistics/caisse/operation');
+        const response = await api().get('/logistics/caisse/operation/' + from);
         const logisticsStore = useLogisticsStore();
         logisticsStore.setOperationCaisse(response.data.caisse);
     } catch (error) {
@@ -195,6 +195,23 @@ const deleteCaisseOperation = async () => {
     }
 };
 
+const newCaisseOperation = async (data: any, form: string) => {
+    try {
+        const response = await api().post('/logistics/caisse/operation', data);
+        if (response.status == 201) {
+            if (form == 'caisse') {
+                const logisticsStore = useLogisticsStore();
+                logisticsStore.pushOperationCaisse(response.data.data);
+            } else {
+                console.log('Here');
+            }
+        }
+        return response.data;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const newSubscription = async (data: any) => {
     try {
         const response = await api().post('/logistics/pacgsm', data);
@@ -294,6 +311,16 @@ const removecardsCarburant = async () => {
     }
 };
 
+const getAchatsForTransport = async (demandeAchatId :number) => {
+    try {
+        const response = await api().get('/purchase/get_achats/'+demandeAchatId);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setTransport(response.data);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 
 
@@ -324,7 +351,9 @@ export default {
     createLouer,
     getVehiculeById,
     deleteSubscriptionById,
-    removecardsCarburant
+    removecardsCarburant,
+    newCaisseOperation,
+    getAchatsForTransport
 };
 
 

@@ -55,8 +55,8 @@ watch(item, () => {
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
             <div v-if="project">
-                <button v-if="project.facture_composante.length == 0" class="btn btn-success ms-auto" data-bs-toggle="modal"
-                    data-bs-target="#invoicesComposant">
+                <button v-if="project.facture_composante.length == 0" class="btn btn-success ms-auto"
+                    data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
                     Composants de la facture
                 </button>
@@ -76,14 +76,15 @@ watch(item, () => {
                                         {{ project.pre_project.project_code }}
                                     </h4>
                                     <span class="fw-bold badge mt-1" :class="helpers.returnBadge(project.status)[0]">{{
-                                        helpers.returnBadge(project.status)[1] }}</span>
+                    helpers.returnBadge(project.status)[1] }}</span>
 
                                 </div>
                             </div>
                         </div>
                         <div class="d-flex justify-content-around flex-wrap mt-3 pt-3 pb-4 border-bottom">
                             <div class="d-flex align-items-start me-4 mt-3 gap-2">
-                                <span class="badge bg-label-primary p-2 rounded"><i class="ti ti-checkbox ti-sm"></i></span>
+                                <span class="badge bg-label-primary p-2 rounded"><i
+                                        class="ti ti-checkbox ti-sm"></i></span>
                                 <div>
                                     <p class="mb-0 fw-medium">
                                         {{ formater.date(project.date_start) }}
@@ -97,12 +98,12 @@ watch(item, () => {
                                 <div>
                                     <p class="mb-0 fw-medium">
                                         {{
-                                            project.pre_project.project_manager.employee
-                                                .first_name +
-                                            ' ' +
-                                            project.pre_project.project_manager.employee
-                                                .last_name
-                                        }}
+                    project.pre_project.project_manager.employee
+                        .first_name +
+                    ' ' +
+                    project.pre_project.project_manager.employee
+                        .last_name
+                }}
                                     </p>
                                     <small class="fw-bold">Chef de projet</small>
                                 </div>
@@ -120,7 +121,7 @@ watch(item, () => {
                         <div class="d-flex justify-content-between">
                             <small class="d-block mb-2 text-muted">Budget de projet</small>
                         </div>
-                        <h4 v-if="project.pre_project.montant_marche != null" class="card-title mb-1">
+                        <h4 v-if="project.budget != null" class="card-title mb-1">
                             {{ formater.number(project.budget) + ' MAD' }}
                         </h4>
                         <h4 v-else class="card-title mb-1">0 MAD</h4>
@@ -136,8 +137,8 @@ watch(item, () => {
                                 </div>
                                 <h5 class="mb-0 pt-1">100%</h5>
                                 <small v-if="project.budget" class="text-muted">{{
-                                    formater.number(project.budget) + ' MAD'
-                                }}</small>
+                    formater.number(project.budget) + ' MAD'
+                }}</small>
                                 <small v-else class="text-muted">0 MAD</small>
                             </div>
                             <div class="col-4">
@@ -151,7 +152,8 @@ watch(item, () => {
                             <div class="col-4 text-end">
                                 <div class="d-flex gap-2 justify-content-end align-items-center mb-2">
                                     <p class="mb-0">Sortie</p>
-                                    <span class="badge bg-label-danger p-1 rounded"><i class="ti ti-link ti-xs"></i></span>
+                                    <span class="badge bg-label-danger p-1 rounded"><i
+                                            class="ti ti-link ti-xs"></i></span>
                                 </div>
                                 <h5 class="mb-0 pt-1">0%</h5>
                                 <small class="text-muted">0 MAD</small>
@@ -161,8 +163,8 @@ watch(item, () => {
                             <div class="progress w-100" style="height: 8px">
                                 <div class="progress-bar bg-success" style="width: 100%" role="progressbar"
                                     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="0"
-                                    aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 0%"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                     </div>
@@ -225,17 +227,17 @@ watch(item, () => {
                                                 <td>{{ project.pre_project.localite }}</td>
                                             </tr>
                                             <tr v-if="project.pre_project.montant_caution != null
-                                                ">
+                    ">
                                                 <th class="fw-bold text-dark">
                                                     Montant de caution définitive
                                                 </th>
                                                 <td>
                                                     {{
-                                                        formater.number(
-                                                            project.pre_project
-                                                                .montant_caution_definitive
-                                                        )
-                                                    }}
+                    formater.number(
+                        project.pre_project
+                            .montant_caution_definitive
+                    )
+                }}
                                                     MAD
                                                 </td>
                                             </tr>
@@ -245,10 +247,10 @@ watch(item, () => {
                                                 </th>
                                                 <td>
                                                     {{
-                                                        formater.number(
-                                                            project.pre_project.montant_marche
-                                                        )
-                                                    }}
+                        formater.number(
+                            project.budget
+                        )
+                    }}
                                                     MAD
                                                 </td>
                                             </tr>
@@ -266,11 +268,11 @@ watch(item, () => {
                                                 </th>
                                                 <td>
                                                     {{
-                                                        project.pre_project.duration != null
-                                                        ? project.pre_project.duration +
-                                                        ' Jours'
-                                                        : '-'
-                                                    }}
+                    project.pre_project.duration != null
+                        ? project.pre_project.duration +
+                        ' Jours'
+                        : '-'
+                }}
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -289,9 +291,9 @@ watch(item, () => {
                             </div>
                             <div class="card-body">
                                 <div v-if="project.assets.length > 0 ||
-                                        project.pre_project.cps_file != null ||
-                                        project.pre_project.cahier_charge != null
-                                        " class="row">
+                    project.pre_project.cps_file != null ||
+                    project.pre_project.cahier_charge != null
+                    " class="row">
                                     <div v-for="item in project.assets" :key="item.id"
                                         class="col-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-3">
                                         <div class="border p-2 rounded">
@@ -303,17 +305,17 @@ watch(item, () => {
                                                     <a class="d-block" target="_blank">
                                                         <span class="d-inline fw-bold me-2 text-heading mb-2">
                                                             {{
-                                                                formater.limitText(
-                                                                    item.file_name,
-                                                                    25
-                                                                )
-                                                            }}
+                    formater.limitText(
+                        item.file_name,
+                        25
+                    )
+                }}
                                                         </span>
                                                     </a>
                                                     <small class="text-muted">Créé le :
                                                         {{
-                                                            formater.date(item.created_at)
-                                                        }}</small>
+                        formater.date(item.created_at)
+                    }}</small>
                                                 </div>
                                             </li>
                                         </div>
@@ -355,7 +357,8 @@ watch(item, () => {
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry" style="">
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
                                         <button data-bs-target="#newPurchaseOrder" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium">
                                             <i class="ti ti-shopping-bag-plus me-2"></i> Ajouter
@@ -384,7 +387,8 @@ watch(item, () => {
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry" style="">
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
                                         <button data-bs-target="#outOfStock" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium">
                                             <i class="ti ti-transfer-out me-2"></i> Demande de sortie de stock
@@ -394,8 +398,8 @@ watch(item, () => {
                             </div>
                             <div class="card-body">
                                 <StockProjectTable :articles="project.pre_project.articles.filter(
-                                    (item: any) => item.category === 'Achats'
-                                )" />
+                    (item: any) => item.category === 'Achats'
+                )" />
                             </div>
                         </div>
                     </div>
@@ -409,7 +413,8 @@ watch(item, () => {
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry" style="">
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
                                         <button data-bs-target="#invoiceUpload" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium">
                                             <i class="ti ti-file-plus me-2"></i> Créer une facture
@@ -427,19 +432,20 @@ watch(item, () => {
             </div>
             <UploadDocumentModal :id="project.id" />
             <NewServiceModal v-if="soustraitants != null" :id="project.id" :services="project.pre_project.articles.filter(
-                (item: any) => item.category === 'Services'
-            )" :soustraitants="soustraitants.data" />
+                    (item: any) => item.category === 'Services'
+                )" :soustraitants="soustraitants.data" />
             <NewPurchaseOrderModal :id="project.id" :articles="project.pre_project.articles.filter(
-                (item: any) => item.category === 'Achats' && item.status === 1
-            )" />
+                    (item: any) => item.category === 'Achats' && item.status === 1
+                )" />
             <OutOfStockModal :id="project.id" :articles="project.pre_project.articles.filter(
-                (item: any) => item.category === 'Achats' && item.qte_restant > 0
-            )" />
+                    (item: any) => item.category === 'Achats' && item.qte_restant > 0
+                )" />
             <invoicesComposantModal :id="project.id" />
             <InvoiceAttachementModal :id="project.id" :project="project" />
             <EditArticleModal :selected-article="selectedArticle" />
             <DeleteModal title="Supprimer un Demande" text="Voulez-vous vraiment supprimer cette demande ?"
-                textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()" />
+                textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()"
+                message="Demande supprimée avec succès" />
         </div>
 
     </div>

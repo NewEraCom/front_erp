@@ -2,6 +2,9 @@
 import { ref } from 'vue';
 import { Modal } from '@/ui';
 import { logisticsService } from '@/services';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 
 const isLoading = ref(false);
 
@@ -56,9 +59,10 @@ const submit = async () => {
     }).then(() => {
         isLoading.value = false;
         $(`#outOfStock`).modal('hide');
-
+        toast.success('Votre demande a ete bien ajoute');
     }).catch(() => {
         isLoading.value = false;
+        toast.error('Error System');
     });
 };
 
@@ -93,8 +97,9 @@ const submit = async () => {
                                             :max="formData.articles[item]?.qte_restant" />
                                         <small class="text-muted" v-if="formData.articles[item]?.qte_restant">Quantite
                                             restante:
-                                            {{ formData.articles[item]?.qte_restant ? formData.articles[item]?.qte_restant :
-                                                0
+                                            {{ formData.articles[item]?.qte_restant ?
+            formData.articles[item]?.qte_restant :
+            0
                                             }}</small>
                                     </div>
                                     <div class="col-md-3 col-12 pe-0">
@@ -102,8 +107,11 @@ const submit = async () => {
                                         <p class="mb-0" v-html="formData.unite[item] ? formData.unite[item] : '-'"></p>
                                     </div>
                                 </div>
-                                <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                                    <i class="ti ti-x cursor-pointer" @click="removeItem(item)"></i>
+                                <div
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                    <i class="ti ti-x cursor-pointer fw-bold" @click="removeItem(item)"></i>
+                                    <i class="ti ti-plus cursor-pointer fw-bold" v-if="item == formData.items.length"
+                                        @click="addItem"></i>
                                 </div>
                             </div>
                         </div>
@@ -129,12 +137,6 @@ const submit = async () => {
                     <div class="col-12">
                         <textarea v-model="formData.remark" class="form-control" rows="2" placeholder="Remarque...">
                                 </textarea>
-                    </div>
-
-                    <div class="col-12 mt-3">
-                        <button type="button" class="btn btn-success" @click="addItem">
-                            Ajouter un Article
-                        </button>
                     </div>
                 </div>
             </div>

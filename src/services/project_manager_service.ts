@@ -25,7 +25,6 @@ async function getPurchasesOrder(type: string) {
     const res = await api().get('purchase/get/' + type);
     if (res.status === 200) {
       PMStore.setPurchases(res.data);
-      console.log(res.data);
       return res.data;
     } else {
       return false;
@@ -34,7 +33,6 @@ async function getPurchasesOrder(type: string) {
     return Promise.reject(e);
   }
 }
-
 
 async function getFacture() {
   try {
@@ -49,7 +47,7 @@ async function getFacture() {
     return Promise.reject(error);
   }
 }
-async function getBorderaux(id: string) {
+async function getBorderaux(id) {
   try {
     const PMStore = usePMStore();
 
@@ -79,7 +77,7 @@ async function updateFacture(req: any) {
     return Promise.reject(error);
   }
 }
-async function deleteFacture(id: string) {
+async function deleteFacture(id) {
   try {
     const response = await api().delete('facture/delete/' + id);
     if (response.status == 200) {
@@ -128,6 +126,7 @@ const getProjects = async () => {
     return Promise.reject(error);
   }
 };
+
 const deleteDemande = async () => {
   try {
     const PMStore = usePMStore();
@@ -152,7 +151,6 @@ const getOutOfStockRequests = async () => {
     return Promise.reject(e);
   }
 };
-
 
 async function getPreProjectById(req: string) {
   try {
@@ -419,8 +417,10 @@ async function validate(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
+    return response;
   }
-}
+};
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -448,6 +448,5 @@ export default {
   create,
   refuser,
   validate,
-  getProjects,
-  deleteArticle
+  getProjects
 };
