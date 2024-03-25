@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useSharedStore } from '@/store';
 import { sharedService } from '@/services';
-import { FournisseurTable } from './components';
+import { AddFournisseurModal ,FournisseurTable } from './components';
 
 const sharedStore = useSharedStore();
 
@@ -58,7 +58,7 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des fournisseurs</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des fournisseurs</small>
                             </div>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFournisseur">
                                 <i class="ti ti-square-rounded-plus-filled me-2"></i>
                                 Ajouter un fournisseur
                             </button>
@@ -81,5 +81,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+            <AddFournisseurModal type="fournisseur" />
     </div>
 </template>

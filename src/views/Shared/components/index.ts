@@ -14,6 +14,7 @@ import AddSoustraitantModal from './AddSoustraitantModal.vue';
 import DemandeRhRequestModal from './DemandeRhRequestModal.vue';
 import EditSousTraitantModal from './EditSousTraitantsModal.vue';
 import PurchaseOrderTable from './PurchaseOrderTable.vue';
+import AddFournisseurModal from './AddFournisseurModal.vue';
 
 export {
     ModalReserve,
@@ -31,5 +32,6 @@ export {
     AddSoustraitantModal,
     DemandeRhRequestModal,
     EditSousTraitantModal,
-    PurchaseOrderTable
+    PurchaseOrderTable,
+    AddFournisseurModal,
 };
