@@ -177,5 +177,17 @@ export const logisticsRoutes = [
             requiresAuth: true
         }
     },
+    {
+        path: '/transports/detail/:id',
+        name: 'DetailTransports',
+        component: () => import('@/views/Logistics/TransportDetail.vue'),
+        props: true,
+        meta: {
+            title: 'Detail Transports',
+            requiresAuth: true,
+
+            // role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
 ];
 

@@ -34,9 +34,12 @@ const getFournisseurById=(id)=>{
 const submit = async () => {
     isLoading.value = true;
     
-    await salesService.ValidateTableComperatif(props.id, selectedFournisseurIds.value).then(() => {
+    await salesService.ValidateTableComperatif(props.id, selectedFournisseurIds.value).then((res) => {
         isLoading.value = false;
-        router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
+        if (res.status === 200) {
+          
+          router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
+        }
 
         
     });

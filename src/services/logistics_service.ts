@@ -310,6 +310,16 @@ const removecardsCarburant = async () => {
     }
 };
 
+const getAchatsForTransport = async (demandeAchatId :number) => {
+    try {
+        const response = await api().get('/purchase/get_achats/'+demandeAchatId);
+        const logisticsStore = useLogisticsStore();
+        logisticsStore.setTransport(response.data);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 
 
@@ -341,7 +351,8 @@ export default {
     getVehiculeById,
     deleteSubscriptionById,
     removecardsCarburant,
-    newCaisseOperation
+    newCaisseOperation,
+    getAchatsForTransport
 };
 
 

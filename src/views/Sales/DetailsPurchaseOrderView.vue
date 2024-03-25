@@ -3,7 +3,8 @@ import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
 import { formater, helpers } from '@/utils';
-import { ValidateArticleModal } from './components';
+// import { ValidateArticleModal } from './components/modals';
+import {Validate} from '../HumanRessources/components/modals';
 import { useRouter } from 'vue-router';
 const salesStore = useSalesStore();
 const purchase = ref(computed(() => salesStore.purchase));
@@ -15,7 +16,7 @@ const props = defineProps({
     required: true,
   }
 });
-
+const isLoading = ref(false);
 onMounted(async () => {
   await salesService.getPurchaseOrderById(Number(props.id));
 });
@@ -30,7 +31,28 @@ const tabeComperatif = () => {
 };
 
 
+const ValidateArticleModal = async() => {
+  isLoading.value = true;
 
+  const formData = new FormData();
+  formData.append('status', '1');
+  await salesService.ValidateArticle(salesStore.ItemId, formData).then(() => {
+    isLoading.value = false;
+    $('#validate-modal').modal('hide');
+
+  });
+};
+const RefuseArticleModal = async() => {
+  isLoading.value = true;
+
+  const formData = new FormData();
+  formData.append('status', '0');
+  await salesService.ValidateArticle(salesStore.ItemId, formData).then(() => {
+    isLoading.value = false;
+    $('#reject-modal').modal('hide');
+
+  });
+};
 
 </script>
 
@@ -102,13 +124,13 @@ const tabeComperatif = () => {
                   <td class="text-center">{{ article.quantity }}</td>
                   <td class="text-center">
                     <div class="btn-group"
-                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations')">
+                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations') && article.article.status !=1 ">
                       <button type="button" class="btn btn-sm btn-success waves-effect waves-light"
-                        data-bs-toggle="modal" data-bs-target="#validateArticle">
+                        data-bs-toggle="modal" data-bs-target="#validate-modal" @click="salesStore.setItemId(article.article.id)">
                         <i class="ti ti-check"></i>
                       </button>
                       <button type="button" class="btn btn-sm btn-danger waves-effect waves-light"
-                        data-bs-toggle="modal" data-bs-target="#refuseArticle">
+                        data-bs-toggle="modal" data-bs-target="#reject-modal" @click="salesStore.setItemId(article.article.id)">
                         <i class="ti ti-x"></i>
                       </button>
                     </div>
@@ -218,9 +240,13 @@ const tabeComperatif = () => {
         </div>
       </div>
     </div>
-    <ValidateArticleModal />
+    <!-- <ValidateArticleModal  :method="ValidateArticleModal"/>
     <ValidateArticleModal id="refuseArticle" type="refuse" title="Refuser l'article hors bordereau"
-      message="Êtes-vous sûr de refuser cet Article ?" buttonText="Oui, Refuser" />
+      message="Êtes-vous sûr de refuser cet Article ?" buttonText="Oui, Refuser" :method="RefuseArticleModal"/> -->
+      <Validate id="validate-modal" :isLoading="isLoading" :method="ValidateArticleModal" :itemid="salesStore.ItemId"
+      title="Valider l'article hors bordereau" message="Êtes-vous sûr de valider cet Article ?" severity="success" />
+    <Validate id="reject-modal" :isLoading="isLoading" :method="RefuseArticleModal" :itemid="salesStore.ItemId"
+      title="Refuser l'article hors bordereau" message="Êtes-vous sûr de refuser cet Article ?" severity="danger" />
   </div>
 </template>
 

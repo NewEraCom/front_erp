@@ -53,6 +53,11 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             stats: null,
             loading: false,
         },
+        transport:{
+            data: null,
+            stats: null,
+            loading: false,
+        },
         outOfStockRequests: {
             data: null,
             stats: null,
@@ -453,6 +458,14 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         },
         clearSelectedItem() {
             this.selectedItem = null;
-        }
+        },
+        setTransport(data: any) {
+            this.transport.data = data;
+            this.transport.stats = {
+                
+                total_achats: data.achats.length,
+            };
+            this.caisse.loading = true;
+        },
     }
 });
