@@ -68,6 +68,8 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         selectedJawaz: null,
         selectedItem: null,
         selectedVehicule: null,
+        article_id: null,
+        livraison_id: null,
     }),
     actions: {
         setStock(data: any) {
@@ -467,5 +469,14 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             };
             this.caisse.loading = true;
         },
+        Livraison(livraison_id: number,article_id: number) {
+            this.livraison_id = livraison_id;
+            this.article_id = article_id;
+            
+        },
+        ClearLivraison() {
+            this.livraison_id = null;
+            this.article_id = null;
+        }
     }
 });

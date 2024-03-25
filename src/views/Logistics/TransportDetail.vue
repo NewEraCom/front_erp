@@ -4,6 +4,7 @@ import { ref, onMounted, computed } from 'vue';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { formater, helpers } from '@/utils';
+import {LivraisonArticlesModal} from './components';
 
 const logisticStore = useLogisticsStore();
 const transport = ref(computed(() => logisticStore.transport.data));
@@ -18,6 +19,7 @@ const isLoading = ref(false);
 onMounted(async () => {
   await logisticsService.getAchatsForTransport(Number(props.id));
 });
+
 
 
 
@@ -84,7 +86,7 @@ onMounted(async () => {
                     <th class="fw-bold text-center">Quantité Livré</th>
                     <th class="fw-bold text-center">Fournisseur</th>
                     <th class="fw-bold text-center">Prix</th>
-                    
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody v-if="transport.achats.length != 0">
@@ -105,7 +107,14 @@ onMounted(async () => {
                         </div>
                     </td>
                     <td class="text-center">{{ article.prix_fournisseur_choisi }}</td>
-                    
+                    <td class="text-center">
+                        <div v-if="article.qte_livre != article.quantity ">
+                            <button class="btn btn-outline-warning btn-sm" data-bs-target="#AddLivraison" data-bs-toggle="modal"
+                             @click="logisticStore.Livraison(article.livraison_id,article.id)">
+                                <i class="ti ti-pencil"></i>
+                            </button>
+                        </div>
+                    </td>
                   </tr>
                 </tbody>
                 <tbody v-else>
@@ -183,7 +192,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      
+      <LivraisonArticlesModal :qte_demande="5"/>
     </div>
   </template>
   
