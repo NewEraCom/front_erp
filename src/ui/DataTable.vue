@@ -104,7 +104,6 @@ watch(() => props.pageSize, () => {
                     <th v-for="(header, index) in headers" @click="sortTable(header.value)" :key="header.value"
                         :class="index == 0 ? 'text-start' : 'text-center'" style="cursor: pointer" class="fw-bold">
                         {{ header.text }}
-
                         <span v-if="sortKey === header.value">{{ sortOrder === 'asc' ? '↑' : '↓' }}</span>
                     </th>
                     <th></th>
@@ -170,10 +169,10 @@ watch(() => props.pageSize, () => {
                         <td v-if="header.isComplex && header.type === 'SousTraitant'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
                             <router-link :to="{ name: 'ProfileSoustraitant', params: { id: item.id } }">
-                                <h6 class="mb-1 fw-bold text-primary">{{ item.raison_social 
+                                <h6 class="mb-1 fw-bold text-primary">{{ item.raison_social
                                     }}</h6>
                             </router-link>
-                            
+
                         </td>
                         <td v-if="header.isComplex && header.type === 'recrute'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
@@ -239,7 +238,9 @@ watch(() => props.pageSize, () => {
                                     {{ formater.phoneNumber(item[header.value]) }}
                                 </span>
                                 <span v-if="header.type === 'facture'">
-                                    <small v-if="item[header.value] == '-'">Aucun facture</small>
+                                    <small v-if="item[header.value] == '-' || item[header.value] != null">Aucun
+                                        facture
+                                    </small>
                                     <button v-else class="btn btn-label-primary btn-sm">
                                         <i class="ti ti-download me-2"></i> Télécharger la facture
                                     </button>
@@ -338,7 +339,7 @@ watch(() => props.pageSize, () => {
                         </button>
                     </td>
                     <td v-else class="text-center">
-                        <div class="dropdown">
+                        <div class="dropdown" v-if="actionsConfig.length > 0">
                             <button class="btn p-0" type="button" id="earningReportsId" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="ti ti-dots-vertical ti-sm text-muted"></i>

@@ -33,6 +33,7 @@ const soustraitants = ref(computed(() => sharedStore.fournisseurs));
 const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
+const role = localStorage.getItem('role');
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
@@ -54,7 +55,7 @@ watch(item, () => {
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / Projets /
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
-            <div v-if="project">
+            <div v-if="project && role === 'Chef de projet'">
                 <button v-if="project.facture_composante.length == 0" class="btn btn-success ms-auto"
                     data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
@@ -169,6 +170,18 @@ watch(item, () => {
                         </div>
                     </div>
                 </div>
+                <div class="card card-border-shadow-primary mt-4">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2 pb-1">
+                            <div class="avatar me-2">
+                                <span class="avatar-initial rounded bg-label-primary"><i
+                                        class="ti ti-building-bank ti-md"></i></span>
+                            </div>
+                            <h4 class="ms-1 mb-0">42 342 <small class="fw-bold">MAD</small></h4>
+                        </div>
+                        <p class="mb-1 fw-bold">Caisse de projet</p>
+                    </div>
+                </div>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-8 col-xxl-8">
                 <div class="row">
@@ -197,6 +210,13 @@ watch(item, () => {
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                     data-bs-target="#facturations" aria-controls="facturations" aria-selected="true">
                                     Facturations
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#facturations" aria-controls="facturations" aria-selected="true">
+                                    Suivi de production
                                 </button>
                             </li>
                         </ul>
@@ -283,8 +303,8 @@ watch(item, () => {
                         <div class="card card-border-shadow-primary mt-4">
                             <div class="d-flex border-bottom justify-content-between align-items-center">
                                 <h5 class="card-header fw-bold">Document de projet</h5>
-                                <button class="btn btn-primary me-4" data-bs-target="#updateDocument"
-                                    data-bs-toggle="modal">
+                                <button v-if="role === 'Chef de projet'" class="btn btn-primary me-4"
+                                    data-bs-target="#updateDocument" data-bs-toggle="modal">
                                     <i class="ti ti-upload me-2"></i>
                                     Ajouter un document
                                 </button>
@@ -346,6 +366,50 @@ watch(item, () => {
                                 </div>
                             </div>
                         </div>
+                        <div class="card card-border-shadow-primary mt-4">
+                            <h5 class="card-header border-bottom fw-bold">Personnel de projet</h5>
+                            <div v-if="project" class="card-body pt-4">
+                                <div class="row g-3">
+                                    <div class="col-6">
+                                        <div class="d-flex mb-3 align-items-center rounded border p-3">
+                                            <div class="badge bg-label-primary me-3 rounded p-2">
+                                                <i class="ti ti-user ti-sm"></i>
+                                            </div>
+                                            <div
+                                                class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                <div class="me-2">
+                                                    <h6 class="mb-0">
+                                                        {{ project.pre_project.activity_director.employee.first_name +
+                    ' '
+                    + project.pre_project.activity_director.employee.last_name }}
+                                                    </h6>
+                                                    <small class="text-muted d-block mt-1">Directeur des
+                                                        opérations</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="d-flex mb-3 align-items-center rounded border p-3">
+                                            <div class="badge bg-label-primary me-3 rounded p-2">
+                                                <i class="ti ti-user ti-sm"></i>
+                                            </div>
+                                            <div
+                                                class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                                <div class="me-2">
+                                                    <h6 class="mb-0">
+                                                        {{ project.pre_project.project_manager.employee.first_name +
+                    ' '
+                    + project.pre_project.project_manager.employee.last_name }}
+                                                    </h6>
+                                                    <small class="text-muted d-block mt-1">Chef de projet</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="sales" class="tab-pane fade text-start" role="tabpanel">
@@ -353,8 +417,9 @@ watch(item, () => {
                             <div class="d-flex border-bottom align-items-center">
                                 <h5 class="card-header fw-bold">Achats & Services</h5>
                                 <div class="dropdown ms-auto me-3">
-                                    <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
+                                    <button v-if="role === 'Chef de projet'" id="salesByCountry" class="btn p-0"
+                                        type="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
@@ -382,7 +447,7 @@ watch(item, () => {
                         <div class="card card-border-shadow-primary">
                             <div class="d-flex border-bottom align-items-center">
                                 <h5 class="card-header fw-bold">Stock</h5>
-                                <div class="dropdown ms-auto me-3">
+                                <div v-if="role === 'Chef de projet'" class="dropdown ms-auto me-3">
                                     <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
@@ -408,7 +473,33 @@ watch(item, () => {
                         <div class="card card-border-shadow-primary">
                             <div class="d-flex border-bottom align-items-center">
                                 <h5 class="card-header fw-bold">Facturation</h5>
-                                <div v-if="project.facture_composante.length != 0" class="dropdown ms-auto me-3">
+                                <div v-if="role === 'Chef de projet' && project.facture_composante.length != 0"
+                                    class="dropdown ms-auto me-3">
+                                    <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
+                                        <button data-bs-target="#invoiceUpload" data-bs-toggle="modal"
+                                            class="dropdown-item fw-medium">
+                                            <i class="ti ti-file-plus me-2"></i> Créer une facture
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <InvoiceProjectTable :invoices="project.factures" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="production" class="tab-pane fade text-start" role="tabpanel">
+                        <div class="card card-border-shadow-primary">
+                            <div class="d-flex border-bottom align-items-center">
+                                <h5 class="card-header fw-bold">Suivi de production</h5>
+                                <div v-if="role === 'Chef de projet' && project.facture_composante.length != 0"
+                                    class="dropdown ms-auto me-3">
                                     <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>

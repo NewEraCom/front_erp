@@ -2,10 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { useSharedStore } from '@/store';
-import {useRouter} from 'vue-router';
-const sharedStore = useSharedStore();
-const router = useRouter();
+
 const props = defineProps({
     fournisseurs: {
         type: Array,

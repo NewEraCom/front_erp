@@ -703,7 +703,7 @@ const BDMenu = [
     {
         id: 1,
         name: 'Dashboard',
-        route: '/dashboard-pm',
+        route: '/dashboard-bdm',
         icon: 'ti ti-smart-home',
         path: 'DashboardPM'
     },
@@ -716,10 +716,10 @@ const BDMenu = [
     },
     {
         id: 2,
-        name: 'PreProject',
+        name: 'Avant Projets',
         route: '/pre-project',
-        icon: 'ti ti-package',
-        path: 'Avant Projects'
+        icon: 'ti ti-briefcase',
+        path: 'PreProject'
     },
     {
         id: 3,

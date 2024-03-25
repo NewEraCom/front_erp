@@ -119,19 +119,20 @@ const generatePDF = () => {
             <div class="card-body m-0 p-0" id="body">
               <div class="row justify-content-between align-items-center mb-2 mt-4 header">
                 <div class="col-6 p-3">
-                  <p class="mb-1"><strong class="text-dark">Bon de commande N° : </strong> {{
-        order.bon_commande[0].num + '/' + index
+                  <p class="mb-1 text-dark"><strong>Bon de commande N° : </strong> {{
+        order.bon_commande[0].num 
       }}
                   </p>
-                  <p class="mb-1"><strong class="text-dark">Date : </strong> {{
+                  <p class="mb-1 text-dark"><strong class="text-dark">Date : </strong> {{
           formater.date(order.bon_commande[0].created_at) }}</p>
-                  <p class="mb-1"><strong class="text-dark">Affaire : </strong> {{ order.project.code }}</p>
-                  <p class="mb-1"><strong class="text-dark">Projet : </strong> {{ order.project.code }}</p>
+                  <p class="mb-1 text-dark"><strong class="text-dark">Affaire N° : </strong> {{ order.project.code }}
+                  </p>
+                  <p class="mb-1 text-dark"><strong class="text-dark">Projet : </strong> {{ order.project.code }}</p>
                 </div>
                 <div class="col-6 border border-primary rounded p-2">
                   <h4 class="font-bold text-dark mb-1" style="font-size: 12px;">{{
         item.fournisseur.raison_social }}</h4>
-                  <p class="mb-1">{{ item.fournisseur.adresse }}</p>
+                  <p class="mb-1 text-dark">{{ item.fournisseur.adresse }}</p>
                 </div>
               </div>
               <div class="row table-responsive text-nowrap">
@@ -139,10 +140,10 @@ const generatePDF = () => {
                   <thead>
                     <tr style="background-color: #4e96de !important;">
                       <th scope="col" class="text-start">Désignation</th>
-                      <th scope="col">Unite</th>
-                      <th scope="col">Quantité</th>
-                      <th scope="col">Prix Unitaire</th>
-                      <th scope="col">Prix Total</th>
+                      <th scope="col" class="text-center">Unite</th>
+                      <th scope="col" class="text-center">Quantité</th>
+                      <th scope="col" class="text-center">Prix Unitaire</th>
+                      <th scope="col" class="text-center">Prix Total</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -158,7 +159,7 @@ const generatePDF = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td colspan="4" class="text-dark">
+                      <td colspan="4" class="text-dark fw-bold">
                         MONTANT TOTAL EN DIRHAMS HT
                       </td>
                       <td class="text-center text-dark">
@@ -173,7 +174,7 @@ const generatePDF = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td colspan="4" class="text-dark">
+                      <td colspan="4" class="text-dark fw-bold">
                         MONTANT TVA 20%
                       </td>
                       <td class="text-center text-dark">
@@ -188,7 +189,7 @@ const generatePDF = () => {
                       </td>
                     </tr>
                     <tr>
-                      <td colspan="4" class="text-dark">
+                      <td colspan="4" class="text-dark fw-bold">
                         MONTANT TOTAL EN DIRHAMS TTC
                       </td>
                       <td class="text-center text-dark">
@@ -207,22 +208,24 @@ const generatePDF = () => {
               </div>
               <div class="row mt-3 w-100 header">
                 <div class="col-md-12 p-2 mt-1">
-                  <p>Arret du present bon de commande toutes taxes comprises a la somme de :</p>
-                  <p class="text-dark font-bold">
+                  <p class="text-dark">Arret du present bon de commande toutes taxes comprises a la somme de :</p>
+                  <p class="text-dark fw-bold">
                     {{ helpers.numberToTextMAD(
         order.purchase_article.reduce((total, item) => {
           const priceProperty = priceFromSelectedSupplier(item)
-                    const unitPrice = priceProperty
-                    return total + item.quantity * unitPrice * 1.2
+          const unitPrice = priceProperty
+          return total + item.quantity * unitPrice * 1.2
                     }, 0))
                     }}
                   </p>
                 </div>
-                <div class="col-12 mt-3">
+                <div class="col-12 mt-3 text-dark">
                   <p>* Disponibilité : Immédiatement</p>
                   <p>* Facture devra être accompagne d'une copie du BDC</p>
-                  <p>* Delai de paiement : {{ order.bon_commande[0].soustraitant.d_paiment }} Jours</p>
-                  <p>* Méthode de paimenet : {{ order.bon_commande[0].soustraitant.m_paiment }}</p>
+                  <p v-if="order.bon_commande[0].soustraitant.d_paiment">* Delai de paiement : {{
+                    order.bon_commande[0].soustraitant.d_paiment }} Jours</p>
+                  <p v-if="order.bon_commande[0].soustraitant.m_paiment">* Méthode de paimenet : {{
+                    order.bon_commande[0].soustraitant.m_paiment }}</p>
                 </div>
 
               </div>

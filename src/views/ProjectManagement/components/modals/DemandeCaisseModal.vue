@@ -30,12 +30,24 @@ const submit = async () => {
         toast.error('Veuillez choisir un project');
         return;
     }
+    isLoading.value = true;
 
     formData.value.project_id = formData.value.project_id.key;
     await logisticsService.newCaisseOperation(formData.value, 'chef').then(() => {
         isLoading.value = false;
         $('#newDemandeCaisse').modal('hide');
         toast.success('Demande de caisse ajoutée avec succès');
+
+        formData.value = {
+            project_id: '-',
+            montant: null,
+            recepteur: JSON.parse(localStorage.getItem('user')).employee.id,
+            remark: null,
+            date_operation: Date(),
+            operation: 'sortie',
+            type: 'cash'
+        };
+
     }).catch(() => {
         isLoading.value = false;
     });

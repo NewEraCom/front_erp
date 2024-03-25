@@ -26,7 +26,7 @@ const getOperationCaisse = async (from: string) => {
     try {
         const response = await api().get('/logistics/caisse/operation/' + from);
         const logisticsStore = useLogisticsStore();
-        logisticsStore.setOperationCaisse(response.data.caisse);
+        logisticsStore.setOperationCaisse(response.data.caisse, response.data.solde);
     } catch (error) {
         return Promise.reject(error);
     }
@@ -199,12 +199,11 @@ const newCaisseOperation = async (data: any, form: string) => {
     try {
         const response = await api().post('/logistics/caisse/operation', data);
         if (response.status == 201) {
-            if (form == 'caisse') {
-                const logisticsStore = useLogisticsStore();
-                logisticsStore.pushOperationCaisse(response.data.data);
-            } else {
-                console.log('Here');
-            }
+            console.log(form);
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushOperationCaisse(response.data.caisse_operation);
+
+
         }
         return response.data;
     } catch (error) {

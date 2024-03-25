@@ -110,14 +110,19 @@ const getDashboard = async () => {
 };
 
 
-const deleteRecruitment = async () => {
+const deleteRecruitment = async (from: string | null) => {
     try {
         const sharedStore = useSharedStore();
         const rhStore = useRhStore();
         const id = sharedStore.selectedItem.id;
         const response = await api().delete('/dmnd/delete-recruitement/' + id);
         if (response.status == 200) {
-            rhStore.deleteRecruitment(id);
+            if (from === 'rh') {
+                rhStore.deleteRecruitment(id);
+            } else {
+                const sharedStore = useSharedStore();
+                sharedStore.deleteRecruitment(id);
+            }
         }
     } catch (error) {
         return Promise.reject(error);
@@ -185,7 +190,7 @@ const deleteSoustraitant = async () => {
         return Promise.reject(error);
     }
 };
-   const getFournisseur = async() => {
+const getFournisseur = async () => {
     try {
         const sharedStore = useSharedStore();
 
@@ -199,11 +204,11 @@ const deleteSoustraitant = async () => {
         console.log(error);
     }
 };
-const getSoustraitantById = async(id) => {
+const getSoustraitantById = async (id) => {
     try {
         const sharedStore = useSharedStore();
 
-        const response = await api().get('tiers/get/'+id);
+        const response = await api().get('tiers/get/' + id);
         if (response.status == 200) {
             sharedStore.Soustraitant = response.data.soustraitant;
             return response.data.soustraitant;

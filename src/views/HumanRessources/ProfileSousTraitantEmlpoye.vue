@@ -96,9 +96,6 @@ const getFileUrl = (attachment) => {
                                     <span class="fw-medium me-1">Matricule:</span>
                                     <span>Nec-{{ worker.matricule }}</span>
                                 </li>
-
-
-
                             </ul>
                         </div>
                         <p class="mt-4 small text-uppercase text-muted">DUREE DE TRAVAIL</p>
@@ -303,7 +300,6 @@ const getFileUrl = (attachment) => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

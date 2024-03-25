@@ -83,8 +83,17 @@ export const projectManagerRoutes = [
             title: 'Detail Avant Projet',
             props: true,
             requiresAuth: true,
-            role: [helpers.roles.BDM,helpers.roles.DO,helpers.roles.DG,helpers.roles.DS,helpers.roles.RAP]
+            role: [helpers.roles.BDM, helpers.roles.DO, helpers.roles.DG, helpers.roles.DS, helpers.roles.RAP]
 
         }
     },
+    {
+        path: '/dashboard-bdm',
+        name: 'DashboardBDM',
+        component: () => import('@/views/ProjectManagement/DashboardBDMView.vue'),
+        meta: {
+            title: 'Dashboard',
+            role: [helpers.roles.BDM]
+        },
+    }
 ];

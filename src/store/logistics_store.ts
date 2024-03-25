@@ -313,14 +313,14 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             this.cachets.stats = null;
             this.cachets.loading = false;
         },
-        setOperationCaisse(data: any) {
+        setOperationCaisse(data: any, solde: number) {
             this.opertationCaisse.data = data;
             this.opertationCaisse.stats = {
-                requested: data.filter((item: any) => item.status == 'pending').length,
-                delivered: data.filter((item: any) => item.status == 'done').length,
+                requested: data.filter((item: any) => item.operation == 'sortie' && item.status == 'pending').length,
+                delivered: data.filter((item: any) => item.operation == 'sortie' && item.status == 'done').length,
                 total: data.length,
-                ongoing: data.filter((item: any) => item.status == 'on going').length,
-
+                ongoing: data.filter((item: any) => item.operation == 'sortie' && item.status == 'on going').length,
+                solde: solde,
             };
             this.opertationCaisse.loading = true;
         },

@@ -7,7 +7,7 @@ import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 const isLoading = ref(false);
-const isStock = ref('Stock');
+const isStock = ref();
 const props = defineProps({
     id: {
         type: Number,
@@ -87,6 +87,13 @@ const submit = async () => {
     isLoading.value = true;
 
     if (!checkArticles(formData.value.service)) {
+        isLoading.value = false;
+        return;
+    }
+
+    if (isStock.value != null) {
+        isLoading.value = false;
+        toast.error('Veuillez sélectionner un emplacement de livraison');
         return;
     }
 

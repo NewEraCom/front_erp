@@ -229,6 +229,12 @@ export const useSharedStore = defineStore('ShareStore', {
             const indexToDelete = this.recruitment.data.findIndex((item: any) => item.id == itemIdToDelete);
             if (indexToDelete !== -1) {
                 this.recruitment.data.splice(indexToDelete, 1);
+                this.recruitement.stats = {
+                    total: this.recruitment.data.length,
+                    pending: this.recruitment.data.filter((item: any) => item.status === 'pending').length,
+                    done: this.recruitment.data.filter((item: any) => item.status === 'done').length,
+                    completed: this.recruitment.data.filter((item: any) => item.status === 'completed').length,
+                };
             } else {
                 console.log('Item not found in array.');
             }
@@ -238,6 +244,12 @@ export const useSharedStore = defineStore('ShareStore', {
         },
         pushRecruitment(data: any) {
             this.recruitment.data.push(data);
+            this.recruitment.stats = {
+                total: this.recruitment.data.length,
+                pending: this.recruitment.data.filter((item: any) => item.status === 'pending').length,
+                done: this.recruitment.data.filter((item: any) => item.status === 'done').length,
+                completed: this.recruitment.data.filter((item: any) => item.status === 'completed').length,
+            };
         },
     },
 });

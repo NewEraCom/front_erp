@@ -22,7 +22,7 @@ const actionsConfig = [
 
         }
     },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    { icon: 'ti ti-trash-filled', type: 'delete', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
 
@@ -90,7 +90,7 @@ const filter = () => {
             </div>
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
-            buttonType="simple" />
+            buttonType="simple" disabled="pending" />
     </div>
 </template>
 <style>

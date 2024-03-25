@@ -6,6 +6,9 @@ import { usePMStore } from '@/store';
 
 const pmStore = usePMStore();
 
+const role = localStorage.getItem('role');
+
+
 const props = defineProps({
     requestSales: {
         type: Array,
@@ -27,13 +30,18 @@ const actionsConfig = [
             router.push(`/purchase-order/details/${item.id}`);
         },
     },
-    {
-        icon: 'ti ti-trash', type: 'delete', class: 'btn btn-danger btn-sm', text: 'Supprimer', onClick: (item: any) => {
-            pmStore.setSelectedArticle(item);
-            $('#deleteModal').modal('show');
-        },
-    },
 ];
+
+if (role === 'Chef de projet') {
+    actionsConfig.push(
+        {
+            icon: 'ti ti-trash', type: 'delete', class: 'btn btn-danger btn-sm', text: 'Supprimer', onClick: (item: any) => {
+                pmStore.setSelectedArticle(item);
+                $('#deleteModal').modal('show');
+            },
+        },
+    );
+}
 
 
 
@@ -59,8 +67,8 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
-                        @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
+                        placeholder="Rechercher..." @input="filter" />
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>

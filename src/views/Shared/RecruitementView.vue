@@ -101,9 +101,9 @@ watch(data, () => {
         </div>
         <DetailsRecruitementModal />
         <DeleteModal title="Supprimer un Demande" text="Voulez-vous vraiment supprimer cette demande ?"
-            textButton="Oui, Supprimer" :action="() => sharedService.deleteRecruitment()"
+            textButton="Oui, Supprimer" :action="() => sharedService.deleteRecruitment('shared')"
             message="La demande a été supprimée avec succès" />
-        <AddNewRecruitmentModal />
+        <AddNewRecruitmentModal from="other" />
     </div>
 </template>
 

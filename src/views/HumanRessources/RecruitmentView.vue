@@ -85,7 +85,7 @@ watch(() => rhStore.recrutement, (newValue) => {
     <AddNewRecruitmentModal />
     <DeleteModal title="Supprimer une demande de recrutement"
       text="Voulez-vous vraiment supprimer cette demande de recrutement ?" textButton="Oui, Supprimer"
-      :action="() => sharedService.deleteRecruitment()"
+      :action="() => sharedService.deleteRecruitment('rh')"
       message="La demande de recrutement a été supprimée avec succès" />
     <RecruitementDetailsModal />
 

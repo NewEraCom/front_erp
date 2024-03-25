@@ -1,58 +1,48 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { usePMStore } from '@/store';
+import router from '@/router';
 
 const props = defineProps({
-    articles: {
+    purchaseOrders: {
         type: Array,
         required: true,
     },
 });
 
-const pmStore = usePMStore();
-const role = localStorage.getItem('role');
-
-
 const headers = [
-    { text: 'Code', value: 'code', type: 'text' },
-    { text: 'Désignation', value: 'article', type: 'text' },
-    { text: 'Unite', value: 'unite', type: 'text' },
-    { text: 'Qte En Stock', value: 'qte_restant', type: 'number' },
-    { text: 'Status', value: 'qte_restant', type: 'stock' },
+    { text: 'N° de commande', value: 'num', type: 'text' },
+    { text: 'Facture', value: 'facture', type: 'facture' },
+    { text: 'Date de création', value: 'created_at', type: 'date' },
+    { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-
+    {
+        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+            console.log(item);
+            router.push({ name: 'DetailBonCommande', params: { id: item.d_achat_id } });
+        }
+    },
 ];
 
-if (role === 'Chef de projet') {
-    actionsConfig.push(
-        {
-            class: 'text-dark text-small', text: 'Modifier', onClick: (item: any) => {
-                pmStore.setSelectedArticle(item);
-                $('#editArticle').modal('show');
-            },
-        },
-    );
-}
-
-
-
-const filteredData = ref(props.articles);
+const filteredData = ref(props.purchaseOrders);
 
 const searchQuery = ref('');
 const itemPerPage = ref(15);
 
 const filter = () => {
-    filteredData.value = props.articles.filter((item: any) => {
-        const combinedFields = `${item.article} ${item.code}`.toLowerCase();
+    filteredData.value = props.purchaseOrders.filter((item: any) => {
+        const combinedFields = `${item.raison_social} ${item.ville}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word));
+
     });
+
 };
 
 </script>
+
 <template>
     <div>
         <div class="row mb-4">
@@ -60,8 +50,8 @@ const filter = () => {
                 <div class="d-flex align-items-center">
                     <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
                         placeholder="Rechercher..." @input="filter" />
-
                     <div class="d-flex align-items-center ms-auto">
+                        <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
                             <option value="15">15</option>
                             <option value="30">30</option>
@@ -76,10 +66,11 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
-            disabled="pending" />
+        <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
+            buttonType="simple" disabled="actif" />
     </div>
 </template>
+
 <style>
 .w-240 {
     width: 240px;
