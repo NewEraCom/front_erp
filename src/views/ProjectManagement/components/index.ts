@@ -28,6 +28,9 @@ import SetFileNumber from './SetFileNumber.vue';
 import SetFileNumberDone from './SetFileNumberDone.vue';
 import ValidatePreProject from './ValidatePreProject.vue';
 import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
+import PreProjectDashTable from './PreProjectDashTable.vue';
+import CautionDashTable from './CautionDashTable.vue';
+import ProjectDash from './ProjectDash.vue'
 export {
     AchatTable,
     EditFacture,
@@ -54,6 +57,9 @@ export {
     ImportChiffrage,
     NewChiffrage,
     DetailsPreProjectSkeleton,
-    DemandeCaisseOutOfStockTable
+    DemandeCaisseOutOfStockTable,
+    PreProjectDashTable,
+    CautionDashTable, 
+    ProjectDash
 
 };
