@@ -172,12 +172,18 @@ watch(item, () => {
                 </div>
                 <div class="card card-border-shadow-primary mt-4">
                     <div class="card-body">
-                        <div class="d-flex align-items-center mb-2 pb-1">
-                            <div class="avatar me-2">
-                                <span class="avatar-initial rounded bg-label-primary"><i
-                                        class="ti ti-building-bank ti-md"></i></span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center mb-2 pb-1">
+                                <div class="avatar me-2">
+                                    <span class="avatar-initial rounded bg-label-primary"><i
+                                            class="ti ti-building-bank ti-md"></i></span>
+                                </div>
+                                <h4 class="ms-1 mb-0 fw-bold">{{ project.caisse }}<small class="fw-bold"> MAD</small>
+                                </h4>
                             </div>
-                            <h4 class="ms-1 mb-0">42 342 <small class="fw-bold">MAD</small></h4>
+                            <button class="btn btn-sm btn-primary">
+                                Budget de caisse
+                            </button>
                         </div>
                         <p class="mb-1 fw-bold">Caisse de projet</p>
                     </div>
