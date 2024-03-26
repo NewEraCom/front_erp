@@ -20,6 +20,7 @@ import CaisseChart from './CaisseChart.vue';
 import EditSubscriptionModal from './EditSubscriptionModal.vue';
 import NewLouerModal from './NewLouerModal.vue';
 import DetailsParcGsmTable from './DetailsParcGSMTable.vue';
+import LivraisonArticlesModal from './LivraisonArticlesModal.vue';
 
 export {
     StockTable,
@@ -43,5 +44,6 @@ export {
     CaisseChart,
     EditSubscriptionModal,
     NewLouerModal,
-    DetailsParcGsmTable
+    DetailsParcGsmTable,
+    LivraisonArticlesModal
 };

@@ -319,6 +319,18 @@ const getAchatsForTransport = async (demandeAchatId :number) => {
         return Promise.reject(error);
     }
 };
+const ReceiveShipment = async (data:any) => {
+    try {
+        const response = await api().post('/logistics/transport/receive-shipement',data);
+        const logisticsStore = useLogisticsStore();
+        // logisticsStore.setTransport(response.data);
+        if (response.status == 200) {
+            return response.data;
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 
@@ -352,7 +364,8 @@ export default {
     deleteSubscriptionById,
     removecardsCarburant,
     newCaisseOperation,
-    getAchatsForTransport
+    getAchatsForTransport,
+    ReceiveShipment
 };
 
 
