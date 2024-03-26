@@ -3,11 +3,13 @@ import { ref, onMounted, computed, onUnmounted } from 'vue';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
 import { formater, helpers } from '@/utils';
-// import { ValidateArticleModal } from './components/modals';
-import {Validate} from '../HumanRessources/components/modals';
+import { Modal } from '@/ui';
+import { Validate } from '../HumanRessources/components/modals';
 import { useRouter } from 'vue-router';
+
 const salesStore = useSalesStore();
 const purchase = ref(computed(() => salesStore.purchase));
+
 const role = ref(localStorage.getItem('role'));
 const router = useRouter();
 const props = defineProps({
@@ -16,7 +18,12 @@ const props = defineProps({
     required: true,
   }
 });
+
+
 const isLoading = ref(false);
+const decision = ref();
+const comment = ref();
+
 onMounted(async () => {
   await salesService.getPurchaseOrderById(Number(props.id));
 });
@@ -31,7 +38,7 @@ const tabeComperatif = () => {
 };
 
 
-const ValidateArticleModal = async() => {
+const ValidateArticleModal = async () => {
   isLoading.value = true;
 
   const formData = new FormData();
@@ -42,7 +49,7 @@ const ValidateArticleModal = async() => {
 
   });
 };
-const RefuseArticleModal = async() => {
+const RefuseArticleModal = async () => {
   isLoading.value = true;
 
   const formData = new FormData();
@@ -51,6 +58,19 @@ const RefuseArticleModal = async() => {
     isLoading.value = false;
     $('#reject-modal').modal('hide');
 
+  });
+};
+
+const validation = async () => {
+  isLoading.value = true;
+
+  const formData = new FormData();
+  formData.append('status', decision.value);
+  formData.append('comment', comment.value);
+  formData.append('purchase_order_id', purchase.value.id);
+  await salesService.validatePurchaseOrder(formData).then(() => {
+    isLoading.value = false;
+    $('#validate-do').modal('hide');
   });
 };
 
@@ -124,13 +144,15 @@ const RefuseArticleModal = async() => {
                   <td class="text-center">{{ article.quantity }}</td>
                   <td class="text-center">
                     <div class="btn-group"
-                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations') && article.article.status !=1 ">
+                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations') && article.article.status != 1">
                       <button type="button" class="btn btn-sm btn-success waves-effect waves-light"
-                        data-bs-toggle="modal" data-bs-target="#validate-modal" @click="salesStore.setItemId(article.article.id)">
+                        data-bs-toggle="modal" data-bs-target="#validate-modal"
+                        @click="salesStore.setItemId(article.article.id)">
                         <i class="ti ti-check"></i>
                       </button>
                       <button type="button" class="btn btn-sm btn-danger waves-effect waves-light"
-                        data-bs-toggle="modal" data-bs-target="#reject-modal" @click="salesStore.setItemId(article.article.id)">
+                        data-bs-toggle="modal" data-bs-target="#reject-modal"
+                        @click="salesStore.setItemId(article.article.id)">
                         <i class="ti ti-x"></i>
                       </button>
                     </div>
@@ -169,6 +191,12 @@ const RefuseArticleModal = async() => {
                   </span>
                   <p class="mb-0">Adresse de livraison : {{ purchase.location }}</p>
                 </div>
+                <div class="d-flex align-items-center mt-4">
+                  <span class="badge bg-label-success rounded-circle p-2 me-2">
+                    <i class="ti ti-clock f-18"></i>
+                  </span>
+                  <p class="mb-0">Date de livraison : {{ formater.date(purchase.delivery_date) }}</p>
+                </div>
                 <div v-if="purchase.location != 'Stock'" class="d-flex align-items-center mt-4">
                   <span class="badge bg-label-success rounded-circle p-2 me-2">
                     <i class="ti ti-user f-18"></i>
@@ -183,23 +211,28 @@ const RefuseArticleModal = async() => {
             <h5 class="card-title m-0">Historique de la demande</h5>
             <div v-if="purchase.historique_purchase_order.length > 0" class="card-body m-2">
               <ul class="timeline pt-3">
-                <li v-for="(historique, index) in purchase.historique_purchase_order" :key="historique.id" :class="index === purchase.historique_purchase_order.length - 1
+                <li v-for="(historique, index) in purchase.historique_purchase_order" :key="historique.id" :class="(index == purchase.historique_purchase_order.length - 1
       ? 'border-transparent'
-      : 'border-left-dashed'
-      " class="timeline-item pb-4 timeline-item-primary">
-                  <span class="timeline-indicator-advanced timeline-indicator-primary">
-                    <i class="ti ti-circle-filled"></i>
-                  </span>
-                  <div class="timeline-event">
-                    <div class="timeline-header border-bottom mb-3">
-                      <h6 class="mb-0">{{ historique.title }}</h6>
-                      <span class="text-muted">
-                        {{ formater.date(historique.created_at) }}
-                      </span>
-                    </div>
-                    <div class="mb-2">
-                      <div class="d-flex align-items-center">
-                        {{ historique.description }}
+      : 'border-left-dashed')" class=" timeline-item pb-4">
+                  <div :class="(historique.is_valid == '1' ? 'timeline-item-primary' : 'timeline-item-secondary')">
+                    <span class="timeline-indicator-advanced"
+                      :class="(historique.is_valid == '1' ? 'timeline-indicator-primary' : 'timeline-indicator-secondary')">
+                      <i class="ti ti-circle-filled"></i>
+                    </span>
+                    <div class="timeline-event">
+                      <div class="timeline-header border-bottom mb-3">
+                        <h6 class="mb-0">{{ historique.title }}</h6>
+                        <span class="text-muted" v-if="historique.is_valid == 1">
+                          {{ formater.date(historique.created_at) }}
+                        </span>
+                      </div>
+                      <div class="mb-2">
+                        <div class="d-flex align-items-center" v-if="historique.is_valid == 1">
+                          {{ historique.description }}
+                        </div>
+                        <div class="d-flex align-items-center text-secondary" v-else>
+                          Cette tâche n'a pas encore été exécutée
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -219,12 +252,13 @@ const RefuseArticleModal = async() => {
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">
-            <button v-if="purchase.status == 'pending' && role == 'Responsable d\'achats'"
+            <button
+              v-if="purchase.status == 'on going' && role == 'Responsable d\'achats' && purchase.table_comperatif == null"
               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex" @click="tabeComperatif">
               <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
             </button>
             <router-link :to="{ name: 'PurchaseOrderValidation', params: { id: purchase.id } }"
-              v-if="purchase.status == 'on going' && [helpers.roles.DG, helpers.roles.DS, helpers.roles.DO].includes(role)"
+              v-if="purchase.status == 'on going' && purchase.table_comperatif != null && [helpers.roles.DS, helpers.roles.DO].includes(role)"
               class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-check me-2"></i> Valider la demande d'achats
             </router-link>
@@ -232,21 +266,60 @@ const RefuseArticleModal = async() => {
               :class="purchase.status != 'pending' ? 'btn-secondary' : 'btn-warning'" href=". /app-invoice-edit.html">
               <i class="ti ti-pencil me-2"></i> Modifier la demande
             </button>
-            <router-link :to="{ name:'DetailBonCommande', params : { id:purchase.id} }"
+            <router-link :to="{ name: 'DetailBonCommande', params: { id: purchase.id } }"
               v-if="purchase.status == 'valide'" class="btn btn-primary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-download me-2"></i> Télécharger le bon de commande
             </router-link>
+            <button class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex" data-bs-target="#validate-do"
+              data-bs-toggle="modal" v-if="purchase.status == 'pending' && [helpers.roles.DO].includes(role)">
+              <i class="ti ti-check me-2"></i> Valider la demande d'achats
+            </button>
+
           </div>
         </div>
       </div>
     </div>
-    <!-- <ValidateArticleModal  :method="ValidateArticleModal"/>
-    <ValidateArticleModal id="refuseArticle" type="refuse" title="Refuser l'article hors bordereau"
-      message="Êtes-vous sûr de refuser cet Article ?" buttonText="Oui, Refuser" :method="RefuseArticleModal"/> -->
-      <Validate id="validate-modal" :isLoading="isLoading" :method="ValidateArticleModal" :itemid="salesStore.ItemId"
+    <Validate id="validate-modal" :isLoading="isLoading" :method="ValidateArticleModal" :itemid="salesStore.ItemId"
       title="Valider l'article hors bordereau" message="Êtes-vous sûr de valider cet Article ?" severity="success" />
     <Validate id="reject-modal" :isLoading="isLoading" :method="RefuseArticleModal" :itemid="salesStore.ItemId"
       title="Refuser l'article hors bordereau" message="Êtes-vous sûr de refuser cet Article ?" severity="danger" />
+
+
+    <Modal id="validate-do" title="Validation de la demande d'achat">
+      <form @submit.prevent="validation">
+        <div class="modal-body">
+          <p>Votre décision pour cette demande d'achat</p>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" v-model="decision"
+              value="1">
+            <label class="form-check-label" for="inlineRadio1">Valider</label>
+          </div>
+          <div class="form-check form-check-inline mt-3">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" v-model="decision"
+              value="0">
+            <label class="form-check-label" for="inlineRadio2">Refuser</label>
+          </div>
+          <div class="mb-3 mt-3" v-if="decision == 0">
+            <label for="comment" class="form-label mb-2">Commentaire <span class="text-danger">*</span> </label>
+            <textarea class="form-control" id="comment" rows="3" placeholder="Entrez votre commentaire" v-model="
+            comment" required></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
+            Non
+          </button>
+          <button type="submit" class="btn btn-danger" :disabled="isLoading">
+            <span v-if="isLoading" class="d-flex align-items-center">
+              <div class="spinner-border spinner-border-sm text-white" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </span>
+            <span v-else>Oui</span>
+          </button>
+        </div>
+      </form>
+    </Modal>
   </div>
 </template>
 

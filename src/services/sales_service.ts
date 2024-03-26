@@ -150,6 +150,7 @@ const insertTableComperatif = async (data) => {
     return false;
   }
 };
+
 const ValidateTableComperatif = async (id, data) => {
   try {
     const res = await api().post('purchase/valid-demande-achat/' + id, data);
@@ -162,6 +163,15 @@ const ValidateTableComperatif = async (id, data) => {
   } catch (e) {
     console.log(e);
     return false;
+  }
+};
+
+const validatePurchaseOrder = async (formData: any) => {
+  try {
+    const response = await api().post('/purchase/validate-do', formData);
+    //pmStore.updatePurchaseOrder(response.data.purchase);
+  } catch (error) {
+    return Promise.reject(error);
   }
 };
 
@@ -179,5 +189,6 @@ export default {
   getBonDeCommandeById,
   insertTableComperatif,
   getCaisseOperation,
-  ValidateTableComperatif
+  ValidateTableComperatif,
+  validatePurchaseOrder
 };

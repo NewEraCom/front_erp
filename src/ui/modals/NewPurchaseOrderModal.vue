@@ -32,6 +32,7 @@ const formData = ref({
     itemsArticleHors: [],
     articleHors: ['-'],
     qtyHors: [],
+    delivery_date: '',
     unites: [],
     recepteur: '',
 });
@@ -105,6 +106,7 @@ const submit = async () => {
         unite: JSON.stringify(formData.value.unite),
         price: JSON.stringify(formData.value.price),
         total: JSON.stringify(formData.value.total),
+        delivery_date: formData.value.delivery_date,
         location: isStock.value,
         remark: formData.value.remark,
         recepteur: formData.value.recepteur,
@@ -262,11 +264,18 @@ const checkArticles = (articles) => {
                             </div>
                         </div>
                     </div>
-                    <div v-if="isStock == 'Chantier'" class="col-12 mb-2">
+                    <div v-if="isStock == 'Chantier'" class="col-12">
                         <div class="mb-3">
                             <label for="recepteur" class="mb-3">Récepteur</label>
                             <input id="recepteur" v-model="formData.recepteur" type="text" class="form-control"
                                 placeholder="Entrez le nom du récepteur de la commande" />
+                        </div>
+                    </div>
+                    <div class="col-12 mb-2">
+                        <div class="mb-3">
+                            <label for="delivery_date" class="mb-3">Date de livraison</label>
+                            <input id="delivery_date" v-model="formData.delivery_date" type="date" class="form-control"
+                                placeholder="Entrez la date de livraison" />
                         </div>
                     </div>
 
