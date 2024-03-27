@@ -110,6 +110,7 @@ const getProjectById = async (id: string) => {
     if (response.status === 200) {
       const PMStore = usePMStore();
       PMStore.setProject(response.data.project);
+      PMStore.setCaisseProject(response.data.caisse);
     }
   } catch (error) {
     return Promise.reject(error);

@@ -31,6 +31,7 @@ const props = defineProps<{
 }>();
 
 const item = ref(computed(() => pmStore.project));
+const caisseProject = ref(computed(() => pmStore.caisse_project));
 const soustraitants = ref(computed(() => sharedStore.fournisseurs));
 
 const project = ref(null);
@@ -42,6 +43,7 @@ const caisse = ref(computed(() => pmStore.caisse_project_sum));
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
+    console.log(caisse.value); 
 });
 
 onUnmounted(() => {
@@ -189,11 +191,17 @@ watch(item, () => {
 
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal">
+                                data-bs-toggle="modal" >
                                 Budget de caisse
                             </button>
                         </div>
-                        <p class="mb-1 fw-bold">Caisse de projet</p>
+                        <p class="mb-1 fw-bold">Caisse de Projet :</p>
+                        <!-- {{ caisseProject }} -->
+                        <ul>
+                            <li v-for="(item, index) in caisseProject" :key="index">
+                                 {{ item.designation }} : {{ item.montant }}
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
