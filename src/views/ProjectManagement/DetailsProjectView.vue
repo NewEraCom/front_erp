@@ -3,7 +3,7 @@ import { ref, onMounted, computed, onUnmounted, watch } from 'vue';
 import { pmService, sharedService } from '@/services';
 import { usePMStore, useSharedStore } from '@/store';
 import { helpers, formater } from '@/utils';
-import {NewCaisseProjectModal} from './components/modals';
+import { NewCaisseProjectModal } from './components/modals';
 import {
     DeleteModal,
     NewPurchaseOrderModal,
@@ -37,12 +37,11 @@ const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
-const CaisseSomme = ref(computed(() =>pmStore.caisse_project_sum));
+const caisse = ref(computed(() => pmStore.caisse_project_sum));
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
-    await pmService.GetCaisseProjectSum(props.id);
 });
 
 onUnmounted(() => {
@@ -184,12 +183,13 @@ watch(item, () => {
                                             class="ti ti-building-bank ti-md"></i></span>
                                 </div>
                                 <!-- {{ project.caisse }} -->
-                                <h4 class="ms-1 mb-0 fw-bold" v-if="CaisseSomme !== null && CaisseSomme !== undefined">
-                                    {{CaisseSomme}}<small class="fw-bold">  MAD</small>
-                                </h4>                                
-                                <h4 v-else><div class="skeleton-text ms-1 mb-0" style="width: 50px; height: 1.2rem"></div></h4>
+                                <h4 class="ms-1 mb-0 fw-bold">
+                                    {{ project.caisse }}<small class="fw-bold"> MAD</small>
+                                </h4>
+
                             </div>
-                            <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject" data-bs-toggle="modal" >
+                            <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
+                                data-bs-toggle="modal">
                                 Budget de caisse
                             </button>
                         </div>
@@ -535,7 +535,7 @@ watch(item, () => {
 
                 </div>
             </div>
-            <NewCaisseProjectModal :projectId="id"/>
+            <NewCaisseProjectModal :projectId="id" />
             <UploadDocumentModal :id="project.id" />
             <NewServiceModal v-if="soustraitants != null" :id="project.id" :services="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Services'
@@ -579,4 +579,5 @@ watch(item, () => {
     50% {
         opacity: 0.2;
     }
-}</style>
+}
+</style>
