@@ -25,6 +25,8 @@ export const usePMStore = defineStore('PMStore', {
         preprojectDetail: null,
         projects: null,
         selectedItem: null,
+        caisse_project: null,
+        caisse_project_sum: null,
     }),
     actions: {
         clearStore() {
@@ -163,5 +165,8 @@ export const usePMStore = defineStore('PMStore', {
         setSelectedItem(data: any) {
             this.selectedItem = data;
         },
+        setCaisseProject(data: any) {
+            this.caisse_project = data;
+        }
     },
 });

@@ -5,6 +5,7 @@ import InvoiceAttachementModal from './InvoiceAttachementModal.vue';
 import EditArticleModal from './EditArticleModal.vue';
 import DemandeCaisseModal from './DemandeCaisseModal.vue';
 import SuivieModal from './SuivieModal.vue';
+import NewCaisseProjectModal from './NewCaisseProjectModal.vue';
 
 export {
     UploadDocumentModal,
@@ -13,5 +14,6 @@ export {
     InvoiceAttachementModal,
     EditArticleModal,
     DemandeCaisseModal,
-    SuivieModal
+    SuivieModal,
+    NewCaisseProjectModal
 };
