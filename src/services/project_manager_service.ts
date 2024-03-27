@@ -419,7 +419,33 @@ async function validate(req: any) {
     console.log(error);
     return response;
   }
-};
+}
+async function addCaisseProject(req: any) {
+  try {
+    const PMStore = usePMStore();
+
+    const response = await api().post('logistics/caisse/caisse-project', req);
+    if (response.status == 200) {
+      PMStore.setCaisseProject(response.data.data);
+      PMStore.caisse_project_sum += response.data.data.montant;
+
+    }
+  } catch (error) {
+    return error;
+  }
+}
+async function GetCaisseProjectSum(id: any) {
+  try {
+    const PMStore = usePMStore();
+
+    const response = await api().get('logistics/caisse/caisse-project/sum/'+id);
+    if (response.status == 200) {
+      PMStore.caisse_project_sum = parseInt(response.data.data);
+    }
+  } catch (error) {
+    return error;
+  }
+}
 
 export default {
   getDataManager,
@@ -448,5 +474,7 @@ export default {
   create,
   refuser,
   validate,
-  getProjects
+  getProjects,
+  addCaisseProject,
+  GetCaisseProjectSum
 };

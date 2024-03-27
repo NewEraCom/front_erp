@@ -3,6 +3,7 @@ import { ref, onMounted, computed, onUnmounted, watch } from 'vue';
 import { pmService, sharedService } from '@/services';
 import { usePMStore, useSharedStore } from '@/store';
 import { helpers, formater } from '@/utils';
+import {NewCaisseProjectModal} from './components/modals';
 import {
     DeleteModal,
     NewPurchaseOrderModal,
@@ -34,10 +35,12 @@ const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
+const CaisseSomme = ref(computed(() =>pmStore.caisse_project_sum));
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
+    await pmService.GetCaisseProjectSum(props.id);
 });
 
 onUnmounted(() => {
@@ -178,10 +181,13 @@ watch(item, () => {
                                     <span class="avatar-initial rounded bg-label-primary"><i
                                             class="ti ti-building-bank ti-md"></i></span>
                                 </div>
-                                <h4 class="ms-1 mb-0 fw-bold">{{ project.caisse }}<small class="fw-bold"> MAD</small>
-                                </h4>
+                                <!-- {{ project.caisse }} -->
+                                <h4 class="ms-1 mb-0 fw-bold" v-if="CaisseSomme !== null && CaisseSomme !== undefined">
+                                    {{CaisseSomme}}<small class="fw-bold">  MAD</small>
+                                </h4>                                
+                                <h4 v-else><div class="skeleton-text ms-1 mb-0" style="width: 50px; height: 1.2rem"></div></h4>
                             </div>
-                            <button class="btn btn-sm btn-primary">
+                            <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject" data-bs-toggle="modal" >
                                 Budget de caisse
                             </button>
                         </div>
@@ -355,7 +361,7 @@ watch(item, () => {
                                                 <div class="ms-2">
                                                     <a class="d-block">
                                                         <span class="d-inline fw-bold me-2 text-heading">
-                                                            {{ project.preproject.cps_file }}
+                                                            {{ project.pre_project.cps_file }}
                                                         </span>
                                                     </a>
                                                     <small>CPS</small>
@@ -527,6 +533,7 @@ watch(item, () => {
 
                 </div>
             </div>
+            <NewCaisseProjectModal :projectId="id"/>
             <UploadDocumentModal :id="project.id" />
             <NewServiceModal v-if="soustraitants != null" :id="project.id" :services="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Services'
@@ -547,3 +554,26 @@ watch(item, () => {
 
     </div>
 </template>
+
+<style>
+.skeleton-text {
+    background-color: #a7a7a7;
+    border-radius: 4px;
+    opacity: 0.4;
+    height: 1rem;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    animation: fadeInOut 1.5s infinite;
+}
+
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}</style>
