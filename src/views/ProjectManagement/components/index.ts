@@ -30,6 +30,9 @@ import ValidatePreProject from './ValidatePreProject.vue';
 import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
 import SuivieTable from './SuivieTable.vue';
 
+import PreProjectDashTable from './PreProjectDashTable.vue';
+import CautionDashTable from './CautionDashTable.vue';
+import ProjectDash from './ProjectDash.vue'
 export {
     AchatTable,
     EditFacture,
@@ -57,5 +60,9 @@ export {
     NewChiffrage,
     DetailsPreProjectSkeleton,
     DemandeCaisseOutOfStockTable,
-    SuivieTable
+    SuivieTable,
+    PreProjectDashTable,
+    CautionDashTable,
+    ProjectDash
+
 };
