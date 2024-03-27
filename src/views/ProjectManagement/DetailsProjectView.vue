@@ -17,7 +17,9 @@ import {
     OutOfStockModal,
     invoicesComposantModal,
     InvoiceAttachementModal,
-    EditArticleModal
+    EditArticleModal,
+    SuivieTable,
+    SuivieModal
 } from './components';
 
 const pmStore = usePMStore();
@@ -221,7 +223,7 @@ watch(item, () => {
 
                             <li class="nav-item">
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#facturations" aria-controls="facturations" aria-selected="true">
+                                    data-bs-target="#production" aria-controls="productions" aria-selected="true">
                                     Suivi de production
                                 </button>
                             </li>
@@ -520,7 +522,7 @@ watch(item, () => {
                                 </div>
                             </div>
                             <div class="card-body">
-                                <InvoiceProjectTable :invoices="project.factures" />
+                                <SuivieTable :items="project.suivie" />
                             </div>
                         </div>
                     </div>
@@ -543,6 +545,7 @@ watch(item, () => {
             <DeleteModal title="Supprimer un Demande" text="Voulez-vous vraiment supprimer cette demande ?"
                 textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()"
                 message="Demande supprimée avec succès" />
+            <SuivieModal />
         </div>
 
     </div>

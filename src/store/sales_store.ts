@@ -28,6 +28,7 @@ export const useSalesStore = defineStore('SalesStore', {
         commande: null,
         article: null,
         table_comperatif: null,
+        selectedItem: null,
     }),
     actions: {
         setPurchaseOrders(purchases: any) {
@@ -35,7 +36,7 @@ export const useSalesStore = defineStore('SalesStore', {
             this.purchaseOrders.stats = {
                 total: purchases.length,
                 pending: purchases.filter((p: any) => p.status === 'pending').length,
-                ongoing: purchases.filter((p: any) => p.status === 'en cours').length,
+                ongoing: purchases.filter((p: any) => p.status === 'on going').length,
                 waiting: purchases.filter((p: any) => p.status === 'waiting').length,
                 onroad: purchases.filter((p: any) => p.status === 'on road').length,
                 completed: purchases.filter((p: any) => p.status === 'valide').length,
@@ -105,6 +106,9 @@ export const useSalesStore = defineStore('SalesStore', {
         },
         setTableComperatif(data: any) {
             this.table_comperatif = data;
-        }
-    }
+        },
+        setSelectedItem(data: any) {
+            this.selectedItem = data;
+        },
+    },
 });

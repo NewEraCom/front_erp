@@ -175,6 +175,19 @@ const validatePurchaseOrder = async (formData: any) => {
   }
 };
 
+const newSuivieProject = async (req: any) => {
+  try {
+    const PMStore = usePMStore();
+
+    const response = await api().post('projects/new-suivie', req);
+    if (response.status === 200) {
+      //PMStore.setProject(response.data.project);
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export default {
   getPurchaseOrders,
   getBonDeCommande,
@@ -190,5 +203,6 @@ export default {
   insertTableComperatif,
   getCaisseOperation,
   ValidateTableComperatif,
-  validatePurchaseOrder
+  validatePurchaseOrder,
+  newSuivieProject,
 };

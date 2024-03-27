@@ -28,6 +28,8 @@ import SetFileNumber from './SetFileNumber.vue';
 import SetFileNumberDone from './SetFileNumberDone.vue';
 import ValidatePreProject from './ValidatePreProject.vue';
 import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
+import SuivieTable from './SuivieTable.vue';
+
 export {
     AchatTable,
     EditFacture,
@@ -54,6 +56,6 @@ export {
     ImportChiffrage,
     NewChiffrage,
     DetailsPreProjectSkeleton,
-    DemandeCaisseOutOfStockTable
-
+    DemandeCaisseOutOfStockTable,
+    SuivieTable
 };

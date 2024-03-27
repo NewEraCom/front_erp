@@ -129,11 +129,11 @@ const submit = async () => {
                   <td class="text-center">{{ article.unity }}</td>
                   <td class="text-center">{{ article.quantity }}</td>
                   <td class="text-center">{{ getFournisseurById(article.fournisseur1_id).raison_social }}</td>
-                  <td class="text-center">{{ article.prix_fournisseur_1 }}</td>
+                  <td class="text-center">{{ formater.number(article.prix_fournisseur_1) }} MAD</td>
                   <td class="text-center">{{ getFournisseurById(article.fournisseur2_id).raison_social }}</td>
-                  <td class="text-center">{{ article.prix_fournisseur_2 }}</td>
+                  <td class="text-center">{{ formater.number(article.prix_fournisseur_2) }} MAD</td>
                   <td class="text-center">{{ getFournisseurById(article.fournisseur3_id).raison_social }}</td>
-                  <td class="text-center">{{ article.prix_fournisseur_3 }}</td>
+                  <td class="text-center">{{ formater.number(article.prix_fournisseur_3) }} MAD</td>
 
                   <td class="text-center">
                     <select v-model="selectedFournisseurIds[article.id]" class="form-select" style="width: 100%;"
@@ -143,14 +143,7 @@ const submit = async () => {
                         :key="fournisseur.id" :value="fournisseur.id">
                         {{ fournisseur.raison_social }}
                       </option>
-                    </select>
-                    <!-- <CustomSelect v-model="selectedFournisseurId" placeholder="Choisir un fournisseur" style="width: 100%;"
-                             :data="[getFournisseurById(article.fournisseur1_id), getFournisseurById(article.fournisseur2_id), getFournisseurById(article.fournisseur3_id)]
-                                .filter((item) => item.is_active == 1)
-                                .map((item) => ({
-                                    key: item.id,
-                                    value: item.raison_social
-                                }))" /> -->
+                    </select>                   
                   </td>
                 </tr>
               </tbody>

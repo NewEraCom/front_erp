@@ -115,6 +115,7 @@ const getProjectById = async (id: string) => {
     return Promise.reject(error);
   }
 };
+
 const getProjects = async () => {
   try {
     const response = await api().get('projects/get');
@@ -173,11 +174,12 @@ async function getPreProjectById(req: string) {
     router.push('/*');
   }
 }
-async function deleteArticle(id:number) {
+
+async function deleteArticle(id: number) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().delete('preprojects/delete-article/'+id);
+    const response = await api().delete('preprojects/delete-article/' + id);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.preprojectDetail.articles_lot = PMStore.preprojectDetail.articles_lot.filter((doc: { id: number; }) => doc.id !== id);
@@ -278,7 +280,7 @@ async function remove(req: string) {
 
     const response = await api().delete('chiffrage/delete/' + req);
     if (response.status == 200) {
-      
+
       await PMStore.removeChiffragePreProject(req);
     }
   } catch (error) {
@@ -404,6 +406,7 @@ async function refuser(req: any) {
     console.log(error);
   }
 }
+
 async function validate(req: any) {
 
   try {
@@ -417,9 +420,9 @@ async function validate(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
-    return response;
   }
-};
+}
+
 
 export default {
   getDataManager,
@@ -448,5 +451,5 @@ export default {
   create,
   refuser,
   validate,
-  getProjects
+  getProjects, deleteArticle,
 };
