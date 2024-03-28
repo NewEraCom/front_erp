@@ -1,62 +1,75 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { Modal ,CustomSelect} from '@/ui';
-import { pmService, sharedService } from '@/services';
-// import { useSharedStore } from '@/store';
+import { ref ,computed} from 'vue';
+import { Modal } from '@/ui';
+import { pmService } from '@/services';
 import { useToast } from 'vue-toastification';
-// const sharedStore = useSharedStore();
+import { usePMStore } from '@/store';
 const toast = useToast();
 
-// const projects = ref(computed(() => sharedStore.projects.data));
 
-// onMounted(async () => {
-//     await sharedService.getProjects();
-// });
-// onUnmounted(() => {
-//     sharedStore.clearProjects();
-// });
 const props = defineProps({
     projectId: {
         type: Object,
         default: null,
     },
 });
+const chunk = (array: any[], size: number) => {
+    return Array.from({ length: Math.ceil(array.length / size) }, (v, i) =>
+        array.slice(i * size, i * size + size)
+    );
+};
 const formData = ref({
-    montant: null,
-    designation: '',
-    mois: null,
-    project_id:props.projectId
-});
 
-const months = [
-    { value: 'janvier', label: 'Janvier' },
-    { value: 'février', label: 'Février' },
-    { value: 'mars', label: 'Mars' },
-    { value: 'avril', label: 'Avril' },
-    { value: 'mai', label: 'Mai' },
-    { value: 'juin', label: 'Juin' },
-    { value: 'juillet', label: 'Juillet' },
-    { value: 'août', label: 'Août' },
-    { value: 'septembre', label: 'Septembre' },
-    { value: 'octobre', label: 'Octobre' },
-    { value: 'novembre', label: 'Novembre' },
-    { value: 'décembre', label: 'Décembre' },
-];
+    project_id:props.projectId,
+    itemsCaisse: [],
+});
+const pmStore = usePMStore();
+
+const caisseProject = ref(computed(() => pmStore.caisse_project));
+
+let itemsCaisse = ref(caisseProject.value.length !== 0 ? [] : [
+    {designation: 'Salaire', montant: 0},
+    {designation: 'Budget', montant: 0},
+    {designation: 'Gasoil', montant: 0},
+    {designation: 'Loyer', montant: 0},
+    {designation: 'Réception', montant: 0},
+    {designation: 'Location de matériels NDF', montant: 0},
+    {designation: 'Indemnité de transport', montant: 0},
+    {designation: 'Panier', montant: 0},
+]);
+
+const initialLength = itemsCaisse.value.length;
+
+const addCaisseItem = () => {
+    itemsCaisse.value.push({designation: '', montant: 0});
+};
+
+const removeCaisseItem = (index) => {
+    if (index >= initialLength) {
+        itemsCaisse.value.splice(index, 1);
+    }
+};
+
+const chunkedItemsCaisse = computed(() => chunk(itemsCaisse.value, 2));
+
 
 const isLoading = ref(false);
 
 const submit = async () => {
+    formData.value.itemsCaisse = itemsCaisse.value;
     isLoading.value = true;
+    console.log(formData.value);
+    
     await pmService.addCaisseProject(formData.value)
         .then((res) => {
-            if (res.status == 200) {
+            
                 
                 $('#caisseProject').modal('hide');
                 toast.success(res.data);
                 isLoading.value = false;
                 
             
-            }else toast.warning(res.data.message);
+           
 
         })
         .catch((e) => {
@@ -66,41 +79,42 @@ const submit = async () => {
 };
 </script>
 <template>
-    <Modal id="caisseProject" title="Ajouter la caisse du projet" size="modal-md">
+    <Modal id="caisseProject" title="Ajouter la Caisse du projet" size="modal-xl">
         <form @submit.prevent="submit">
             <div class="modal-body">
-                <!-- <div class="col-sm-12">
-                    <div v-if="projects != null" class="col-12 mb-3">
-                        <CustomSelect v-model="formData.project_id" placeholder="Choisir un Projet" label="Projet"
-                            :data="projects.filter(item => item.status == 'on going').map((item) => ({
-                            key: item.id,
-                            value: item.code 
-                        }))" />
-                    </div>
-                </div> -->
-                <div class="col-sm-12">
-                    <div class="mb-3">
-                        <label for="nameEx" class="form-label">Mois <span class="text-danger">*</span></label>
-                        <select v-model="formData.mois" class="form-select" required>
-                            <option value="" disabled selected>Choisir un mois</option>
-                            <option v-for="month in months" :value="month.value" :key="month.value">{{ month.label }}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="mb-3">
-                        <label for="nameEx" class="form-label">Montant <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" v-model="formData.montant" placeholder="Choisir un Montant" required>
-                    </div>
-                </div>
-                <div class="col-sm-12">
-                    <div class="mb-3">
-                        <label for="nameEx" class="form-label">Designation <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" v-model="formData.designation" placeholder="Choisir une Designation" required>
+                <div class="row" v-for="(row, rowIndex) in chunkedItemsCaisse" :key="'row-' + rowIndex">
+                    <div class="col-md-6" v-for="(item, index) in row" :key="'item-' + index">
+                        <div class="repeater-wrapper pt-0 pt-md-4">
+                            <div class="d-flex border rounded position-relative pe-0">
+                                <div class="row w-100 p-3">
+                                    <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                        <div class="mb-3">
+                                            <input type="text" class="form-control" v-model="item.designation" :disabled="rowIndex * 2 + index < initialLength" placeholder="Designation" required >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                        <div class="mb-3">
+                                            <input type="number" class="form-control" v-model="item.montant" placeholder="Choisir un Montant" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    v-if="rowIndex * 2 + index >= initialLength"
+                                    class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+                                    <i class="ti ti-x cursor-pointer"  @click="removeCaisseItem(rowIndex * 2 + index)"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                
+                <div class="row pt-2">
+                    <div class="col-sm-12 float-end">
+                        <button type="button" class="btn btn-label-dark btn-sm" @click="addCaisseItem">
+                            <i class="ti ti-square-rounded-plus-filled me-2"></i>Plus de composants
+                        </button>
+                    </div>
+                </div>
+            
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">

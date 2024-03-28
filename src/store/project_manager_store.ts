@@ -61,7 +61,8 @@ export const usePMStore = defineStore('PMStore', {
         },
         setProject(data: any) {
             this.project = data;
-            this.caisse_project_sum = data.caisse.reduce((acc, item) => acc + item.montant, 0);
+            this.caisse_project_sum = data.caisse;
+            // .reduce((acc, item) => acc + item.montant, 0)
         },
         clearProject() {
             this.project = null;
