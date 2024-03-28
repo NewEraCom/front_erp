@@ -66,7 +66,7 @@ const submit = async () => {
 };
 </script>
 <template>
-    <Modal id="caisseProject" title="Ajouter la Caisse du projet" size="modal-md">
+    <Modal id="caisseProject" title="Ajouter la caisse du projet" size="modal-md">
         <form @submit.prevent="submit">
             <div class="modal-body">
                 <!-- <div class="col-sm-12">

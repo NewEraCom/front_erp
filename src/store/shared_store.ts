@@ -166,7 +166,6 @@ export const useSharedStore = defineStore('ShareStore', {
             this.stock.loading = false;
         },
         setProjects(data: any) {
-            console.log(data);
             this.projects.data = data;
             this.projects.stats = {
                 total: data.length,

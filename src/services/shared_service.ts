@@ -219,6 +219,17 @@ const getSoustraitantById = async (id) => {
 };
 
 
+const addLeave = async (data: any) => {
+    try {
+        const response = await api().post('rh/conge/request', data);
+        return response;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+
+
 export default {
     createEvent,
     getEvent,
@@ -236,5 +247,6 @@ export default {
     deleteRhRequest,
     updateSousTraitants,
     getFournisseur,
-    getSoustraitantById
+    getSoustraitantById,
+    addLeave
 };

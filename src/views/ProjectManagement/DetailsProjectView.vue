@@ -194,6 +194,7 @@ watch(item, () => {
                             </button>
                         </div>
                         <p class="mb-1 fw-bold">Caisse de projet</p>
+                        
                     </div>
                 </div>
             </div>
