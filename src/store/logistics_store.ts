@@ -70,6 +70,7 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         selectedVehicule: null,
         article_id: null,
         livraison_id: null,
+        qte_demande: null,
     }),
     actions: {
         setStock(data: any) {
@@ -469,9 +470,10 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
             };
             this.caisse.loading = true;
         },
-        Livraison(livraison_id: number,article_id: number) {
+        Livraison(livraison_id: number,article_id: number,qte_demande: number) {
             this.livraison_id = livraison_id;
             this.article_id = article_id;
+            this.qte_demande = qte_demande;
             
         },
         ClearLivraison() {

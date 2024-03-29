@@ -93,7 +93,11 @@ watch(() => props.pageSize, () => {
     currentPage.value = 1;
 });
 
-
+const getFileUrl = (attachment) => {
+    console.log(attachment);
+    
+    return helpers.baseUrl() + `uploads/${attachment}`;
+};
 </script>
 
 <template>
@@ -247,9 +251,9 @@ watch(() => props.pageSize, () => {
                                 </span>
                                 <span v-if="header.type === 'attachement'">
                                     <small v-if="item[header.value] == '-'">Aucun Attachement</small>
-                                    <button v-else class="btn btn-label-primary btn-sm">
-                                        <i class="ti ti-download me-2"></i> Télécharger l'attachement
-                                    </button>
+                                    <a v-else class="btn btn-label-primary btn-sm" target="_blank" :href="getFileUrl(item[header.value])">
+                                        <i class="ti ti-download me-2" ></i> Télécharger l'attachement
+                                    </a>
                                 </span>
                                 <span v-if="header.type === 'stock'">
                                     <span :class="helpers.returnStockAlert(item[header.value], item.alert)[0]">
