@@ -72,12 +72,12 @@ const submit = async () => {
           <label for="mode_paiement" class="mb-2"
             >Type de carte <span class="text-danger">*</span></label
           >
-          <Select class="form-select" v-model="card.type" label="Type de carte" required>
+          <select class="form-select" v-model="card.type" required>
             <option value="">Selectionner le type de carte</option>
             <option value="Carte Confort">Carte Confort</option>
             <option value="Carte Premium">Carte Premium</option>
             <option value="Carte Gold">Carte Gold</option>
-          </Select>
+          </select>
         </div>
       </div>
 

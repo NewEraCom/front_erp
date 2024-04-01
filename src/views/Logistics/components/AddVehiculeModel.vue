@@ -56,8 +56,6 @@ const car = ref({
 })
 
 const submit = async () => {
-  console.log("projet :"+project.value[0].code)
-  
   await logisticsService
     .createCar(car.value)
     .then(() => {
