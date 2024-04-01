@@ -320,6 +320,54 @@ const getAchatsForTransport = async (demandeAchatId :number) => {
     }
 };
 
+const createCarburant = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/carte-gasoil/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushCarburant(response.data.cardsCarburant);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createCachet = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/cachet/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushCachet(response.data.cachet);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createJawaz = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/pass-jawaz/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushJawaz(response.data.jawaz);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createCar = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/vehicule/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushVehicule(response.data.vehicule);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 
 
 
@@ -352,7 +400,11 @@ export default {
     deleteSubscriptionById,
     removecardsCarburant,
     newCaisseOperation,
-    getAchatsForTransport
+    getAchatsForTransport,
+    createCarburant,
+    createJawaz,
+    createCachet,
+    createCar
 };
 
 

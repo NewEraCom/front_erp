@@ -1,3 +1,4 @@
+import { vue } from '@vitejs/plugin-vue';
 import TheSideBar from './TheSideBar.vue';
 import TheTopBar from './TheTopBar.vue';
 import DataTable from './DataTable.vue';
@@ -23,5 +24,5 @@ export {
     AchatPieChart,
     ProjectChart,
     CardStats,
-    OutOfStockTable
+    OutOfStockTable,
 };

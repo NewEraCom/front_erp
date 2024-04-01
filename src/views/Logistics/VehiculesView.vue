@@ -5,6 +5,7 @@ import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { VehiculesTable } from './components';
 import { formater } from '@/utils';
+import AddVehiculeModel from './components/AddVehiculeModel.vue';
 
 const logisticsStore = useLogisticsStore();
 
@@ -58,7 +59,7 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des véhicules</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des véhicules en stock</small>
                             </div>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addVehicule">
                                 <i class="ti ti-plus me-2"></i>
                                 Ajouter un véhicule
                             </button>
@@ -71,5 +72,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <AddVehiculeModel/>
     </div>
 </template>

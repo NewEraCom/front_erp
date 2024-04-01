@@ -3,8 +3,9 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardOne, CardOneSkeleton, DeleteModal } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { CarburantTable } from './components';
+import { AddCarburantModel, CarburantTable } from './components';
 import { formater } from '@/utils';
+
 
 const logisticsStore = useLogisticsStore();
 
@@ -58,8 +59,9 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des Cartes Carburant</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des cartes carburant en stock</small>
                             </div>
-                            <button class="btn btn-primary">
-                                <i class="ti ti-plus me-2"></i> Ajouter une carte carburant
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCarburant">
+                                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                                Ajouter une Carte Carburant
                             </button>
                         </div>
                         <div v-if="carburant != null" class="card-body border-top pt-4">
@@ -80,6 +82,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <AddCarburantModel type="card" />
         <DeleteModal title="Supprimer Carte Carburant" text="Voulez-vous vraiment supprimer cette carte carburant ?"
             textButton="Oui, Supprimer" :action="() => logisticsService.removecardsCarburant()"
             message="La carte carburant a été supprimée avec succès" />
