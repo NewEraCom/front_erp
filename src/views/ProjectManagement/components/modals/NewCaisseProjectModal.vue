@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref ,computed} from 'vue';
+import { ref, computed } from 'vue';
 import { Modal } from '@/ui';
 import { pmService } from '@/services';
 import { useToast } from 'vue-toastification';
@@ -9,7 +9,7 @@ const toast = useToast();
 
 const props = defineProps({
     projectId: {
-        type: Object,
+        type: String,
         default: null,
     },
 });
@@ -20,7 +20,7 @@ const chunk = (array: any[], size: number) => {
 };
 const formData = ref({
 
-    project_id:props.projectId,
+    project_id: props.projectId,
     itemsCaisse: [],
 });
 const pmStore = usePMStore();
@@ -28,20 +28,20 @@ const pmStore = usePMStore();
 const caisseProject = ref(computed(() => pmStore.caisse_project));
 
 let itemsCaisse = ref(caisseProject.value.length !== 0 ? [] : [
-    {designation: 'Salaire', montant: 0},
-    {designation: 'Budget', montant: 0},
-    {designation: 'Gasoil', montant: 0},
-    {designation: 'Loyer', montant: 0},
-    {designation: 'Réception', montant: 0},
-    {designation: 'Location de matériels NDF', montant: 0},
-    {designation: 'Indemnité de transport', montant: 0},
-    {designation: 'Panier', montant: 0},
+    { designation: 'Salaire', montant: 0 },
+    { designation: 'Budget', montant: 0 },
+    { designation: 'Gasoil', montant: 0 },
+    { designation: 'Loyer', montant: 0 },
+    { designation: 'Réception', montant: 0 },
+    { designation: 'Location de matériels NDF', montant: 0 },
+    { designation: 'Indemnité de transport', montant: 0 },
+    { designation: 'Panier', montant: 0 },
 ]);
 
 const initialLength = itemsCaisse.value.length;
 
 const addCaisseItem = () => {
-    itemsCaisse.value.push({designation: '', montant: 0});
+    itemsCaisse.value.push({ designation: '', montant: 0 });
 };
 
 const removeCaisseItem = (index) => {
@@ -59,23 +59,23 @@ const submit = async () => {
     formData.value.itemsCaisse = itemsCaisse.value;
     isLoading.value = true;
     console.log(formData.value);
-    
+
     await pmService.addCaisseProject(formData.value)
         .then((res) => {
-            
-                
-                $('#caisseProject').modal('hide');
-                toast.success(res.data);
-                isLoading.value = false;
-                
-            
-           
+
+
+            $('#caisseProject').modal('hide');
+            toast.success(res.data);
+            isLoading.value = false;
+
+
+
 
         })
         .catch((e) => {
             console.error(e);
         });
-    
+
 };
 </script>
 <template>
@@ -89,19 +89,22 @@ const submit = async () => {
                                 <div class="row w-100 p-3">
                                     <div class="col-md-6 col-12 mb-md-0 mb-3">
                                         <div class="mb-3">
-                                            <input type="text" class="form-control" v-model="item.designation" :disabled="rowIndex * 2 + index < initialLength" placeholder="Designation" required >
+                                            <input type="text" class="form-control" v-model="item.designation"
+                                                :disabled="rowIndex * 2 + index < initialLength"
+                                                placeholder="Designation" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-12 mb-md-0 mb-3">
                                         <div class="mb-3">
-                                            <input type="number" class="form-control" v-model="item.montant" placeholder="Choisir un Montant" required>
+                                            <input type="number" class="form-control" v-model="item.montant"
+                                                placeholder="Choisir un Montant" required>
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    v-if="rowIndex * 2 + index >= initialLength"
+                                <div v-if="rowIndex * 2 + index >= initialLength"
                                     class="d-flex flex-column align-items-center justify-content-between border-start p-2">
-                                    <i class="ti ti-x cursor-pointer"  @click="removeCaisseItem(rowIndex * 2 + index)"></i>
+                                    <i class="ti ti-x cursor-pointer"
+                                        @click="removeCaisseItem(rowIndex * 2 + index)"></i>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +117,7 @@ const submit = async () => {
                         </button>
                     </div>
                 </div>
-            
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">

@@ -46,7 +46,8 @@ const submit = async () => {
             remark: null,
             date_operation: Date(),
             operation: 'sortie',
-            type: 'cash'
+            type: 'cash',
+            item: '-'
         };
 
     }).catch(() => {
@@ -76,6 +77,7 @@ const submit = async () => {
                             </option>
                         </select>
                     </div>
+
                     <div class="col-12 mb-3">
                         <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
                         <input type="number" class="form-control" id="montant" v-model="formData.montant"

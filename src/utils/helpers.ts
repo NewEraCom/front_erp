@@ -366,6 +366,7 @@ export function dateRegex(date) {
 	}
 	return result;
 }
+
 export function numberToTextMAD(number) {
 	const units = ['', 'mille', 'million', 'milliard', 'billion'];
 	const baseNumbers = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];

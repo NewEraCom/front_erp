@@ -188,18 +188,20 @@ watch(item, () => {
                                 <h4 class="ms-1 mb-0 fw-bold">
                                     {{ project.caisse }}<small class="fw-bold"> MAD</small>
                                 </h4>
-
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
                                 data-bs-toggle="modal">
                                 Budget de caisse
                             </button>
                         </div>
-                        <p class="mb-1 fw-bold">Caisse de Projet :</p>
+                        <h5 class="mb-1 fw-bold">Caisse de Projet</h5>
                         <!-- {{ caisseProject }} -->
-                        <ul>
-                            <li v-for="(item, index) in caisseProject" :key="index">
-                                {{ item.designation }} : {{ item.montant }}
+                        <ul class="list-group mt-4">
+                            <li v-for="(item, index) in caisseProject" :key="index"
+                                class="list-group-item d-flex align-items-center">
+                                <small> {{ item.designation }}</small> <small class="ms-auto">{{
+                    formater.number(item.montant)
+                }} MAD</small>
                             </li>
                         </ul>
                     </div>
@@ -428,6 +430,28 @@ watch(item, () => {
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-border-shadow-primary mt-4">
+                            <h5 class="card-header border-bottom fw-bold">Veheicules de projet</h5>
+                            <div v-if="project" class="card-body pt-4">
+                                <div class="row rounded">
+                                    <div class="col-12 text-center p-4">
+                                        <img src="/src/assets/img/Empty.png" style="width: 10% !important" srcset="" />
+                                        <h5 class="mt-4 mb-2 fw-bold">Aucun véhicule ici.</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-border-shadow-primary mt-4">
+                            <h5 class="card-header border-bottom fw-bold">GSM de projet</h5>
+                            <div v-if="project" class="card-body pt-4">
+                                <div class="row rounded">
+                                    <div class="col-12 text-center p-4">
+                                        <img src="/src/assets/img/Empty.png" style="width: 10% !important" srcset="" />
+                                        <h5 class="mt-4 mb-2 fw-bold">Aucun GSM ici.</h5>
                                     </div>
                                 </div>
                             </div>
