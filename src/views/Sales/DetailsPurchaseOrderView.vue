@@ -6,6 +6,7 @@ import { formater, helpers } from '@/utils';
 import { Modal } from '@/ui';
 import { Validate } from '../HumanRessources/components/modals';
 import { useRouter } from 'vue-router';
+import { AddFactureClientModal } from './components/modals';
 
 const salesStore = useSalesStore();
 const purchase = ref(computed(() => salesStore.purchase));
@@ -266,6 +267,11 @@ const validation = async () => {
               :class="purchase.status != 'pending' ? 'btn-secondary' : 'btn-warning'" href=". /app-invoice-edit.html">
               <i class="ti ti-pencil me-2"></i> Modifier la demande
             </button>
+            <button class="btn d-grid w-100 mb-2 waves-effect d-flex" v-if="purchase.status == 'on road'"
+              :class="purchase.status != 'on road' ? 'btn-secondary' : 'btn-success'" data-bs-target="#upload-facture"
+              data-bs-toggle="modal" >
+              <i class="ti ti-square-rounded-plus-filled me-2"></i> Facture 
+            </button>
             <router-link :to="{ name: 'DetailBonCommande', params: { id: purchase.id } }"
               v-if="purchase.status == 'valide'" class="btn btn-primary d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-download me-2"></i> Télécharger le bon de commande
@@ -284,7 +290,7 @@ const validation = async () => {
     <Validate id="reject-modal" :isLoading="isLoading" :method="RefuseArticleModal" :itemid="salesStore.ItemId"
       title="Refuser l'article hors bordereau" message="Êtes-vous sûr de refuser cet Article ?" severity="danger" />
 
-
+      <AddFactureClientModal v-if="purchase" :id="purchase.id" :bon-commande="purchase.bon_commande"/>
     <Modal id="validate-do" title="Validation de la demande d'achat">
       <form @submit.prevent="validation">
         <div class="modal-body">

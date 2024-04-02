@@ -1,13 +1,18 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref ,computed, onMounted} from 'vue';
 import { Modal } from '@/ui';
-import { salesService } from '@/services';
+import { salesService ,sharedService} from '@/services';
 import { useToast } from 'vue-toastification';
-
+import { useSharedStore } from '@/store';
 const toast = useToast();
 
 const isLoading = ref(false);
+const sharedStore = useSharedStore();
+const mainItem = ref(computed(() => sharedStore.mainItem));
 const isStock = ref('Stock');
+onMounted(()=>{
+    sharedService.getItems();
+});
 const props = defineProps({
     id: {
         type: Number,
@@ -20,22 +25,25 @@ const props = defineProps({
 });
 
 const formData = ref({
-    selectedSoustrait: '-',
+    selectedSoustrait: null,
     remark: '',
     items: [1],
     service: [],
     qty: [],
     unite: [],
     price: [],
+    mainItem: [],
     total: [],
     itemsArticle: [],
     itemsArticleHors: [],
-    articleHors: ['-'],
+    articleHors: [],
     qtyHors: [],
     delivery_date: '',
     unites: [],
     recepteur: '',
 });
+console.log(props.articles);
+
 
 const addItem = () => {
     formData.value.items.push(formData.value.items.length + 1);
@@ -65,6 +73,7 @@ const changeValue = (item, index) => {
         formData.value.total[index] = item.prix_ht * formData.value.qty[index];
         formData.value.total[index] = formData.value.total[index].toFixed(2);
     }
+    console.log(formData.value);  
 };
 
 const changeQuantity = (index) => {
@@ -104,6 +113,7 @@ const submit = async () => {
         articles: JSON.stringify(formData.value.service),
         qty: JSON.stringify(formData.value.qty),
         unite: JSON.stringify(formData.value.unite),
+        mainItem: JSON.stringify(formData.value.mainItem),
         price: JSON.stringify(formData.value.price),
         total: JSON.stringify(formData.value.total),
         delivery_date: formData.value.delivery_date,
@@ -122,6 +132,9 @@ const submit = async () => {
         isLoading.value = false;
         toast.error('Une erreur est survenue');
     });
+    console.log(formData.value);
+    
+    
 };
 
 const checkArticles = (articles) => {
@@ -220,6 +233,18 @@ const checkArticles = (articles) => {
                                         <p class="mb-2 repeater-title">Unite</p>
                                         <input id="qteInput" v-model="formData.unites[item]" type="text"
                                             class="form-control" placeholder="M2" />
+                                    </div>
+                                    <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                        <p class="mb-2 repeater-title">Item</p>
+                                        <select v-model="formData.mainItem[item]" class="form-select item-details mb-1"
+                                            @change="changeValue(formData.mainItem[item], item)">
+                                            <option value="-">
+                                                Sélectionner un Item
+                                            </option>
+                                            <option v-for="(item, index) in mainItem" :key="index" :value="item.id">
+                                                {{ item.designation }}
+                                            </option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div

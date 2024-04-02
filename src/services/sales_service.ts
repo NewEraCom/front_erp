@@ -69,6 +69,15 @@ const getFacturesClient = async () => {
     return Promise.reject(error);
   }
 };
+const insertFacturesClient = async (data:any) => {
+  try {
+    const response = await api().post('/facture/client/insert',data);
+    const salesStore = useSalesStore();
+    salesStore.invoices.data.push(response.data.factures);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
 async function ValidateArticle(id: number, data: any) {
   try {
     const salesStore = useSalesStore();
@@ -205,4 +214,5 @@ export default {
   ValidateTableComperatif,
   validatePurchaseOrder,
   newSuivieProject,
+  insertFacturesClient
 };

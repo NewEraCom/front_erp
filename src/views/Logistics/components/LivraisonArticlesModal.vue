@@ -8,12 +8,7 @@ const toast = useToast();
 
 const logisticStore = useLogisticsStore();
 
-const props = defineProps({
-  qte_demande: {
-    type: Number,
-    required: true
-  }
-});
+
 const isLoading = ref(false);
 
 const formData = ref({
@@ -64,7 +59,7 @@ const submit = async () => {
                 v-model="formData.qte_livre"
                 required
                 type="number"
-                :max="props.qte_demande"
+                :max="logisticStore.qte_demande"
                 min="0"
               />
             </div>

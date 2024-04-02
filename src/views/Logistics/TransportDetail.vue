@@ -40,97 +40,70 @@ onMounted(async () => {
 
               </div>
             </div>
-            <div class="d-flex">
-              <div class="me-auto">
-                <p class="mb-2">Demande Par : {{
-      transport.demande_achat.created_by.employee.first_name +
-      ' ' +
-      transport.demande_achat.created_by.employee.last_name
-    }}</p>
-                <p class="mb-2">Numéro de téléphone : {{ formater.phoneNumber(
-      transport.demande_achat.created_by.employee.phone_no) }}</p>
-                <p class="mb-2">Adresse email : {{ transport.demande_achat.created_by.employee.email }}</p>
-              </div>
-              <div class="ms-auto">
-
-                <h5 class="fw-bold mb-2">Demande d'achat #{{ transport.demande_achat.n_order }}</h5>
-                <div class="mb-2 pt-1">
-                  <span>Date de creation :</span>
-                  <span class="fw-bold ms-2">{{ formater.date(transport.demande_achat.created_at) }}</span>
-                </div>
-                <div class="pt-1">
-                  <span>Status :</span>
-                  <span class="fw-bold ms-2">
-                    <span :class="helpers.returnBadge(transport.demande_achat.status)[0]" class="fw-bold">{{
-      helpers.returnBadge(transport.demande_achat.status)[1] }}</span>
-                  </span>
+            <div class="table-responsive border-top">
+              <table class="table m-0">
+                <thead class="table-dark">
+                  <tr>
+                    <th class="fw-bold">Désignation</th>
+                    <!-- <th class="fw-bold">Article</th> -->
+                    <th class="fw-bold text-center">Unité</th>
+                    <th class="fw-bold text-center">Quantité Demandé</th>
+                    <th class="fw-bold text-center">Quantité Livré</th>
+                    <th class="fw-bold text-center">Fournisseur</th>
+                    <th class="fw-bold text-center">Prix</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody v-if="transport.achats.length != 0">
+                  <tr v-for="article in transport.achats" :key="article.id">
+                    <td>
+                      {{ article.designation }}
+                      <i v-if="article.livraison_false != false" class="ti ti-bookmark-filled text-danger"></i>
+                    </td>
+                    <td class="text-center">{{ article.unity }}</td>
+                    <td class="text-center">{{ article.quantity }}</td>
+                    <td class="text-center">{{ article.qte_livre }}</td>
+                    <td class="text-center">
+                        <div v-if="article.livraison_false != false">
+                            NEWERACOM
+                        </div>
+                        <div v-else>
+                            {{ article.fournisseur_choisi.raison_social }}
+                        </div>
+                    </td>
+                    <td class="text-center">{{ article.prix_fournisseur_choisi }}</td>
+                    <td class="text-center">
+                        <div v-if="article.qte_livre != article.quantity ">
+                            <button class="btn btn-outline-warning btn-sm" data-bs-target="#AddLivraison" data-bs-toggle="modal"
+                             @click="logisticStore.Livraison(article.livraison_id,article.id,article.quantity)">
+                                <i class="ti ti-pencil"></i>
+                            </button>
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <tr>
+                    <td colspan="10" class="text-center">
+                      <small>Aucun article</small>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="card-body">
+              <p> <i class="ti ti-bookmark-filled text-danger"></i> : Tous les articles signalés seront pris en charge pour la livraison par notre équipe. </p>
+            </div>
+            <div v-if="transport.demande_achat.commentaire" class="card-body mx-3">
+              <div class="row">
+                <div class="col-12">
+                  <span class="fw-bold text-danger">Commentaire : </span>
+                  <span>{{ transport.demande_achat.commentaire }}</span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="table-responsive border-top">
-            <table class="table m-0">
-              <thead class="table-dark">
-                <tr>
-                  <th class="fw-bold">Désignation</th>
-                  <!-- <th class="fw-bold">Article</th> -->
-                  <th class="fw-bold text-center">Unité</th>
-                  <th class="fw-bold text-center">Quantité Demandé</th>
-                  <th class="fw-bold text-center">Quantité Livré</th>
-                  <th class="fw-bold text-center">Fournisseur</th>
-                  <th class="fw-bold text-center">Prix</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody v-if="transport.achats.length != 0">
-                <tr v-for="article in transport.achats" :key="article.id">
-                  <td>
-                    {{ article.designation }}
-                    <i v-if="article.livraison_false != false" class="ti ti-bookmark-filled text-danger"></i>
-                  </td>
-                  <td class="text-center">{{ article.unity }}</td>
-                  <td class="text-center">{{ article.quantity }}</td>
-                  <td class="text-center">{{ article.qte_livre }}</td>
-                  <td class="text-center">
-                    <div v-if="article.livraison_false != false">
-                      NEWERACOM
-                    </div>
-                    <div v-else>
-                      {{ article.fournisseur_choisi.raison_social }}
-                    </div>
-                  </td>
-                  <td class="text-center">{{ article.prix_fournisseur_choisi }}</td>
-                  <td class="text-center">
-                    <div v-if="article.qte_livre != article.quantity">
-                      <button class="btn btn-outline-warning btn-sm" data-bs-target="#AddLivraison"
-                        data-bs-toggle="modal" @click="logisticStore.Livraison(article.livraison_id, article.id)">
-                        <i class="ti ti-pencil"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody v-else>
-                <tr>
-                  <td colspan="10" class="text-center">
-                    <small>Aucun article</small>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="card-body">
-            <p> <i class="ti ti-bookmark-filled text-danger"></i> : Tous les articles signalés seront pris en charge
-              pour la livraison par notre équipe. </p>
-          </div>
-          <div v-if="transport.demande_achat.commentaire" class="card-body mx-3">
-            <div class="row">
-              <div class="col-12">
-                <span class="fw-bold text-danger">Commentaire : </span>
-                <span>{{ transport.demande_achat.commentaire }}</span>
-              </div>
-            </div>
-          </div>
+          
           <hr v-if="transport.demande_achat.commentaire">
 
           <div class="card-body mx-3">
@@ -171,6 +144,7 @@ onMounted(async () => {
           </div>
         </div>
       </div>
+      <LivraisonArticlesModal />
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">

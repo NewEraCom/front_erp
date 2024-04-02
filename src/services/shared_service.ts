@@ -227,6 +227,20 @@ const addLeave = async (data: any) => {
         return Promise.reject(error);
     }
 };
+const getItems = async () => {
+    try {
+        const sharedStore = useSharedStore();
+
+        const response = await api().get('/purchase/getItems');
+        if (response.status == 200) {
+            sharedStore.setMainItem(response.data.mainItem) ;
+            return response.data.mainItem;
+        }
+        return response;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 
@@ -248,5 +262,6 @@ export default {
     updateSousTraitants,
     getFournisseur,
     getSoustraitantById,
-    addLeave
+    addLeave,
+    getItems
 };

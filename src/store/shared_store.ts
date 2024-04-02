@@ -46,6 +46,7 @@ export const useSharedStore = defineStore('ShareStore', {
         event: null,
         selectedItem: null,
         Soustraitant: null,
+        mainItem:null,
     }),
     actions: {
         setEvents(data: any) {
@@ -250,5 +251,8 @@ export const useSharedStore = defineStore('ShareStore', {
                 completed: this.recruitment.data.filter((item: any) => item.status === 'completed').length,
             };
         },
+        setMainItem(data: any) {
+            this.mainItem = data;
+        }
     },
 });
