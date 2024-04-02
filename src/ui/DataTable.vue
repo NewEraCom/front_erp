@@ -143,7 +143,7 @@ watch(() => props.pageSize, () => {
                         name: 'PreProjectDetail',
                         params: { id: item.id }
                     }">
-                                <h6 class=" fw-bold">{{ item.maitre_ouvrage }}</h6>
+                                <h6 class="mb-1 text-primary fw-bold">{{ item.maitre_ouvrage }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">
                                 Code : {{ helpers.limitedClientName(item.project_code) }}

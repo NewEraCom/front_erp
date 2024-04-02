@@ -62,6 +62,7 @@ const initialDashboard = (role: string): string => {
 		case roles.DO:
 			return 'DashboardPM';
 		case roles.BDM:
+		case roles.RAP:
 			return 'DashboardBDM';
 		default:
 			return '404';
@@ -88,6 +89,7 @@ const returnSideBarItems = (): any => {
 		case roles.DO:
 			return sideBar.DOMenu;
 		case roles.BDM:
+		case roles.RAP:
 			return sideBar.BDMenu;
 		default:
 			return [];

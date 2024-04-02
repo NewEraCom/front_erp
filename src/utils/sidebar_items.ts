@@ -615,6 +615,7 @@ const SupportMenu = [
     },
     ...sharedMenu
 ];
+
 const FinanceMenu = [
     {
         id: 1,
@@ -700,6 +701,7 @@ const DOMenu = [
     ...sharedMenu2,
     ...sharedMenu
 ];
+
 const BDMenu = [
     {
         id: 1,

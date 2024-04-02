@@ -26,6 +26,7 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
                 const { data } = error.response;
                 return Promise.reject(data);
             }
+            console.log('Here');
             return Promise.reject(error);
         }
     );

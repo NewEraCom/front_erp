@@ -1,6 +1,7 @@
 import { api } from '@/utils';
 import { usePMStore } from '@/store';
 import { useRouter } from 'vue-router';
+import { authService } from '.';
 
 const router = useRouter();
 
@@ -14,6 +15,7 @@ async function getDataManager() {
       return res.data;
     }
   } catch (error) {
+    authService.refreshToken();
     return Promise.reject(error);
   }
 }
@@ -289,6 +291,20 @@ async function remove(req: string) {
     throw error;
   }
 }
+
+const createPreProject = async (req: any) => {
+  try {
+    const PMStore = usePMStore();
+
+    const response = await api().post('preprojects/create', req);
+    if (response.status === 200) {
+      PMStore.setPreProject(response.data);
+    }
+  } catch (e) {
+    return Promise.reject(e);
+  }
+};
+
 async function update(req: any) {
   try {
     const PMStore = usePMStore();
@@ -480,5 +496,6 @@ export default {
   validate,
   getProjects, deleteArticle,
   addCaisseProject,
-  GetCaisseProjectSum
+  GetCaisseProjectSum,
+  createPreProject
 };

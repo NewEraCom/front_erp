@@ -4,7 +4,6 @@ import { Modal } from '@/ui';
 import { logisticsService } from '@/services';
 import { useToast } from 'vue-toastification';
 
-
 const toast = useToast();
 
 const isLoading = ref(false);

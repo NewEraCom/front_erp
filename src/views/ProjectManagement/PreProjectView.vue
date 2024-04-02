@@ -3,8 +3,8 @@
 import { onMounted, ref, computed } from 'vue';
 import { pmService } from '@/services';
 import { usePMStore } from '@/store';
-import { CardTwo } from '@/ui';
-import { PreProjectTable } from './components';
+import { CardTwo, Modal } from '@/ui';
+import { PreProjectTable, NewPreProjectModal } from './components';
 
 const PMStore = usePMStore();
 
@@ -48,10 +48,18 @@ onMounted(async () => {
             <div class="card-header">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <h5 class="fw-bold mb-1">Avant Projet</h5>
-                  <small class="fw-bold mb-1 text-muted">Liste des Avant Projet</small>
+                  <h5 class="fw-bold mb-1">Avant Projets</h5>
+                  <small class="fw-bold mb-1 text-muted">Liste des avant projets</small>
                 </div>
-
+                <button v-if="preProject != null" class="btn btn-primary ms-auto" data-bs-toggle="modal"
+                  data-bs-target="#new-avantprojet">
+                  <i class="ti ti-square-rounded-plus-filled me-2"></i> Nouveau Avant
+                  Projet
+                </button>
+                <button class="btn btn-success ms-2" data-bs-target="#import-avantprojet" data-bs-toggle="modal">
+                  <i class="ti ti-file-type-csv me-2" />
+                  Importer
+                </button>
               </div>
             </div>
             <div v-if="preProject != null" class="card-body border-top pt-4">
@@ -61,5 +69,10 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
+    <Modal id="new-avantprojet" title="Nouveau Avant Projet" size="modal-xl">
+      <NewPreProjectModal />
+    </Modal>
+
   </div>
 </template>

@@ -1,3 +1,4 @@
+import router from '@/router';
 import { api, helpers } from '@/utils';
 
 const login = async (formData: { email: string, password: string }) => {
@@ -22,8 +23,17 @@ const logout = async () => {
     }
 };
 
+const refreshToken = async () => {
+    try {
+        localStorage.clear();
+        router.push({ name: 'Login' });
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 export default {
     login,
-    logout
+    logout,
+    refreshToken
 };
