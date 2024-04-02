@@ -158,7 +158,7 @@ const getFileUrl = (attachment) => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
+                            <h6 class="mb-1 fw-bold">{{ item.pre_project.maitre_ouvrage }}</h6>
                             <small class="fw-bold text-muted">Code : {{ item.pre_project.project_code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'leave'"
@@ -305,6 +305,9 @@ const getFileUrl = (attachment) => {
                                     <small class="fw-bold text-muted">Numéro RC : {{ item.num_rc ?? 'N/A' }}</small>
                                 </span>
 
+                                <span v-if="header.type == 'percentage'">
+                                    {{ formater.number((item.suivie / item.qte) * 100) }} %
+                                </span>
                                 <span v-if="header.type === 'test'">
                                     {{ item }}
                                 </span>

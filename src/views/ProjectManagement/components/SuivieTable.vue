@@ -14,11 +14,10 @@ const props = defineProps({
 
 const headers = [
     { text: 'Designation', value: 'designation', type: 'text' },
-    { text: 'Code', value: 'reference', type: 'text' },
     { text: 'Unite', value: 'unite', type: 'text' },
     { text: 'Qte', value: 'qte', type: 'number' },
-    { text: 'Comsomation', value: 'suivie', type: 'number' }
-
+    { text: 'Comsomation', value: 'suivie', type: 'number' },
+    { text: 'Etat', value: 'état', type: 'percentage' },
 ];
 
 const actionsConfig = [

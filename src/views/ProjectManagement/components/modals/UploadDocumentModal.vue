@@ -12,13 +12,7 @@ const props = defineProps({
 });
 
 const formData = ref({
-    date_start: null,
-    date_end: null,
-    type: '-',
-    duree: null,
-    employee_id: props.id,
     attachement: null,
-    status: 'pending'
 
 });
 
@@ -28,7 +22,8 @@ const handleFileChange = (e) => {
 
 const submit = async () => {
     isLoading.value = true;
-
+    
+    
 };
 
 </script>

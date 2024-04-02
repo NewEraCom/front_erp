@@ -22,7 +22,8 @@ const formData = ref({
     remark: null,
     date_operation: Date(),
     operation: 'sortie',
-    type: 'cash'
+    type: 'cash',
+    item: '-'
 });
 
 const submit = async () => {
@@ -45,7 +46,8 @@ const submit = async () => {
             remark: null,
             date_operation: Date(),
             operation: 'sortie',
-            type: 'cash'
+            type: 'cash',
+            item: '-'
         };
 
     }).catch(() => {
@@ -64,6 +66,18 @@ const submit = async () => {
                         <CustomSelect v-model="formData.project_id" placeholder="Choisir un project" label="Project"
                             :data="projects.map((item) => ({ key: item.id, value: item.code }))" />
                     </div>
+                    <div v-if="formData.project_id != '-'" class="mb-3">
+                        <label for="itm" class="mb-2">Item <span class="text-danger">*</span> </label>
+                        <select name="" id="" class="form-select" v-model="formData.item">
+                            <option value="-">Choisir un item</option>
+                            <option
+                                v-for="itm in projects.filter((item) => item.id == formData.project_id.key)[0].caisse"
+                                :key="itm.id">
+                                {{ itm.designation }}
+                            </option>
+                        </select>
+                    </div>
+
                     <div class="col-12 mb-3">
                         <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
                         <input type="number" class="form-control" id="montant" v-model="formData.montant"
