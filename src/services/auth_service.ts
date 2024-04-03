@@ -25,8 +25,8 @@ const logout = async () => {
 
 const refreshToken = async () => {
     try {
-        localStorage.clear();
-        router.push({ name: 'Login' });
+        const response = await api().post('/auth/refresh-token');
+        return response.data.token;
     } catch (error) {
         return Promise.reject(error);
     }

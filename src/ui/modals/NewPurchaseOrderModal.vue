@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { ref ,computed, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import { Modal } from '@/ui';
-import { salesService ,sharedService} from '@/services';
+import { salesService, sharedService } from '@/services';
 import { useToast } from 'vue-toastification';
-import { useSharedStore } from '@/store';
 const toast = useToast();
 
 const isLoading = ref(false);
-const sharedStore = useSharedStore();
-const mainItem = ref(computed(() => sharedStore.mainItem));
 const isStock = ref('Stock');
-onMounted(()=>{
+onMounted(() => {
     sharedService.getItems();
 });
 const props = defineProps({
@@ -22,6 +19,10 @@ const props = defineProps({
         type: Array,
         default: null,
     },
+    mainItems: {
+        type: Array,
+        default: null,
+    }
 });
 
 const formData = ref({
@@ -73,7 +74,7 @@ const changeValue = (item, index) => {
         formData.value.total[index] = item.prix_ht * formData.value.qty[index];
         formData.value.total[index] = formData.value.total[index].toFixed(2);
     }
-    console.log(formData.value);  
+    console.log(formData.value);
 };
 
 const changeQuantity = (index) => {
@@ -133,8 +134,8 @@ const submit = async () => {
         toast.error('Une erreur est survenue');
     });
     console.log(formData.value);
-    
-    
+
+
 };
 
 const checkArticles = (articles) => {
@@ -217,24 +218,24 @@ const checkArticles = (articles) => {
                         <div class="repeater-wrapper pt-0 pt-md-4">
                             <div class="d-flex border rounded position-relative pe-0">
                                 <div class="row w-100 p-3">
-                                    <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-4 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">
                                             Article Hors Bordereau {{ item }}
                                         </p>
                                         <input id="qteInput" v-model="formData.articleHors[item]" type="text"
                                             class="form-control" placeholder="Entrez le désignation de l'article" />
                                     </div>
-                                    <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Qty</p>
                                         <input id="qteInput" v-model="formData.qtyHors[item]" type="number"
                                             class="form-control" placeholder="1" min="1" />
                                     </div>
-                                    <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Unite</p>
                                         <input id="qteInput" v-model="formData.unites[item]" type="text"
                                             class="form-control" placeholder="M2" />
                                     </div>
-                                    <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-4 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Item</p>
                                         <select v-model="formData.mainItem[item]" class="form-select item-details mb-1"
                                             @change="changeValue(formData.mainItem[item], item)">

@@ -1,6 +1,9 @@
 import axios, { AxiosError } from 'axios';
+import { authService } from '@/services';
 
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
+
+// Assuming you have a function to refresh the token
 
 const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getItem('token')) => {
     const instance = axios.create({
@@ -13,20 +16,32 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
     });
 
     instance.interceptors.request.use((config) => {
-        if (token) {
-            config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
+        // Ensure the latest token is always used
+        const updatedToken = localStorage.getItem('token');
+        if (updatedToken) {
+            config.headers.Authorization = `Bearer ${updatedToken}`;
         }
         return config;
     });
 
     instance.interceptors.response.use(
         (response) => response,
-        (error: AxiosError) => {
-            if (error.response) {
-                const { data } = error.response;
-                return Promise.reject(data);
+        async (error: AxiosError) => {
+            if (error.response && error.response.status === 401) {
+                try {
+                    // Attempt to refresh the token
+                    await authService.refreshToken().then((token) => {
+                        error.config.headers['Authorization'] = `Bearer ${token}`;
+                        localStorage.setItem('token', token);
+
+                    });
+                    // Retry the original request with the new token
+                    return instance(error.config);
+                } catch (refreshError) {
+                    // Handle failure to refresh the token, e.g., logging out the user
+                    return Promise.reject(refreshError);
+                }
             }
-            console.log('Here');
             return Promise.reject(error);
         }
     );
