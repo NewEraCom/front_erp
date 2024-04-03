@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import{pmService} from '@/services';
 
 const props = defineProps({
@@ -15,7 +15,7 @@ const isLoading = ref(false);
 
 const submit = async () => {
     const formData = new FormData();
-    
+
     formData.append('id', props.id);
     formData.append('doc_id', $('#docID').val());
     formData.append('number_file', nomberDocs.value);
