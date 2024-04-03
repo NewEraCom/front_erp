@@ -31,6 +31,7 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
                 try {
                     localStorage.clear();
                     router.push('/login');
+                    return;
                     // Retry the original request with the new token
                     return instance(error.config);
                 } catch (refreshError) {

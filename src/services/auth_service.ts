@@ -1,4 +1,3 @@
-import router from '@/router';
 import { api, helpers } from '@/utils';
 
 const login = async (formData: { email: string, password: string }) => {
