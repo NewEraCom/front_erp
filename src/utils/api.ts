@@ -1,5 +1,5 @@
+import router from '@/router';
 import axios, { AxiosError } from 'axios';
-import { authService } from '@/services';
 
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 
@@ -29,12 +29,8 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
         async (error: AxiosError) => {
             if (error.response && error.response.status === 401) {
                 try {
-                    // Attempt to refresh the token
-                    await authService.refreshToken().then((token) => {
-                        error.config.headers['Authorization'] = `Bearer ${token}`;
-                        localStorage.setItem('token', token);
-
-                    });
+                    localStorage.clear();
+                    router.push('/login');
                     // Retry the original request with the new token
                     return instance(error.config);
                 } catch (refreshError) {
