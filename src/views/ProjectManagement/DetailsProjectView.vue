@@ -564,12 +564,10 @@ watch(item, () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
             <NewCaisseProjectModal :project-id="id" />
             <UploadDocumentModal :id="project.id" />
-            {{project.pre_project}}
             <NewServiceModal v-if="soustraitants != null" :id="project.id" :services="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Services'
                 )" :soustraitants="soustraitants.data" />
