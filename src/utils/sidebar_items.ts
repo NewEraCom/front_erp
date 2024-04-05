@@ -697,6 +697,13 @@ const DOMenu = [
         icon: 'ti ti-transfer-out',
         path: 'CaisseRequest'
     },
+    {
+        id: 6,
+        name: 'Congés',
+        route: '/leaves',
+        icon: 'ti ti-plane-inflight',
+        path: 'Leaves'
+    },
 
     ...sharedMenu2,
     ...sharedMenu
@@ -738,6 +745,13 @@ const BDMenu = [
         route: '/project/caisse-request',
         icon: 'ti ti-transfer-out',
         path: 'CaisseRequest'
+    },
+    {
+        id: 6,
+        name: 'Congés',
+        route: '/leaves',
+        icon: 'ti ti-plane-inflight',
+        path: 'Leaves'
     },
 
     ...sharedMenu2,
