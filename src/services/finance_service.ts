@@ -166,6 +166,22 @@ async function encaisser(id) {
     }
 }
 
+async function insertFactureAttachement(req) {
+    try {
+        const FinanceStore = useFinanceStore();
+        const response = await api().post('facture/comp/store-attachement', req);
+        if (response.status == 200) {
+            // FinanceStore.facture_attachement.push(response.data.facture_attachement);
+            console.log(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
 export default {
     get,
     insert,
@@ -176,5 +192,6 @@ export default {
     getCaution,
     recover,
     getCheque,
-    encaisser
+    encaisser,
+    insertFactureAttachement,
 }
