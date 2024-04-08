@@ -39,6 +39,7 @@ const formData = ref({
   articles: [], 
   article_id:[],
   composants: [],
+  value: [],
 })
 
 const addItem = () => {
@@ -91,6 +92,11 @@ const checkArticles = (articles) => {
   return true
 }
 
+const handleFileChange = (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0];
+};
+
 const submit = async () => {
   isLoading.value = true
   if (!checkArticles(formData.value.service)) {
@@ -118,6 +124,7 @@ const submit = async () => {
       price: JSON.stringify(formData.value.price),
       composants :JSON.stringify(props.composants),
       articles:JSON.stringify(formData.value.service),
+      value:JSON.stringify(formData.value.value),
 
     })
     .then(() => {
@@ -144,7 +151,8 @@ const submit = async () => {
             <div class="col-6 mb-2" v-for="composant in props.composants">
               <div class="col-6">{{ composant.label }}</div>
               <div class="col-6">
-                <input v-model="formData.composants[composant.label]" :type="composant.type" class="form-control"/>
+                <input v-if="composant.type === 'file'" @change="handleFileChange($event)" type="file" class="form-control"/>
+                <input v-else v-model="formData.value" :type="composant.type" class="form-control"/>
               </div>
             </div>
           </div>
