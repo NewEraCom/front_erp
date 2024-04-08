@@ -2,6 +2,7 @@
 import { ref, computed, watch } from 'vue';
 import { formater, helpers } from '@/utils';
 
+const role = localStorage.getItem('role');
 type Item = {
     [key: string]: any; // This allows any number of properties with any type
 }
@@ -163,12 +164,22 @@ const getFileUrl = (attachment) => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'leave'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
+                            <div v-if="role == helpers.roles.RH">
+
+                                <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
+                                    <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
+                            item.employe.last_name
+                                        }}</h6>
+                                </router-link>
+                                <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
+                            </div>
+                            <div v-else>
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
-                        item.employe.last_name
-                                    }}</h6>
-                            </router-link>
-                            <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
+                            item.employe.last_name
+                                        }}</h6>
+                                <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
+
+                            </div>
                         </td>
                         <td v-if="header.isComplex && header.type === 'SousTraitant'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
