@@ -584,6 +584,13 @@ const SupportMenu = [
         ]
     },
     {
+        id: 2,
+        name: 'Avant Projets',
+        route: '/pre-project',
+        icon: 'ti ti-briefcase',
+        path: 'PreProject'
+    },
+    {
         id: 5,
         name: 'Projets',
         route: '/projects',
@@ -675,6 +682,13 @@ const DOMenu = [
         route: '/facture',
         icon: 'ti ti-file-invoice',
         path: 'DashboardPM'
+    },
+    {
+        id: 2,
+        name: 'Avant Projets',
+        route: '/pre-project',
+        icon: 'ti ti-briefcase',
+        path: 'PreProject'
     },
     {
         id: 5,
