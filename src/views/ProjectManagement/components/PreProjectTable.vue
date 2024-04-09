@@ -68,9 +68,10 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
                             <option value="-">Tout</option>
-                            <option value="annule">Annuler</option>
-                            <option value="en attente">En Attente</option>
-                            <option value="paye">Payé</option>
+                            <option value="En attente">En attente</option>
+                            <option value="En soumission">En soumission</option>
+                            <option value="Gagné">Gagné</option>
+                            <option value="Perdu">Perdu</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-auto">
