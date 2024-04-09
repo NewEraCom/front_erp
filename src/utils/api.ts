@@ -3,7 +3,6 @@ import axios, { AxiosError } from 'axios';
 
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data';
 
-// Assuming you have a function to refresh the token
 
 const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getItem('token')) => {
     const instance = axios.create({
@@ -32,10 +31,9 @@ const api = (baseURL = import.meta.env.VITE_API_URL, token = localStorage.getIte
                     localStorage.clear();
                     router.push('/login');
                     return;
-                    // Retry the original request with the new token
-                    return instance(error.config);
                 } catch (refreshError) {
                     // Handle failure to refresh the token, e.g., logging out the user
+                    router.push('/login');
                     return Promise.reject(refreshError);
                 }
             }

@@ -14,7 +14,7 @@ const togglePassword = (value: string[]): string[] => {
 		: ['ti-eye', 'password'];
 };
 
-const setSavedUser = (res: any): void => {
+const setSavedUser = (res: any) => {
 	localStorage.setItem('user', JSON.stringify(res.user));
 	localStorage.setItem('isOnline', 'true');
 	localStorage.setItem('role', res.user.roles[0].name);

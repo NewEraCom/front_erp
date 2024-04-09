@@ -68,23 +68,14 @@ onMounted(() => {
         </aside>
         <aside class="sidebar-small locked">
             <div class="logo_items text-center mt-2 pt-2">
-                <img
-                    src="/src/assets/img/Logo_white_bg_small.png"
-                    alt="logo"
-                    class="logo_small"
-                    srcset=""
-                />
+                <img src="/src/assets/img/Logo_white_bg_small.png" alt="logo" class="logo_small" srcset="" />
             </div>
 
             <div class="menu_container mt-4 ps-0">
                 <div class="menu_items">
                     <ul class="menu_item ps-1">
-                        <li
-                            v-for="item in itemsMenu"
-                            :key="item.id"
-                            class="item"
-                            :class="{ active: isActiveRoute(item.route) }"
-                        >
+                        <li v-for="item in itemsMenu" :key="item.id" class="item"
+                            :class="{ active: isActiveRoute(item.route) }">
                             <router-link :to="item.route" class="link flex">
                                 <i class="ti" :class="item.icon" />
                             </router-link>
@@ -458,6 +449,4 @@ onMounted(() => {
 .icon-children {
     font-size: 14px !important;
 }
-
-
 </style>
