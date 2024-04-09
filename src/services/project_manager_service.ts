@@ -219,13 +219,15 @@ async function cancel(req: any) {
     console.log(error);
   }
 }
-export async function markChiffrageDone(req: string) {
+ async function markChiffrageDone(req: string,data: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().post('chiffrage/close/' + req);
+    const response = await api().post('chiffrage/close/' + req,data);
     if (response.status == 200) {
-      PMStore.closeChiffratePreProject(response.data.chiffrage_status);
+      // PMStore.closeChiffratePreProject(response.data.chiffrage_status);
+      PMStore.preproject.data= response.data.pre_project;
+      return response.status;
     }
   } catch (error) {
     console.log(error);
@@ -236,10 +238,11 @@ async function clotureLostProject(req: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().post('chiffrage/mark', req);
+    const response = await api().post('preprojects/mark', req);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.preprojectDetail = null;
+      PMStore.preprojectDetail = response.data[0];
       PMStore.setPreProject(response.data[0]);
       return response.status;
     }
@@ -497,5 +500,6 @@ export default {
   getProjects, deleteArticle,
   addCaisseProject,
   GetCaisseProjectSum,
-  createPreProject
+  createPreProject,
+  markChiffrageDone
 };

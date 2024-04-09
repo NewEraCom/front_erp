@@ -584,6 +584,13 @@ const SupportMenu = [
         ]
     },
     {
+        id: 2,
+        name: 'Avant Projets',
+        route: '/pre-project',
+        icon: 'ti ti-briefcase',
+        path: 'PreProject'
+    },
+    {
         id: 5,
         name: 'Projets',
         route: '/projects',
@@ -677,6 +684,13 @@ const DOMenu = [
         path: 'DashboardPM'
     },
     {
+        id: 2,
+        name: 'Avant Projets',
+        route: '/pre-project',
+        icon: 'ti ti-briefcase',
+        path: 'PreProject'
+    },
+    {
         id: 5,
         name: 'Demande DSS',
         route: '/project/out-of-stock',
@@ -696,6 +710,13 @@ const DOMenu = [
         route: '/project/caisse-request',
         icon: 'ti ti-transfer-out',
         path: 'CaisseRequest'
+    },
+    {
+        id: 6,
+        name: 'Congés',
+        route: '/leaves',
+        icon: 'ti ti-plane-inflight',
+        path: 'Leaves'
     },
 
     ...sharedMenu2,
@@ -738,6 +759,13 @@ const BDMenu = [
         route: '/project/caisse-request',
         icon: 'ti ti-transfer-out',
         path: 'CaisseRequest'
+    },
+    {
+        id: 6,
+        name: 'Congés',
+        route: '/leaves',
+        icon: 'ti ti-plane-inflight',
+        path: 'Leaves'
     },
 
     ...sharedMenu2,

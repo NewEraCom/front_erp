@@ -283,11 +283,14 @@ const addEmployee = async (data: any) => {
 async function Confirmation(id, req) {
     try {
 
-
+        const rhStore = useRhStore();
         const response = await api().post('conge/valider/' + id, req);
         if (response.status == 200) {
             console.log(response.data);
-
+            const dmndIndex = rhStore.leaves.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.leaves.data.splice(dmndIndex, 1, response.data.conge);
+            }
 
             await getLeaves();
 

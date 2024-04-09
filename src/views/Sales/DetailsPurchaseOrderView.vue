@@ -139,13 +139,13 @@ const validation = async () => {
                   <td>{{ article.article.id }}</td>
                   <td>
                     {{ article.article.article }}
-                    <i v-if="article.type == 'hors bordereau'" class="ti ti-bookmark-filled text-danger"></i>
+                    <i v-if="article.article.type == 'hors bordereau'" class="ti ti-bookmark-filled text-danger"></i>
                   </td>
                   <td class="text-center">{{ article.unity }}</td>
                   <td class="text-center">{{ article.quantity }}</td>
                   <td class="text-center">
                     <div class="btn-group"
-                      v-if="article.type == 'hors bordereau' && (role == 'Directeur support' || role == 'Directeur des opérations') && article.article.status != 1">
+                      v-if="article.article.type == 'hors bordereau' && ([helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO].includes(role)) && article.article.status != 1">
                       <button type="button" class="btn btn-sm btn-success waves-effect waves-light"
                         data-bs-toggle="modal" data-bs-target="#validate-modal"
                         @click="salesStore.setItemId(article.article.id)">
