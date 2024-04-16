@@ -112,6 +112,7 @@ const getPointages = async () => {
         const response = await api().get('/rh/get-pointages');
         if (response.status === 200) {
             const rhStore = useRhStore();
+            console.log(response.data);
             rhStore.setPointages(response.data.pointages);
             return;
         }
@@ -187,7 +188,9 @@ const addPointage = async (data: any) => {
         const response = await api().post('rh/add-pointage', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            rhStore.employee.pointages.push(response.data.pointage);
+            if (rhStore.employee && rhStore.employee.id === response.data.pointage.employee_id) {
+                rhStore.employee.pointages.push(response.data.pointage);
+            }
             rhStore.pointages.push(response.data.pointage);
             return;
         }
@@ -383,9 +386,9 @@ const deleteWorker = async () => {
         return error;
     }
 };
-const updateWorker = async (data: any,id:any) => {
+const updateWorker = async (data: any, id: any) => {
     try {
-        const response = await api().post('/tiers/update-worker/'+id, data);
+        const response = await api().post('/tiers/update-worker/' + id, data);
         if (response.status === 200) {
             const rhStore = useRhStore();
             // rhStore.setWorkers(response.data.workers);
