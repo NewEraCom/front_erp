@@ -31,7 +31,7 @@ onUnmounted(() => {
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
         <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
-        <div v-if="purchaseOrders.stats" class="row g-3">
+        <div v-if="stock && purchaseOrders" class="row g-3">
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
                 <CardTwo title="En alert stock" :count="stock.alert" color="bg-label-warning"
                     icon="ti ti-building-store" card-color=" card-border-shadow-warning" />

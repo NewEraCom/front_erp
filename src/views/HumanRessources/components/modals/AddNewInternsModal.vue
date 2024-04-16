@@ -15,6 +15,7 @@ const formData = {
     sexe: '-',
     email: null,
     adresse: null,
+    city: null, 
     diplome: null,
     poste: null,
     date_start: null,
@@ -90,6 +91,20 @@ const submit = async () => {
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
                                 id="nameEx" v-model="formData.email" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Ville <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre la ville de stagiaire" type="text"
+                                tabindex="0" id="nameEx" v-model="formData.city" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Adresse <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre l'adresse de stagiaire" type="text"
+                                tabindex="0" id="nameEx" v-model="formData.adresse" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
