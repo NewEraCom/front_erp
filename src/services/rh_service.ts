@@ -782,6 +782,21 @@ async function DeleteDocIntern(id) {
         console.log(error);
     }
 }
+const updateAttachement = async (id:number,data: any) => {
+    try {
+        const response = await api().post('stg/updateAttachement/'+id, data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.intern = response.data.stg;
+            
+            return;
+        }
+        throw new Error('Add pointage failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
 
 
 export default {
@@ -830,5 +845,6 @@ export default {
     getInternById,
     UploadDocIntern,
     DeleteDocIntern,
-    updateWorker
+    updateWorker,
+    updateAttachement
 };

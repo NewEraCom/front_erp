@@ -38,7 +38,8 @@ const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
-const caisse = ref(computed(() => pmStore.caisse_project_sum));
+const caisse = ref(computed(() => pmStore.caisse_project));
+const caisse_sum = ref(computed(() => pmStore.caisse_project_sum));
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
@@ -186,7 +187,7 @@ watch(item, () => {
                                 </div>
                                 <!-- {{ project.caisse }} -->
                                 <h4 class="ms-1 mb-0 fw-bold">
-                                    {{ project.caisse }}<small class="fw-bold"> MAD</small>
+                                    {{ caisse_sum }}<small class="fw-bold"> MAD</small>
                                 </h4>
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
