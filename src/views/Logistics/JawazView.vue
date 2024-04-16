@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardOne, CardOneSkeleton } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { JawazTable } from './components';
+import { AddJawazModel, JawazTable } from './components';
 import { formater } from '@/utils';
 
 const logisticsStore = useLogisticsStore();
@@ -58,6 +58,10 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des Cartes Jawaz</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des cartes Jawaz en stock</small>
                             </div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addJawaz">
+                                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                                Ajouter une Carte Jawaz
+                            </button>
                         </div>
                         <div v-if="jawaz != null" class="card-body border-top pt-4">
                             <JawazTable :jawaz="jawaz" />
@@ -77,5 +81,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <AddJawazModel/>
     </div>
 </template>

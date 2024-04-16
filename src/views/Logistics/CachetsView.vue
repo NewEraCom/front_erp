@@ -5,6 +5,7 @@ import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { CachetsTable } from './components';
 import { formater } from '@/utils';
+import AddCachetModel from './components/AddCachetModel.vue';
 
 const logisticsStore = useLogisticsStore();
 
@@ -58,6 +59,10 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des Cachets</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des cachets enregistrés</small>
                             </div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCachet">
+                                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                                Ajouter un Cachet
+                            </button>
                         </div>
                         <div v-if="cachets != null" class="card-body border-top pt-4">
                             <CachetsTable :cachets="cachets" />
@@ -77,5 +82,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <AddCachetModel/>
     </div>
 </template>

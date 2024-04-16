@@ -21,6 +21,10 @@ import EditSubscriptionModal from './EditSubscriptionModal.vue';
 import NewLouerModal from './NewLouerModal.vue';
 import DetailsParcGsmTable from './DetailsParcGSMTable.vue';
 import LivraisonArticlesModal from './LivraisonArticlesModal.vue';
+import AddCarburantModel from './AddCarburantModel.vue';
+import AddCachetModel from './AddCachetModel.vue';
+import AddVehiculeModel from './AddVehiculeModel.vue';
+import AddJawazModel from './AddJawazModel.vue'
 
 export {
     StockTable,
@@ -45,5 +49,9 @@ export {
     EditSubscriptionModal,
     NewLouerModal,
     DetailsParcGsmTable,
-    LivraisonArticlesModal
+    LivraisonArticlesModal,
+    AddCarburantModel,
+    AddJawazModel,
+    AddCachetModel,
+    AddVehiculeModel,
 };

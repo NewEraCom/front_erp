@@ -470,6 +470,13 @@ async function GetCaisseProjectSum(id: any) {
   }
 }
 
+async function createFactureComposant(req: any) {
+  const response = await api().post('facture/comp/store', req);
+    if (response.status == 200) {
+      console.log(response.data);
+    }
+};
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -497,9 +504,6 @@ export default {
   create,
   refuser,
   validate,
-  getProjects, deleteArticle,
-  addCaisseProject,
-  GetCaisseProjectSum,
-  createPreProject,
-  markChiffrageDone
+  getProjects,
+  createFactureComposant
 };

@@ -479,6 +479,23 @@ export const useLogisticsStore = defineStore('LogisticsStore', {
         ClearLivraison() {
             this.livraison_id = null;
             this.article_id = null;
-        }
+        },
+        pushCarburant(data: any) {
+            this.cardsCarburant.data.unshift(data);
+        },
+        pushJawaz(data: any) {
+            this.jawaz.data.unshift(data);
+        },
+        pushCachet(data: any) {
+            if (this.cachet) {
+                this.cachet.data = data;
+            }
+        },
+        pushVehicule(data: any) {
+            if (this.vehicule) {
+                this.vehicule.data = data;
+            }
+        },        
+        
     }
 });

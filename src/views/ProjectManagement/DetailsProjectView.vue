@@ -6,6 +6,7 @@ import { helpers, formater } from '@/utils';
 import { NewCaisseProjectModal } from './components/modals';
 import {
     DeleteModal,
+    InvoiceModal,
     NewPurchaseOrderModal,
     NewServiceModal
 } from '@/ui';
@@ -25,6 +26,8 @@ import {
 
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
+
+const composants = ref(computed(() => pmStore.composants));
 
 const props = defineProps<{
     id: string;
@@ -62,7 +65,7 @@ watch(item, () => {
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
             <div v-if="project && role === 'Chef de projet'">
-                <button v-if="project.facture_composante.length == 0" class="btn btn-success ms-auto"
+                <button v-if="project.facture_composante.length !== 0" class="btn btn-success ms-auto"
                     data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
                     Composants de la facture
@@ -527,7 +530,7 @@ watch(item, () => {
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
                                         style="">
-                                        <button data-bs-target="#invoiceUpload" data-bs-toggle="modal"
+                                        <button data-bs-target="#invoice" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium">
                                             <i class="ti ti-file-plus me-2"></i> Créer une facture
                                         </button>
@@ -584,6 +587,9 @@ watch(item, () => {
                 textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()"
                 message="Demande supprimée avec succès" />
             <SuivieModal />
+            <InvoiceModal :composants="project.facture_composante" :id="project.id" :articles="project.pre_project.articles.filter(
+                    (item: any) => item.category === 'Achats' && item.status === 1
+                )" />
         </div>
 
     </div>

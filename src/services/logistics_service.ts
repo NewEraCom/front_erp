@@ -310,22 +310,70 @@ const removecardsCarburant = async () => {
     }
 };
 
-const getAchatsForTransport = async (demandeAchatId :number) => {
+const getAchatsForTransport = async (demandeAchatId: number) => {
     try {
-        const response = await api().get('/purchase/get_achats/'+demandeAchatId);
+        const response = await api().get('/purchase/get_achats/' + demandeAchatId);
         const logisticsStore = useLogisticsStore();
         logisticsStore.setTransport(response.data);
     } catch (error) {
         return Promise.reject(error);
     }
 };
-const ReceiveShipment = async (data:any) => {
+const ReceiveShipment = async (data: any) => {
     try {
-        const response = await api().post('/logistics/transport/receive-shipement',data);
+        const response = await api().post('/logistics/transport/receive-shipement', data);
         const logisticsStore = useLogisticsStore();
         // logisticsStore.setTransport(response.data);
         if (response.status == 200) {
             return response.data;
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createCarburant = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/carte-gasoil/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushCarburant(response.data.cardsCarburant);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createCachet = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/cachet/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushCachet(response.data.cachet);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createJawaz = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/pass-jawaz/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushJawaz(response.data.jawaz);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+const createCar = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/vehicule/', data);
+        if (response.status == 201) {
+            const logisticsStore = useLogisticsStore();
+            logisticsStore.pushVehicule(response.data.vehicule);
         }
     } catch (error) {
         return Promise.reject(error);
@@ -365,7 +413,11 @@ export default {
     removecardsCarburant,
     newCaisseOperation,
     getAchatsForTransport,
-    ReceiveShipment
+    ReceiveShipment,
+    createCarburant,
+    createJawaz,
+    createCachet,
+    createCar
 };
 
 
