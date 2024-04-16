@@ -124,7 +124,7 @@ async function recover(id) {
 
         const response = await api().post('cautions/recover/' + id);
         if (response.status == 200) {
-            let caution = FinanceStore.caution.find((item) => item.id === id);
+            const caution = FinanceStore.caution.find((item) => item.id === id);
             if (caution) {
                 Object.assign(caution, response.data.caution);
             }
@@ -155,7 +155,7 @@ async function encaisser(id) {
 
         const response = await api().put('cheque/encaisser/' + id);
         if (response.status == 200) {
-            let cheque = FinanceStore.cheque.find((item) => item.id === id);
+            const cheque = FinanceStore.cheque.find((item) => item.id === id);
             if (cheque) {
                 Object.assign(cheque, response.data.cheque);
             }
@@ -164,6 +164,22 @@ async function encaisser(id) {
         console.log(error);
     }
 }
+async function insertFactureAttachement(req) {
+    try {
+        const FinanceStore = useFinanceStore();
+        const response = await api().post('facture/comp/store-attachement', req);
+        if (response.status == 200) {
+            // FinanceStore.facture_attachement.push(response.data.facture_attachement);
+            console.log(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
 
 export default {
     get,
@@ -175,5 +191,6 @@ export default {
     getCaution,
     recover,
     getCheque,
-    encaisser
-}
+    encaisser,
+    insertFactureAttachement
+};
