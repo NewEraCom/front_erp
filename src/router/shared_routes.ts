@@ -130,4 +130,15 @@ export const sharedRoutes = [
             requiresAuth: true
         },
     },
+    {
+        path: '/validation/caisse',
+        name: 'CaisseValidation',
+        component: () => import('@/views/Shared/ValidateCaisseProject.vue'),
+        meta: {
+            title: 'Validation Caisse',
+            requiresAuth: true,
+            role: [helpers.roles.DG,helpers.roles.DO,helpers.roles.DS]
+
+        },
+    },
 ];

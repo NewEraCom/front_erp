@@ -241,7 +241,34 @@ const getItems = async () => {
         return Promise.reject(error);
     }
 };
+const getCaisse = async () => {
+    try {
+        const sharedStore = useSharedStore();
 
+        const response = await api().get('/logistics/caisse/caisse-project');
+        if (response.status == 200) {
+            sharedStore.setCaisse(response.data) ;
+            return response.data;
+        }
+        return response;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+const validateCaisse = async (data:any) => {
+    try {
+        const sharedStore = useSharedStore();
+
+        const response = await api().post('/logistics/caisse/project/validate',data);
+        if (response.status == 200) {
+            sharedStore.selectedCaisse = response.data.data;
+            return response.data;
+        }
+        return response;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -263,5 +290,7 @@ export default {
     getFournisseur,
     getSoustraitantById,
     addLeave,
-    getItems
+    getItems,
+    getCaisse,
+    validateCaisse
 };

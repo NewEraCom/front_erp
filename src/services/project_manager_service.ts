@@ -471,6 +471,19 @@ async function GetCaisseProjectSum(id: any) {
   }
 }
 
+const PointageEmployeeImport = async (data: any) => {
+  try {
+      const response = await api().post('/projects/insert-pointage', data);
+      if (response.status === 200) {
+          return;
+      }
+      throw new Error('Import data failed with status: ' + response.status);
+  } catch (error) {
+      console.error(error);
+      return error;
+  }
+};
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -502,5 +515,6 @@ export default {
   addCaisseProject,
   GetCaisseProjectSum,
   createPreProject,
-  markChiffrageDone
+  markChiffrageDone,
+  PointageEmployeeImport
 };

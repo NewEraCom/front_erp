@@ -217,6 +217,9 @@ const getFileUrl = (attachment) => {
                                 <span v-if="header.type === 'text'">
                                     {{ formater.limitText(String(item[header.value]), 40) }}
                                 </span>
+                                <span v-if="header.type === 'jours'">
+                                    {{ formater.limitText(String(item[header.value]), 40) }} Jrs
+                                </span>
                                 <span v-if="header.type === 'project'">
                                     {{ item.project.code }}
                                 </span>
