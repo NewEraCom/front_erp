@@ -705,6 +705,13 @@ const DOMenu = [
         path: 'Soustraitant'
     },
     {
+        id: 4,
+        name: 'Caisse',
+        route: '/caisse',
+        icon: 'ti ti-cash',
+        path: 'Caisse'
+    },
+    {
         id: 7,
         name: 'Demande de caisse',
         route: '/project/caisse-request',

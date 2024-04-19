@@ -6,9 +6,10 @@ import { watch } from 'vue';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { formater } from '@/utils';
+import { ValidateCaisse } from './components';
 
 const logisticsStore = useLogisticsStore();
-
+const isLoading = ref(false);
 const caisse = ref(computed(() => logisticsStore.opertationCaisse.data));
 const stats = ref(computed(() => logisticsStore.opertationCaisse.stats));
 const stats_analyse = ref(computed(() => logisticsStore.caisse.stats));
@@ -36,6 +37,16 @@ onUnmounted(() => {
 watch(caisse, () => {
     data.value.caisse = caisse.value;
 }, { deep: true });
+
+const Validate = async () => {
+    isLoading.value = true;
+    await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
+        isLoading.value = false;
+        $('#validate-caisse-modal').modal('hide');
+
+    });
+    // console.log($('#validateInput').val());
+};
 
 </script>
 
@@ -103,6 +114,8 @@ watch(caisse, () => {
         <DetailsCaisseOperation />
         <DeleteModal title="Supprimer un opération" text="Voulez-vous vraiment supprimer cette opération ?"
             textButton="Oui, Supprimer" :action="() => logisticsService.deleteCaisseOperation()" />
+        <ValidateCaisse id="validate-caisse-modal" :isLoading="isLoading" :method="Validate"
+             />
 
     </div>
 </template>
