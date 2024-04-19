@@ -31,9 +31,10 @@ const submit = async () => {
         toast.error('Veuillez choisir un project');
         return;
     }
+
     isLoading.value = true;
 
-    formData.value.project_id = formData.value.project_id.key;
+    formData.value.project_id = formData.value.project_id.key
     await logisticsService.newCaisseOperation(formData.value, 'chef').then(() => {
         isLoading.value = false;
         $('#newDemandeCaisse').modal('hide');
@@ -72,7 +73,7 @@ const submit = async () => {
                             <option value="-">Choisir un item</option>
                             <option
                                 v-for="itm in projects.filter((item) => item.id == formData.project_id.key)[0].caisse"
-                                :key="itm.id">
+                                :key="itm.id" :value="itm.id">
                                 {{ itm.designation }}
                             </option>
                         </select>

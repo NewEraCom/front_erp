@@ -97,20 +97,6 @@ const handleFileChange = (event, index) => {
 };
 
 const submit = async () => {
-
-  console.log(formData.value.value);
-
-  const file = event.target.files[0];
-  formData.value[index] = file;
-  if (formData.value.value[index]) {
-    formData.value.value[index] = file;
-  } else {
-    formData.value.value[index] = file;
-
-  }
-};
-
-const submit = async () => {
   isLoading.value = true;
   if (!checkArticles(formData.value.service)) {
     isLoading.value = false;

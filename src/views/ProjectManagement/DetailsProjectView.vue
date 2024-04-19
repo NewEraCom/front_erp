@@ -195,8 +195,7 @@ watch(item, () => {
                                 </h4>
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal"
-                                v-if="[helpers.roles.RH, helpers.roles.LOGISTICS, helpers.roles.FINANCE, helpers.roles.SALES].includes(role)">
+                                data-bs-toggle="modal">
                                 <i class="ti ti-plus"></i>
                                 Budget de caisse
                             </button>

@@ -96,7 +96,7 @@ watch(() => props.pageSize, () => {
 
 const getFileUrl = (attachment) => {
     console.log(attachment);
-    
+
     return helpers.baseUrl() + `uploads/${attachment}`;
 };
 </script>
@@ -168,15 +168,15 @@ const getFileUrl = (attachment) => {
 
                                 <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
                                     <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
-                            item.employe.last_name
+                        item.employe.last_name
                                         }}</h6>
                                 </router-link>
                                 <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
                             </div>
                             <div v-else>
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
-                            item.employe.last_name
-                                        }}</h6>
+                        item.employe.last_name
+                                    }}</h6>
                                 <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
 
                             </div>
@@ -219,6 +219,9 @@ const getFileUrl = (attachment) => {
                                 </span>
                                 <span v-if="header.type === 'jours'">
                                     {{ formater.limitText(String(item[header.value]), 40) }} Jrs
+                                </span>
+                                <span v-if="header.type === 'item'">
+                                    {{ item.item.designation }}
                                 </span>
                                 <span v-if="header.type === 'project'">
                                     {{ item.project.code }}
@@ -265,8 +268,9 @@ const getFileUrl = (attachment) => {
                                 </span>
                                 <span v-if="header.type === 'attachement'">
                                     <small v-if="item[header.value] == '-'">Aucun Attachement</small>
-                                    <a v-else class="btn btn-label-primary btn-sm" target="_blank" :href="getFileUrl(item[header.value])">
-                                        <i class="ti ti-download me-2" ></i> Télécharger l'attachement
+                                    <a v-else class="btn btn-label-primary btn-sm" target="_blank"
+                                        :href="getFileUrl(item[header.value])">
+                                        <i class="ti ti-download me-2"></i> Télécharger l'attachement
                                     </a>
                                 </span>
                                 <span v-if="header.type === 'stock'">

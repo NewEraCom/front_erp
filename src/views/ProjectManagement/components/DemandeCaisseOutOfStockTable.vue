@@ -11,7 +11,7 @@ const props = defineProps({
 });
 const headers = [
     { text: 'Montant', value: 'montant', type: 'currency' },
-    { text: 'Item', value: 'item', type: 'text' },
+    { text: 'Item', value: 'item', type: 'item' },
     { text: 'Projet', value: 'projet', type: 'project' },
     { text: 'Date d\'opération', value: 'date_operation', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },
