@@ -3,12 +3,12 @@ import { ref, onMounted, computed, onUnmounted, watch } from 'vue';
 import { pmService, sharedService } from '@/services';
 import { usePMStore, useSharedStore } from '@/store';
 import { helpers, formater } from '@/utils';
-import { NewCaisseProjectModal } from './components/modals';
+import { NewCaisseProjectModal, PointageEmployeModal } from './components/modals';
 import {
     DeleteModal,
-    InvoiceModal,
     NewPurchaseOrderModal,
-    NewServiceModal
+    NewServiceModal,
+    InvoiceModal,
 } from '@/ui';
 
 import {
@@ -23,6 +23,7 @@ import {
     SuivieTable,
     SuivieModal
 } from './components';
+import PointageTable from './components/PointageTable.vue';
 
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
@@ -41,7 +42,8 @@ const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
-const caisse = ref(computed(() => pmStore.caisse_project_sum));
+const caisse = ref(computed(() => pmStore.caisse_project));
+const caisse_sum = ref(computed(() => pmStore.caisse_project_sum));
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
@@ -189,11 +191,13 @@ watch(item, () => {
                                 </div>
                                 <!-- {{ project.caisse }} -->
                                 <h4 class="ms-1 mb-0 fw-bold">
-                                    {{ project.caisse }}<small class="fw-bold"> MAD</small>
+                                    {{ caisse_sum }}<small class="fw-bold"> MAD</small>
                                 </h4>
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal">
+                                data-bs-toggle="modal"
+                                v-if="[helpers.roles.RH, helpers.roles.LOGISTICS, helpers.roles.FINANCE, helpers.roles.SALES].includes(role)">
+                                <i class="ti ti-plus"></i>
                                 Budget de caisse
                             </button>
                         </div>
@@ -244,6 +248,12 @@ watch(item, () => {
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                     data-bs-target="#production" aria-controls="productions" aria-selected="true">
                                     Suivi de production
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#pointage" aria-controls="productions" aria-selected="true">
+                                    Pointage des employés
                                 </button>
                             </li>
                         </ul>
@@ -394,7 +404,16 @@ watch(item, () => {
                             </div>
                         </div>
                         <div class="card card-border-shadow-primary mt-4">
-                            <h5 class="card-header border-bottom fw-bold">Personnel de projet</h5>
+                            <div class="d-flex border-bottom justify-content-between align-items-center">
+                                <h5 class="card-header fw-bold">Personnel de projet</h5>
+                                <button v-if="role === 'Chef de projet'" class="btn btn-primary me-4"
+                                    data-bs-target="#import-pointage" data-bs-toggle="modal">
+                                    <i class="ti ti-upload me-2"></i>
+                                    Importer le pointages des employés
+                                </button>
+                            </div>
+
+
                             <div v-if="project" class="card-body pt-4">
                                 <div class="row g-3">
                                     <div class="col-6">
@@ -567,6 +586,30 @@ watch(item, () => {
                             </div>
                         </div>
                     </div>
+                    <div id="pointage" class="tab-pane fade text-start" role="tabpanel">
+                        <div class="card card-border-shadow-primary">
+                            <div class="d-flex border-bottom align-items-center">
+                                <h5 class="card-header fw-bold">Suivi de pointage</h5>
+                                <div v-if="role === 'Chef de projet' && project.pointage.length != 0"
+                                    class="dropdown ms-auto me-3">
+                                    <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
+                                        <button data-bs-target="#import-pointage" data-bs-toggle="modal"
+                                            class="dropdown-item fw-medium">
+                                            <i class="ti ti-file-plus me-2"></i> Importer le pointages des employés
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <PointageTable :items="project.pointage" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <NewCaisseProjectModal :project-id="id" />
@@ -590,6 +633,7 @@ watch(item, () => {
             <InvoiceModal :composants="project.facture_composante" :id="project.id" :articles="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Achats' && item.status === 1
                 )" />
+            <PointageEmployeModal :project="project.id" />
         </div>
 
     </div>

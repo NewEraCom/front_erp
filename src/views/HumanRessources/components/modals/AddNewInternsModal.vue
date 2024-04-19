@@ -87,6 +87,14 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
+                            <label for="nameEx" class="form-label">Adresse  <span
+                                    class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="Entre l'adresse " type="text" tabindex="0"
+                                id="nameEx" v-model="formData.adresse" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
                             <label for="nameEx" class="form-label">Adresse mail <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
@@ -119,7 +127,7 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="copie_cin" class="form-label">Copie Cin</label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cin"
-                                name="copie_cin" @change="e => handleFileChange(e, 'cin')" required />
+                                name="copie_cin" @change="e => handleFileChange(e, 'cin')"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -177,14 +185,14 @@ const submit = async () => {
                             <label for="copie_diplome" class="form-label">Copie Diplome<span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_diplome" @change="e => handleFileChange(e, 'copie_diplome')" required />
+                                name="copie_diplome" @change="e => handleFileChange(e, 'copie_diplome')"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="copie_cv" class="form-label">Copie CV <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cv" @change="e => handleFileChange(e, 'cv')" required />
+                                name="copie_cv" @change="e => handleFileChange(e, 'cv')"  />
                         </div>
                     </div>
                     <div class="col-sm-6">

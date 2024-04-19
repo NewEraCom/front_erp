@@ -7,6 +7,7 @@ import DemandeCaisseModal from './DemandeCaisseModal.vue';
 import SuivieModal from './SuivieModal.vue';
 import NewCaisseProjectModal from './NewCaisseProjectModal.vue';
 import NewPreProjectModal from './NewPreProjectModal.vue';
+import PointageEmployeModal from './PointageEmployeModal.vue';
 
 export {
     UploadDocumentModal,
@@ -17,5 +18,6 @@ export {
     DemandeCaisseModal,
     SuivieModal,
     NewCaisseProjectModal,
-    NewPreProjectModal
+    NewPreProjectModal,
+    PointageEmployeModal
 };

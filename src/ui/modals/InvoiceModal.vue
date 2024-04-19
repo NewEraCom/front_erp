@@ -100,6 +100,17 @@ const submit = async () => {
 
   console.log(formData.value.value);
 
+  const file = event.target.files[0];
+  formData.value[index] = file;
+  if (formData.value.value[index]) {
+    formData.value.value[index] = file;
+  } else {
+    formData.value.value[index] = file;
+
+  }
+};
+
+const submit = async () => {
   isLoading.value = true;
   if (!checkArticles(formData.value.service)) {
     isLoading.value = false;
@@ -112,28 +123,31 @@ const submit = async () => {
     return;
   }
 
+  let data = new FormData();
+  data.append('project_id', props.id);
+  data.append('numero', formData.value.numero);
+  data.append('montant', JSON.stringify(formData.value.total));
+  data.append('type', 'client');
+  data.append('date', formData.value.date);
+  data.append('date_echeance', formData.value.date_echeance);
+  data.append('facture_id', formData.value);
+  data.append('qty', JSON.stringify(formData.value.qty));
+  data.append('unite', JSON.stringify(formData.value.unite));
+  data.append('price', JSON.stringify(formData.value.price));
+  data.append('composants', JSON.stringify(props.composants));
+  data.append('articles', JSON.stringify(formData.value.service));
 
-  const fd = new FormData();
-
-  fd.append('project_id', JSON.stringify(props.id));
-  fd.append('numero', JSON.stringify(formData.value.numero));
-  fd.append('montant', JSON.stringify(formData.value.total));
-  fd.append('type', 'client');
-  fd.append('date', JSON.stringify(formData.value.date));
-  fd.append('date_echeance', JSON.stringify(formData.value.date_echeance));
-  fd.append('facture_id', JSON.stringify(formData.value));
-  fd.append('qty', JSON.stringify(formData.value.qty));
-  fd.append('unite', JSON.stringify(formData.value.unite));
-  fd.append('price', JSON.stringify(formData.value.price));
-  fd.append('composants', JSON.stringify(props.composants));
-  fd.append('articles', JSON.stringify(formData.value.service));
-  fd.append('value', JSON.stringify(formData.value.value));
-
-
-
+  // Append files to FormData
+  for (let i = 0; i < formData.value.value.length; i++) {
+    if (formData.value.value[i] instanceof File) {
+      data.append(`value[${i}]`, formData.value.value[i]);
+    } else {
+      data.append(`value[${i}]`, formData.value.value[i]);
+    }
+  }
 
   await finance_service
-    .insertFactureAttachement(fd)
+    .insertFactureAttachement(data)
     .then(() => {
       isLoading.value = false;
       $('#invoice').modal('hide');

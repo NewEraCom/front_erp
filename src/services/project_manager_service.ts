@@ -113,6 +113,7 @@ const getProjectById = async (id: string) => {
       const PMStore = usePMStore();
       PMStore.setProject(response.data.project);
       PMStore.setCaisseProject(response.data.caisse);
+      PMStore.caisse_project_sum = response.data.caisse_sum;
     }
   } catch (error) {
     return Promise.reject(error);
@@ -219,14 +220,14 @@ async function cancel(req: any) {
     console.log(error);
   }
 }
- async function markChiffrageDone(req: string,data: any) {
+async function markChiffrageDone(req: string, data: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().post('chiffrage/close/' + req,data);
+    const response = await api().post('chiffrage/close/' + req, data);
     if (response.status == 200) {
       // PMStore.closeChiffratePreProject(response.data.chiffrage_status);
-      PMStore.preproject.data= response.data.pre_project;
+      PMStore.preproject.data = response.data.pre_project;
       return response.status;
     }
   } catch (error) {
@@ -472,9 +473,22 @@ async function GetCaisseProjectSum(id: any) {
 
 async function createFactureComposant(req: any) {
   const response = await api().post('facture/comp/store', req);
-    if (response.status == 200) {
-      console.log(response.data);
+  if (response.status == 200) {
+    console.log(response.data);
+  }
+}
+
+const PointageEmployeeImport = async (data: any) => {
+  try {
+    const response = await api().post('/projects/insert-pointage', data);
+    if (response.status === 200) {
+      return;
     }
+    throw new Error('Import data failed with status: ' + response.status);
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
 };
 
 export default {
@@ -505,5 +519,11 @@ export default {
   refuser,
   validate,
   getProjects,
-  createFactureComposant
+  createFactureComposant,
+  deleteArticle,
+  addCaisseProject,
+  GetCaisseProjectSum,
+  createPreProject,
+  markChiffrageDone,
+  PointageEmployeeImport
 };

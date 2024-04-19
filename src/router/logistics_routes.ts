@@ -189,5 +189,17 @@ export const logisticsRoutes = [
             // role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },
     },
+    {
+        path: '/Print-Recu',
+        name: 'DetailRecu',
+        component: () => import('@/views/Logistics/components/RecuDecaissementPreview.vue'),
+        props: true,
+        meta: {
+            title: 'Detail Recu',
+            requiresAuth: true,
+
+            // role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
 ];
 
