@@ -31,7 +31,6 @@ const submit = async () => {
     isMessage.value = false;
     isError.value = true;
   });
-
 };
 
 </script>

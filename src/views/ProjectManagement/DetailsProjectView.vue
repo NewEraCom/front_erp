@@ -27,7 +27,7 @@ import {
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
 
-const composants = ref(computed(() => pmStore.composants));
+//const composants = ref(computed(() => pmStore.composants));
 
 const props = defineProps<{
     id: string;
@@ -65,7 +65,7 @@ watch(item, () => {
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
             <div v-if="project && role === 'Chef de projet'">
-                <button v-if="project.facture_composante.length !== 0" class="btn btn-success ms-auto"
+                <button v-if="project.facture_composante.length === 0" class="btn btn-success ms-auto"
                     data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
                     Composants de la facture

@@ -52,6 +52,7 @@ const submit = async () => {
                                 <option value="Attestation de salaire">Attestation de salaire</option>
                                 <option value="Attestation de congé">Attestation de congé</option>
                                 <option value="Solde de tout compte">Solde de tout compte</option>
+                                <option value="Bulletin de paie">Bulletin de paie</option>
                                 <option value="Autre">Autre</option>
                             </select>
                         </div>

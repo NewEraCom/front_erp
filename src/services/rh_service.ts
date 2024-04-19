@@ -416,6 +416,7 @@ const getSousTaraitant = async () => {
         return error;
     }
 };
+
 const addDemandeRh = async (data: any, src: string = 'rh') => {
     try {
         const response = await api().post('/dmnd/insert', data);
@@ -786,6 +787,18 @@ async function DeleteDocIntern(id) {
     }
 }
 
+const downloadFile = async () => {
+    try {
+        const response = await api().get('rh/pointage-file', { responseType: 'blob' });
+        return response;
+
+        throw new Error('Download file failed with status: ' + response.status);
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+};
+
 
 export default {
     getEmployees,
@@ -833,5 +846,6 @@ export default {
     getInternById,
     UploadDocIntern,
     DeleteDocIntern,
-    updateWorker
+    updateWorker,
+    downloadFile
 };

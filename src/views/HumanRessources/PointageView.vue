@@ -3,7 +3,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
-import { PointageTable, AddPointageModal } from './components';
+import { PointageTable, AddPointageModal, ImportPointageModal } from './components';
 
 const rhStore = useRhStore();
 
@@ -38,10 +38,17 @@ watch(pointages, (value) => {
                                 <h5 class="fw-bold mb-1">Pointage</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des pointages</small>
                             </div>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPointage">
-                                <i class="ti ti-clock-plus me-2"></i>
-                                Ajouter un pointage
-                            </button>
+                            <div>
+                                <button class="btn btn-success me-2" data-bs-toggle="modal"
+                                    data-bs-target="#importPointage">
+                                    <i class="ti ti-download me-2"></i>
+                                    Importer
+                                </button>
+                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPointage">
+                                    <i class="ti ti-clock-plus me-2"></i>
+                                    Ajouter un pointage
+                                </button>
+                            </div>
                         </div>
                         <div v-if="pointages" class="card-body border-top pt-4">
                             <PointageTable :pointages="pointages" :custom="true" />
@@ -62,6 +69,7 @@ watch(pointages, (value) => {
             </div>
         </div>
         <AddPointageModal v-if="employees" :employees="employees" source="complex" />
+        <ImportPointageModal />
     </div>
 </template>
 

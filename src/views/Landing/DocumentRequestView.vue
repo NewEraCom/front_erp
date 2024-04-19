@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { NavBar, FooterBar } from './components';
+import { sharedService } from '@/services';
 
 const isMessage = ref(false);
 const isError = ref(false);
@@ -9,12 +10,25 @@ const isLoading = ref(false);
 const formData = ref({
   matricule: '',
   email: '',
-  type_document: '-',
-  type_document_autre: '',
+  title: '-',
+  otherTitle: '',
   commentaire: '',
 });
 
-const submit = () => { };
+const submit = async () => {
+  isLoading.value = true;
+  isMessage.value = true;
+  isError.value = false;
+  await sharedService.addDocumentRh(formData.value).then(() => {
+    isLoading.value = false;
+    isMessage.value = true;
+    isError.value = false;
+  }).catch(() => {
+    isLoading.value = false;
+    isMessage.value = false;
+    isError.value = true;
+  });
+};
 </script>
 
 <template>
@@ -42,8 +56,8 @@ const submit = () => { };
                 <div v-if="isMessage" class="row">
                   <div class="col-12">
                     <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
-                      <span class="alert-icon alert-icon-lg text-danger me-2">
-                        <i class="ti ti-x ti-sm"></i>
+                      <span class="alert-icon alert-icon-lg text-success me-2">
+                        <i class="ti ti-check ti-sm"></i>
                       </span>
                       <div class="d-flex flex-column ps-1">
                         <h5 class="alert-heading mb-2">Demande envoyée avec succès !</h5>
@@ -86,7 +100,7 @@ const submit = () => { };
                     </div>
                     <div class="col-md-12">
                       <label class="form-label" for="type-doc"> Type de document </label>
-                      <select id="type-doc" v-model="formData.type_document" class="form-select">
+                      <select id="type-doc" v-model="formData.title" class="form-select">
                         <option value="-">Selectionner l'objet de la demande</option>
                         <option value="Attestation de travail">Attestation de travail</option>
                         <option value="Attestation de salaire">Attestation de salaire</option>
@@ -95,10 +109,10 @@ const submit = () => { };
                         <option value="Autre">Autre</option>
                       </select>
                     </div>
-                    <div v-if="formData.type_document == 'Autre'" class="col-md-12">
+                    <div v-if="formData.title == 'Autre'" class="col-md-12">
                       <label class="form-label" for="titre-doc"> Titre de document </label>
-                      <input id="titre-doc" v-model="formData.type_document_autre" type="email" class="form-control"
-                        placeholder="johndoe@neweracom.ma" />
+                      <input id="titre-doc" v-model="formData.otherTitle" type="text" class="form-control"
+                        placeholder="Titre de document" />
                     </div>
                     <div class="col-12">
                       <label class="form-label" for="message"> Message </label>

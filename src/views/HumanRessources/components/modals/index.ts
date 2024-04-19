@@ -28,6 +28,7 @@ import LeaveDetailsModal from './LeaveDetailsModal.vue';
 import WorkerDetailsModal from './WorkerDetailsModal.vue';
 import AddDocsInternModal from './AddDocsInternModal.vue';
 import EditWorkerModal from './EditWorkerModal.vue';
+import ImportPointageModal from './ImportPointageModal.vue';
 
 export {
     AddNewEmployeeModal,
@@ -59,6 +60,7 @@ export {
     LeaveDetailsModal,
     WorkerDetailsModal,
     AddDocsInternModal,
-    EditWorkerModal
-    
+    EditWorkerModal,
+    ImportPointageModal
+
 };

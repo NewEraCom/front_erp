@@ -40,6 +40,7 @@ const roles = {
 	RAP: 'Responsable d\'avant projet',
 	MAGASINIER: 'Magasinier',
 	FINANCE: 'Responsable financier',
+	OFFICIER: 'officier de securite'
 };
 
 
@@ -64,6 +65,8 @@ const initialDashboard = (role: string): string => {
 		case roles.BDM:
 		case roles.RAP:
 			return 'DashboardBDM';
+		case roles.OFFICIER:
+			return 'Pointage';
 		default:
 			return '404';
 	}
