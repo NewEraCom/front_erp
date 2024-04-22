@@ -8,6 +8,8 @@ import SuivieModal from './SuivieModal.vue';
 import NewCaisseProjectModal from './NewCaisseProjectModal.vue';
 import NewPreProjectModal from './NewPreProjectModal.vue';
 import PointageEmployeModal from './PointageEmployeModal.vue';
+import ImportPreProjectModal from './ImportPreProjectModal.vue';
+
 
 export {
     UploadDocumentModal,
@@ -19,5 +21,6 @@ export {
     SuivieModal,
     NewCaisseProjectModal,
     NewPreProjectModal,
-    PointageEmployeModal
+    PointageEmployeModal,
+    ImportPreProjectModal
 };

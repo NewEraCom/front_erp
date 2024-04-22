@@ -4,7 +4,7 @@ import { onMounted, ref, computed } from 'vue';
 import { pmService } from '@/services';
 import { usePMStore } from '@/store';
 import { CardTwo, Modal } from '@/ui';
-import { PreProjectTable, NewPreProjectModal } from './components';
+import { PreProjectTable, NewPreProjectModal ,ImportPreProjectModal} from './components';
 
 const PMStore = usePMStore();
 
@@ -72,6 +72,9 @@ onMounted(async () => {
 
     <Modal id="new-avantprojet" title="Nouveau Avant Projet" size="modal-xl">
       <NewPreProjectModal />
+    </Modal>
+    <Modal id="import-avantprojet" title="Import Avant Projet" size="modal-lg">
+      <ImportPreProjectModal />
     </Modal>
 
   </div>

@@ -490,6 +490,23 @@ const PointageEmployeeImport = async (data: any) => {
     return error;
   }
 };
+const  importFromFile = async (req) =>{
+  try {
+    
+      const PMStore = usePMStore();
+
+      const response = await api().post('preprojects/upload', req);
+      if (response.status == 200) {
+        // PMStore.importPreProjects(response.data);
+      PMStore.preproject.data = response.data.pre_projects;
+      PMStore.preproject.data = response.data.stats;
+
+      }
+      return response.status;
+  } catch (error) {
+      console.log(error.response);
+  }
+};
 
 export default {
   getDataManager,
@@ -525,5 +542,6 @@ export default {
   GetCaisseProjectSum,
   createPreProject,
   markChiffrageDone,
-  PointageEmployeeImport
+  PointageEmployeeImport,
+  importFromFile
 };
