@@ -14,10 +14,11 @@ caisse.value = logisticsStore.selectedItem;
 
 let pdfUrl = ref(null);
 
+const today = new Date();
+
 onMounted(() => {
   if (caisse.value && Object.keys(caisse.value).length > 0) {
     generatePDF('printsection');
-    console.log(caisse.value);
   } else {
     router.push({ name: 'Caisse' });
   }
@@ -58,96 +59,92 @@ const generatePDF = (elementId) => {
       </h5>
     </div>
     <div class="row">
-      <div class="col-12 p-0" id="printsection" >
+      <div class="col-12 p-0" id="printsection">
         <div v-if="caisse && !pdfUrl">
-          <div
-           
-            
-            class="card card-border-shadow-primary p-9 m-0"
-            style="height: 90vh"
-          >
-            <img
-              class="img-thumbnail"
-              src="@/assets/img/Header.png"
-              width="100%"
-              height="100%"
-              style="object-fit: contain"
-            />
+          <div class="card card-border-shadow-primary p-9 m-0" style="height: 100vh">
+            <img class="img-thumbnail" src="@/assets/img/Header.png" width="100%" height="100%"
+              style="object-fit: contain" />
             <div class="card-body m-0 p-9" id="body">
-              <div class="row justify-content-between align-items-center mb-2 mt-4 header">
-                <div class="col-6 p-3">
-                  <p class="mb-1 text-dark">
-                    <strong>Recu N° : </strong> {{ 10 }}
-                  </p>
-                  <p class="mb-1 text-dark">
-                    <strong class="text-dark">Date : </strong>
-                    {{ formater.date(caisse.date_operation) }}
-                  </p>
-                  
-                  <p class="mb-1 text-dark">
-                    <strong class="text-dark">Projet : </strong> {{ caisse.project.code }}
-                  </p>
-                </div>
-                <div class="col-6 border border-primary rounded p-2">
-                  <h4 class="font-bold text-dark mb-1" style="font-size: 12px">
-                    {{ caisse.recepteur.first_name + " " + caisse.recepteur.last_name }}
-                  </h4>
-                  <p class="mb-1 text-dark">{{ caisse.recepteur.adresse }}</p>
-                  <p class="mb-1 text-dark">{{ caisse.recepteur.phone }}</p>
-                  <p class="mb-1 text-dark">{{ caisse.recepteur.email }}</p>
-                </div>
+              <div class="col-12 text-center">
+                <h5 class="fw-bold">Recu de reception</h5>
               </div>
-              <div class="row table-responsive text-nowrap">
-                <table class="table striped-table mt-3 my-2">
-                    <thead>
-                        <tr style="background-color: #4e96de !important">
-                            <th scope="col">Emetteur</th>
-                            <th scope="col">Montant</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Date d'operation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{{ caisse.emetteur }}</td>
-                            <td>{{ caisse.montant }} MAD</td>
-                            <td>{{ caisse.type }}</td>
-                            <td>{{ caisse.date_operation}}</td>
-                        </tr>
-                    </tbody>
+              <div class="row">
+                <div class="col-12 d-flex p-3">
+                  <h6 v-if="today" class="me-auto">Date : {{ formater.date(today) }}</h6>
+                  <h6 class="me-auto">No : {{ 202403230 + caisse.id }}</h6>
+                </div>
+                <table class="table">
+                  <thead>
+                    <tr class="bg-secondary">
+                      <th colspan="4" class="text-dark">
+                        <h6 class="mb-0 text-dark fw-bold">Informations sur le récepteur</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="fw-bold">Nom :</th>
+                      <th>{{ caisse.recepteur.last_name }}</th>
+                      <th class="fw-bold">Prenom :</th>
+                      <th>{{ caisse.recepteur.first_name }}</th>
+                    </tr>
+                    <tr>
+                      <th class="fw-bold">Adresse</th>
+                      <th colspan="3">{{ caisse.recepteur.adresse }}</th>
+                    </tr>
+                    <tr>
+                      <th class="fw-bold">Adresse email :</th>
+                      <th>{{ caisse.recepteur.email }}</th>
+                      <th class="fw-bold">Telephone :</th>
+                      <th>{{ caisse.recepteur.phone_no }}</th>
+                    </tr>
+                    <tr>
+                      <th class="fw-bold">Salarié :</th>
+                      <th class="d-flex d-inline">
+                        <div class="d-flex ">
+                          <div class="border border-dark p-2" style="width: 25px;height: 25px;"></div>
+                          <span class="ms-2">Oui</span>
+                        </div>
+                        <div class="d-flex ms-3">
+                          <div class="border border-dark p-2" style="width: 25px;height: 25px;"></div>
+                          <span class="ms-2">Non</span>
+                        </div>
+                      </th>
+                      <th>
+                      </th>
+                      <th></th>
+                    </tr>
+                  </tbody>
                 </table>
-                <div class="mt-3">
-                    <h6 class="text-primary fw-bold">Commentaire</h6>
-                    <p class=" text-dark" >
-                        {{ caisse.comment }}
-                       
-                    </p>
-                </div>
+                <table class="table">
+                  <thead>
+                    <tr class="bg-secondary">
+                      <th colspan="4" class="text-dark">
+                        <h6 class="mb-0 text-dark fw-bold">Details</h6>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th class="fw-bold">Montant :</th>
+                      <th>{{ formater.number(caisse.montant) }} MAD</th>
+                      <th class="fw-bold">Type de transaction :</th>
+                      <th>{{ caisse.type }}</th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div class="row mt-3 w-100 header">
-                <div class="col-md-12 p-2 mt-1">
-                  <p class="text-dark">
-                    Arret du present Recu toutes taxes comprises a la somme de :
-                  </p>
-                  <p class="text-dark fw-bold">
-                    {{
-                      helpers.numberToTextMAD(caisse.montant)
-                    }}
-                  </p>
-                </div>
-                
-              </div>
-              <div class="mt-4 w-100 d-flex flex-row align-items-center justify-content-between">
-                <p>
+              <div class="col-8">
+                <div class="mt-4 w-100 d-flex flex-row align-items-center justify-content-between">
+                  <p>
                     Signé par le Responsable de caisse :
-                </p>
-                <p>
+                  </p>
+                  <p>
                     Signé par le Recepteur :
-                </p>
+                  </p>
+                </div>
               </div>
-            </div>
-            <div class="card-footer footer" style="margin-top: auto">
-              <img class="img-thumbnail" src="@/assets/img/Footer.png" width="100%" height="100%" />
+
             </div>
           </div>
         </div>
@@ -155,7 +152,7 @@ const generatePDF = (elementId) => {
       <div class="col-12">
         <!-- <iframe id="pdfPreview" style="width: 100%; height: 100%;" :src="pdfUrl"></iframe> -->
         <object id="pdfPreview" type="application/pdf" style="width: 100%; height: 900px;" :data="pdfUrl"></object>
-          </div>
+      </div>
     </div>
   </div>
 </template>
@@ -165,7 +162,7 @@ p {
   font-size: 12px;
 }
 
-thead > tr > th {
+thead>tr>th {
   color: #fff !important;
 }
 
@@ -189,7 +186,7 @@ thead > tr > th {
   width: 100% !important;
 }
 
-thead > tr > th {
+thead>tr>th {
   font-size: 10px;
 }
 
