@@ -589,8 +589,7 @@ watch(item, () => {
                         <div class="card card-border-shadow-primary">
                             <div class="d-flex border-bottom align-items-center">
                                 <h5 class="card-header fw-bold">Suivi de pointage</h5>
-                                <div v-if="role === 'Chef de projet' && project.pointage.length != 0"
-                                    class="dropdown ms-auto me-3">
+                                <div v-if="role === 'Chef de projet'" class="dropdown ms-auto me-3">
                                     <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
