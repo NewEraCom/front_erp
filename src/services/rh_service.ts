@@ -814,6 +814,19 @@ const downloadFile = async () => {
     }
 };
 
+const importPointage = async (data: any) => {
+    try {
+        const response = await api().post('rh/pointage-import', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.setPointages(response.data.pointages);
+            return;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
 export default {
     getEmployees,
@@ -863,5 +876,6 @@ export default {
     DeleteDocIntern,
     updateWorker,
     downloadFile,
-    updateAttachement
+    updateAttachement,
+    importPointage
 };

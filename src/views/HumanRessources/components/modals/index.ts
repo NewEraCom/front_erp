@@ -62,6 +62,6 @@ export {
     WorkerDetailsModal,
     AddDocsInternModal,
     EditWorkerModal,
-    AddAttachementInternModal
-    
+    AddAttachementInternModal,
+    ImportPointageModal
 };

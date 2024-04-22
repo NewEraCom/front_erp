@@ -15,7 +15,7 @@ const formData = {
     sexe: '-',
     email: null,
     adresse: null,
-    city: null, 
+    city: null,
     diplome: null,
     poste: null,
     date_start: null,
@@ -87,28 +87,20 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Adresse  <span
-                                    class="text-danger">*</span></label>
-                            <input class="form-control" placeholder="Entre l'adresse " type="text" tabindex="0"
-                                id="nameEx" v-model="formData.adresse" required />
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="mb-3">
                             <label for="nameEx" class="form-label">Adresse mail <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre l'adresse mail" type="email" tabindex="0"
                                 id="nameEx" v-model="formData.email" required />
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Ville <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre la ville de stagiaire" type="text"
                                 tabindex="0" id="nameEx" v-model="formData.city" required />
                         </div>
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-9">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Adresse <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre l'adresse de stagiaire" type="text"
@@ -127,7 +119,7 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="copie_cin" class="form-label">Copie Cin</label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cin"
-                                name="copie_cin" @change="e => handleFileChange(e, 'cin')"  />
+                                name="copie_cin" @change="e => handleFileChange(e, 'cin')" />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -141,8 +133,8 @@ const submit = async () => {
 
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date de naissance <span class="text-danger">*</span>
-                                <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Date de naissance <span
+                                    class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
                                 v-model="formData.birthdate" required />
                         </div>
@@ -167,32 +159,30 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date fin de stage <span
-                                    class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Date fin de stage </label>
                             <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
-                                v-model="formData.date_fin" required />
+                                v-model="formData.date_fin" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Diplome <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Diplôme <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="Entre le poste" type="text" tabindex="0"
                                 v-model="formData.diplome" required />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="copie_diplome" class="form-label">Copie Diplome<span
-                                    class="text-danger">*</span></label>
+                            <label for="copie_diplome" class="form-label">Copie Diplôme</label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_diplome" @change="e => handleFileChange(e, 'copie_diplome')"  />
+                                name="copie_diplome" @change="e => handleFileChange(e, 'copie_diplome')" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="copie_cv" class="form-label">Copie CV <span class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_cv"
-                                name="copie_cv" @change="e => handleFileChange(e, 'cv')"  />
+                                name="copie_cv" @change="e => handleFileChange(e, 'cv')" />
                         </div>
                     </div>
                     <div class="col-sm-6">

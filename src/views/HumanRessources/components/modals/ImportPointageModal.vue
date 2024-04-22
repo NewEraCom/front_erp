@@ -4,6 +4,7 @@ import { Modal } from '@/ui';
 import { rhService } from '@/services';
 import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 
 const isLoading = ref(false);
 
@@ -14,9 +15,27 @@ const formData = ref({
 
 const message = ref(null);
 
+const handleFileChange = (e: any) => {
+    formData.value.file = e.target.files[0];
+};
 
 const submit = async () => {
+    isLoading.value = true;
+    const fd = new FormData();
+    fd.append('file', formData.value.file);
+    fd.append('date', formData.value.date);
 
+    try {
+        await rhService.importPointage(fd);
+        isLoading.value = false;
+        $('#importPointage').modal('hide');
+        toast.success('Pointage importé avec succès');
+    } catch (error) {
+        isLoading.value = false;
+        message.value = error.response.data.message;
+        console.error('Error during action execution', error);
+        toast.error('Erreur lors de l\'importation du pointage');
+    }
 
 };
 
@@ -38,7 +57,7 @@ const downloadFile = async () => {
 </script>
 <template>
     <Modal id="importPointage" title="Importer un liste de pointage" size="modal-md">
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12">
@@ -57,15 +76,16 @@ const downloadFile = async () => {
                                 Fichier a importer
                                 <span class="text-danger font-18">*</span>
                             </label>
-                            <input id="file" :ref="formData.file" class="form-control"
-                                placeholder="Entre le titre de document" type="file" tabindex="0" required />
+                            <input id="file" class="form-control" required @change="e => handleFileChange(e)"
+                                placeholder="Entre le titre de document" type="file" tabindex="0" />
                         </div>
                     </div>
                     <div class="col-sm-12">
                         <p class="text-danger">* Ne modifiez aucune information existante du fichier</p>
                     </div>
                     <div class="col-sm-12">
-                        <button type="button" @click="downloadFile" class="bg-primary p-3 w-100 rounded text-white">
+                        <button type="button" @click="downloadFile"
+                            class="bg-primary p-3 w-100 rounded text-white border-none">
                             <i class="ti ti-download me-2"></i>
                             Télécharger le modèle
                         </button>

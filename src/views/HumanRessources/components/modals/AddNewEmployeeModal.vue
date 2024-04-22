@@ -128,21 +128,16 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="rib" class="form-label">Numéro de RIB
-                                <span class="text-danger">*</span>
-                            </label>
+                            <label for="rib" class="form-label">Numéro de RIB</label>
                             <input id="rib" v-model="formData.rib" class="form-control"
-                                placeholder="Entrer le numero de rib" type="number" tabindex="0" required />
+                                placeholder="Entrer le numero de rib" type="number" tabindex="0" />
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="copie_rib" class="form-label">Copie RIB
-                                <span class="text-danger">*</span>
-                            </label>
+                            <label for="copie_rib" class="form-label">Copie RIB</label>
                             <input id="copie_rib" ref="rib_copie" class="form-control" placeholder="Choisir le fichier"
-                                type="file" tabindex="0" name="copie_rib" required
-                                @change="e => handleFileChange(e, 'rib')" />
+                                type="file" tabindex="0" name="copie_rib" @change="e => handleFileChange(e, 'rib')" />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -161,10 +156,7 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="bank_name" class="form-label">Nom de la banque
-                                <span class="text-danger">*</span>
-                            </label>
-
+                            <label for="bank_name" class="form-label">Nom de la banque</label>
                             <select id="bank_name" v-model="formData.bank_name" class="form-select" required>
                                 <option value="-">Choisir la banque</option>
                                 <option value="CIH">CIH Bank</option>
@@ -248,6 +240,7 @@ const submit = async () => {
                             </select>
                         </div>
                     </div>
+
                     <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="date_start" class="form-label">Date d'embauche
@@ -275,6 +268,7 @@ const submit = async () => {
                                 placeholder="Entre le nombre de jours de congé" type="string" tabindex="0" required />
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">

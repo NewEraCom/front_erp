@@ -27,7 +27,6 @@ const handleFileChange = (e, type) => {
 
 const submit = async () => {
 
-    console.log(formData.value);
     isLoading.value = true;
     await rhService.RuptureContractEmployee(props.id, formData.value).then(() => {
         $('#ruptureContrat').modal('hide');
@@ -45,7 +44,6 @@ const submit = async () => {
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="nameEx" class="form-label">Date de depart <span
@@ -53,14 +51,11 @@ const submit = async () => {
                             <input type="date" class="form-control" v-model="formData.date_depart">
                         </div>
                     </div>
-
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="copie_rib" class="form-label">Attachement
-                                <span class="text-danger">*</span>
-                            </label>
+                            <label for="copie_rib" class="form-label">Attachement</label>
                             <input id="copie_rib" ref="copie_cnss" class="form-control" placeholder="Choisir le fichier"
-                                type="file" tabindex="0" name="copie_cnss" required
+                                type="file" tabindex="0" name="copie_cnss"
                                 @change="e => handleFileChange(e, 'attachement')" />
                         </div>
                     </div>
@@ -72,7 +67,6 @@ const submit = async () => {
                                 v-model="formData.commentaire"></textarea>
                         </div>
                     </div>
-
                 </div>
             </div>
             <div class="modal-footer">
