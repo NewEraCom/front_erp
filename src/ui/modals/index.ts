@@ -11,5 +11,5 @@ export {
     NewPurchaseOrderModal,
     NewServiceModal,
     InvoiceModal,
-    InvoiceTable
+    InvoiceTable,
 };

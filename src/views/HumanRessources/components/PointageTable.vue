@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { DataTable, Modal } from '@/ui';
+import { DataTable } from '@/ui';
+// import { utils, writeFile } from 'xlsx';
+// import * as XLSX from 'xlsx';
+import { helpers } from '@/utils';
 
 const props = defineProps({
     pointages: {
@@ -64,6 +67,58 @@ const filter = () => {
             (!endQuery.value || new Date(item.date_pointage) <= new Date(endQuery.value));
     });
 };
+// const downloadFile = async () => {
+//     try {
+//         isLoading.value = true;
+//         const data = props.pointages.map(item => {
+//             return headers.reduce((acc, header) => {
+//                 if (header.isComplex) {
+//                     acc[header.text] = item[header.value].first_name + ' ' + item[header.value].last_name;
+//                 } else {
+//                     acc[header.text] = item[header.value];
+//                 }
+//                 return acc;
+//             }, {});
+//         });
+//         const ws = utils.json_to_sheet(data);
+//         const wb = utils.book_new();
+//         utils.book_append_sheet(wb, ws, 'Sheet1');
+//         writeFile(wb, 'output.xlsx');
+//         isLoading.value = false;
+//     } catch (error) {
+//         isLoading.value = false;
+//         console.log(error);
+//     }
+// };
+
+// const downloadFile = async () => {
+//     try {
+//         const data = filteredData.value.map(item => {
+//     let exportedItem = {};
+//     headers.forEach(header => {
+//       if (header.isComplex && header.type === 'leave') {
+//         exportedItem[header.text] = item[header.value].first_name + ' ' + item[header.value].last_name;
+//       } else {
+//         exportedItem[header.text] = item[header.value];
+//       }
+//     });
+//     return exportedItem;
+//   });
+
+//   const ws = XLSX.utils.json_to_sheet(data);
+//   const wb = XLSX.utils.book_new();
+//   XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+//   XLSX.writeFile(wb, 'output.xlsx');
+//     } catch (error) {
+//         isLoading.value = false;
+//         console.log(error);
+//     }
+// };
+const downloadFile = () => {
+    helpers.ExportData();
+};
+
+
 
 </script>
 <template>
@@ -92,7 +147,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#details-modal">
+                    <button class="btn btn-success"   @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
@@ -101,9 +156,9 @@ const filter = () => {
         </div>
         <DataTable :items="filteredData" :headers="headers" :page-size=itemPerPage :actionsConfig="actionsConfig"
             button-type="custom" disabled="true" />
+        </div>
 
-    </div>
-</template>
+    </template>
 <style>
 .w-240 {
     width: 240px;
@@ -115,4 +170,5 @@ const filter = () => {
     z-index: 10000;
     /* Adjust as needed */
 }
+
 </style>

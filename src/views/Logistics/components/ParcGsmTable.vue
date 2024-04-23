@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
 import router from '@/router';
 import { useLogisticsStore } from '@/store';
 
@@ -62,7 +62,9 @@ const filter = () => {
     });
 
 };
-
+const downloadFile = () => {
+    helpers.ExportData();
+};
 </script>
 
 <template>
@@ -99,7 +101,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

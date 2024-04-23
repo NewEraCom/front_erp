@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import router from '@/router';
+import { helpers } from '@/utils';
 
 const props = defineProps({
     purchaseOrders: {
@@ -40,7 +41,9 @@ const filter = () => {
     });
 
 };
-
+const downloadFile = () => {
+    helpers.ExportData();
+};
 </script>
 
 <template>
@@ -53,13 +56,14 @@ const filter = () => {
                     <div class="d-flex align-items-center ms-auto">
                         <label for="">Afficher</label>
                         <select v-model="itemPerPage" name="" class="form-select ms-2 me-2 w-120">
+                            <option value="1">1</option>
                             <option value="15">15</option>
                             <option value="30">30</option>
                             <option value="45">45</option>
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

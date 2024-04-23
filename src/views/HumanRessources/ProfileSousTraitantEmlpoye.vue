@@ -180,7 +180,7 @@ const getFileUrl = (attachment) => {
 
                                         <h4 class="mb-1 fw-bold text-warning">
                                             {{ worker.project.code }}
-                                            <small>MAD</small>
+                                            
                                         </h4>
 
                                         <h6 class="mb-1 fw-bold">

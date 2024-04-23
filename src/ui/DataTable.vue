@@ -353,7 +353,7 @@ const getFileUrl = (attachment) => {
                         </td>
                     </template>
 
-                    <td v-if="buttonType == 'simple'" class="text-center">
+                    <td v-if="buttonType == 'simple'" class="text-center" id="action-column">
                         <button v-for="  action   in   actionsConfig  " :key="action.icon" class="btn me-2"
                             :class="action.type == 'delete' ? (item.status == disabled ? action.class : 'btn btn-secondary btn-sm') : action.class"
                             @click="action.onClick(item)"
@@ -363,7 +363,7 @@ const getFileUrl = (attachment) => {
                             <i v-else :class="action.icon"></i>
                         </button>
                     </td>
-                    <td v-else class="text-center">
+                    <td v-else class="text-center" id="action-column">
                         <div class="dropdown" v-if="actionsConfig.length > 0">
                             <button class="btn p-0" type="button" id="earningReportsId" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">

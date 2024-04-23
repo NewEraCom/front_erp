@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { useRhStore } from '@/store';
+import { helpers } from '@/utils';
 
 const props = defineProps({
     interns: {
@@ -66,7 +67,9 @@ const filter = () => {
     });
 
 };
-
+const downloadFile = () => {
+    helpers.ExportData();
+};
 </script>
 <template>
     <div>
@@ -92,7 +95,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

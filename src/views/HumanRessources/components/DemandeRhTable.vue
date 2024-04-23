@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater, exportToExcel } from '@/utils';
+import { formater, exportToExcel, helpers } from '@/utils';
 import { useRhStore } from '@/store';
 
 const props = defineProps({
@@ -63,8 +63,11 @@ const filter = () => {
 
 };
 
-const exportData = () => {
-    exportToExcel(filteredData.value);
+// const exportData = () => {
+//     exportToExcel(filteredData.value);
+// };
+const downloadFile = () => {
+    helpers.ExportData();
 };
 
 </script>
@@ -103,7 +106,7 @@ const exportData = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" @click="exportData">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

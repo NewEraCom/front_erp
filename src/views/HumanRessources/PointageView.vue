@@ -5,6 +5,7 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { PointageTable, AddPointageModal, ImportPointageModal } from './components';
 
+
 const rhStore = useRhStore();
 
 const pointages = ref(computed(() => rhStore.pointages));
@@ -70,6 +71,7 @@ watch(pointages, (value) => {
         </div>
         <AddPointageModal v-if="employees" :employees="employees" source="complex" />
         <ImportPointageModal />
+        
     </div>
 </template>
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
 
 const props = defineProps({
     cachets: {
@@ -48,7 +48,9 @@ const filter = () => {
             (!endQuery.value || formater.startOfDay(item.created_at) <= formater.startOfDay(endQuery.value));
     });
 };
-
+const downloadFile = () => {
+    helpers.ExportData();
+};
 </script>
 <template>
     <div>
@@ -83,7 +85,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>
