@@ -1,20 +1,23 @@
 <script setup>
-import { ref, watch, computed } from 'vue';
-import { useFinanceStore } from '@/store';
-import html2pdf from 'html2pdf.js';
-import { helpers } from '@/utils';
-import { useRouter } from 'vue-router';
-import { UpdateFacture } from '.';
-import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import { ref, watch, computed } from 'vue'
+import { useFinanceStore } from '@/store'
+import html2pdf from 'html2pdf.js'
+import { helpers } from '@/utils'
+import { useRouter } from 'vue-router'
+import { UpdateFacture } from '.'
+import JSZip from 'jszip'
+import { saveAs } from 'file-saver'
+import RejectModal from '@/ui/modals/RejectModal.vue'
+import finance_service from '@/services/finance_service'
 
-const router = useRouter();
+const router = useRouter()
 
 const getFileUrl = (attachment) => {
-  return helpers.baseUrl() + `${attachment}`;
-};
-const FinanceStore = useFinanceStore();
-const updateModal = 'update-facture';
+  return helpers.baseUrl() + `${attachment}`
+}
+const FinanceStore = useFinanceStore()
+const updateModal = 'update-facture'
+const rejectModal = 'rejeter-modal'
 
 // const props = defineProps({
 //     id: {
@@ -23,47 +26,51 @@ const updateModal = 'update-facture';
 //     }
 // });
 const formatDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return date.toLocaleDateString('fr-FR', options);
-};
+  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  return date.toLocaleDateString('fr-FR', options)
+}
 const addOneMonth = (date) => {
-  const newDate = new Date(date);
-  newDate.setMonth(date.getMonth() + 1);
-  return newDate;
-};
+  const newDate = new Date(date)
+  newDate.setMonth(date.getMonth() + 1)
+  return newDate
+}
 
-const facture = ref(computed(() => FinanceStore.print_facture));
-const articles = ref(computed(() => FinanceStore.print_articles));
+const facture = ref(computed(() => FinanceStore.print_facture))
+const articles = ref(computed(() => FinanceStore.print_articles))
+const facture_attachement = ref(computed(() => FinanceStore.print_facture_attachement))
 
-const comment = ref(computed(() => FinanceStore.comment));
-const objet = ref(computed(() => FinanceStore.objet));
+const comment = ref(computed(() => FinanceStore.comment))
+const objet = ref(computed(() => FinanceStore.objet))
 
-console.log(facture.value);
-console.log(articles.value);
+console.log(facture.value)
+console.log(articles.value)
 
 watch([() => facture.value, () => articles.value], () => {
   if (facture.value === null && articles.value === null) {
     router.push({
       name: 'FnFacture'
-    });
+    })
   }
-});
+})
 const Submit = () => {
-  generatePDF('printsection');
-};
-let pdfUrl = ref(null);
+  generatePDF('printsection')
+}
+
+const uploadsUrl = import.meta.env.VITE_UPLOADS_URL;
+
+let pdfUrl = ref(null)
 const generatePDF = (elementId) => {
-  console.log('PRINTING');
-  const element = document.getElementById(elementId);
-  const childElement = element.querySelector('.card.card-border-shadow-primary');
-  const iframe = document.getElementById('pdfPreview');
+  console.log('PRINTING')
+  const element = document.getElementById(elementId)
+  const childElement = element.querySelector('.card.card-border-shadow-primary')
+  const iframe = document.getElementById('pdfPreview')
 
   // Remove the classes before printing
-  element.classList.replace('col-xl-9', 'col-md-12');
-  element.classList.add('p-3');
+  element.classList.replace('col-xl-9', 'col-md-12')
+  element.classList.add('p-3')
   if (childElement) {
-    childElement.classList.remove('card');
-    childElement.classList.remove('card-border-shadow-primary');
+    childElement.classList.remove('card')
+    childElement.classList.remove('card-border-shadow-primary')
   }
 
   const opt = {
@@ -72,7 +79,7 @@ const generatePDF = (elementId) => {
     image: { type: 'jpeg', quality: 0.98 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-  };
+  }
 
   html2pdf()
     .set(opt)
@@ -80,47 +87,52 @@ const generatePDF = (elementId) => {
     .toPdf()
     .get('pdf')
     .then(function (pdf) {
-      iframe.src = pdf.output('datauristring');
-      pdfUrl.value = pdf.output('datauristring');
+      iframe.src = pdf.output('datauristring')
+      pdfUrl.value = pdf.output('datauristring')
     })
     .then(function () {
       // Add the classes back after printing
       if (childElement) {
-        childElement.classList.add('card');
-        childElement.classList.add('card-border-shadow-primary');
+        childElement.classList.add('card')
+        childElement.classList.add('card-border-shadow-primary')
       }
-    });
-};
+    })
+}
 const downloadAllAttachments = async () => {
-  const zip = new JSZip();
+  const zip = new JSZip()
   const promises = facture.value.facture_attachement.map(async (attachment, index) => {
     if (attachment.composent.type === 'file') {
-      const url = getFileUrl(attachment.value);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `attachment_${index}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      const url = getFileUrl(attachment.value)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = `attachment_${index}`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
     } else {
-      zip.file(`attachment_${index}.txt`, attachment.value);
+      zip.file(`attachment_${index}.txt`, attachment.value)
     }
-  });
+  })
 
-  await Promise.all(promises);
+  await Promise.all(promises)
 
-  const content = await zip.generateAsync({ type: 'blob' });
-  saveAs(content, 'attachments.zip');
-};
+  const content = await zip.generateAsync({ type: 'blob' })
+  saveAs(content, 'attachments.zip')
+}
 const total = computed(() => {
-      return articles.value.reduce((total, item) => {
-        return total + item.article.quantite * item.article.prix_ht * 1.2;
-      }, 0);
-    });
+  return articles.value.reduce((total, item) => {
+    return total + item.article.quantite * item.article.prix_ht * 1.2
+  }, 0)
+})
 
-    const totalInWords = computed(() => {
-      return helpers.numberToTextMAD(total.value);
-    });
+const totalInWords = computed(() => {
+  return helpers.numberToTextMAD(total.value)
+})
+
+const Valide = async () => {
+  await finance_service.ValidStatus(facture.value.id)
+}
+
 </script>
 
 <template>
@@ -164,6 +176,8 @@ const total = computed(() => {
                   ><br />
                   <span><strong>Projet :</strong>{{ facture.project.code }}</span
                   ><br />
+                  <span><strong>Status :</strong>{{ facture.status.toUpperCase() }}</span
+                  ><br />
                 </div>
                 <div class="col-md-6 flex-item fs-6 border border-primary p-3">
                   <!-- <h5 class="text-primary">Client</h5> -->
@@ -197,11 +211,11 @@ const total = computed(() => {
                   <tr v-for="items in articles" :key="items.id">
                     <td>{{ items.article.article }}</td>
                     <td>{{ items.article.type }}</td>
-                    <td>{{ items.article.quantite }}</td>
+                    <td>{{ items.qte }}</td>
                     <td>{{ items.article.prix_ht }} MAD</td>
                     <td>{{ items.article.prix_ttc }} MAD</td>
                     <td>
-                      {{ items.article.quantite * items.article.prix_ht }}
+                      {{ items.qte * items.article.prix_ht }}
                       MAD
                     </td>
                   </tr>
@@ -215,7 +229,7 @@ const total = computed(() => {
                     <td id="totalAmount" style="text-align: right; border: 1px solid">
                       {{
                         articles.reduce((total, item) => {
-                          return total + item.article.quantite * item.article.prix_ht
+                          return total + item.qte * item.article.prix_ht
                         }, 0)
                       }}
                       MAD
@@ -230,7 +244,7 @@ const total = computed(() => {
                     <td id="totalAmount" style="text-align: right; border: 1px solid">
                       {{
                         articles.reduce((total, item) => {
-                          return total + item.article.quantite * item.article.prix_ht * 0.2
+                          return total + item.qte * item.article.prix_ht * 0.2
                         }, 0)
                       }}
                       MAD
@@ -245,11 +259,37 @@ const total = computed(() => {
                     <td id="totalAmount" style="text-align: right; border: 1px solid">
                       {{
                         articles.reduce((total, item) => {
-                          return total + item.article.quantite * item.article.prix_ht * 1.2
+                          return total + item.qte * item.article.prix_ht * 1.2
                         }, 0)
                       }}
                       MAD
                     </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="row flex-item m-2 mt-4">
+                <div style="display: flex; align-items: center">
+                  <h4 class="text-primary">Facture attachements</h4>
+                </div>
+              </div>
+              <table class="table table-bordered mt-2 my-2" id="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Label</th>
+                    <th scope="col">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="items in facture_attachement" :key="items.id">
+                    <td>{{ items.composent.label }}</td>
+                    <td
+                      v-if="items.composent.type === 'file'"
+                    >
+                      <a :href="`${uploadsUrl}storage/`+items.value" style="max-width: 200px;color: white">{{
+                        items.value
+                      }}</a>
+                    </td>
+                    <td v-else style="max-width: 200px">{{ items.value }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -263,11 +303,7 @@ const total = computed(() => {
               <div class="col-md-12 p-2 mt-1">
                 <p>Arret du present bon de commande toutes taxes comprises a la somme de :</p>
                 <p class="fw-bold">
-                  {{
-                    
-                    totalInWords
-                    
-                  }}
+                  {{ totalInWords }}
                 </p>
                 <p class="fs-6">*Disponibilité :</p>
                 <p class="fs-6">*Facture devra etre accompagnée d'une copie du BC :</p>
@@ -288,6 +324,24 @@ const total = computed(() => {
       </div>
 
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
+        <div class="card card-border-shadow-primary mb-4">
+          <div class="card-body">
+            <button
+              class="btn btn-label-success d-grid w-100 mb-2 waves-effect d-flex"
+              @click="Valide()"
+            >
+              <i class="ti ti-check me-2"></i> Valider la facture
+            </button>
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#rejeter-modal"
+              class="btn btn-label-danger d-grid w-100 mb-2 waves-effect d-flex"
+            >
+              <i class="ti ti-trash me-2"></i> Rejeter la facture
+            </button>
+          </div>
+        </div>
+
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">
             <button
@@ -325,6 +379,7 @@ const total = computed(() => {
     ></iframe>
 
     <UpdateFacture :id="updateModal" />
+    <RejectModal :id="rejectModal" />
   </div>
 </template>
 

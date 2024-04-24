@@ -15,8 +15,6 @@ import DemandeRhRequestModal from './DemandeRhRequestModal.vue';
 import EditSousTraitantModal from './EditSousTraitantsModal.vue';
 import PurchaseOrderTable from './PurchaseOrderTable.vue';
 import AddFournisseurModal from './AddFournisseurModal.vue';
-import ValidateCaisseTable from './ValidateCaisseTable.vue';
-import DetailsCaisseProjectModal from './DetailsCaisseProjectModal.vue';
 
 export {
     ModalReserve,
@@ -36,6 +34,4 @@ export {
     EditSousTraitantModal,
     PurchaseOrderTable,
     AddFournisseurModal,
-    ValidateCaisseTable,
-    DetailsCaisseProjectModal
 };

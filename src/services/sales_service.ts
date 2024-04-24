@@ -69,15 +69,6 @@ const getFacturesClient = async () => {
     return Promise.reject(error);
   }
 };
-const insertFacturesClient = async (data:any) => {
-  try {
-    const response = await api().post('/facture/client/insert',data);
-    const salesStore = useSalesStore();
-    salesStore.invoices.data.push(response.data.factures);
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
 async function ValidateArticle(id: number, data: any) {
   try {
     const salesStore = useSalesStore();
@@ -159,7 +150,6 @@ const insertTableComperatif = async (data) => {
     return false;
   }
 };
-
 const ValidateTableComperatif = async (id, data) => {
   try {
     const res = await api().post('purchase/valid-demande-achat/' + id, data);
@@ -172,28 +162,6 @@ const ValidateTableComperatif = async (id, data) => {
   } catch (e) {
     console.log(e);
     return false;
-  }
-};
-
-const validatePurchaseOrder = async (formData: any) => {
-  try {
-    const response = await api().post('/purchase/validate-do', formData);
-    //pmStore.updatePurchaseOrder(response.data.purchase);
-  } catch (error) {
-    return Promise.reject(error);
-  }
-};
-
-const newSuivieProject = async (req: any) => {
-  try {
-    const PMStore = usePMStore();
-
-    const response = await api().post('projects/new-suivie', req);
-    if (response.status === 200) {
-      //PMStore.setProject(response.data.project);
-    }
-  } catch (error) {
-    return Promise.reject(error);
   }
 };
 
@@ -211,8 +179,5 @@ export default {
   getBonDeCommandeById,
   insertTableComperatif,
   getCaisseOperation,
-  ValidateTableComperatif,
-  validatePurchaseOrder,
-  newSuivieProject,
-  insertFacturesClient
+  ValidateTableComperatif
 };

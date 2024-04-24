@@ -2,7 +2,6 @@
 import { ref, computed, watch } from 'vue';
 import { formater, helpers } from '@/utils';
 
-const role = localStorage.getItem('role');
 type Item = {
     [key: string]: any; // This allows any number of properties with any type
 }
@@ -94,11 +93,7 @@ watch(() => props.pageSize, () => {
     currentPage.value = 1;
 });
 
-const getFileUrl = (attachment) => {
-    console.log(attachment);
 
-    return helpers.baseUrl() + `uploads/${attachment}`;
-};
 </script>
 
 <template>
@@ -148,7 +143,7 @@ const getFileUrl = (attachment) => {
                         name: 'PreProjectDetail',
                         params: { id: item.id }
                     }">
-                                <h6 class="mb-1 text-primary fw-bold">{{ item.maitre_ouvrage }}</h6>
+                                <h6 class=" fw-bold">{{ item.maitre_ouvrage }}</h6>
                             </router-link>
                             <small class="fw-bold text-muted">
                                 Code : {{ helpers.limitedClientName(item.project_code) }}
@@ -159,27 +154,17 @@ const getFileUrl = (attachment) => {
                         </td>
                         <td v-if="header.isComplex && header.type === 'preproject'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <h6 class="mb-1 fw-bold">{{ item.pre_project.maitre_ouvrage }}</h6>
+                            <!-- <h6 class="mb-1 fw-bold">{{ item.name }}</h6> -->
                             <small class="fw-bold text-muted">Code : {{ item.pre_project.project_code }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'leave'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
-                            <div v-if="role == helpers.roles.RH">
-
-                                <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
-                                    <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
-                        item.employe.last_name
-                                        }}</h6>
-                                </router-link>
-                                <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
-                            </div>
-                            <div v-else>
+                            <router-link :to="{ name: 'ProfileEmployee', params: { id: item.employe.id } }">
                                 <h6 class="mb-1 fw-bold text-primary">{{ item.employe.first_name + ' ' +
                         item.employe.last_name
                                     }}</h6>
-                                <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
-
-                            </div>
+                            </router-link>
+                            <small class="fw-bold text-muted">Matricule : {{ item.employe.matricule }}</small>
                         </td>
                         <td v-if="header.isComplex && header.type === 'SousTraitant'"
                             :class="index == 0 ? 'text-start' : 'text-center'">
@@ -216,12 +201,6 @@ const getFileUrl = (attachment) => {
                                 </span>
                                 <span v-if="header.type === 'text'">
                                     {{ formater.limitText(String(item[header.value]), 40) }}
-                                </span>
-                                <span v-if="header.type === 'jours'">
-                                    {{ formater.limitText(String(item[header.value]), 40) }} Jrs
-                                </span>
-                                <span v-if="header.type === 'item'">
-                                    {{ item.item.designation }}
                                 </span>
                                 <span v-if="header.type === 'project'">
                                     {{ item.project.code }}
@@ -268,10 +247,9 @@ const getFileUrl = (attachment) => {
                                 </span>
                                 <span v-if="header.type === 'attachement'">
                                     <small v-if="item[header.value] == '-'">Aucun Attachement</small>
-                                    <a v-else class="btn btn-label-primary btn-sm" target="_blank"
-                                        :href="getFileUrl(item[header.value])">
+                                    <button v-else class="btn btn-label-primary btn-sm">
                                         <i class="ti ti-download me-2"></i> Télécharger l'attachement
-                                    </a>
+                                    </button>
                                 </span>
                                 <span v-if="header.type === 'stock'">
                                     <span :class="helpers.returnStockAlert(item[header.value], item.alert)[0]">
@@ -323,9 +301,6 @@ const getFileUrl = (attachment) => {
                                     <small class="fw-bold text-muted">Numéro RC : {{ item.num_rc ?? 'N/A' }}</small>
                                 </span>
 
-                                <span v-if="header.type == 'percentage'">
-                                    {{ formater.number((item.suivie / item.qte) * 100) }} %
-                                </span>
                                 <span v-if="header.type === 'test'">
                                     {{ item }}
                                 </span>

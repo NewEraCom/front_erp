@@ -52,8 +52,8 @@ onMounted(() => {
                   </div>
                   <div class="flex-grow-1">
                     <span class="fw-medium d-block">{{
-    user.employee.first_name + ' ' + user.employee.last_name
-  }}</span>
+                      user.employee.first_name + ' ' + user.employee.last_name
+                    }}</span>
                     <small class="text-muted">
                       {{ user.employee.poste }}
                     </small>

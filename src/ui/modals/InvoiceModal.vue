@@ -36,8 +36,8 @@ const formData = ref({
   unite: [],
   price: [],
   total: [],
-  articles: [],
-  article_id: [],
+  articles: [], 
+  article_id:[],
   composants: [],
   value: [],
 });
@@ -93,7 +93,14 @@ const checkArticles = (articles) => {
 };
 
 const handleFileChange = (event, index) => {
-  formData.value.value[index] = event.target.files[0];
+  const file = event.target.files[0];
+  formData.value[index] = file;
+  if (formData.value.value[index]) {
+    formData.value.value[index] = file;
+  } else {
+    formData.value.value[index] = file;
+
+  }
 };
 
 const submit = async () => {
@@ -151,12 +158,11 @@ const submit = async () => {
       <div class="modal-body">
         <div class="border p-3 rounded">
           <div class="row">
-            <div class="col-6 mb-2" v-for="(composant, index) in props.composants" :key="composant.id">
-              <div class="mb-3">
-                <label for="" class="mb-3">{{ composant.label }}</label>
-                <input v-if="composant.type === 'file'" @change="handleFileChange($event, index)" type="file"
-                  class="form-control" />
-                <input v-else v-model="formData.value[index]" :type="composant.type" class="form-control" />
+            <div class="col-6 mb-2" v-for="(composant,index) in props.composants">
+              <div class="col-12">{{ composant.label }}</div>
+              <div class="col-12">
+                <input v-if="composant.type === 'file'" @change="handleFileChange($event, index)" type="file" class="form-control"/>
+                <input v-else v-model="formData.value[index]" :type="composant.type" class="form-control"/>
               </div>
             </div>
           </div>
@@ -168,9 +174,12 @@ const submit = async () => {
               <div class="row w-100 p-3">
                 <div class="col-md-4 col-12 mb-md-0 mb-3">
                   <p class="mb-2 repeater-title">Article {{ item }}</p>
-                  <select v-model="formData.service[item]" class="form-select item-details mb-3"
-                    @change="changeValue(formData.service[item], item)">
-                    <option value="-">Sélectionner un article</option>
+                  <select
+                    v-model="formData.service[item]"
+                    class="form-select item-details mb-3"
+                    @change="changeValue(formData.service[item], item)"
+                  >
+                    <option value="-" >Sélectionner un article</option>
                     <option v-for="(item, index) in props.articles" :key="index" :value="item">
                       {{ item.article }}
                     </option>
@@ -178,13 +187,23 @@ const submit = async () => {
                 </div>
                 <div class="col-md-2 col-12 mb-md-0 mb-3">
                   <p class="mb-2 repeater-title">Qty</p>
-                  <input id="qteInput" v-model="formData.qty[item]" type="number" class="form-control invoice-item-qty"
-                    placeholder="1" min="1" :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)"
-                    required />
-                  <small class="text-muted" v-if="formData.service[item]?.qte_restant">Quantite restante:
+                  <input
+                    id="qteInput"
+                    v-model="formData.qty[item]"
+                    type="number"
+                    class="form-control invoice-item-qty"
+                    placeholder="1"
+                    min="1"
+                    :max="formData.service[item]?.qte_restant"
+                    @input="changeQuantity(item)"
+                    required
+                  />
+                  <small class="text-muted" v-if="formData.service[item]?.qte_restant"
+                    >Quantite restante:
                     {{
-      formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant : 0
-    }}</small>
+                      formData.service[item]?.qte_restant ? formData.service[item]?.qte_restant : 0
+                    }}</small
+                  >
                 </div>
                 <div class="col-md-2 col-12 pe-0">
                   <p class="mb-2 repeater-title">Unite</p>
@@ -192,14 +211,22 @@ const submit = async () => {
                 </div>
                 <div class="col-md-2 col-12 pe-0">
                   <p class="mb-2 repeater-title">Prix Unitaire</p>
-                  <p class="mb-0" v-html="(formData.price[item] ? formData.price[item] : '0') + ' MAD'"></p>
+                  <p
+                    class="mb-0"
+                    v-html="(formData.price[item] ? formData.price[item] : '0') + ' MAD'"
+                  ></p>
                 </div>
                 <div class="col-md-2 col-12 pe-0">
                   <p class="mb-2 repeater-title">Prix Total</p>
-                  <p class="mb-0" v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'"></p>
+                  <p
+                    class="mb-0"
+                    v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'"
+                  ></p>
                 </div>
               </div>
-              <div class="d-flex flex-column align-items-center justify-content-between border-start p-2">
+              <div
+                class="d-flex flex-column align-items-center justify-content-between border-start p-2"
+              >
                 <i class="ti ti-x cursor-pointer" @click="removeItem(item)"></i>
               </div>
             </div>

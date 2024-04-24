@@ -10,9 +10,6 @@ const props = defineProps({
 
 
 const isLoading = ref(false);
-const client = ref();
-const montant = ref();
-const commentaire = ref();
 
 const method = async () => {
     isLoading.value = true;

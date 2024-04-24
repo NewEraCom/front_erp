@@ -2,16 +2,14 @@
 import { watch, ref, computed, onMounted } from 'vue';
 import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css';
-import { rhService, sharedService } from '@/services';
-import { useSharedStore, useRhStore } from '@/store';
+import { sharedService } from '@/services';
+import { useSharedStore } from '@/store';
 import { ModalReserve, EventModal } from './components';
 
 const sharedStore = useSharedStore();
-const rhStore = useRhStore();
 
 const minDate = new Date();
 const events = ref(computed(() => sharedStore.events));
-const employees = ref(computed(() => rhStore.employees));
 const dataEvents = ref(events.value);
 
 const onEventClick = (event: any) => {
@@ -25,7 +23,6 @@ watch(events, () => {
 
 onMounted(async () => {
   sharedService.getEvent('reservation');
-  rhService.getEmployees();
 });
 
 </script>
@@ -53,7 +50,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <ModalReserve v-if="employees" type="reservation" title="Réserver la salle de réunion" :employees="employees" />
+    <ModalReserve type="reservation" title="Réserver la salle de réunion" />
     <EventModal />
   </div>
 </template>

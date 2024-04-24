@@ -35,7 +35,6 @@ import { TheSideBar, TheTopBar, LogoutModal } from '@/ui';
     background: #f1f1f1;
 }
 
-
 @media (max-width: 1458px) {
     .sidebar {
         display: none;
@@ -43,7 +42,7 @@ import { TheSideBar, TheTopBar, LogoutModal } from '@/ui';
     }
 
     .layout-page {
-        margin-left: 75px;
+        margin-left: 0px;
     }
 }
 </style>

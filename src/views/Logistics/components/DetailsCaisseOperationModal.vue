@@ -3,16 +3,12 @@ import { ref, computed } from 'vue';
 import { Modal } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { formater } from '@/utils';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+
 const logisticsStore = useLogisticsStore();
 
 
 const selectedOperation = ref(computed(() => logisticsStore.selectedItem));
 
-const PrintRecu = () => {
-    router.push({ name: 'DetailRecu'});
-};
 </script>
 
 <template>
@@ -48,9 +44,6 @@ const PrintRecu = () => {
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-label-outline-primary" 
-            data-bs-dismiss="modal" @click="PrintRecu()" 
-            v-if=" selectedOperation && selectedOperation.status == 'on going'">Imprimer le recu</button>
             <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">Fermer</button>
         </div>
     </Modal>

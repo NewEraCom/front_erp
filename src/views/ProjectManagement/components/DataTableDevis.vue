@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import { usePMStore } from '@/store';
 
 const props = defineProps({
     data: {
@@ -10,7 +9,6 @@ const props = defineProps({
         required: true,
     },
 });
-const pmStore = usePMStore();
 
 const headers = [
     { text: 'Article', value: 'article', type: 'text' },
@@ -24,9 +22,7 @@ const headers = [
 
 const actionsConfig = [
     {
-        icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
-            pmStore.setSelectedItem(item);
-            $('#delete-chiffrage').modal('show');
+        icon: 'ti ti-recycle', class: 'btn btn-danger btn-sm', onClick: (item: any) => {
         },
     },
 ];

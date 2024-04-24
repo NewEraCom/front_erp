@@ -377,11 +377,6 @@ const DeleteDoc = async () => {
                         <div class="card card-action card-border-shadow-primary">
                             <div class="card-header align-items-center">
                                 <h5 class="card-action-title mb-0">Historique</h5>
-                                <button class="btn btn-primary btn-sm">
-                                    <i class="ti ti-paperclip me-2"></i>
-                                    Affecter a nouveau projet
-                                </button>
-
                             </div>
                             <div v-if="employee.projects != null && employee.projects.length != 0"
                                 class="card-body pb-0">

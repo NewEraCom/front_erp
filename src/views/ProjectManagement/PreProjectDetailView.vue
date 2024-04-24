@@ -276,7 +276,7 @@ const deleteArticles = async () => {
                                   <button class="dropdown-item fw-bold" data-bs-target="#set-number_file"
                                     data-bs-toggle="modal" @:click="fillInputIdDoc(file.id)">
                                     <i class="ti ti-file-diff me-2" />
-                                    Définir le nombre de fichier
+                                    Définir le number de fichier
                                   </button>
                                 </li>
                                 <li>
@@ -574,11 +574,26 @@ const deleteArticles = async () => {
                     <i class="ti ti-alert-square-rounded-filled me-2"></i>
                     Cet devis a été marqué comme terminé
                   </div>
-                  <DataTableDevis :data="preProject.chiffrages" />
-
                   <div>
-                    
-                    
+                    <!-- <DataTableDevis
+                                            v-if="preProject != null"
+                                            extra-class="table-light"
+                                            :headers="[
+                                                ['Article', 'article'],
+                                                ['unite', 'unite'],
+                                                ['Quantite', 'quantite'],
+                                                ['Prix d\'achat', 'purchase_price'],
+                                                ['Prix de vente', 'selling_price'],
+                                                ['Frais supplémentaires', 'extra_fees'],
+                                                ['Fournisseur', 'fournisseur'],
+                                                ['Action', 'action']
+                                            ]"
+                                            :data="preProject.chiffrages"
+                                            :is-status="preProject.chiffrage_status"
+                                        /> -->
+                    <div v-if="preProject.chiffrages != null" class="card-body border-top pt-4">
+                      <DataTableDevis :data="preProject.chiffrages" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -597,10 +612,27 @@ const deleteArticles = async () => {
                   </div>
                 </div>
                 <div class="card-body">
-                    
-                    <div v-if="preProject.articles_lot != null" class="">
+                  <div>
+                    <!-- <DataTableBordereau
+                                            v-if="preProject != null"
+                                            extra-class="table-light"
+                                            :headers="[
+                                                ['Article', 'article'],
+                                                ['unite', 'unite'],
+                                                ['Quantite', 'quantite'],
+                                                ['Prix HT', 'prix_ht'],
+                                                ['Prix TTC', 'prix_ttc'],
+                                                ['Prix TTC Total', 'prix_tttc'],
+                                                ['Lot', 'lot'],
+                                                ['Action', 'action']
+                                            ]"
+                                            :data="preProject.articles_lot"
+                                            :is-status="preProject.status"
+                                        /> -->
+                    <div v-if="preProject.articles_lot != null" class="card-body border-top pt-4">
                       <DataTableBordereau :data="preProject.articles_lot" />
                     </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -608,52 +640,52 @@ const deleteArticles = async () => {
         </div>
       </div>
     </div>
-    <Modal id="add-lots" title="Importer Avant Projet" size="modal-lg">
+    <Modal id="add-lots" title="Importer Avant Projet" extra-class="modal-lg">
       <AddLots :id="preProject.id" />
     </Modal>
-    <Modal id="import-assets" title="Télécharger des documents" size="modal-md">
+    <Modal id="import-assets" title="Télécharger des documents" extra-class="modal-md">
       <ImportAssets :id="preProject.id" />
     </Modal>
-    <Modal id="edit-preproject" title="Modifier avant projet" size="modal-xl">
+    <Modal id="edit-preproject" title="Modifier avant projet" extra-class="modal-xl">
       <EditPreProject :pre-project="preProject" />
     </Modal>
-    <Modal id="set-number_file" title="Définir le nombre de documents" size="modal-md">
+    <Modal id="set-number_file" title="Définir le nombre de documents" extra-class="modal-md">
       <SetFileNumber :id="preProject.id" />
     </Modal>
-    <Modal id="set-number_file_done" title="Marque comme terminé" size="modal-md">
+    <Modal id="set-number_file_done" title="Marque comme terminé" extra-class="modal-md">
       <SetFileNumberDone :id="preProject.id" />
     </Modal>
-    <Modal id="validate-project" title="Validation d'avant Projet" size="modal-md">
+    <Modal id="validate-project" title="Validation d'avant Projet" extra-class="modal-md">
       <ValidatePreProject :id="preProject.id" />
     </Modal>
-    <Modal id="cancel-submission" title="Annuler la soumission" size="modal-md">
+    <Modal id="cancel-submission" title="Annuler la soumission" extra-class="modal-md">
       <CancelSubmission :id="preProject.id" />
     </Modal>
-    <Modal id="refuser-project" title="Validation d'avant Projet" size="modal-md">
+    <Modal id="refuser-project" title="Validation d'avant Projet" extra-class="modal-md">
       <RefuserPreProject :id="preProject.id" />
     </Modal>
-    <Modal id="cloture" title="Projet Gagné" size="modal-md">
+    <Modal id="cloture" title="Projet Gagné" extra-class="modal-md">
       <CloturePreProject :id="preProject.id" :type-project="preProject.type_project" :number-lots="preProject.lots" />
     </Modal>
-    <Modal id="close" title="Projet Perdu" size="modal-md">
+    <Modal id="close" title="Projet Perdu" extra-class="modal-md">
       <ClosePreProject :id="preProject.id" />
     </Modal>
 
-    <Modal id="add-chiffrage" title="Ajouter un article" size="modal-md">
+    <Modal id="add-chiffrage" title="Ajouter un article" extra-class="modal-md">
       <NewChiffrage :id="preProject.id" />
     </Modal>
-    <Modal id="delete-chiffrage" title="Supprimer un article" size="modal-md">
+    <Modal id="delete-chiffrage" title="Supprimer un article" extra-class="modal-md">
       <DeleteChiffrage />
     </Modal>
-    <Modal id="import-chiffrage" title="Importer des articles" size="modal-md">
+    <Modal id="import-chiffrage" title="Importer des articles" extra-class="modal-md">
       <ImportChiffrage :id="preProject.id" />
     </Modal>
 
-    <Modal id="close-chiffrage" title="Marque comme Terminé" size="modal-md">
+    <Modal id="close-chiffrage" title="Marque comme Terminé" extra-class="modal-md">
       <CloseChiffrage :id="preProject.id" />
     </Modal>
 
-    <Modal id="import-bordereau" title="Importer bordereau" size="modal-md">
+    <Modal id="import-bordereau" title="Importer bordereau" extra-class="modal-md">
       <ImportBordereau :id="preProject.id" :lots="preProject.lots" />
     </Modal>
     <DeleteDocModal id="deleteArticle" :isLoading="isLoading"

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { Modal, MultiSelect } from '@/ui';
+import { Modal } from '@/ui';
 import { sharedService } from '@/services';
 import { useToast } from 'vue-toastification';
 
@@ -14,10 +14,6 @@ const props = defineProps({
     title: {
         type: String,
         default: 'Ajouter un événement'
-    },
-    employees: {
-        type: Array,
-        default: () => []
     }
 });
 
@@ -28,8 +24,7 @@ const formData = ref({
     end: '',
     comment: '',
     shared: true,
-    type: props.type,
-    employees: []
+    type: props.type
 });
 
 const isLoading = ref(false);
@@ -47,8 +42,7 @@ const submit = async () => {
             end: '',
             comment: '',
             shared: true,
-            type: props.type,
-            employees: []
+            type: props.type
         };
         $('#addEventModal').modal('hide');
         toast.success('Evénement ajouté avec succès');
@@ -57,7 +51,6 @@ const submit = async () => {
         toast.error(error.response.data.message);
     });
 };
-
 </script>
 
 <template>

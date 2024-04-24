@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater } from '@/utils';
+import { formater, helpers } from '@/utils';
 import router from '@/router';
 
 const props = defineProps({
@@ -21,7 +21,7 @@ const headers = [
 
 const actionsConfig = [
     {
-        icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
+        icon: 'ti ti-eye',class: 'btn btn-primary btn-sm', onClick: (item: any) => {
             router.push(`/purchase-order/details/${item.id}`);
         }
     },
@@ -30,7 +30,7 @@ const actionsConfig = [
 // if ([helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO ].includes(localStorage.getItem('role'))) {
 //     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
 //         console.log(item);
-
+        
 //     },type: 'validate'});
 // }
 // <button v-for="action in actionsConfig" :key="action.icon" class="btn me-2"

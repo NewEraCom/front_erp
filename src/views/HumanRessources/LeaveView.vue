@@ -5,19 +5,16 @@ import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { LeavesTable, AddNewLeaveModal } from './components';
 import { DeleteDocModal, Validate, LeaveDetailsModal } from './components/modals';
-import { helpers } from '@/utils';
 const rhStore = useRhStore();
 const isLoading = ref(false);
 const leaves = ref(rhStore.leaves);
 
-const role = localStorage.getItem('role');
+
 const employees = ref(computed(() => rhStore.employees));
 
 onMounted(async () => {
   await rhService.getLeaves();
   await rhService.getEmployees();
-  console.log(role);
-  
 
 });
 // watch(rhStore.leaves, (newValue) => {
@@ -113,7 +110,7 @@ const DeleteLeave = async () => {
                 <h5 class="fw-bold mb-1">Liste des congés</h5>
                 <small class="fw-bold mb-1 text-muted">Liste des congés demandés par les employés</small>
               </div>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave" v-if="role == helpers.roles.RH">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave">
                 <i class="ti ti-square-rounded-plus-filled me-2"></i>
                 Ajouter un congé
               </button>

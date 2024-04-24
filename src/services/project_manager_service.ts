@@ -1,7 +1,6 @@
 import { api } from '@/utils';
 import { usePMStore } from '@/store';
 import { useRouter } from 'vue-router';
-import { authService } from '.';
 
 const router = useRouter();
 
@@ -15,7 +14,6 @@ async function getDataManager() {
       return res.data;
     }
   } catch (error) {
-    authService.refreshToken();
     return Promise.reject(error);
   }
 }
@@ -112,14 +110,11 @@ const getProjectById = async (id: string) => {
     if (response.status === 200) {
       const PMStore = usePMStore();
       PMStore.setProject(response.data.project);
-      PMStore.setCaisseProject(response.data.caisse);
-      PMStore.caisse_project_sum = response.data.caisse_sum;
     }
   } catch (error) {
     return Promise.reject(error);
   }
 };
-
 const getProjects = async () => {
   try {
     const response = await api().get('projects/get');
@@ -178,12 +173,11 @@ async function getPreProjectById(req: string) {
     router.push('/*');
   }
 }
-
-async function deleteArticle(id: number) {
+async function deleteArticle(id:number) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().delete('preprojects/delete-article/' + id);
+    const response = await api().delete('preprojects/delete-article/'+id);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.preprojectDetail.articles_lot = PMStore.preprojectDetail.articles_lot.filter((doc: { id: number; }) => doc.id !== id);
@@ -220,15 +214,13 @@ async function cancel(req: any) {
     console.log(error);
   }
 }
-async function markChiffrageDone(req: string, data: any) {
+export async function markChiffrageDone(req: string) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().post('chiffrage/close/' + req, data);
+    const response = await api().post('chiffrage/close/' + req);
     if (response.status == 200) {
-      // PMStore.closeChiffratePreProject(response.data.chiffrage_status);
-      PMStore.preproject.data = response.data.pre_project;
-      return response.status;
+      PMStore.closeChiffratePreProject(response.data.chiffrage_status);
     }
   } catch (error) {
     console.log(error);
@@ -239,11 +231,10 @@ async function clotureLostProject(req: any) {
   try {
     const PMStore = usePMStore();
 
-    const response = await api().post('preprojects/mark', req);
+    const response = await api().post('chiffrage/mark', req);
     console.log(response.data);
     if (response.status == 200) {
       PMStore.preprojectDetail = null;
-      PMStore.preprojectDetail = response.data[0];
       PMStore.setPreProject(response.data[0]);
       return response.status;
     }
@@ -287,7 +278,7 @@ async function remove(req: string) {
 
     const response = await api().delete('chiffrage/delete/' + req);
     if (response.status == 200) {
-
+      
       await PMStore.removeChiffragePreProject(req);
     }
   } catch (error) {
@@ -295,20 +286,6 @@ async function remove(req: string) {
     throw error;
   }
 }
-
-const createPreProject = async (req: any) => {
-  try {
-    const PMStore = usePMStore();
-
-    const response = await api().post('preprojects/create', req);
-    if (response.status === 200) {
-      PMStore.setPreProject(response.data);
-    }
-  } catch (e) {
-    return Promise.reject(e);
-  }
-};
-
 async function update(req: any) {
   try {
     const PMStore = usePMStore();
@@ -427,7 +404,6 @@ async function refuser(req: any) {
     console.log(error);
   }
 }
-
 async function validate(req: any) {
 
   try {
@@ -441,54 +417,15 @@ async function validate(req: any) {
     return response.status;
   } catch (error) {
     console.log(error);
+    return response;
   }
-}
-async function addCaisseProject(req: any) {
-  try {
-    const PMStore = usePMStore();
-
-    const response = await api().post('logistics/caisse/caisse-project', req);
-    if (response.status == 200) {
-      PMStore.setCaisseProject(response.data.data);
-      PMStore.caisse_project_sum += response.data.data.montant;
-
-    }
-  } catch (error) {
-    return error;
-  }
-}
-
-async function GetCaisseProjectSum(id: any) {
-  try {
-    const PMStore = usePMStore();
-
-    const response = await api().get('logistics/caisse/caisse-project/sum/' + id);
-    if (response.status == 200) {
-      PMStore.caisse_project_sum = parseInt(response.data.data);
-    }
-  } catch (error) {
-    return error;
-  }
-}
+};
 
 async function createFactureComposant(req: any) {
   const response = await api().post('facture/comp/store', req);
-  if (response.status == 200) {
-    console.log(response.data);
-  }
-}
-
-const PointageEmployeeImport = async (data: any) => {
-  try {
-    const response = await api().post('/projects/insert-pointage', data);
-    if (response.status === 200) {
-      return;
+    if (response.status == 200) {
+      console.log(response.data);
     }
-    throw new Error('Import data failed with status: ' + response.status);
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
 };
 
 export default {
@@ -519,11 +456,5 @@ export default {
   refuser,
   validate,
   getProjects,
-  createFactureComposant,
-  deleteArticle,
-  addCaisseProject,
-  GetCaisseProjectSum,
-  createPreProject,
-  markChiffrageDone,
-  PointageEmployeeImport
+  createFactureComposant
 };

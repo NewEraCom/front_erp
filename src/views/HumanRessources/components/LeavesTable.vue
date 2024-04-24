@@ -29,7 +29,7 @@ const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     
 ];
-if( [helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO,helpers.roles.BDM ,helpers.roles.RH ].includes(localStorage.getItem('role'))){
+if( localStorage.getItem('role') === helpers.roles.RH){
     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         showValidationModal(item);
     } },

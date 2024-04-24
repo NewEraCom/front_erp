@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps({
     label: {
@@ -59,6 +59,7 @@ const search = (word) => {
     filterData.value = value;
 };
 </script>
+
 <template>
     <div class="input-wrapper">
         <div class="relative">
@@ -85,6 +86,7 @@ const search = (word) => {
         </div>
     </div>
 </template>
+
 <style scoped>
 .bg {
     position: absolute;

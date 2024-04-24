@@ -12,20 +12,21 @@ const props = defineProps({
 });
 
 const headers = [
-    { text: 'Project', isComplex: true, type: 'preproject' },
-    { text: 'Montant', value: 'amount', type: 'currency' },
+    { text: 'Project' ,isComplex: true, type: 'preproject'},
+    { text: 'Description', value: 'description', type: 'text' },
     { text: 'date de recuperation', value: 'date_recuperation', type: 'date' },
+    { text: 'Montant',  value: 'amount', type: 'currency'},
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     {
-        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item: any) => {
+        icon: 'ti ti-recycle', class: 'btn btn-success btn-sm', onClick: (item:any) => {
             financeService.recover(item.id);
         },
-        condition: (item: any) => item.status != 1
+        condition: (item:any) => item.status != 1
     },
-
+    
 ];
 
 
@@ -55,8 +56,8 @@ const filter = () => {
         <div class="row mb-4">
             <div class="col-12">
                 <div class="d-flex align-items-center">
-                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2"
-                        placeholder="Rechercher..." @input="filter" />
+                    <input v-model="searchQuery" type="search" class="form-control w-240 me-2" placeholder="Rechercher..."
+                        @input="filter" />
                     <div class="d-flex align-items-center ms-2">
                         <label for="start">De</label>
                         <input v-model="startQuery" type="date" id="start" class="form-control ms-2 me-2"
@@ -64,8 +65,7 @@ const filter = () => {
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <label for="end">à</label>
-                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2"
-                            @change="filter" />
+                        <input v-model="endQuery" type="date" id="end" class="form-control ms-2 me-2" @change="filter" />
                     </div>
                     <div class="d-flex align-items-center ms-0">
                         <select v-model="statusQuery" class="form-select ms-2 me-2 w-180" @change="filter">
@@ -90,8 +90,7 @@ const filter = () => {
                 </div>
             </div>
         </div>
-        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig"
-            button-type="simple" />
+        <DataTable :items="filteredData" :headers="headers" :page-size='itemPerPage' :actionsConfig="actionsConfig" button-type="simple" />
     </div>
 </template>
 <style>

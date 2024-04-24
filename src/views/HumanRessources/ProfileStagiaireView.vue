@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { helpers ,formater} from '@/utils';
-import {AddDocsInternModal,DeleteDocModal,EditStgModal ,AddAttachementInternModal} from './components/modals';
+import {AddDocsInternModal,DeleteDocModal,EditStgModal} from './components/modals';
 
 const props = defineProps({
     id: {
@@ -162,19 +162,9 @@ const DeleteDoc = async()=>{
                                             </div>
                                             
                                         </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="mb-1 fw-bold text-dark">
-                                                Copie Attestation de stage 
-                                            </h6>
-                                            <button class="btn bg-label-primary" 
-                                            v-if="intern.attestation_stage == null"
-                                            @click=" rhStore.setAttachement('attestation_stage')"
-                                            data-bs-target="#upload-attachement" data-bs-toggle="modal"
-                                            >
-                                                <i class="ti ti-download"></i>
-                                               
-                                            </button>
-                                        </div>
+                                        <h6 class="mb-1 fw-bold text-dark">
+                                            Copie Attestation de stage 
+                                        </h6>
 
                                         <div v-if="intern.attestation_stage != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
@@ -209,19 +199,9 @@ const DeleteDoc = async()=>{
                                             </div>
                                             
                                         </div>
-                                        
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="mb-1 fw-bold text-dark">
-                                                Copie CIN
-                                            </h6>
-                                            <button class="btn bg-label-primary" v-if="intern.copie_cin == null"
-                                            @click="rhStore.setAttachement('copie_cin')  "
-                                            data-bs-target="#upload-attachement" data-bs-toggle="modal"
-                                            >
-                                                <i class="ti ti-download"></i>
-                                               
-                                            </button>
-                                        </div>
+                                        <h6 class="mb-1 fw-bold text-dark">
+                                            Copie CIN 
+                                        </h6>
 
                                         <div v-if="intern.copie_cin != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
@@ -256,19 +236,9 @@ const DeleteDoc = async()=>{
                                             </div>
                                             
                                         </div>
-                                       
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="mb-1 fw-bold text-dark">
-                                                Copie Diplome 
-                                            </h6>
-                                            <button class="btn bg-label-primary" v-if="intern.copie_diplome == null"
-                                            @click="rhStore.setAttachement('copie_diplome')"
-                                            data-bs-target="#upload-attachement" data-bs-toggle="modal"
-                                            >
-                                                <i class="ti ti-download"></i>
-                                               
-                                            </button>
-                                        </div>
+                                        <h6 class="mb-1 fw-bold text-dark">
+                                            Copie Diplome 
+                                        </h6>
 
                                         <div v-if="intern.copie_diplome != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
@@ -304,19 +274,9 @@ const DeleteDoc = async()=>{
                                             </div>
                                             
                                         </div>
-                                        
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <h6 class="mb-1 fw-bold text-dark">
-                                                Copie Contrat 
-                                            </h6>
-                                            <button class="btn bg-label-primary" v-if="intern.assurance_copie == null"
-                                            @click=" rhStore.setAttachement('assurance_copie')"
-                                            data-bs-target="#upload-attachement" data-bs-toggle="modal"
-                                            >
-                                                <i class="ti ti-download"></i>
-                                               
-                                            </button>
-                                        </div>
+                                        <h6 class="mb-1 fw-bold text-dark">
+                                            Copie Contrat  
+                                        </h6>
 
                                         <div v-if="intern.assurance_copie != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
@@ -421,7 +381,6 @@ const DeleteDoc = async()=>{
                 title="Supprimer le document"
                 message="Êtes-vous sûr de supprimer ce document ?"
                 />
-            <AddAttachementInternModal :id="intern.id" />
         </div>
     </div>
 </template>

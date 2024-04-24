@@ -3,12 +3,11 @@ import { ref, onMounted, computed, onUnmounted, watch } from 'vue';
 import { pmService, sharedService } from '@/services';
 import { usePMStore, useSharedStore } from '@/store';
 import { helpers, formater } from '@/utils';
-import { NewCaisseProjectModal, PointageEmployeModal } from './components/modals';
 import {
     DeleteModal,
-    NewPurchaseOrderModal,
-    NewServiceModal,
     InvoiceModal,
+    NewPurchaseOrderModal,
+    NewServiceModal
 } from '@/ui';
 
 import {
@@ -19,36 +18,29 @@ import {
     OutOfStockModal,
     invoicesComposantModal,
     InvoiceAttachementModal,
-    EditArticleModal,
-    SuivieTable,
-    SuivieModal
+    EditArticleModal
 } from './components';
-import PointageTable from './components/PointageTable.vue';
 
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
 
-//const composants = ref(computed(() => pmStore.composants));
+const composants = ref(computed(() => pmStore.composants))
 
 const props = defineProps<{
     id: string;
 }>();
 
 const item = ref(computed(() => pmStore.project));
-const caisseProject = ref(computed(() => pmStore.caisse_project));
 const soustraitants = ref(computed(() => sharedStore.fournisseurs));
 
 const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
-const caisse = ref(computed(() => pmStore.caisse_project));
-const caisse_sum = ref(computed(() => pmStore.caisse_project_sum));
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
-    console.log(caisse.value);
 });
 
 onUnmounted(() => {
@@ -67,7 +59,7 @@ watch(item, () => {
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
             <div v-if="project && role === 'Chef de projet'">
-                <button v-if="project.facture_composante.length === 0" class="btn btn-success ms-auto"
+                <button v-if="project.facture_composante.length !== 0" class="btn btn-success ms-auto"
                     data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
                     Composants de la facture
@@ -183,33 +175,14 @@ watch(item, () => {
                 </div>
                 <div class="card card-border-shadow-primary mt-4">
                     <div class="card-body">
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="d-flex align-items-center mb-2 pb-1">
-                                <div class="avatar me-2">
-                                    <span class="avatar-initial rounded bg-label-primary"><i
-                                            class="ti ti-building-bank ti-md"></i></span>
-                                </div>
-                                <!-- {{ project.caisse }} -->
-                                <h4 class="ms-1 mb-0 fw-bold">
-                                    {{ caisse_sum }}<small class="fw-bold"> MAD</small>
-                                </h4>
+                        <div class="d-flex align-items-center mb-2 pb-1">
+                            <div class="avatar me-2">
+                                <span class="avatar-initial rounded bg-label-primary"><i
+                                        class="ti ti-building-bank ti-md"></i></span>
                             </div>
-                            <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal">
-                                <i class="ti ti-plus"></i>
-                                Budget de caisse
-                            </button>
+                            <h4 class="ms-1 mb-0">42 342 <small class="fw-bold">MAD</small></h4>
                         </div>
-                        <h5 class="mb-1 fw-bold">Caisse de Projet</h5>
-                        <!-- {{ caisseProject }} -->
-                        <ul class="list-group mt-4">
-                            <li v-for="(item, index) in caisseProject" :key="index"
-                                class="list-group-item d-flex align-items-center">
-                                <small> {{ item.designation }}</small> <small class="ms-auto">{{
-                    formater.number(item.montant)
-                }} MAD</small>
-                            </li>
-                        </ul>
+                        <p class="mb-1 fw-bold">Caisse de projet</p>
                     </div>
                 </div>
             </div>
@@ -245,14 +218,8 @@ watch(item, () => {
 
                             <li class="nav-item">
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#production" aria-controls="productions" aria-selected="true">
+                                    data-bs-target="#facturations" aria-controls="facturations" aria-selected="true">
                                     Suivi de production
-                                </button>
-                            </li>
-                            <li class="nav-item">
-                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
-                                    data-bs-target="#pointage" aria-controls="productions" aria-selected="true">
-                                    Pointage des employés
                                 </button>
                             </li>
                         </ul>
@@ -385,7 +352,7 @@ watch(item, () => {
                                                 <div class="ms-2">
                                                     <a class="d-block">
                                                         <span class="d-inline fw-bold me-2 text-heading">
-                                                            {{ project.pre_project.cps_file }}
+                                                            {{ project.preproject.cps_file }}
                                                         </span>
                                                     </a>
                                                     <small>CPS</small>
@@ -403,16 +370,7 @@ watch(item, () => {
                             </div>
                         </div>
                         <div class="card card-border-shadow-primary mt-4">
-                            <div class="d-flex border-bottom justify-content-between align-items-center">
-                                <h5 class="card-header fw-bold">Personnel de projet</h5>
-                                <button v-if="role === 'Chef de projet'" class="btn btn-primary me-4"
-                                    data-bs-target="#import-pointage" data-bs-toggle="modal">
-                                    <i class="ti ti-upload me-2"></i>
-                                    Importer le pointages des employés
-                                </button>
-                            </div>
-
-
+                            <h5 class="card-header border-bottom fw-bold">Personnel de projet</h5>
                             <div v-if="project" class="card-body pt-4">
                                 <div class="row g-3">
                                     <div class="col-6">
@@ -451,28 +409,6 @@ watch(item, () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-border-shadow-primary mt-4">
-                            <h5 class="card-header border-bottom fw-bold">Veheicules de projet</h5>
-                            <div v-if="project" class="card-body pt-4">
-                                <div class="row rounded">
-                                    <div class="col-12 text-center p-4">
-                                        <img src="/src/assets/img/Empty.png" style="width: 10% !important" srcset="" />
-                                        <h5 class="mt-4 mb-2 fw-bold">Aucun véhicule ici.</h5>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card card-border-shadow-primary mt-4">
-                            <h5 class="card-header border-bottom fw-bold">GSM de projet</h5>
-                            <div v-if="project" class="card-body pt-4">
-                                <div class="row rounded">
-                                    <div class="col-12 text-center p-4">
-                                        <img src="/src/assets/img/Empty.png" style="width: 10% !important" srcset="" />
-                                        <h5 class="mt-4 mb-2 fw-bold">Aucun GSM ici.</h5>
                                     </div>
                                 </div>
                             </div>
@@ -581,43 +517,19 @@ watch(item, () => {
                                 </div>
                             </div>
                             <div class="card-body">
-                                <SuivieTable :items="project.suivie" />
-                            </div>
-                        </div>
-                    </div>
-                    <div id="pointage" class="tab-pane fade text-start" role="tabpanel">
-                        <div class="card card-border-shadow-primary">
-                            <div class="d-flex border-bottom align-items-center">
-                                <h5 class="card-header fw-bold">Suivi de pointage</h5>
-                                <div v-if="role === 'Chef de projet'" class="dropdown ms-auto me-3">
-                                    <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
-                                        style="">
-                                        <button data-bs-target="#import-pointage" data-bs-toggle="modal"
-                                            class="dropdown-item fw-medium">
-                                            <i class="ti ti-file-plus me-2"></i> Importer le pointages des employés
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <PointageTable :items="project.pointage" />
+                                <InvoiceProjectTable :invoices="project.factures" />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <NewCaisseProjectModal :project-id="id" />
             <UploadDocumentModal :id="project.id" />
             <NewServiceModal v-if="soustraitants != null" :id="project.id" :services="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Services'
                 )" :soustraitants="soustraitants.data" />
             <NewPurchaseOrderModal :id="project.id" :articles="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Achats' && item.status === 1
-                )" :main-items="project.pre_project" />
+                )" />
             <OutOfStockModal :id="project.id" :articles="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Achats' && item.qte_restant > 0
                 )" />
@@ -627,36 +539,10 @@ watch(item, () => {
             <DeleteModal title="Supprimer un Demande" text="Voulez-vous vraiment supprimer cette demande ?"
                 textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()"
                 message="Demande supprimée avec succès" />
-            <SuivieModal />
             <InvoiceModal :composants="project.facture_composante" :id="project.id" :articles="project.pre_project.articles.filter(
                     (item: any) => item.category === 'Achats' && item.status === 1
                 )" />
-            <PointageEmployeModal :project="project.id" />
         </div>
 
     </div>
 </template>
-
-<style>
-.skeleton-text {
-    background-color: #a7a7a7;
-    border-radius: 4px;
-    opacity: 0.4;
-    height: 1rem;
-    width: 100%;
-    margin-bottom: 0.5rem;
-    animation: fadeInOut 1.5s infinite;
-}
-
-@keyframes fadeInOut {
-
-    0%,
-    100% {
-        opacity: 0.8;
-    }
-
-    50% {
-        opacity: 0.2;
-    }
-}
-</style>

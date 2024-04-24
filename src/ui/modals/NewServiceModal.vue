@@ -118,11 +118,11 @@ const submit = async () => {
                         <div class="repeater-wrapper pt-0 pt-md-4">
                             <div class="d-flex border rounded position-relative pe-0">
                                 <div class="row w-100 p-3">
-                                    <div class="col-md-6 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-4 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">
                                             Service {{ item }}
                                         </p>
-                                        <select v-model="formData.service[item]" class="form-select item-details mb-1"
+                                        <select v-model="formData.service[item]" class="form-select item-details mb-3"
                                             @change="changeValue(formData.service[item], item)">
                                             <option value="-">
                                                 Sélectionner un article
@@ -131,14 +131,11 @@ const submit = async () => {
                                                 {{ service.article }}
                                             </option>
                                         </select>
-                                        <small class="text-muted" v-if="formData.service[item]">
-                                            Item : {{ formData.service[item]?.items.designation }}
-                                        </small>
                                     </div>
-                                    <div class="col-md-3 col-12 mb-md-0 mb-3">
+                                    <div class="col-md-2 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Qty</p>
                                         <input id="qteInput" v-model="formData.qty[item]" type="number"
-                                            class="form-control invoice-item-qty mb-1" placeholder="1" min="1"
+                                            class="form-control invoice-item-qty" placeholder="1" min="1"
                                             :max="formData.service[item]?.qte_restant" @input="changeQuantity(item)" />
                                         <small class="text-muted" v-if="formData.service[item]?.qte_restant">Quantite
                                             restante:
@@ -146,10 +143,22 @@ const submit = async () => {
             : 0
                                             }}</small>
                                     </div>
-                                    <div class="col-md-3 col-12 pe-0">
+                                    <div class="col-md-2 col-12 pe-0">
                                         <p class="mb-2 repeater-title">Unite</p>
                                         <p class="mb-0" v-html="formData.unite[item] ? formData.unite[item] : '-'"></p>
                                     </div>
+                                    <div class="col-md-2 col-12 pe-0">
+                                        <p class="mb-2 repeater-title">Prix Unitaire</p>
+                                        <p class="mb-0" v-html="(formData.price[item] ? formData.price[item] : '0') + ' MAD'
+            "></p>
+                                    </div>
+                                    <div class="col-md-2 col-12 pe-0">
+                                        <p class="mb-2 repeater-title">Prix Total</p>
+                                        <p class="mb-0" v-html="(formData.total[item] ? formData.total[item] : '0') + ' MAD'
+            "></p>
+                                    </div>
+
+
                                 </div>
                                 <div
                                     class="d-flex flex-column align-items-center justify-content-between border-start p-2">

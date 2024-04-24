@@ -64,7 +64,7 @@ export const hrRoutes = [
         component: () => import('@/views/HumanRessources/LeaveView.vue'),
         meta: {
             title: 'Congés',
-            role: [helpers.roles.RH, helpers.roles.DS, helpers.roles.BDM]
+            role: [helpers.roles.RH, helpers.roles.DS]
         },
     },
     {

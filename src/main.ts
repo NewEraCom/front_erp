@@ -1,22 +1,11 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import Toast, { PluginOptions } from 'vue-toastification';
-import axios from 'axios';
-import router from './router';
 
 import 'vue-toastification/dist/index.css';
 
-axios.interceptors.response.use(
-    response => response,
-    error => {
-        if (error.response.status === 401) { // Token expired or unauthorized
-            router.push('/login');
-        }
-        return Promise.reject(error);
-    }
-);
-
 import App from './App.vue';
+import router from './router';
 
 
 const options: PluginOptions = {

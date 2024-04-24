@@ -13,11 +13,6 @@ export const useSharedStore = defineStore('ShareStore', {
             stats: null,
             loading: false,
         },
-        caisse: {
-            data: null,
-            stats: null,
-            loading: false,
-        },
         fournisseurs: {
             data: null,
             stats: null,
@@ -51,8 +46,6 @@ export const useSharedStore = defineStore('ShareStore', {
         event: null,
         selectedItem: null,
         Soustraitant: null,
-        mainItem:null,
-        selectedCaisse:null,
     }),
     actions: {
         setEvents(data: any) {
@@ -173,6 +166,7 @@ export const useSharedStore = defineStore('ShareStore', {
             this.stock.loading = false;
         },
         setProjects(data: any) {
+            console.log(data);
             this.projects.data = data;
             this.projects.stats = {
                 total: data.length,
@@ -257,28 +251,5 @@ export const useSharedStore = defineStore('ShareStore', {
                 completed: this.recruitment.data.filter((item: any) => item.status === 'completed').length,
             };
         },
-        setMainItem(data: any) {
-            this.mainItem = data;
-        },
-        setCaisse(data: any) {
-            this.caisse.data = data;
-            this.caisse.stats = {
-                total: data.length,
-                pending: data.filter((item: any) => item.status === 'pending').length,
-                valide: data.filter((item: any) => item.status === 'valide').length,
-                rejected: data.filter((item: any) => item.status === 'rejected').length,
-            };
-            this.caisse.loading = true;
-        },
-        clearCaisse() {
-            this.caisse.data = null;
-            this.caisse.stats = null;
-            this.caisse.loading = false;
-        },
-        setSelectedCaisse(data: any) {
-            this.selectedCaisse = data.caisses;
-            console.log(data);
-            
-        }
     },
 });

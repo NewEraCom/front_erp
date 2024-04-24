@@ -219,72 +219,6 @@ const getSoustraitantById = async (id) => {
 };
 
 
-const addLeave = async (data: any) => {
-    try {
-        const response = await api().post('rh/conge/request', data);
-        return response;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-
-
-
-const addDocumentRh = async (data: any) => {
-    try {
-        const response = await api().post('demande-externe/document', data);
-        console.log(response.data);
-        return response;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-
-
-const getItems = async () => {
-    try {
-        const sharedStore = useSharedStore();
-
-        const response = await api().get('/purchase/getItems');
-        if (response.status == 200) {
-            sharedStore.setMainItem(response.data.mainItem);
-            return response.data.mainItem;
-        }
-        return response;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-const getCaisse = async () => {
-    try {
-        const sharedStore = useSharedStore();
-
-        const response = await api().get('/logistics/caisse/caisse-project');
-        if (response.status == 200) {
-            sharedStore.setCaisse(response.data);
-            return response.data;
-        }
-        return response;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-const validateCaisse = async (data: any) => {
-    try {
-        const sharedStore = useSharedStore();
-
-        const response = await api().post('/logistics/caisse/project/validate', data);
-        if (response.status == 200) {
-            sharedStore.selectedCaisse = response.data.data;
-            return response.data;
-        }
-        return response;
-    } catch (error) {
-        return Promise.reject(error);
-    }
-};
-
-
 export default {
     createEvent,
     getEvent,
@@ -302,10 +236,5 @@ export default {
     deleteRhRequest,
     updateSousTraitants,
     getFournisseur,
-    getSoustraitantById,
-    addLeave,
-    getItems,
-    addDocumentRh,
-    getCaisse,
-    validateCaisse
+    getSoustraitantById
 };

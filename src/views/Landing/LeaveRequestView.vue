@@ -1,36 +1,23 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { NavBar, FooterBar } from './components';
-import { sharedService } from '@/services';
 
 const isMessage = ref(false);
 const isError = ref(false);
 
-const isLoading = ref(false);
-
 const formData = ref({
-  matricule: '',
-  email: '',
-  date_start: '',
-  date_fin: '',
-  duree: '',
-  commentaire: '',
-  src: 'public'
+	matricule: '',
+	email: '',
+	date_start: '',
+	date_fin: '',
+	duree: '',
+	commentaire: '',
 });
 
-const submit = async () => {
-  isLoading.value = true;
-  isMessage.value = true;
-  isError.value = false;
-  await sharedService.addLeave(formData.value).then(() => {
-    isLoading.value = false;
-    isMessage.value = true;
-    isError.value = false;
-  }).catch(() => {
-    isLoading.value = false;
-    isMessage.value = false;
-    isError.value = true;
-  });
+const submit = () => {
+	console.log(formData.value);
+	isMessage.value = true;
+	isError.value = false;
 };
 
 </script>
@@ -59,7 +46,10 @@ const submit = async () => {
                 </p>
                 <div v-if="isMessage" class="row">
                   <div class="col-12">
-                    <div class="alert alert-success alert-dismissible d-flex align-items-baseline" role="alert">
+                    <div
+                      class="alert alert-success alert-dismissible d-flex align-items-baseline"
+                      role="alert"
+                    >
                       <span class="alert-icon alert-icon-lg text-success me-2">
                         <i class="ti ti-check ti-sm"></i>
                       </span>
@@ -69,14 +59,22 @@ const submit = async () => {
                           Votre demande a été envoyée avec succès, vous recevrez une réponse dans
                           les plus brefs délais.
                         </p>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div v-if="isError" class="row">
                   <div class="col-12">
-                    <div class="alert alert-danger alert-dismissible d-flex align-items-baseline" role="alert">
+                    <div
+                      class="alert alert-danger alert-dismissible d-flex align-items-baseline"
+                      role="alert"
+                    >
                       <span class="alert-icon alert-icon-lg text-danger me-2">
                         <i class="ti ti-x ti-sm"></i>
                       </span>
@@ -85,7 +83,12 @@ const submit = async () => {
                         <p class="mb-0">
                           Votre demande n'a pas été envoyée, veuillez réessayer plus tard.
                         </p>
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="alert"
+                          aria-label="Close"
+                        ></button>
                       </div>
                     </div>
                   </div>
@@ -94,40 +97,68 @@ const submit = async () => {
                   <div class="row g-3">
                     <div class="col-md-6">
                       <label class="form-label" for="matricule"> Matricule </label>
-                      <input id="matricule" v-model="formData.matricule" type="number" class="form-control"
-                        placeholder="Ex : 1" />
+                      <input
+                        id="matricule"
+                        v-model="formData.matricule"
+                        type="number"
+                        class="form-control"
+                        placeholder="Ex : 1"
+                      />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="address-email"> Adresse email </label>
-                      <input id="address-email" v-model="formData.email" type="email" class="form-control"
-                        placeholder="Entrez votre adresse email" />
+                      <input
+                        id="address-email"
+                        v-model="formData.email"
+                        type="email"
+                        class="form-control"
+                        placeholder="Entrez votre adresse email"
+                      />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="start-date"> Date de début </label>
-                      <input id="start-date" v-model="formData.date_start" type="date" class="form-control"
-                        placeholder="Ex : 1" />
+                      <input
+                        id="start-date"
+                        v-model="formData.date_start"
+                        type="date"
+                        class="form-control"
+                        placeholder="Ex : 1"
+                      />
                     </div>
                     <div class="col-md-6">
                       <label class="form-label" for="end-date"> Date de fin </label>
-                      <input id="end-date" v-model="formData.date_fin" type="date" class="form-control"
-                        placeholder="johndoe@neweracom.ma" />
+                      <input
+                        id="end-date"
+                        v-model="formData.date_fin"
+                        type="date"
+                        class="form-control"
+                        placeholder="johndoe@neweracom.ma"
+                      />
                     </div>
 
                     <div class="col-md-12">
                       <label class="form-label" for="vacation"> Durée de congé </label>
-                      <input id="vacation" v-model="formData.duree" type="number" class="form-control"
-                        placeholder="Entre 1 et 30 jours" />
+                      <input
+                        id="vacation"
+                        v-model="formData.duree"
+                        type="number"
+                        class="form-control"
+                        placeholder="Entre 1 et 30 jours"
+                      />
                     </div>
                     <div class="col-12">
                       <label class="form-label" for="message"> Message </label>
-                      <textarea id="message" v-model="formData.commentaire" class="form-control" rows="8"
-                        placeholder="Écrire un message"></textarea>
+                      <textarea
+                        id="message"
+                        v-model="formData.commentaire"
+                        class="form-control"
+                        rows="8"
+                        placeholder="Écrire un message"
+                      ></textarea>
                     </div>
                     <div class="col-12">
                       <button type="submit" class="btn btn-primary waves-effect waves-light">
-                        <i v-if="isLoading" class="spinner-border spinner-border-sm me-1" role="status"
-                          aria-hidden="true"></i>
-                        Envoyer la demande
+                        Envoyer
                       </button>
                     </div>
                   </div>

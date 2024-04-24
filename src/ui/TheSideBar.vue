@@ -66,41 +66,6 @@ onMounted(() => {
                 </div>
             </div>
         </aside>
-        <aside class="sidebar-small locked">
-            <div class="logo_items text-center mt-2 pt-2">
-                <img src="/src/assets/img/Logo_white_bg_small.png" alt="logo" class="logo_small" srcset="" />
-            </div>
-
-            <div class="menu_container mt-4 ps-0">
-                <div class="menu_items">
-                    <ul class="menu_item ps-1">
-                        <li v-for="(item, index) in itemsMenu" :key="item.id" class="item"
-                            :class="{ 'has-children': item.children, active: isActiveRoute(item.route) }"
-                            @click="toggleActiveIndex(index)">
-                            <span v-if="item.children" class="link flex">
-                                <i class="ti" :class="item.icon"></i>
-                                <span>{{ item.name }}</span>
-                                <i class="ms-auto ti"
-                                    :class="activeIndex === index ? 'ti-chevron-down' : 'ti-chevron-right'"></i>
-                            </span>
-                            <router-link v-else :to="item.route" class="link flex">
-                                <i class="ti" :class="item.icon"></i>
-                                <span>{{ item.name }}</span>
-                            </router-link>
-                            <ul v-if="item.children && activeIndex === index" class="submenu">
-                                <li v-for="child in item.children" :key="child.id" class="submenu-item">
-                                    <router-link :to="child.route" class="link flex">
-                                        <i class="ti ti-circle icon-children"></i>
-                                        <span>{{ child.name }}</span>
-                                    </router-link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </aside>
-
     </div>
 </template>
 

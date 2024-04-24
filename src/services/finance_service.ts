@@ -13,6 +13,7 @@ async function get() {
     } catch (error) {
         console.log(error);
         return Promise.reject(error);
+
     }
 }
 
@@ -44,6 +45,40 @@ async function update(req) {
             //     Object.assign(facture, response.data.facture);
             // }
             return response.data;
+        } else {
+
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
+async function ValidStatus(id) {
+    try {
+        const response = await api().put('facture/validStatus/'+id);
+        if (response.status == 200) {
+            console.log(response.data);
+            return response.data;
+        } else {
+
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
+async function RejectStatus(id, req) {
+    try {
+        const response = await api().post('facture/rejectStatus/'+id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+            return response.data;
+        } else {
+
         }
     } catch (error) {
         console.log(error);
@@ -79,6 +114,8 @@ async function getCompsByProjectId(id) {
     } catch (error) {
         console.log(error);
         return Promise.reject(error);
+
+
     }
 }
 
@@ -120,7 +157,7 @@ async function recover(id) {
 
         const response = await api().post('cautions/recover/' + id);
         if (response.status == 200) {
-            const caution = FinanceStore.caution.find((item) => item.id === id);
+            let caution = FinanceStore.caution.find((item) => item.id === id);
             if (caution) {
                 Object.assign(caution, response.data.caution);
             }
@@ -151,7 +188,7 @@ async function encaisser(id) {
 
         const response = await api().put('cheque/encaisser/' + id);
         if (response.status == 200) {
-            const cheque = FinanceStore.cheque.find((item) => item.id === id);
+            let cheque = FinanceStore.cheque.find((item) => item.id === id);
             if (cheque) {
                 Object.assign(cheque, response.data.cheque);
             }
@@ -165,7 +202,6 @@ async function insertFactureAttachement(req) {
     try {
         const response = await api().post('facture/comp/store-attachement', req);
         if (response.status == 200) {
-            // FinanceStore.facture_attachement.push(response.data.facture_attachement);
             console.log(response.data);
             return response.data;
         }
@@ -175,6 +211,7 @@ async function insertFactureAttachement(req) {
 
     }
 }
+
 
 export default {
     get,
@@ -188,4 +225,6 @@ export default {
     getCheque,
     encaisser,
     insertFactureAttachement,
-};
+    ValidStatus,
+    RejectStatus,
+}

@@ -1,15 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import {pmService} from '@/services';
-import { usePMStore } from '@/store';
 
-
-const pmStore = usePMStore();
 const isLoading = ref(false);
 
 const submit = async () => {
     isLoading.value = true;
-    await pmService.remove(pmStore.selectedItem.id)
+    await pmService.remove($('#deleteInput').val())
         .then(() => {
             isLoading.value = false;
             $('#deleteInput').val('');

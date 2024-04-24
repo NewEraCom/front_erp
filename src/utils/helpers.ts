@@ -14,7 +14,7 @@ const togglePassword = (value: string[]): string[] => {
 		: ['ti-eye', 'password'];
 };
 
-const setSavedUser = (res: any) => {
+const setSavedUser = (res: any): void => {
 	localStorage.setItem('user', JSON.stringify(res.user));
 	localStorage.setItem('isOnline', 'true');
 	localStorage.setItem('role', res.user.roles[0].name);
@@ -40,7 +40,6 @@ const roles = {
 	RAP: 'Responsable d\'avant projet',
 	MAGASINIER: 'Magasinier',
 	FINANCE: 'Responsable financier',
-	OFFICIER: 'officier de securite'
 };
 
 
@@ -63,10 +62,7 @@ const initialDashboard = (role: string): string => {
 		case roles.DO:
 			return 'DashboardPM';
 		case roles.BDM:
-		case roles.RAP:
 			return 'DashboardBDM';
-		case roles.OFFICIER:
-			return 'Pointage';
 		default:
 			return '404';
 	}
@@ -92,7 +88,6 @@ const returnSideBarItems = (): any => {
 		case roles.DO:
 			return sideBar.DOMenu;
 		case roles.BDM:
-		case roles.RAP:
 			return sideBar.BDMenu;
 		default:
 			return [];
@@ -124,6 +119,8 @@ const returnBadge = (item: any): any[] => {
 			return ['badge bg-label-warning', 'En attente'];
 		case 'on going':
 			return ['badge bg-label-info', 'En cours'];
+		case 'rejected':
+			return ['badge bg-label-danger', 'Rejected'];
 		case 'on road':
 			return ['badge bg-label-primary', 'En route'];
 		case 'done':
@@ -371,7 +368,6 @@ export function dateRegex(date) {
 	}
 	return result;
 }
-
 export function numberToTextMAD(number) {
 	const units = ['', 'mille', 'million', 'milliard', 'billion'];
 	const baseNumbers = ['', 'un', 'deux', 'trois', 'quatre', 'cinq', 'six', 'sept', 'huit', 'neuf', 'dix', 'onze', 'douze', 'treize', 'quatorze', 'quinze', 'seize', 'dix-sept', 'dix-huit', 'dix-neuf'];

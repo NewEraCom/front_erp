@@ -112,7 +112,6 @@ const getPointages = async () => {
         const response = await api().get('/rh/get-pointages');
         if (response.status === 200) {
             const rhStore = useRhStore();
-            console.log(response.data);
             rhStore.setPointages(response.data.pointages);
             return;
         }
@@ -188,9 +187,7 @@ const addPointage = async (data: any) => {
         const response = await api().post('rh/add-pointage', data);
         if (response.status === 200) {
             const rhStore = useRhStore();
-            if (rhStore.employee && rhStore.employee.id === response.data.pointage.employee_id) {
-                rhStore.employee.pointages.push(response.data.pointage);
-            }
+            rhStore.employee.pointages.push(response.data.pointage);
             rhStore.pointages.push(response.data.pointage);
             return;
         }
@@ -286,14 +283,11 @@ const addEmployee = async (data: any) => {
 async function Confirmation(id, req) {
     try {
 
-        const rhStore = useRhStore();
+
         const response = await api().post('conge/valider/' + id, req);
         if (response.status == 200) {
             console.log(response.data);
-            const dmndIndex = rhStore.leaves.data.findIndex((item) => item.id === id);
-            if (dmndIndex !== -1) {
-                rhStore.leaves.data.splice(dmndIndex, 1, response.data.conge);
-            }
+
 
             await getLeaves();
 
@@ -386,9 +380,9 @@ const deleteWorker = async () => {
         return error;
     }
 };
-const updateWorker = async (data: any, id: any) => {
+const updateWorker = async (data: any,id:any) => {
     try {
-        const response = await api().post('/tiers/update-worker/' + id, data);
+        const response = await api().post('/tiers/update-worker/'+id, data);
         if (response.status === 200) {
             const rhStore = useRhStore();
             // rhStore.setWorkers(response.data.workers);
@@ -416,7 +410,6 @@ const getSousTaraitant = async () => {
         return error;
     }
 };
-
 const addDemandeRh = async (data: any, src: string = 'rh') => {
     try {
         const response = await api().post('/dmnd/insert', data);
@@ -786,46 +779,6 @@ async function DeleteDocIntern(id) {
         console.log(error);
     }
 }
-const updateAttachement = async (id: number, data: any) => {
-    try {
-        const response = await api().post('stg/updateAttachement/' + id, data);
-        if (response.status === 200) {
-            const rhStore = useRhStore();
-            rhStore.intern = response.data.stg;
-
-            return;
-        }
-        throw new Error('Add pointage failed with status: ' + response.status);
-    } catch (error) {
-        console.error(error);
-        return error;
-    }
-};
-
-const downloadFile = async () => {
-    try {
-        const response = await api().get('rh/pointage-file', { responseType: 'blob' });
-        return response;
-
-        throw new Error('Download file failed with status: ' + response.status);
-    } catch (error) {
-        console.error(error);
-        return error;
-    }
-};
-
-const importPointage = async (data: any) => {
-    try {
-        const response = await api().post('rh/pointage-import', data);
-        if (response.status === 200) {
-            const rhStore = useRhStore();
-            rhStore.setPointages(response.data.pointages);
-            return;
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 
 export default {
@@ -874,8 +827,5 @@ export default {
     getInternById,
     UploadDocIntern,
     DeleteDocIntern,
-    updateWorker,
-    downloadFile,
-    updateAttachement,
-    importPointage
+    updateWorker
 };
