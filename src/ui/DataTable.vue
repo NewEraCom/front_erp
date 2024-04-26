@@ -103,7 +103,7 @@ const getFileUrl = (attachment) => {
 
 <template>
     <div>
-        <table class="table">
+        <table class="table" id="data-table">
             <thead class="table-light">
                 <tr>
                     <th v-for="(header, index) in headers" @click="sortTable(header.value)" :key="header.value"

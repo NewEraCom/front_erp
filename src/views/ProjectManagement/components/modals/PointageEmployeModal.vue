@@ -20,6 +20,7 @@ const formData = ref({
     mois: '-',
     project: props.project,
     pointage: null,
+    annee:'-'
 
 });
 
@@ -47,6 +48,7 @@ const handleFileChange = (e) => {
     formData.value.pointage = e.target.files[0];
 };
 
+const year = ref(new Date().getFullYear());
 
 </script>
 <template>
@@ -76,11 +78,20 @@ const handleFileChange = (e) => {
                     </div>
                     
 
-                    
+                    <div class="col-sm-12">
+                        <div class="mb-3">
+                            <label for="year" class="form-label">Année <span class="text-danger">*</span></label>
+                            <select id="year" class="form-select" required v-model="formData.annee">
+                                <option value="-">Choisir une année</option>
+                                <option v-for="(item, index) in 10" :key="index" :value="year + index">{{ year + index }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
 
                     <div class="col-sm-12">
                         <div class="mb-3">
-                            <label for="copie_paie" class="form-label">Copie de la paie <span
+                            <label for="copie_paie" class="form-label">Copie de pointage <span
                                     class="text-danger">*</span></label>
                             <input class="form-control" placeholder="" type="file" tabindex="0" id="copie_paie"
                                 name="copie_paie" @change="handleFileChange" required />

@@ -550,7 +550,7 @@ const capitalizeFirst = (value: string) => {
 // };
 
 const ExportData = () => {
-	const table = document.querySelector('table').cloneNode(true); 
+	const table = document.getElementById('data-table'); 
         const actionColumn = table.querySelector('.action-column'); // replace ".action-column" with the selector of your action column
         if (actionColumn) actionColumn.remove();
         const wb = XLSX.utils.table_to_book(table);

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
+import { helpers } from '@/utils';
 
 
 const props = defineProps({
@@ -14,6 +15,7 @@ const headers = [
     { text: 'Employé', value: 'employee', type: 'text' },
     { text: 'Jours Travaillés', value: 'work_days', type: 'jours' },
     { text: 'Mois', value: 'mois', type: 'text' },
+    { text: 'Année', value: 'annee', type: 'text' },
 ];
 
 const actionsConfig = [
@@ -40,7 +42,10 @@ const filter = () => {
         return searchWords.every(word => combinedFields.includes(word));
     });
 };
-
+const downloadFile = () => {
+    helpers.ExportData();
+    
+};
 </script>
 <template>
     <div>
@@ -58,7 +63,7 @@ const filter = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-secondary" disabled data-bs-toggle="modal" data-bs-target="#import-modal">
+                    <button class="btn btn-success" @click="downloadFile">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

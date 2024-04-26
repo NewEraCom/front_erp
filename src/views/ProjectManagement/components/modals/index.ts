@@ -9,6 +9,8 @@ import NewCaisseProjectModal from './NewCaisseProjectModal.vue';
 import NewPreProjectModal from './NewPreProjectModal.vue';
 import PointageEmployeModal from './PointageEmployeModal.vue';
 import ImportPreProjectModal from './ImportPreProjectModal.vue';
+import EditProjectModal from './EditProjectModal.vue';
+import NewProjectArticlesModal from './NewProjectArticlesModal.vue';
 
 
 export {
@@ -22,5 +24,7 @@ export {
     NewCaisseProjectModal,
     NewPreProjectModal,
     PointageEmployeModal,
-    ImportPreProjectModal
+    ImportPreProjectModal,
+    EditProjectModal,
+    NewProjectArticlesModal
 };

@@ -807,7 +807,6 @@ const downloadFile = async () => {
         const response = await api().get('rh/pointage-file', { responseType: 'blob' });
         return response;
 
-        throw new Error('Download file failed with status: ' + response.status);
     } catch (error) {
         console.error(error);
         return error;
@@ -820,6 +819,18 @@ const importPointage = async (data: any) => {
         if (response.status === 200) {
             const rhStore = useRhStore();
             rhStore.setPointages(response.data.pointages);
+            return;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+const AffecterEmpProjet = async (id,data: any) => {
+    try {
+        const response = await api().post('rh/affecter-employe/'+id, data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.employee = response.data.employee;
             return;
         }
     } catch (error) {
@@ -877,5 +888,6 @@ export default {
     updateWorker,
     downloadFile,
     updateAttachement,
-    importPointage
+    importPointage,
+    AffecterEmpProjet
 };

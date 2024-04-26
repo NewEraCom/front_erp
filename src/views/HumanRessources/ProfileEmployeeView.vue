@@ -9,7 +9,7 @@ import {
     EditSalaryModal, AugementationSalaryModal, EditLeavePerMonthModal,
     AddCongeModal, EditBanInfoModal, EditCnssModal,
     AddDocumentModal, DeleteDocModal, AddPointageModal,
-    EditEmployeeModal, RuptureContractModal
+    EditEmployeeModal, RuptureContractModal,AffecteEmpProjectModal
 } from './components/modals';
 
 import { useToast } from 'vue-toastification';
@@ -377,7 +377,7 @@ const DeleteDoc = async () => {
                         <div class="card card-action card-border-shadow-primary">
                             <div class="card-header align-items-center">
                                 <h5 class="card-action-title mb-0">Historique</h5>
-                                <button class="btn btn-primary btn-sm">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#AffecteEmp">
                                     <i class="ti ti-paperclip me-2"></i>
                                     Affecter a nouveau projet
                                 </button>
@@ -660,6 +660,7 @@ const DeleteDoc = async () => {
             <EditEmployeeModal :employee="employee" />
             <RuptureContractModal :id="employee.id" />
             <AddPointageModal source="simple" :id="Number(id)" />
+            <AffecteEmpProjectModal :emp_id="Number(employee.id)" />
 
         </div>
         <div v-else>

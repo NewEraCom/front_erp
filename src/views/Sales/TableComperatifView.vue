@@ -15,29 +15,34 @@ const sharedStore = useSharedStore();
 const salesStore = useSalesStore();
 const fournisseurs = ref(computed(() => sharedStore.fournisseurs.data));
 const article = ref(salesStore.article);
+
 onMounted(async () => {
     await sharedService.getFournisseur();
+    console.log(fournisseurs.value);
     // fournisseurs.value = sharedStore.fournisseurs.data;
     if (article.value === null) {
         router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
 
     }
 });
-const fournisseur1 = ref('');
-const fournisseur2 = ref('');
-const fournisseur3 = ref('');
+// const fournisseur1 = ref('');
+// const fournisseur2 = ref('');
+// const fournisseur3 = ref('');
 
 const Submit = async () => {
 
     const payload = {
         data: article.value.map((article) => ({
             article_id: article.id,
-            fournisseur1_id: fournisseur1.value.key,
-            fournisseur2_id: fournisseur2.value.key,
-            fournisseur3_id: fournisseur3.value.key,
-            fournisseur1_prix: article.fournisseur1_prix,
-            fournisseur2_prix: article.fournisseur2_prix,
-            fournisseur3_prix: article.fournisseur3_prix
+            // fournisseur1_id: fournisseur1.value.key,
+            // fournisseur2_id: fournisseur2.value.key,
+            // fournisseur3_id: fournisseur3.value.key,
+            fournisseur1_prix: article.prix1,
+            fournisseur2_prix: article.prix2,
+            fournisseur3_prix: article.prix3,
+            fournisseur1_id: article.fournisseur1,
+            fournisseur2_id: article.fournisseur2,
+            fournisseur3_id: article.fournisseur3
         }))
     };
 
@@ -71,7 +76,7 @@ onUnmounted(() => {
                 <div class="card-body">
                     <form @submit.prevent="Submit" enctype="multipart/form-data">
                         <div class="">
-                            <div class="row">
+                            <!-- <div class="row">
                                 <div class="col-12">
                                     <div class="d-flex justify-content-between">
                                         <div class="col-sm-4 m-1">
@@ -145,7 +150,82 @@ onUnmounted(() => {
                                         </table>
                                     </div>
                                 </div>
+                            </div> --> 
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table-responsive mt-4">
+                                    <table class="table">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>Article</th>
+                                                <th class="fw-bold text-center">Fournisseur 1</th>
+                                                <th class="fw-bold text-center">Prix 1</th>
+                                                <th class="fw-bold text-center">Fournisseur 2</th>
+                                                <th class="fw-bold text-center">Prix 2</th>
+                                                <th class="fw-bold text-center">Fournisseur 3</th>
+                                                <th class="fw-bold text-center">Prix 3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody v-if="article">
+                                            <tr v-for="(item, index) in article" :key="index">
+                                                <td>
+                                                    {{ item.article.article }}
+                                                </td>
+                                                <td class="text-center text-truncate" v-if="fournisseurs" >
+                                                    <!-- <CustomSelect 
+                                                    v-model="item.fournisseur1"
+                                                    placeholder="Choisir un fournisseur" :label="null" :data="fournisseurs.filter((item) => item.is_active == 1).map((item) => ({
+                                                        key: item.id,
+                                                        value: item.raison_social
+                                                    }))
+                                                        " /> -->
+                                                        <select name="" id="" v-model="item.fournisseur1" class="form-select">
+                                                            <option :value="item.id" v-for="item in fournisseurs" :key="item.id"> {{ item.raison_social }}</option>
+                                                        </select>
+                                                </td>
+                                                <td class="text-center text-truncate">
+                                                    <input type="number" class="form-control" v-model="item.prix1">
+                                                </td>
+                                                <td class="text-center text-truncate" v-if="fournisseurs">
+                                                     <!-- <CustomSelect  v-model="item.fournisseur2"
+                                                    placeholder="Choisir un fournisseur" :label="null" :data="fournisseurs.filter((item) => item.is_active == 1).map((item) => ({
+                                                        key: item.id,
+                                                        value: item.raison_social
+                                                    }))
+                                                        " />  -->
+                                                        <select name="" id="" v-model="item.fournisseur2" class="form-select">
+                                                            <option :value="item.id" v-for="item in fournisseurs" :key="item.id"> {{ item.raison_social }}</option>
+                                                        </select>
+                                                </td>
+                                                <td class="text-center text-truncate">
+                                                    <input type="number" class="form-control" v-model="item.prix2" >
+                                                </td>
+                                                <td class="text-center text-truncate" v-if="fournisseurs">
+                                                    <!-- <CustomSelect 
+                                                    v-model="item.fournisseur3"
+                                                    placeholder="Choisir un fournisseur" :label="null" :data="fournisseurs.filter((item) => item.is_active == 1).map((item) => ({
+                                                        key: item.id,
+                                                        value: item.raison_social
+                                                    }))
+                                                        " /> -->
+                                                        <select name="" id="" v-model="item.fournisseur3" class="form-select">
+                                                            <option :value="item.id" v-for="item in fournisseurs" :key="item.id"> {{ item.raison_social }}</option>
+                                                        </select>
+                                                </td>
+                                                <td class="text-center text-truncate">
+                                                    <input type="number" class="form-control" v-model="item.prix3">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody v-else>
+                                            <tr class="text-center">
+                                                <td colspan="7">Aucun Article</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
+                        </div>
                         </div>
                         <div class="modal-footer mt-5">
                             <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">

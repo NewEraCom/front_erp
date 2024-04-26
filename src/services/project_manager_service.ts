@@ -508,6 +508,35 @@ const  importFromFile = async (req) =>{
   }
 };
 
+const EditProject = async (id,data) => {
+  try {
+    const response = await api().post('projects/update/'+id,data);
+    if (response.status === 200) {
+      const PMStore = usePMStore();
+      PMStore.projects = response.data.projects;
+       const project = PMStore.projects.find((item) => item.id === id);
+      if (project) {
+          Object.assign(project, response.data.project);
+      }
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+const insertArticles = async (data) => {
+  try {
+    const PMStore = usePMStore();
+
+    const response = await api().post('purchase/insert-articles',data);
+    if (response.status === 200) {
+      PMStore.project.pre_project.articles= response.data.articles;
+      console.log(response.data);
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -543,5 +572,7 @@ export default {
   createPreProject,
   markChiffrageDone,
   PointageEmployeeImport,
-  importFromFile
+  importFromFile,
+  EditProject,
+  insertArticles
 };

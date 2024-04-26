@@ -21,9 +21,11 @@ import {
     InvoiceAttachementModal,
     EditArticleModal,
     SuivieTable,
-    SuivieModal
+    SuivieModal,
+    PointageTable,
+    EditProjectModal,
+    NewProjectArticlesModal
 } from './components';
-import PointageTable from './components/PointageTable.vue';
 
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
@@ -33,7 +35,12 @@ const sharedStore = useSharedStore();
 const props = defineProps<{
     id: string;
 }>();
-
+const ShowButtonCaisse = computed(() => {
+      const now = new Date();
+      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      const diff = Math.floor((endOfMonth - now) / (1000 * 60 * 60 * 24));
+      return diff < 6;
+    });
 const item = ref(computed(() => pmStore.project));
 const caisseProject = ref(computed(() => pmStore.caisse_project));
 const soustraitants = ref(computed(() => sharedStore.fournisseurs));
@@ -62,17 +69,25 @@ watch(item, () => {
 </script>
 <template>
     <div class="flex-grow-1 container-fluid mt-3">
-        <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center justify-content-between mb-4">
             <h5 class="py-3 mb-4 fw-medium text-muted">Dashboard / Projets /
                 <span class="text-dark" v-if="project">{{ project.code }}</span>
             </h5>
-            <div v-if="project && role === 'Chef de projet'">
-                <button v-if="project.facture_composante.length === 0" class="btn btn-success ms-auto"
+            <div v-if="project" class="d-flex gap-3">
+                <button class="btn btn-warning ms-auto "
+                    data-bs-toggle="modal" data-bs-target="#edit-project">
+                    <i class="ti ti-pencil me-2"></i> Modifier
+                </button>
+                <div v-if="project && role === 'Chef de projet'">
+                <button v-if="project.facture_composante.length === 0" class="btn btn-success ms-auto ms-2"
                     data-bs-toggle="modal" data-bs-target="#invoicesComposant">
                     <i class="ti ti-square-rounded-check-filled me-2"></i> Ajouter les
                     Composants de la facture
                 </button>
             </div>
+            </div>
+            
+            
         </div>
 
         <div v-if="project" class="row g-3">
@@ -195,7 +210,7 @@ watch(item, () => {
                                 </h4>
                             </div>
                             <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal">
+                                data-bs-toggle="modal" v-if="ShowButtonCaisse">
                                 <i class="ti ti-plus"></i>
                                 Budget de caisse
                             </button>
@@ -525,6 +540,11 @@ watch(item, () => {
                                             class="dropdown-item fw-medium">
                                             <i class="ti ti-transfer-out me-2"></i> Demande de sortie de stock
                                         </button>
+                                        <button data-bs-target="#new-articles" data-bs-toggle="modal"
+                                            class="dropdown-item fw-medium"
+                                            v-if="project.status =='pending'">
+                                            <i class="ti ti-square-rounded-plus me-2"></i> Nouveau article
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -632,6 +652,8 @@ watch(item, () => {
                     (item: any) => item.category === 'Achats' && item.status === 1
                 )" />
             <PointageEmployeModal :project="project.id" />
+            <EditProjectModal :project="project" />
+            <NewProjectArticlesModal :pre_project_id="project.pre_project.id"/>
         </div>
 
     </div>
