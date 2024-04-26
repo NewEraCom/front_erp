@@ -1,11 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue';
-import {pmService} from '@/services';
-import {usePMStore} from '@/store';
+import { ref, computed, onMounted } from 'vue';
+import {pmService,rhService} from '@/services';
+import {usePMStore,useRhStore} from '@/store';
 
 import { CustomSelect } from '@/ui';
 
 const PMStore = usePMStore();
+const rhStore = useRhStore();
 
 const props = defineProps({
     id: {
@@ -22,13 +23,17 @@ const props = defineProps({
         required: false
     }
 });
-
+onMounted(()=>{
+    rhService.getEmployees();
+});
 const projectManager = ref(computed(() => PMStore.projectManager));
+const employees = ref(computed(() => rhStore.employees));
 
 const isLoading = ref(false);
 const cautionDefinitif = ref(null);
 const duration = ref(null);
 const projectManagerSelect = ref('-');
+const DirecteurOprerationSelect = ref('-');
 const lots = ref([]);
 
 const ClotureSimple = async () => {
@@ -37,11 +42,14 @@ const ClotureSimple = async () => {
         return;
     }
     projectManagerSelect.value = projectManagerSelect.value.key;
+    DirecteurOprerationSelect.value = DirecteurOprerationSelect.value.key;
+
 
     isLoading.value = true;
     const formData = new FormData();
     formData.append('id', props.id);
     formData.append('project_manager', projectManagerSelect.value);
+    formData.append('activity_director', DirecteurOprerationSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
     await pmService.clotureSimple(formData).then(() => {
@@ -57,11 +65,13 @@ const ClotureComplex = async () => {
     }
 
     projectManagerSelect.value = projectManagerSelect.value.key;
+    DirecteurOprerationSelect.value = DirecteurOprerationSelect.value.key;
     isLoading.value = true;
     const formData = new FormData();
     formData.append('id', props.id);
     formData.append('lots', lots.value);
     formData.append('project_manager', projectManagerSelect.value);
+    formData.append('activity_director', DirecteurOprerationSelect.value);
     formData.append('caution_definitif', cautionDefinitif.value);
     formData.append('duration', duration.value);
     await pmService.clotureComplex(formData).then(() => {
@@ -87,10 +97,18 @@ const toggleLot = (id) => {
                 <div class="mb-3">
                     <CustomSelect v-if="projectManager != null" v-model="projectManagerSelect"
                         placeholder="Choisir un employee" label="Chef de projet" :data="projectManager.map((item) => ({
-            key: item.id,
-            value: item.employee.first_name + ' ' + item.employee.last_name
-        }))
-            " />
+                        key: item.id,
+                        value: item.employee.first_name + ' ' + item.employee.last_name
+                    }))
+                        " />
+                </div>
+                <div class="mb-3">
+                    <CustomSelect v-if="employees != null" v-model="DirecteurOprerationSelect"
+                        placeholder="Choisir un employee" label="Directeur D'operation" :data="employees.map((item) => ({
+                        key: item.id,
+                        value: item.first_name + ' ' + item.last_name
+                    }))
+                        " />
                 </div>
                 <div class="mb-3">
                     <label id="cautionDefinitif" class="form-label mb-2">Caution définitif</label>
@@ -128,6 +146,14 @@ const toggleLot = (id) => {
             value: item.employee.first_name + ' ' + item.employee.last_name
         }))
             " />
+                </div>
+                <div class="mb-3">
+                    <CustomSelect v-if="employees != null" v-model="DirecteurOprerationSelect"
+                        placeholder="Choisir un employee" label="Directeur D'operation" :data="employees.map((item) => ({
+                        key: item.id,
+                        value: item.first_name + ' ' + item.last_name
+                    }))
+                        " />
                 </div>
                 <div class="mb-3">
                     <label id="cautionDefinitif" class="form-label mb-2">Caution définitif</label>

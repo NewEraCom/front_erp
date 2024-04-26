@@ -97,6 +97,10 @@ const year = ref(new Date().getFullYear());
                                 name="copie_paie" @change="handleFileChange" required />
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <a href="/src/assets/pointage.xlsx"> <i class="ti ti-file-download me-2"></i>Télécharger le
+                            modèle </a>
+                    </div>
 
                 </div>
             </div>
