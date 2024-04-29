@@ -1,23 +1,28 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue';
-import { CardOne, CardOneSkeleton } from '@/ui';
+import { ref,  onMounted, watch } from 'vue';
+import {  CardOneSkeleton } from '@/ui';
 import {  sharedService } from '@/services';
 import { useSharedStore } from '@/store';
-import { BudgetTable } from './components';
+import { BudgetCard ,BudgetTable} from './components';
 import {NewBudgetSiegeModal} from './components/modals';
 import { Validate } from '../HumanRessources/components/modals';
 const sharedStore = useSharedStore();
 
+const budget = ref( sharedStore.budgetSiege.data);
+const stats = ref( sharedStore.budgetSiege.stats);
 
-const budget = ref( sharedStore.budgetSiege);
 const isLoading = ref(false);
 onMounted(async () => {
   await sharedService.getCaisseSiege();
+  console.log(stats.value);
 });
 
 
-watch(() => sharedStore.budgetSiege, (newValue) => {
+watch(() => sharedStore.budgetSiege.data, (newValue) => {
   budget.value = newValue;
+});
+watch(() => sharedStore.budgetSiege.stats, (newValue) => {
+  stats.value = newValue;
 });
 const ValidateCaisse = async () => {
   isLoading.value = true;
@@ -49,23 +54,9 @@ const RejectCaisse = async () => {
     <h5 class="py-3 mb-4 fw-medium text-muted">
       Dashboard / <span class="text-dark">Budget Siege</span>
     </h5>
-    <div v-if="budget != null" class="row g-3">
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Total des budgets" :count="10" color="bg-label-warning"
-          icon="ti-plane-inflight" card-color="card-border-shadow-warning" />
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Demande des budgets SIEGE" :count="10" color="bg-label-danger"
-          icon="ti-plane-inflight" card-color="card-border-shadow-danger" />
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Demande Traitées" :count="10" color="bg-label-success"
-          icon="ti-plane-inflight" card-color="card-border-shadow-success" />
-      </div>
-      <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-4 col-xxl-3">
-        <CardOne title="Congés Maladie" :count="10" color="bg-label-primary" icon="ti-hospital"
-          card-color="card-border-shadow-primary" />
-      </div>
+    <div v-if="stats != null" class="row g-3">
+          <BudgetCard  :stats="stats"/>
+    
     </div>
     <div v-else class="row g-3 mb-4">
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
@@ -98,17 +89,7 @@ const RejectCaisse = async () => {
             <div v-if="budget != null" class="card-body border-top pt-4">
               <BudgetTable :budget="budget" />
             </div>
-            <!-- <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
-              style="height: 650px;">
-              <div class="row mt-5">
-                <div class="col-12 text-center">
-                  <h5>Chargement des données...</h5>
-                  <div class="spinner-border text-primary mt-4" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+           
           </div>
         </div>
       </div>

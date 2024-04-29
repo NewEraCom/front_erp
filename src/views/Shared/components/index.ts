@@ -18,7 +18,7 @@ import AddFournisseurModal from './AddFournisseurModal.vue';
 import ValidateCaisseTable from './ValidateCaisseTable.vue';
 import DetailsCaisseProjectModal from './DetailsCaisseProjectModal.vue';
 import BudgetTable from './BudgetTable.vue';
-
+import BudgetCard from './BudgetCard.vue';
 export {
     ModalReserve,
     TopBarSupport,
@@ -39,5 +39,6 @@ export {
     AddFournisseurModal,
     ValidateCaisseTable,
     DetailsCaisseProjectModal,
-    BudgetTable
+    BudgetTable,
+    BudgetCard
 };

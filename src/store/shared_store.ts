@@ -53,7 +53,10 @@ export const useSharedStore = defineStore('ShareStore', {
         Soustraitant: null,
         mainItem:null,
         selectedCaisse:null,
-        budgetSiege:null,
+        budgetSiege:{
+            data:null,
+            stats:null,
+        },
     }),
     actions: {
         setEvents(data: any) {
@@ -281,8 +284,16 @@ export const useSharedStore = defineStore('ShareStore', {
             console.log(data);
             
         },
-        setBudgetSiege(data: any) {
-            this.budgetSiege = data;
+        setBudgetSiege(data: any) {            
+            this.budgetSiege.data = data;
+            this.budgetSiege.stats = {
+                total: data.length,
+                count_siege: data.filter(caisse => caisse.project.code === 'SIEGE').length,
+                total_budget: data.filter(caisse => caisse.project.code === 'SIEGE').reduce((total, caisse) => total + caisse.montant, 0),
+                count_projets: data.reduce((total, caisse) => total + caisse.montant, 0),
+            };
+            console.log(this.budgetSiege.stats);
+            
         }
     },
 });
