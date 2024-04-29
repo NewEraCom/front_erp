@@ -16,10 +16,11 @@ const headers = [
     { text: 'Créer par', type: 'created_by' },
     { text: 'Project', isComplex: true, type: 'project' },
     { text: 'Mois', value: 'mois', type: 'text' },
+    { text: 'Designation', value: 'designation', type: 'text' },
+    { text: 'Montant', value: 'montant', type: 'text' },
     { text: 'Validation DO', value: 'validation_DO', type: 'badge' },
     { text: 'Validation DS', value: 'validation_DS', type: 'badge' },
     { text: 'Validation DG', value: 'validation_DG', type: 'badge' },
-    { text: 'Designation', value: 'designation', type: 'text' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 

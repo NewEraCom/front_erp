@@ -172,6 +172,13 @@ const RHMenu = [
         path: 'DocumentsRH'
     }, */
     {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseValidation'
+    },
+    {
         id: 8,
         name: 'Recrutements',
         route: '/recruitments',
@@ -334,6 +341,13 @@ const LogisticsMenu = [
         route: '/caisse',
         icon: 'ti ti-cash',
         path: 'Caisse'
+    },
+    {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseValidation'
     },
     {
         id: 6,
@@ -596,6 +610,13 @@ const SupportMenu = [
         route: '/projects',
         icon: 'ti ti-package',
         path: 'Projects'
+    },
+    {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseValidation'
     },
     {
         id: 6,

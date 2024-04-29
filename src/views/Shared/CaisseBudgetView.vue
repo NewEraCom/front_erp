@@ -9,7 +9,7 @@ import { Validate } from '../HumanRessources/components/modals';
 const sharedStore = useSharedStore();
 
 
-const budget = ref(computed(() => sharedStore.budgetSiege));
+const budget = ref( sharedStore.budgetSiege);
 const isLoading = ref(false);
 onMounted(async () => {
   await sharedService.getCaisseSiege();
@@ -98,7 +98,7 @@ const RejectCaisse = async () => {
             <div v-if="budget != null" class="card-body border-top pt-4">
               <BudgetTable :budget="budget" />
             </div>
-            <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
+            <!-- <div v-else class="card-body border-top pt-4 d-flex align-items-center justify-content-center"
               style="height: 650px;">
               <div class="row mt-5">
                 <div class="col-12 text-center">
@@ -108,7 +108,7 @@ const RejectCaisse = async () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

@@ -314,7 +314,7 @@ async function addCaisseSiege(data) {
   
       const response = await api().post('logistics/caisse/validate-budget/'+id,data);
       if (response.status == 200) {
-        sharedStore.setBudgetSiege(response.data.caisses) ;
+        // sharedStore.setBudgetSiege(response.data.caisses) ;
         const budget = sharedStore.budgetSiege.find((item) => item.id === id);
             if (budget) {
                 Object.assign(budget, response.data.caisse);
