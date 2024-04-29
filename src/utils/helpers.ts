@@ -169,6 +169,10 @@ const returnBadge = (item: any): any[] => {
       return ['badge bg-label-dark', 'Non Validé', 'ti-circle-x'];
     case 'valide':
       return ['badge bg-label-success', 'Validé', 'ti-circle-x'];
+    case 0:
+      return ['badge bg-label-danger', 'Désapprouvé', 'ti-circle-x'];
+    case 1:
+      return ['badge bg-label-success', 'Approuvé', 'ti-circle-x'];
     default:
       return ['badge bg-secondary', 'Autre'];
   }

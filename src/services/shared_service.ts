@@ -284,6 +284,47 @@ const validateCaisse = async (data: any) => {
     }
 };
 
+async function getCaisseSiege() {
+    try {
+        const sharedStore = useSharedStore();
+  
+      const response = await api().get('logistics/caisse/get-budget-siege');
+      if (response.status == 200) {
+        sharedStore.setBudgetSiege(response.data.caisses) ;
+      }
+    } catch (error) {
+      return error;
+    }
+}
+async function addCaisseSiege(data) {
+    try {
+        const sharedStore = useSharedStore();
+  
+      const response = await api().post('logistics/caisse/budget-siege',data);
+      if (response.status == 200) {
+        sharedStore.setBudgetSiege(response.data.caisses) ;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+  async function ValidateCaisseProject(id,data) {
+    try {
+        const sharedStore = useSharedStore();
+  
+      const response = await api().post('logistics/caisse/validate-budget/'+id,data);
+      if (response.status == 200) {
+        sharedStore.setBudgetSiege(response.data.caisses) ;
+        const budget = sharedStore.budgetSiege.find((item) => item.id === id);
+            if (budget) {
+                Object.assign(budget, response.data.caisse);
+            }
+      }
+    } catch (error) {
+      return error;
+    }
+  }
+
 
 export default {
     createEvent,
@@ -307,5 +348,8 @@ export default {
     getItems,
     addDocumentRh,
     getCaisse,
-    validateCaisse
+    validateCaisse,
+    getCaisseSiege,
+    addCaisseSiege,
+    ValidateCaisseProject
 };

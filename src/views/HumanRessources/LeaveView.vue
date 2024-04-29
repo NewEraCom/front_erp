@@ -49,7 +49,7 @@ const RejectConge = async () => {
   formData.append('status', 'disapproved');
   await rhService.Confirmation(rhStore.ItemId, formData).then(() => {
     isLoading.value = false;
-    $('#validate-modal').modal('hide');
+    $('#reject-modal').modal('hide');
 
   });
   // console.log($('#validateInput').val());

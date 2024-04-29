@@ -17,6 +17,7 @@ import PurchaseOrderTable from './PurchaseOrderTable.vue';
 import AddFournisseurModal from './AddFournisseurModal.vue';
 import ValidateCaisseTable from './ValidateCaisseTable.vue';
 import DetailsCaisseProjectModal from './DetailsCaisseProjectModal.vue';
+import BudgetTable from './BudgetTable.vue';
 
 export {
     ModalReserve,
@@ -37,5 +38,6 @@ export {
     PurchaseOrderTable,
     AddFournisseurModal,
     ValidateCaisseTable,
-    DetailsCaisseProjectModal
+    DetailsCaisseProjectModal,
+    BudgetTable
 };

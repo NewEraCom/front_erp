@@ -197,8 +197,8 @@ const getFileUrl = (attachment) => {
                         </td>
                         <td v-if="!header.isComplex" :class="index == 0 ? 'text-start' : 'text-center'">
                             <span v-if="header.type == 'badge'">
-                                <small class="fw-bold" :class="helpers.returnBadge(String(item[header.value]))[0]">{{
-                        helpers.returnBadge(String(item[header.value]))[1] }}
+                                <small class="fw-bold" :class="helpers.returnBadge(item[header.value])[0]">{{
+                        helpers.returnBadge(item[header.value])[1] }}
                                 </small>
                             </span>
                             <small v-else>

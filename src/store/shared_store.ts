@@ -53,6 +53,7 @@ export const useSharedStore = defineStore('ShareStore', {
         Soustraitant: null,
         mainItem:null,
         selectedCaisse:null,
+        budgetSiege:null,
     }),
     actions: {
         setEvents(data: any) {
@@ -279,6 +280,9 @@ export const useSharedStore = defineStore('ShareStore', {
             this.selectedCaisse = data.caisses;
             console.log(data);
             
+        },
+        setBudgetSiege(data: any) {
+            this.budgetSiege = data;
         }
     },
 });

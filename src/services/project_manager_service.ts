@@ -537,6 +537,8 @@ const insertArticles = async (data) => {
   }
 };
 
+
+
 export default {
   getDataManager,
   getPurchasesOrder,
@@ -574,5 +576,5 @@ export default {
   PointageEmployeeImport,
   importFromFile,
   EditProject,
-  insertArticles
+  insertArticles,
 };
