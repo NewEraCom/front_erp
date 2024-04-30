@@ -37,9 +37,9 @@ const Submit = async () => {
             // fournisseur1_id: fournisseur1.value.key,
             // fournisseur2_id: fournisseur2.value.key,
             // fournisseur3_id: fournisseur3.value.key,
-            fournisseur1_prix: article.prix1,
-            fournisseur2_prix: article.prix2,
-            fournisseur3_prix: article.prix3,
+            fournisseur1_prix: article.prix1.replace(/[^0-9.,]/g, '').replace(/,/g, '.'),
+            fournisseur2_prix: article.prix2.replace(/[^0-9.,]/g, '').replace(/,/g, '.'),
+            fournisseur3_prix: article.prix3.replace(/[^0-9.,]/g, '').replace(/,/g, '.'),
             fournisseur1_id: article.fournisseur1,
             fournisseur2_id: article.fournisseur2,
             fournisseur3_id: article.fournisseur3
@@ -184,7 +184,7 @@ onUnmounted(() => {
                                                         </select>
                                                 </td>
                                                 <td class="text-center text-truncate">
-                                                    <input type="number" class="form-control" v-model="item.prix1">
+                                                    <input type="text" class="form-control" v-model="item.prix1">
                                                 </td>
                                                 <td class="text-center text-truncate" v-if="fournisseurs">
                                                      <!-- <CustomSelect  v-model="item.fournisseur2"
@@ -198,7 +198,7 @@ onUnmounted(() => {
                                                         </select>
                                                 </td>
                                                 <td class="text-center text-truncate">
-                                                    <input type="number" class="form-control" v-model="item.prix2" >
+                                                    <input type="text" class="form-control" v-model="item.prix2" >
                                                 </td>
                                                 <td class="text-center text-truncate" v-if="fournisseurs">
                                                     <!-- <CustomSelect 
@@ -213,7 +213,7 @@ onUnmounted(() => {
                                                         </select>
                                                 </td>
                                                 <td class="text-center text-truncate">
-                                                    <input type="number" class="form-control" v-model="item.prix3">
+                                                    <input type="text" class="form-control" v-model="item.prix3">
                                                 </td>
                                             </tr>
                                         </tbody>

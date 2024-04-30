@@ -1,20 +1,22 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { salesService, sharedService } from '@/services';
-import { useSalesStore, useSharedStore } from '@/store';
-import { CardTwo, CardTwoSkeleton } from '@/ui';
+import { pmService, salesService, sharedService } from '@/services';
+import { usePMStore, useSalesStore, useSharedStore } from '@/store';
+import { CardTwo, CardTwoSkeleton,NewPurchaseOrderModal } from '@/ui';
 import { PurchaseOrderTable } from './components';
 
 const salesStore = useSalesStore();
 const sharedStore = useSharedStore();
-
+const pmStore = usePMStore();
+const SiegeId = 50;
 const stats = ref(computed(() => salesStore.purchaseOrders.stats));
 const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
-
+const articles = ref(computed(() => pmStore.borderaux));
 
 onMounted(async () => {
     await sharedService.getProjects();
     await salesService.getPurchaseOrders('Achats');
+    await pmService.getBorderaux(SiegeId);
 });
 
 
@@ -69,7 +71,7 @@ onUnmounted(() => {
                                     <h5 class="fw-bold mb-1">Demande d'achat</h5>
                                     <small class="fw-bold mb-1 text-muted">Liste des demandes d'achat</small>
                                 </div>
-                                <button class="btn btn-primary" data-bs-target="#addNewPurchaseOrder"
+                                <button class="btn btn-primary" data-bs-target="#newPurchaseOrder"
                                     data-bs-toggle="modal">
                                     <i class="ti ti-shopping-bag-plus me-2"></i> Ajouter une demande d'achat
                                 </button>
@@ -93,5 +95,8 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <NewPurchaseOrderModal v-if="articles" :id="50" :articles="articles.filter(
+                    (item: any) => item.category === 'Achats' && item.status === 1
+                )"  />
     </div>
 </template>

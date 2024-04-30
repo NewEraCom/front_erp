@@ -259,7 +259,7 @@ const validation = async () => {
               <i class="ti ti-bookmark-plus me-2"></i> Créer la table comparative
             </button>
             <router-link :to="{ name: 'PurchaseOrderValidation', params: { id: purchase.id } }"
-              v-if="purchase.status == 'on going' && purchase.table_comperatif != null && [helpers.roles.DS, helpers.roles.DO].includes(role)"
+              v-if="purchase.status == 'on going' && purchase.table_comperatif == null && [helpers.roles.DS, helpers.roles.DO].includes(role)"
               class="btn btn-success d-grid w-100 mb-2 waves-effect d-flex">
               <i class="ti ti-check me-2"></i> Valider la demande d'achats
             </router-link>

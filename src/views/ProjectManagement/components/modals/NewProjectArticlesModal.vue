@@ -178,6 +178,10 @@ const handleFileUpload = (event) => {
                     </button>
                     <input v-if="isUploadVisible" type="file" @change="handleFileUpload" class="form-control mt-3" />
                     </div>
+                    <div class="col-sm-12 mt-3" v-if="isUploadVisible">
+                        <a href="/src/assets/Article_template.xlsx"> <i class="ti ti-file-download me-2"></i>Télécharger le
+                            modèle </a>
+                    </div>
                 </div>
 
             </div>

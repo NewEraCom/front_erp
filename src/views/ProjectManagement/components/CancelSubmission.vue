@@ -5,7 +5,12 @@ import { pmService } from '@/services';
 
 const isLoading = ref(false);
 const motif = ref('');
-
+const props = defineProps({
+    id:{
+        type:Number,
+        required:true
+    }
+});
 const submit = async () => {
     isLoading.value = true;
 

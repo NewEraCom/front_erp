@@ -1,10 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref ,watch } from 'vue';
 import { usePMStore } from '@/store';
 import { pmService } from '@/services';
 import { helpers } from '@/utils';
-// import { Modal, DataTableDevis, DataTableBordereau, DetailsPreProjectSkeleton } from '@/ui';
-import { Modal } from '@/ui';
+import { Modal, DetailsPreProjectSkeleton } from '@/ui';
 import { DataTableBordereau ,DataTableDevis} from './components';
 import { DeleteDocModal } from '../HumanRessources/components';
 
@@ -35,7 +34,7 @@ const props = defineProps({
 const isLoading = ref(false);
 
 const PMStore = usePMStore();
-const preProject = computed(() => PMStore.preprojectDetail);
+const preProject = ref(computed(()=>PMStore.preprojectDetail));
 let user = ref(null);
 
 const projectManager = ref(computed(() => PMStore.projectManager));
@@ -78,6 +77,10 @@ const deleteArticles = async () => {
     isLoading.value = false;
   });
 };
+
+    watch(PMStore.preprojectDetail, (newValue) => {
+    preProject.value = newValue;
+}, { deep: true });
 </script>
 
 
@@ -336,13 +339,13 @@ const deleteArticles = async () => {
                           <div class="card-info">
                             <h4 class="card-title mb-3">Estimation du marche</h4>
                             <div class="d-flex align-items-baseline mb-1 gap-1">
-                              <h4 v-if="preProject.type == 'simple'" class="text-primary mb-0 fw-bold">
+                              <h4 v-if="preProject.type_project == 'simple'" class="text-primary mb-0 fw-bold">
                                 {{ helpers.formatNumber(preProject.montant_marche) }}
                               </h4>
                               <h4 v-else class="text-primary mb-0 fw-bold">
                                 {{
-    helpers.formatNumber(sumCautionAndEstimation(preProject.lots)[1])
-  }}
+                                  sumCautionAndEstimation(preProject.lots)[1]
+                                }}
                               </h4>
                               <p class="mb-0 fw-bold text-muted">MAD</p>
                             </div>
@@ -363,13 +366,13 @@ const deleteArticles = async () => {
                           <div class="card-info">
                             <h4 class="card-title mb-3">Caution provisoire</h4>
                             <div class="d-flex align-items-baseline mb-1 gap-1">
-                              <h4 v-if="preProject.type == 'simple'" class="text-primary mb-0 fw-bold">
+                              <h4 v-if="preProject.type_project == 'simple'" class="text-primary mb-0 fw-bold">
                                 {{ helpers.formatNumber(preProject.montant_caution) }}
                               </h4>
                               <h4 v-else class="text-primary mb-0 fw-bold">
                                 {{
-    helpers.formatNumber(sumCautionAndEstimation(preProject.lots)[0])
-  }}
+                                  sumCautionAndEstimation(preProject.lots)[0]
+                                }}
                               </h4>
                               <p class="mb-0 fw-bold text-muted">MAD</p>
                             </div>
@@ -590,7 +593,7 @@ const deleteArticles = async () => {
                   <div v-if="preProject.chiffrage_status == 0 &&
     (preProject.status == 'En soumission' || preProject.status == 'Gagné')
     " class="ms-auto">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-chiffrage">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#import-bordereau">
                       <i class="ti ti-file-export me-2"></i>
                       Importer
                     </button>

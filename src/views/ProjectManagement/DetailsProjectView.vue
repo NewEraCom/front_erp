@@ -3,12 +3,12 @@ import { ref, onMounted, computed, onUnmounted, watch } from 'vue';
 import { pmService, sharedService } from '@/services';
 import { usePMStore, useSharedStore } from '@/store';
 import { helpers, formater } from '@/utils';
-import { NewCaisseProjectModal, PointageEmployeModal } from './components/modals';
+import { NewCaisseProjectModal, PointageEmployeModal,EditBudgetProjectModal } from './components/modals';
 import {
     DeleteModal,
     NewPurchaseOrderModal,
     NewServiceModal,
-    InvoiceModal,
+    InvoiceModal
 } from '@/ui';
 
 import {
@@ -49,13 +49,37 @@ const project = ref(null);
 
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
-const caisse = ref(computed(() => pmStore.caisse_project));
 const caisse_sum = ref(computed(() => pmStore.caisse_project_sum));
+// const showModal = ref(true);
+// const frenchMonths = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+
+// const getMonthNumberFromFrenchMonth = (frenchMonth) => {
+//     return frenchMonths.indexOf(frenchMonth.toLowerCase());
+// };
+
+// const isCaisseInsertedForCurrentMonth = () => {
+//     const today = new Date();
+//     return caisseProject.value.some(caisse => {
+//         const caisseMonthNumber = getMonthNumberFromFrenchMonth(caisse.mois);
+//         const caisseDate = new Date(today.getFullYear(), caisseMonthNumber);
+//         return caisseDate.getMonth() === today.getMonth() && caisseDate.getFullYear() === today.getFullYear();
+//     });
+// };
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
-    console.log(caisse.value);
+    // const today = new Date();
+    // const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    // console.log(+today === +firstDayOfMonth);
+    // console.log(isCaisseInsertedForCurrentMonth());
+    // console.log(project.value.pre_project.articles.length === 0 || project.value.facture_composante.length === 0);  // Should log true if either `articles` or `facture_composant` is not inserted
+    // if (+today === +firstDayOfMonth && 
+    //     !isCaisseInsertedForCurrentMonth() && 
+    //     (project.value.pre_project.articles.length === 0 || project.value.facture_composante.length === 0)) {
+    //     showModal.value = true;
+    // }
+    // console.log(showModal.value);
 });
 
 onUnmounted(() => {
@@ -147,6 +171,9 @@ watch(item, () => {
                     <div class="card-header pb-0">
                         <div class="d-flex justify-content-between">
                             <small class="d-block mb-2 text-muted">Budget de projet</small>
+                            <a class="p-1 rounded bg-label-primary" data-bs-toggle="modal" data-bs-target="#editBudget">
+                                <i class="ti ti-pencil text-primary ps-3 pe-3"></i>
+                            </a>
                         </div>
                         <h4 v-if="project.budget != null" class="card-title mb-1">
                             {{ formater.number(project.budget) + ' MAD' }}
@@ -654,8 +681,12 @@ watch(item, () => {
             <PointageEmployeModal :project="project.id" />
             <EditProjectModal :project="project" />
             <NewProjectArticlesModal :pre_project_id="project.pre_project.id"/>
+            <EditBudgetProjectModal  :id="project.id" :old-budget="project.budget"/>
         </div>
+              <!-- <div v-if="showModal">
+                Input your bUDGET AND ARTICLES FIRST
 
+              </div> -->
     </div>
 </template>
 
@@ -680,5 +711,16 @@ watch(item, () => {
     50% {
         opacity: 0.2;
     }
+}
+.modal {
+  /* Add your modal styles here. This is a basic example. */
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
 }
 </style>

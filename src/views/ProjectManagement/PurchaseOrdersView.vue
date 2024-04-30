@@ -4,13 +4,17 @@ import { salesService } from '@/services';
 import { useSalesStore } from '@/store';
 import { CardTwo } from '@/ui';
 import PurchaseOrderTable from '../Sales/components/PurchaseOrderTable.vue';
+import { helpers } from '@/utils';
 
 const salesStore = useSalesStore();
-
+const role = localStorage.getItem('role');
 const stats = ref(computed(() => salesStore.purchaseOrders.stats));
 const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
 
 onMounted(async () => {
+    if(role == helpers.roles.DO){
+        await salesService.getPurchaseOrders('Achats');
+    }
     await salesService.getPurchaseOrdersByProjectManager('Achats');
 });
 

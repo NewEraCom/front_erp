@@ -57,13 +57,14 @@ const filteredData = ref(props.interns);
 const searchQuery = ref('');
 const statusQuery = ref('-');
 const itemPerPage = ref(15);
-
+const potentielQuery = ref('-');
 const filter = () => {
     filteredData.value = props.interns.filter((item: any) => {
-        const combinedFields = `${item.nom} ${item.prenom} ${item.poste} ${item.diplome} ${item.status}`.toLowerCase();
+        const combinedFields = `${item.nom} ${item.prenom} ${item.poste} ${item.diplome} ${item.status} ${item.potentiel}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
-            (statusQuery.value === '-' || item.status === statusQuery.value);
+            (statusQuery.value === '-' || item.status === statusQuery.value) &&
+            (potentielQuery.value === '-' || item.potentiel === potentielQuery.value);
     });
 
 };
@@ -84,6 +85,12 @@ const downloadFile = () => {
                             <option value="-">Tout</option>
                             <option value="1">Actif</option>
                             <option value="0">Non Actif</option>
+                        </select>
+                    </div>
+                    <div class="d-flex align-items-center ms-0">
+                        <select v-model="potentielQuery" class="form-select ms-2 me-2 w-180" @change="filter">
+                            <option value="-">Tout</option>
+                            <option value="1">Potentiel</option>
                         </select>
                     </div>
                     <div class="d-flex align-items-center ms-auto">

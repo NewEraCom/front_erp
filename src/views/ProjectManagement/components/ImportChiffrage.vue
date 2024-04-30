@@ -24,7 +24,11 @@ const submit = async () => {
     await pmService.importChiffrage(formData).then(() => {
         isLoading.value = false;
         $('#import-chiffrage').modal('hide');
-    });
+    })
+    .catch((error) => {
+            console.log(error);
+            isLoading.value = false;
+        });
 };
 </script>
 

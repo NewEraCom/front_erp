@@ -30,6 +30,7 @@ const formData = ref({
     situation_familiale: null,
     children: null,
     ville: null,
+    matricule: null,
 });
 
 watchEffect(() => {
@@ -49,6 +50,7 @@ watchEffect(() => {
             birthdate: props.employee.birthdate,
             situation_familiale: props.employee.situation_familiale,
             children: props.employee.num_personne_charge,
+            matricule: props.employee.matricule,
         };
     }
 });
@@ -96,6 +98,15 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="poste" v-model="formData.poste" class="form-control" placeholder="Entre le poste"
+                                type="text" tabindex="0" required />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="matricule" class="form-label">Matricule
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input id="matricule" v-model="formData.matricule" class="form-control" placeholder="Entre le matricule"
                                 type="text" tabindex="0" required />
                         </div>
                     </div>

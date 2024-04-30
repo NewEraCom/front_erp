@@ -12,6 +12,7 @@ import OutOfStockTable from './OutOfStockTable.vue';
 import ListItem from './ListItem.vue';
 import ListItemSkeleton from './ListItemSkeleton.vue';
 import CautionOut from './CautionOut.vue';
+import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
 
 export * from './cards';
 export * from './modals';
@@ -30,5 +31,6 @@ export {
     OutOfStockTable,
     ListItem,
     ListItemSkeleton,
-    CautionOut
+    CautionOut,
+    DetailsPreProjectSkeleton
 };

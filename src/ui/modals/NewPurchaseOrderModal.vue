@@ -127,8 +127,8 @@ const submit = async () => {
         unites: JSON.stringify(formData.value.unites),
     }).then(() => {
         isLoading.value = false;
-        $('#newPurchaseOrder').modal('hide');
         toast.success('Demande d\'achat envoyé avec succès');
+        $('#newPurchaseOrder').modal('hide');
     }).catch(() => {
         isLoading.value = false;
         toast.error('Une erreur est survenue');

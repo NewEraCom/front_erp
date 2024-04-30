@@ -11,7 +11,7 @@ import PointageEmployeModal from './PointageEmployeModal.vue';
 import ImportPreProjectModal from './ImportPreProjectModal.vue';
 import EditProjectModal from './EditProjectModal.vue';
 import NewProjectArticlesModal from './NewProjectArticlesModal.vue';
-
+import EditBudgetProjectModal from './EditBudgetProjectModal.vue';
 
 export {
     UploadDocumentModal,
@@ -26,5 +26,6 @@ export {
     PointageEmployeModal,
     ImportPreProjectModal,
     EditProjectModal,
-    NewProjectArticlesModal
+    NewProjectArticlesModal,
+    EditBudgetProjectModal
 };

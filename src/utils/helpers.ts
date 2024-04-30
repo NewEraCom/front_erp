@@ -166,7 +166,7 @@ const returnBadge = (item: any): any[] => {
     case 'Gagné':
       return ['badge bg-label-success', 'Gagné', 'ti-circle-check'];
     case 'Non Validé':
-      return ['badge bg-label-dark', 'Non Validé', 'ti-circle-x'];
+      return ['badge bg-label-danger', 'Non Validé', 'ti-circle-x'];
     case 'valide':
       return ['badge bg-label-success', 'Validé', 'ti-circle-x'];
     case 0:

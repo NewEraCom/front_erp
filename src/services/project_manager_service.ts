@@ -348,7 +348,7 @@ async function setFiles(req: any) {
     const response = await api().post('preprojects/set-files', req);
     if (response.status == 200) {
       PMStore.preprojectDetail = null;
-      PMStore.setPreProject(response.data[0]);
+      PMStore.setPreProjectDetail(response.data[0]);
     }
   } catch (error) {
     console.log(error);
@@ -405,7 +405,10 @@ async function create(req: any) {
     const PMStore = usePMStore();
 
     const response = await api().post('chiffrage/insert', req);
-    PMStore.setChiffragePreProject(response.data.chiffrages);
+    // PMStore.setChiffragePreProject(response.data.chiffrages);
+    // PMStore.preproject.data.chiffrages = response.data.pre_project[0].chiffrages;
+    PMStore.setPreProjectDetail(response.data.pre_project);
+
   } catch (error) {
     console.log(error);
     throw error;
@@ -449,10 +452,8 @@ async function addCaisseProject(req: any) {
 
     const response = await api().post('logistics/caisse/caisse-project', req);
     if (response.status == 200) {
-      PMStore.setCaisseProject(response.data.data);
-      PMStore.caisse_project_sum += response.data.data.montant;
-
-    }
+      PMStore.caisse_project.push(response.data.data);
+      PMStore.caisse_project_sum = Number(PMStore.caisse_project_sum || 0) + Number(response.data.data.montant);    }
   } catch (error) {
     return error;
   }
@@ -513,8 +514,8 @@ const EditProject = async (id,data) => {
     const response = await api().post('projects/update/'+id,data);
     if (response.status === 200) {
       const PMStore = usePMStore();
-      PMStore.projects = response.data.projects;
-       const project = PMStore.projects.find((item) => item.id === id);
+      // PMStore.projects = response.data.projects;
+       const project = PMStore.projects?.find((item) => item.id === id);
       if (project) {
           Object.assign(project, response.data.project);
       }

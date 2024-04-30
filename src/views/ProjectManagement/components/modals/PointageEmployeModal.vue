@@ -56,7 +56,7 @@ const year = ref(new Date().getFullYear());
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="month" class="form-label">Mois <span class="text-danger">*</span></label>
                             <select id="month" class="form-select" required v-model="formData.mois">
@@ -78,7 +78,7 @@ const year = ref(new Date().getFullYear());
                     </div>
                     
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="mb-3">
                             <label for="year" class="form-label">Année <span class="text-danger">*</span></label>
                             <select id="year" class="form-select" required v-model="formData.annee">
