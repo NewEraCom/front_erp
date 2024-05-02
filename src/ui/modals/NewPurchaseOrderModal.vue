@@ -28,7 +28,7 @@ const props = defineProps({
 const formData = ref({
     selectedSoustrait: null,
     remark: '',
-    items: [1],
+    items: [],
     service: [],
     qty: [],
     unite: [],
@@ -55,11 +55,11 @@ const addItemHors = () => {
 };
 
 const removeItem = (index) => {
-    if (formData.value.items.length > 1) {
+    
         formData.value.items?.splice(index - 1, 1);
         formData.value.service?.splice(index - 1, 1);
         formData.value.qty?.splice(index - 1, 1);
-    }
+    
 };
 
 const removeItemHors = (index) => {

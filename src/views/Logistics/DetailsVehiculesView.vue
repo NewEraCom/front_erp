@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted ,watch } from 'vue';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { formater } from '@/utils';
-
+import { useToast } from 'vue-toastification';
+import {Modal} from '@/ui';
+const toast = useToast();
 const logisticsStore = useLogisticsStore();
 
 const props = defineProps({
@@ -12,15 +14,15 @@ const props = defineProps({
         required: true,
     },
 });
-
+const isLoading = ref(false);
 import Renault from '@/assets/img/brands/Renault.jpg';
 import Dacia from '@/assets/img/brands/Dacia.jpg';
 import Hyundai from '@/assets/img/brands/Hyundai.jpg';
 import Peugeot from '@/assets/img/brands/Peugeot.jpg';
 import Volkswagen from '@/assets/img/brands/Volkswagen.jpg';
+import { AddCarHistoryModal ,DetailsVehiculeTable} from './components';
 
 const vehicule = ref(computed(() => logisticsStore.selectedVehicule));
-
 
 const getImage = () => {
     switch (vehicule.value?.brand) {
@@ -46,7 +48,22 @@ onMounted(async () => {
 onUnmounted(() => {
     logisticsStore.clearVehicule();
 });
+const recoverCar = async () => {
+    isLoading.value = true;
+    await logisticsService.recoverVehicule({ id_vehicule: props.id }).then(() => {
+        $('#recover-car').modal('hide');
+        toast.success('Ce vehicule a été récupérée avec succès');
+    }).finally(() => {
+        isLoading.value = false;
+    });
+};
 
+watch(
+  () => logisticsStore.selectedVehicule,
+  (newValue) => {
+    vehicule.value = newValue;
+  }
+);
 </script>
 
 <template>
@@ -182,7 +199,7 @@ onUnmounted(() => {
                         </li>
                     </ul>
                     <div class="tab-content p-0 m-0">
-                        <div id="historique" class="card tab-pane active show fade" role="tabpanel">
+                        <div id="historique" class="card tab-pane active show fade" role="tabpanel" v-if="vehicule">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0 fw-bold">Historique</h5>
                                 <button class="btn btn-warning ms-auto" data-bs-toggle="modal"
@@ -190,19 +207,13 @@ onUnmounted(() => {
                                     <i class="ti ti-arrow-back-up me-2" /> Récupérer
                                 </button>
                                 <button class="btn btn-primary ms-2" data-bs-toggle="modal"
-                                    :data-bs-target="'#' + createModalId">
+                                    data-bs-target='#create-history-cars'>
                                     <i class="ti ti-square-rounded-plus-filled me-2" /> Nouvelle
                                     Sortie Voiture
                                 </button>
                             </div>
-                            <div class="card-body border-top">
-                                <div class="d-flex align-items-center mb-3 mt-3">
-                                    <input type="search" class="form-control w-240 me-auto"
-                                        placeholder="Rechercher..." />
-                                    <button class="btn btn-warning me-2" @click="throwEror">
-                                        <i class="ti ti-file-type-csv me-2" /> Exporter
-                                    </button>
-                                </div>
+                            <div class="card-body border-top">    
+                                <DetailsVehiculeTable :items="vehicule?.historiques" />
                             </div>
                         </div>
                         <div id="mecanique" class="card tab-pane fade" role="tabpanel">
@@ -229,5 +240,27 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <Modal title="Récupération du vehicule" id="recover-car" size="modal-md">
+            <form @submit.prevent="recoverCar">
+                <div class="modal-body">
+                    <p>Etes-vous sûr de vouloir récupérer ce vehicule ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
+                        Fermer
+                    </button>
+
+                    <button type="submit" :disabled="isLoading" class="btn btn-primary me-0">
+                        <span v-if="isLoading" class="d-flex align-items-center">
+                            <div class="spinner-border spinner-border-sm text-white" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </span>
+                        <span v-else> Oui, Récupérer</span>
+                    </button>
+                </div>
+            </form>
+        </Modal>
+        <AddCarHistoryModal :id="id" />
     </div>
 </template>

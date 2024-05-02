@@ -24,8 +24,9 @@ import LivraisonArticlesModal from './LivraisonArticlesModal.vue';
 import AddCarburantModel from './AddCarburantModel.vue';
 import AddCachetModel from './AddCachetModel.vue';
 import AddVehiculeModel from './AddVehiculeModel.vue';
-import AddJawazModel from './AddJawazModel.vue'
-
+import AddJawazModel from './AddJawazModel.vue';
+import AddCarHistoryModal from './AddCarHistoryModal.vue';
+import DetailsVehiculeTable from './DetailsVehiculeTable.vue';
 export {
     StockTable,
     LouerTable,
@@ -54,4 +55,6 @@ export {
     AddJawazModel,
     AddCachetModel,
     AddVehiculeModel,
+    AddCarHistoryModal,
+    DetailsVehiculeTable
 };

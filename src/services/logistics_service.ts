@@ -380,7 +380,30 @@ const createCar = async (data: any) => {
     }
 };
 
+const affectVehicule = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/vehicule/affect', data);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            logisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
+const recoverVehicule = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/vehicule/desaffect', data);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            getVehiculeById(data.id_vehicule);
+            logisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -417,7 +440,9 @@ export default {
     createCarburant,
     createJawaz,
     createCachet,
-    createCar
+    createCar,
+    affectVehicule,
+    recoverVehicule
 };
 
 

@@ -7,14 +7,15 @@ const toast = useToast();
 
 const isLoading = ref(false);
 
-defineProps({
+const props = defineProps({
     projects: {
         type: Array,
         required: true,
-    }
+    },
+    
 });
 
-
+let montantMax = ref();
 const formData = ref({
     project_id: '-',
     montant: null,
@@ -34,7 +35,13 @@ const submit = async () => {
 
     isLoading.value = true;
 
-    formData.value.project_id = formData.value.project_id.key
+    formData.value.project_id = formData.value.project_id.key;
+    if (formData.value.montant > montantMax.value) {
+        toast.error('Le montant demandé est supérieur au montant disponible');
+        isLoading.value = false;
+        return;
+        
+    }
     await logisticsService.newCaisseOperation(formData.value, 'chef').then(() => {
         isLoading.value = false;
         $('#newDemandeCaisse').modal('hide');
@@ -55,7 +62,16 @@ const submit = async () => {
         isLoading.value = false;
     });
 };
-
+const updateMontant =() =>{
+    const selectedItem = props.projects
+            .filter((item) => item.id == formData.value.project_id.key)[0]
+            .caisse.find((caisse) => caisse.id == formData.value.item);
+        if (selectedItem) {
+            montantMax.value = selectedItem.montant;  // replace `montant` with the actual property name in your `caisse` object
+            console.log(montantMax.value);
+            
+        }
+    };
 </script>
 
 <template>
@@ -69,7 +85,7 @@ const submit = async () => {
                     </div>
                     <div v-if="formData.project_id != '-'" class="mb-3">
                         <label for="itm" class="mb-2">Item <span class="text-danger">*</span> </label>
-                        <select name="" id="" class="form-select" v-model="formData.item">
+                        <select name="" id="" class="form-select" v-model="formData.item" @change="updateMontant">
                             <option value="-">Choisir un item</option>
                             <option
                                 v-for="itm in projects.filter((item) => item.id == formData.project_id.key)[0].caisse"
@@ -82,7 +98,7 @@ const submit = async () => {
                     <div class="col-12 mb-3">
                         <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
                         <input type="number" class="form-control" id="montant" v-model="formData.montant"
-                            placeholder="Entre le montant demande" required />
+                            placeholder="Entre le montant demande" required :max="montantMax" />
                     </div>
                     <div class="col-12">
                         <textarea v-model="formData.remark" class="form-control" rows="2" placeholder="Remarque...">

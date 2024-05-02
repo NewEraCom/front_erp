@@ -109,6 +109,6 @@ watch(caisse, () => {
                 </div>
             </div>
         </div>
-        <DemandeCaisseModal :projects="projects" />
+        <DemandeCaisseModal :projects="projects"  />
     </div>
 </template>
