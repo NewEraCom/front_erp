@@ -33,7 +33,8 @@ const ValidateCaisse = async () => {
         ids = sharedStore.selectedCaisse.map(caisse => caisse.id);
     }
     const data = {
-        caisse_ids: ids
+        caisse_ids: ids,
+        status:1
     };
     await sharedService.validateCaisse(data).then(() => {
       isLoading.value = false;
@@ -61,8 +62,8 @@ const ValidateCaisse = async () => {
                     icon="ti ti-zoom-filled" card-color="card-border-shadow-success" />
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
-                <CardTwo title="Demande recrutée" :count="String(stats.rejected)" color="bg-label-info"
-                    icon="ti ti-zoom-filled" card-color="card-border-shadow-info" />
+                <CardTwo title="Demande refusé" :count="String(stats.rejected)" color="bg-label-danger"
+                    icon="ti ti-zoom-filled" card-color="card-border-shadow-danger" />
             </div>
         </div>
         <div v-else class="row">

@@ -7,7 +7,9 @@ import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { formater } from '@/utils';
 import { ValidateCaisse } from './components';
+import { useToast } from 'vue-toastification';
 
+const toast = useToast();
 const logisticsStore = useLogisticsStore();
 const isLoading = ref(false);
 const caisse = ref(computed(() => logisticsStore.opertationCaisse.data));
@@ -42,6 +44,7 @@ const Validate = async () => {
     isLoading.value = true;
     await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
         isLoading.value = false;
+        toast.success('Validé avec succès');
         $('#validate-caisse-modal').modal('hide');
 
     });

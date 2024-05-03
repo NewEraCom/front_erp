@@ -211,6 +211,15 @@ const getFileUrl = (attachment) => {
                                 <span v-if="header.type === 'gsm' && header.value === 'date_retour'">
                                     {{ item.pivot.date_fin ?? 'N/A' }}
                                 </span>
+                                <span v-if="header.type === 'meq' && header.value === 'kilometrage'">
+                                    {{ item.pivot.kilometrage }} KM
+                                </span>
+                                <span v-if="header.type === 'meq' && header.value === 'service_date'">
+                                    {{ item.pivot.service_date }}
+                                </span>
+                                <span v-if="header.type === 'meq' && header.value === 'next_service'">
+                                    {{ item.pivot.next_service }}
+                                </span>
                                 <span v-if="header.type === 'date'">
                                     {{ formater.date(item[header.value]) }}
                                 </span>

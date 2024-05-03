@@ -3,7 +3,9 @@ import { ref } from 'vue';
 import { DataTable, Modal } from '@/ui';
 import { formater, helpers } from '@/utils';
 import router from '@/router';
+import { useLogisticsStore } from '@/store';
 
+const logisticsStore = useLogisticsStore();
 const props = defineProps({
     vehicules: {
         type: Array,
@@ -33,6 +35,9 @@ const actionsConfig = [
 
 
 const deleteItem = (item: any) => {
+    logisticsStore.setSelectedItem(item.id);
+    $('#delete-modal').modal('show');
+
     console.log('Delete item', item);
 };
 

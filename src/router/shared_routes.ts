@@ -142,8 +142,8 @@ export const sharedRoutes = [
         },
     },
     {
-        path: '/caisse',
-        name: 'CaisseValidation',
+        path: '/caisse-budget',
+        name: 'CaisseBudget',
         component: () => import('@/views/Shared/CaisseBudgetView.vue'),
         meta: {
             title: 'Caisse',

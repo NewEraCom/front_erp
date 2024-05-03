@@ -1,15 +1,16 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed ,watch} from 'vue';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useSharedStore } from '@/store';
 import { sharedService } from '@/services';
 import { AddFournisseurModal ,FournisseurTable } from './components';
+import { Validate } from '../HumanRessources/components/modals';
 
 const sharedStore = useSharedStore();
 
 const fournisseurs = ref(computed(() => sharedStore.fournisseurs.data));
 const stats = ref(computed(() => sharedStore.fournisseurs.stats));
-
+const isLoading = ref(false);
 onMounted(async () => {
     await sharedService.getFournisseurs();
 });
@@ -17,8 +18,16 @@ onMounted(async () => {
 onUnmounted(() => {
     sharedStore.clearFournisseurs();
 });
+watch(sharedStore.fournisseurs.data, (newValue) => {
+    fournisseurs.value = newValue;
+}, { deep: true });
+const validateTier = async () => {
+    await sharedService.validateTier(sharedStore.selectedItem).then(() => {
+      isLoading.value = false;
+      $('#validate-modal').modal('hide');
 
-
+    });
+};
 </script>
 
 <template>
@@ -82,5 +91,7 @@ onUnmounted(() => {
             </div>
         </div>
             <AddFournisseurModal type="fournisseur" />
+            <Validate id="validate-modal" :isLoading="isLoading" :method="validateTier" 
+            title="Valider Ce Fournisseur" message="Êtes-vous sûr de valider ce fournisseur ?" severity="success" />
     </div>
 </template>

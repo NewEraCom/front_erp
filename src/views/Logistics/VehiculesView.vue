@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue';
+import { ref, onMounted, onUnmounted, computed ,watch} from 'vue';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
 import { VehiculesTable } from './components';
 import { formater } from '@/utils';
 import AddVehiculeModel from './components/AddVehiculeModel.vue';
+import { Validate } from '../HumanRessources/components';
 
 const logisticsStore = useLogisticsStore();
 
 const vehicules = ref(computed(() => logisticsStore.vehicules.data));
 const stats = ref(computed(() => logisticsStore.vehicules.stats));
-
+const isLoading = ref(false);
 onMounted(async () => {
     await logisticsService.getVehicules();
 });
@@ -19,7 +20,25 @@ onMounted(async () => {
 onUnmounted(() => {
     logisticsStore.clearVehicules();
 });
-
+const Delete = async () => {
+  isLoading.value = true;
+  await logisticsService.deleteVehicule(logisticsStore.selectedItem).then(() => {
+    isLoading.value = false;
+    $('#delete-modal').modal('hide');
+  });
+};
+watch(
+  () => logisticsStore.vehicules.data,
+  (newValue) => {
+    vehicules.value = newValue;
+  }
+);
+watch(
+  () => logisticsStore.vehicules.stats,
+  (newValue) => {
+    stats.value = newValue;
+  }
+);
 </script>
 
 <template>
@@ -73,5 +92,7 @@ onUnmounted(() => {
             </div>
         </div>
         <AddVehiculeModel/>
+        <Validate id="delete-modal" :isLoading="isLoading" :method="Delete"
+      title="Supprimer ce Vehicule" message="Êtes-vous sûr de supprimer ce ehicule" severity="danger" />
     </div>
 </template>

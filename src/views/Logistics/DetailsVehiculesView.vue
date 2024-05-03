@@ -20,7 +20,9 @@ import Dacia from '@/assets/img/brands/Dacia.jpg';
 import Hyundai from '@/assets/img/brands/Hyundai.jpg';
 import Peugeot from '@/assets/img/brands/Peugeot.jpg';
 import Volkswagen from '@/assets/img/brands/Volkswagen.jpg';
-import { AddCarHistoryModal ,DetailsVehiculeTable} from './components';
+import NoLogo from '@/assets/img/brands/NoLogo.png';
+import { AddCarHistoryModal ,DetailsVehiculeTable ,VehiculeEntretienTable ,AddEntretienVehiculeModal} from './components';
+import { Validate } from '../HumanRessources/components';
 
 const vehicule = ref(computed(() => logisticsStore.selectedVehicule));
 
@@ -37,7 +39,7 @@ const getImage = () => {
         case 'Volkswagen':
             return Volkswagen;
         default:
-            return '';
+            return NoLogo;
     }
 };
 
@@ -64,6 +66,22 @@ watch(
     vehicule.value = newValue;
   }
 );
+const DeleteMeq = async () => {
+  isLoading.value = true;
+  await logisticsService.removeEntretien(logisticsStore.selectedItem.idVeh,logisticsStore.selectedItem.id).then(() => {
+    isLoading.value = false;
+    $('#delete-modal').modal('hide');
+  });
+  // console.log($('#validateInput').val());
+};
+const DeleteHist = async () => {
+  isLoading.value = true;
+  await logisticsService.removeHistoriqueVehicule(logisticsStore.selectedItem.idVeh,logisticsStore.selectedItem.id).then(() => {
+    isLoading.value = false;
+    $('#delete-hist-modal').modal('hide');
+  });
+  // console.log($('#validateInput').val());
+};
 </script>
 
 <template>
@@ -212,28 +230,22 @@ watch(
                                     Sortie Voiture
                                 </button>
                             </div>
-                            <div class="card-body border-top">    
+                            <div class="card-body border-top pt-4">    
                                 <DetailsVehiculeTable :items="vehicule?.historiques" />
                             </div>
                         </div>
-                        <div id="mecanique" class="card tab-pane fade" role="tabpanel">
+                        <div id="mecanique" class="card tab-pane fade" role="tabpanel" v-if="vehicule">
                             <div class="card-header d-flex align-items-center">
                                 <h5 class="mb-0 fw-bold">Mécanique</h5>
                                 <button class="btn btn-primary ms-auto" data-bs-toggle="modal"
-                                    data-bs-target="#add-mecanique">
-                                    <i class="ti ti-square-rounded-plus-filled me-2" /> Nouvelle
+                                    data-bs-target="#entretien-car">
+                                    <i class="ti ti-square-rounded-plus-filled me-2" /> Nouveau
                                     enrégistrement
                                 </button>
                             </div>
-                            <div class="card-body border-top">
-                                <div class="d-flex align-items-center mb-3 mt-3">
-                                    <input type="search" class="form-control w-240 me-auto"
-                                        placeholder="Rechercher..." />
-                                    <button class="btn btn-warning me-2" @click="throwEror">
-                                        <i class="ti ti-file-type-csv me-2" /> Exporter
-                                    </button>
-                                    <CarHistoryTable />
-                                </div>
+                            <div class="card-body border-top pt-4">
+                                <VehiculeEntretienTable :items="vehicule?.mecaniques" />
+
                             </div>
                         </div>
                     </div>
@@ -262,5 +274,10 @@ watch(
             </form>
         </Modal>
         <AddCarHistoryModal :id="id" />
+        <AddEntretienVehiculeModal :id="id" />
+        <Validate id="delete-modal" :isLoading="isLoading" :method="DeleteMeq"
+      title="Supprimer cet Entretien" message="Êtes-vous sûr de supprimer cet entretien" severity="danger" />
+      <Validate id="delete-hist-modal" :isLoading="isLoading" :method="DeleteHist"
+      title="Supprimer cet Affectation" message="Êtes-vous sûr de supprimer cet affectation" severity="danger" />
     </div>
 </template>

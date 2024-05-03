@@ -2,7 +2,9 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater, helpers } from '@/utils';
-
+import { useSharedStore } from '@/store';
+const role = localStorage.getItem('role');
+const sharedStore = useSharedStore();
 const props = defineProps({
     fournisseurs: {
         type: Array,
@@ -21,8 +23,21 @@ const headers = [
 const actionsConfig = [
    
 ];
+if([helpers.roles.DS,helpers.roles.DO,helpers.roles.SALES].includes(role)){
+    actionsConfig.push(
+        {
+            icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => validateItem(item)
+        },
+        
+    );
+}
 
+const validateItem = (item: any) => {
+    sharedStore.setSelectedItem(item.id);
+    console.log(item);
+    $('#validate-modal').modal('show');
 
+};
 
 const filteredData = ref(props.fournisseurs);
 

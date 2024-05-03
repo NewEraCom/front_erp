@@ -7,9 +7,11 @@ import {
     FournisseurTable,
     AddSoustraitantModal
 } from './components';
+import { Validate } from '../HumanRessources/components/modals';
+
 
 const sharedStore = useSharedStore();
-
+const isLoading = ref(false);
 let fournisseurs = ref(computed(() => sharedStore.fournisseurs.data));
 let stats = ref(computed(() => sharedStore.fournisseurs.stats));
 
@@ -33,7 +35,13 @@ watch(fournisseurs, () => {
     data.value.stats = stats.value;
 }, { deep: true });
 
+const validateTier = async () => {
+    await sharedService.validateTier(sharedStore.selectedItem).then(() => {
+      isLoading.value = false;
+      $('#validate-modal').modal('hide');
 
+    });
+};
 </script>
 
 <template>
@@ -100,5 +108,7 @@ watch(fournisseurs, () => {
         <DeleteModal title="Supprimer un sous-traitant" text="Voulez-vous vraiment supprimer ce sous-traitant?"
             textButton="Oui, Supprimer" :action="() => sharedService.deleteSoustraitant()"
             message="Sous-traitant supprimé avec succès" />
+            <Validate id="validate-modal" :isLoading="isLoading" :method="validateTier" 
+            title="Valider Ce Fournisseur" message="Êtes-vous sûr de valider ce fournisseur ?" severity="success" />
     </div>
 </template>

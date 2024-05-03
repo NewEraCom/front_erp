@@ -24,7 +24,9 @@ const actionsConfig = [
 ];
 
 const deleteItem = (item: any) => {
-    console.log('Delete item', item);
+    logisticsStore.setSelectedItem({id:item.pivot.id,idVeh:item.pivot.vehicule_id});
+    
+    $('#delete-hist-modal').modal('show');
 };
 
 const filteredData = ref(props.items);

@@ -324,6 +324,22 @@ async function addCaisseSiege(data) {
       return error;
     }
   }
+  const validateTier = async (id: number) => {
+    try {
+        const sharedStore = useSharedStore();
+
+        const response = await api().post('/tiers/validate/'+id);
+        if (response.status == 200) {
+            const tier = sharedStore.fournisseurs.data.find((item) => item.id === id);
+            if (tier) {
+                Object.assign(tier, response.data.tier);
+            }
+        }
+        return response;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -351,5 +367,6 @@ export default {
     validateCaisse,
     getCaisseSiege,
     addCaisseSiege,
-    ValidateCaisseProject
+    ValidateCaisseProject,
+    validateTier
 };

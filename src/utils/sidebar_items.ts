@@ -345,7 +345,7 @@ const LogisticsMenu = [
     {
         id: 9,
         name: 'Budget de caisse',
-        route: '/caisse',
+        route: '/caisse-budget',
         icon: 'ti ti-coins',
         path: 'CaisseValidation'
     },
@@ -616,6 +616,13 @@ const SupportMenu = [
         name: 'Budget de caisse',
         route: '/caisse',
         icon: 'ti ti-coins',
+        path: 'CaisseBudget'
+    },
+    {
+        id: 6,
+        name: 'Validation des caisse',
+        route: '/validation/caisse',
+        icon: 'ti ti-coins',
         path: 'CaisseValidation'
     },
     {
@@ -738,6 +745,13 @@ const DOMenu = [
         route: '/project/caisse-request',
         icon: 'ti ti-transfer-out',
         path: 'CaisseRequest'
+    },
+    {
+        id: 6,
+        name: 'Validation des caisse',
+        route: '/validation/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseValidation'
     },
     {
         id: 6,

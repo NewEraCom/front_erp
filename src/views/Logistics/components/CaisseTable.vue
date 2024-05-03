@@ -29,7 +29,7 @@ const actionsConfig = [
     { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-if ([helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO ].includes(localStorage.getItem('role'))) {
+if ([ helpers.roles.DS ,helpers.roles.DO ].includes(localStorage.getItem('role'))) {
     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         showValidationModal(item);
     } });

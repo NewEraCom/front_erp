@@ -26,7 +26,7 @@ onMounted(() => {
 
 const generatePDF = (elementId) => {
   const element = document.getElementById(elementId);
-
+  const childElement = element.querySelector('.card.card-border-shadow-primary');
   const opt = {
     margin: 0,
     filename: 'Recu.pdf',
@@ -34,7 +34,11 @@ const generatePDF = (elementId) => {
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
   };
-
+  element.classList.add('p-3');
+  if (childElement) {
+    childElement.classList.remove('card');
+    childElement.classList.remove('card-border-shadow-primary');
+  }
   html2pdf()
     .set(opt)
     .from(element)

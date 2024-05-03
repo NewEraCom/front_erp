@@ -404,6 +404,70 @@ const recoverVehicule = async (data: any) => {
         return Promise.reject(error);
     }
 };
+const entretienVehicule = async (data: any) => {
+    try {
+        const response = await api().post('/logistics/vehicule/entretien', data);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            // logisticsStore.setSubscription(response.data.data);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+const removeEntretien = async (idVeh: any,id:any) => {
+    try {
+        const response = await api().delete(`/logistics/vehicule/entretien/${idVeh}/${id}`);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            
+
+            const entretien = logisticsStore.selectedVehicule.mecaniques.find((item) => item.pivot.id === id);
+            if (entretien) {
+                logisticsStore.selectedVehicule.mecaniques.splice(logisticsStore.selectedVehicule.mecaniques.indexOf(entretien), 1);
+            } else {
+                console.log('No item found with the provided id');  
+            }
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+const removeHistoriqueVehicule = async (idVeh: any,id:any) => {
+    try {
+        const response = await api().delete(`/logistics/vehicule/affectation/${idVeh}/${id}`);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            
+
+            const entretien = logisticsStore.selectedVehicule.historiques.find((item) => item.pivot.id === id);
+            if (entretien) {
+                logisticsStore.selectedVehicule.historiques.splice(logisticsStore.selectedVehicule.historiques.indexOf(entretien), 1);
+            } else {
+                console.log('No item found with the provided id');  
+            }
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+const deleteVehicule = async (id:any) => {
+    try {
+        const response = await api().delete(`/logistics/vehicule/${id}`);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            
+            const vehicule = logisticsStore.vehicules.data.find((item) => item.id === id);
+            if (vehicule) {
+                logisticsStore.vehicules.data.splice(logisticsStore.vehicules.data.indexOf(vehicule), 1);
+            } else {
+                console.log('No item found with the provided id');  
+            }
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -442,7 +506,11 @@ export default {
     createCachet,
     createCar,
     affectVehicule,
-    recoverVehicule
+    recoverVehicule,
+    entretienVehicule,
+    removeEntretien,
+    removeHistoriqueVehicule,
+    deleteVehicule
 };
 
 

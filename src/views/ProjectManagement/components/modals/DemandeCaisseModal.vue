@@ -98,7 +98,13 @@ const updateMontant =() =>{
                     <div class="col-12 mb-3">
                         <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
                         <input type="number" class="form-control" id="montant" v-model="formData.montant"
-                            placeholder="Entre le montant demande" required :max="montantMax" />
+                            placeholder="Entre le montant demande" required :max="montantMax" :disabled="montantMax === 0" />
+                            <small class="text-muted" v-if="montantMax">
+                                Montant Max : {{ montantMax}} MAD
+                            </small>
+                            <small class="text-danger" v-if="montantMax == 0">
+                                Cette caisse est consomée entiérement
+                            </small>
                     </div>
                     <div class="col-12">
                         <textarea v-model="formData.remark" class="form-control" rows="2" placeholder="Remarque...">

@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { Modal } from '@/ui'
-import { useToast } from 'vue-toastification'
-import { logisticsService, sharedService } from '@/services'
-import { useSharedStore } from '@/store'
+import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { Modal } from '@/ui';
+import { useToast } from 'vue-toastification';
+import { logisticsService, sharedService } from '@/services';
+import { useSharedStore } from '@/store';
 
-const toast = useToast()
+const toast = useToast();
 
-const sharedStore = useSharedStore()
-const project = ref(computed(() => sharedStore.projects.data))
+const sharedStore = useSharedStore();
+const project = ref(computed(() => sharedStore.projects.data));
 
 onMounted(async () => {
-  await sharedService.getProjects()
-})
+  await sharedService.getProjects();
+});
 
-const isLoading = ref(false)
+const isLoading = ref(false);
 
 const brands = [
   { name: 'Dacia', id: 1 },
@@ -41,7 +41,7 @@ const brands = [
   { name: 'Volvo', id: 24 },
   { name: 'Jaguar', id: 25 },
   { name: 'Autre', id: 26 }
-]
+];
 
 const car = ref({
   brand: brands[0].name,
@@ -51,25 +51,25 @@ const car = ref({
   matricule_w: '',
   km: '',
   date_entree: '',
-  id_projet: null,
+  // id_projet: null,
   rented: 0
-})
+});
 
 const submit = async () => {
   await logisticsService
     .createCar(car.value)
     .then(() => {
-      $('#addVehicule').modal('hide')
-      toast.success('Vehicule ajouté avec succès')
+      $('#addVehicule').modal('hide');
+      toast.success('Vehicule ajouté avec succès');
     })
     .catch((error) => {
-      console.log(error)
-      toast.error(error)
+      console.log(error);
+      toast.error(error);
     })
     .finally(() => {
-      isLoading.value = false
-    })
-}
+      isLoading.value = false;
+    });
+};
 </script>
 
 <template>
@@ -85,7 +85,7 @@ const submit = async () => {
               </option>
             </select>
           </div>
-          <div class="col-6 mb-3">
+          <!-- <div class="col-6 mb-3">
             <label for="id_projet" class="mb-2">Projet <span class="text-danger">*</span></label>
             <select
               class="form-select"
@@ -97,7 +97,7 @@ const submit = async () => {
                 {{ id_projet.code }}
               </option>
             </select>
-          </div>
+          </div> -->
           <div class="col-6 mb-3">
             <label for="model" class="mb-2"
               >Entrez la marque de la voiture <span class="text-danger">*</span></label
