@@ -613,8 +613,15 @@ const SupportMenu = [
     },
     {
         id: 9,
-        name: 'Budget de caisse',
+        name: 'Caisse Operation',
         route: '/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseBudget'
+    },
+    {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse-budget',
         icon: 'ti ti-coins',
         path: 'CaisseBudget'
     },
@@ -734,10 +741,17 @@ const DOMenu = [
     },
     {
         id: 4,
-        name: 'Caisse',
+        name: 'Caisse Operation',
         route: '/caisse',
         icon: 'ti ti-cash',
         path: 'Caisse'
+    },
+    {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse-budget',
+        icon: 'ti ti-coins',
+        path: 'CaisseBudget'
     },
     {
         id: 7,

@@ -6,7 +6,7 @@ import { formater } from '@/utils';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 const logisticsStore = useLogisticsStore();
-
+const role = localStorage.getItem('role');
 
 const selectedOperation = ref(computed(() => logisticsStore.selectedItem));
 
@@ -50,7 +50,7 @@ const PrintRecu = () => {
         <div class="modal-footer">
             <button type="button" class="btn btn-label-outline-primary" 
             data-bs-dismiss="modal" @click="PrintRecu()" 
-            v-if=" selectedOperation && selectedOperation.status == 'on going'">Imprimer le recu</button>
+            v-if=" selectedOperation && selectedOperation.status == 'on going' && role == 'Responsable logistique'">Imprimer le recu</button>
             <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">Fermer</button>
         </div>
     </Modal>
