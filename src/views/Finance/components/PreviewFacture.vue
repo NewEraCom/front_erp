@@ -1,147 +1,53 @@
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { financeService } from '@/services'
 import { useFinanceStore } from '@/store'
-import html2pdf from 'html2pdf.js'
-import { helpers } from '@/utils'
-import { useRouter } from 'vue-router'
-import { UpdateFacture } from '.'
-import JSZip from 'jszip'
-import { saveAs } from 'file-saver'
+import { formater, helpers } from '@/utils'
+import UpdateFacture from './UpdateFacture.vue'
 import RejectModal from '@/ui/modals/RejectModal.vue'
-import finance_service from '@/services/finance_service'
+import ValidModal from '@/ui/modals/ValidModal.vue'
+import AvoirModal from '@/ui/modals/AvoirModal.vue'
 
-const router = useRouter()
+const financeStore = useFinanceStore()
 
-const getFileUrl = (attachment) => {
-  return helpers.baseUrl() + `${attachment}`
-}
-const FinanceStore = useFinanceStore()
 const updateModal = 'update-facture'
 const rejectModal = 'rejeter-modal'
+const validModal = 'valid-modal'
 
-// const props = defineProps({
-//     id: {
-//         type: String,
-//         required: true
-//     }
-// });
-const formatDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' }
-  return date.toLocaleDateString('fr-FR', options)
-}
-const addOneMonth = (date) => {
-  const newDate = new Date(date)
-  newDate.setMonth(date.getMonth() + 1)
-  return newDate
-}
+const uploadsUrl = import.meta.env.VITE_UPLOADS_URL
 
-const facture = ref(computed(() => FinanceStore.print_facture))
-const articles = ref(computed(() => FinanceStore.print_articles))
-const facture_attachement = ref(computed(() => FinanceStore.print_facture_attachement))
-
-const comment = ref(computed(() => FinanceStore.comment))
-const objet = ref(computed(() => FinanceStore.objet))
-
-console.log(facture.value)
-console.log(articles.value)
-
-watch([() => facture.value, () => articles.value], () => {
-  if (facture.value === null && articles.value === null) {
-    router.push({
-      name: 'FnFacture'
-    })
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
   }
 })
-const Submit = () => {
-  generatePDF('printsection')
-}
 
-const uploadsUrl = import.meta.env.VITE_UPLOADS_URL;
+const facture = ref(computed(() => financeStore.facture))
+const comment = ref(computed(() => financeStore.comment))
+const objet = ref(computed(() => financeStore.objet))
+const item = ref(null)
 
-let pdfUrl = ref(null)
-const generatePDF = (elementId) => {
-  console.log('PRINTING')
-  const element = document.getElementById(elementId)
-  const childElement = element.querySelector('.card.card-border-shadow-primary')
-  const iframe = document.getElementById('pdfPreview')
-
-  // Remove the classes before printing
-  element.classList.replace('col-xl-9', 'col-md-12')
-  element.classList.add('p-3')
-  if (childElement) {
-    childElement.classList.remove('card')
-    childElement.classList.remove('card-border-shadow-primary')
-  }
-
-  const opt = {
-    margin: 0,
-    filename: 'Facture.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-  }
-
-  html2pdf()
-    .set(opt)
-    .from(element)
-    .toPdf()
-    .get('pdf')
-    .then(function (pdf) {
-      iframe.src = pdf.output('datauristring')
-      pdfUrl.value = pdf.output('datauristring')
-    })
-    .then(function () {
-      // Add the classes back after printing
-      if (childElement) {
-        childElement.classList.add('card')
-        childElement.classList.add('card-border-shadow-primary')
-      }
-    })
-}
-const downloadAllAttachments = async () => {
-  const zip = new JSZip()
-  const promises = facture.value.facture_attachement.map(async (attachment, index) => {
-    if (attachment.composent.type === 'file') {
-      const url = getFileUrl(attachment.value)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `attachment_${index}`
-      document.body.appendChild(link)
-      link.click()
-      document.body.removeChild(link)
-    } else {
-      zip.file(`attachment_${index}.txt`, attachment.value)
-    }
-  })
-
-  await Promise.all(promises)
-
-  const content = await zip.generateAsync({ type: 'blob' })
-  saveAs(content, 'attachments.zip')
-}
-const total = computed(() => {
-  return articles.value.reduce((total, item) => {
-    return total + item.article.quantite * item.article.prix_ht * 1.2
-  }, 0)
+onMounted(async () => {
+  await financeService.getById(props.id)
 })
 
-const totalInWords = computed(() => {
-  return helpers.numberToTextMAD(total.value)
-})
-
-const Valide = async () => {
-  await finance_service.ValidStatus(facture.value.id)
-}
-
+watch(
+  item,
+  () => {
+    facture.value = item.value
+  },
+  { deep: true }
+)
 </script>
 
 <template>
-  <div class="flex-grow-1 container-fluid mt-3" v-if="articles && facture">
+  <div class="flex-grow-1 container-fluid mt-3" v-if="facture">
     <h5 class="py-3 mb-4">
       <span class="text-muted fw-light">Dashboard / </span>
-      test
+      {{ facture.numero }}
     </h5>
-    <div v-if="!pdfUrl" class="row invoice-preview">
+    <div class="row invoice-preview">
       <div class="col-xl-9 col-md-8 col-12 mb-md-0 mb-4" id="printsection">
         <div class="card card-border-shadow-primary invoice-preview-card">
           <div class="card-body">
@@ -149,38 +55,30 @@ const Valide = async () => {
               <div class="row flex-container mb-4 header">
                 <div class="col-md-12 float-left">
                   <img
-                    class="img-thumbnail h-px-100 w-px-250 flex-item"
+                    class="img-thumbnail flex-item"
                     src="../../../assets/img/Logo_Neweracom.png"
                     alt="Company Logo"
+                    width="30%"
+                    height="13px"
                   />
                 </div>
-
-                <!-- <div class="col-md-6 flex-item">
-                        <h3>Facture N° {{ facture.numero }}</h3>
-
-                        <span>
-                            Rabat, Le
-                            <span id="date">{{ formatDate(new Date()) }} .</span> </span><br />
-                        <span>Date Limite de validitée
-                            {{ formatDate(addOneMonth(new Date())) }} .</span><br />
-                    </div> -->
               </div>
               <div class="row m-2 d-flex justify-content-between align-items-center">
                 <div class="col-md-6 flex-item fs-6">
-                  <!-- <h5 class="text-primary">Societe</h5> -->
-                  <span><strong>Date :</strong> {{ formatDate(new Date()) }}</span
-                  ><br />
                   <span><strong>Facture N° :</strong>{{ facture.numero }}</span
                   ><br />
                   <span><strong>Affaire N° :</strong>{{ facture.project.code }}</span
                   ><br />
                   <span><strong>Projet :</strong>{{ facture.project.code }}</span
                   ><br />
-                  <span><strong>Status :</strong>{{ facture.status.toUpperCase() }}</span
+                  <span
+                    ><strong>Status :</strong>
+                    <span class="badge" :class="helpers.returnBadge(facture.status)[0]">
+                      {{ helpers.returnBadge(facture.status)[1] }}</span
+                    ></span
                   ><br />
                 </div>
-                <div class="col-md-6 flex-item fs-6 border border-primary p-3">
-                  <!-- <h5 class="text-primary">Client</h5> -->
+                <div class="col-md-6 flex-item fs-6 rounded border border-primary p-3">
                   <span>{{ facture.project.client.raison_social }}</span
                   ><br />
                   <span>{{ facture.project.client.adresse }}</span
@@ -192,11 +90,9 @@ const Valide = async () => {
               <div class="row flex-item m-2 mt-4">
                 <div style="display: flex; align-items: center">
                   <h4 class="text-primary">Objet :{{ objet }}</h4>
-                  <!-- <h5 class=""></h5> -->
                 </div>
               </div>
-
-              <table class="table table-bordered mt-2 my-2" id="table">
+              <table class="table table-bordered mt-4 my-2" id="table">
                 <thead>
                   <tr>
                     <th scope="col">Article</th>
@@ -208,7 +104,7 @@ const Valide = async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="items in articles" :key="items.id">
+                  <tr v-for="items in facture.facture_article" :key="items.id">
                     <td>{{ items.article.article }}</td>
                     <td>{{ items.article.type }}</td>
                     <td>{{ items.qte }}</td>
@@ -228,7 +124,7 @@ const Valide = async () => {
                     <td style="border: none"></td>
                     <td id="totalAmount" style="text-align: right; border: 1px solid">
                       {{
-                        articles.reduce((total, item) => {
+                        facture.facture_article.reduce((total, item) => {
                           return total + item.qte * item.article.prix_ht
                         }, 0)
                       }}
@@ -243,11 +139,38 @@ const Valide = async () => {
                     <td style="border: none"></td>
                     <td id="totalAmount" style="text-align: right; border: 1px solid">
                       {{
-                        articles.reduce((total, item) => {
+                        facture.facture_article.reduce((total, item) => {
                           return total + item.qte * item.article.prix_ht * 0.2
                         }, 0)
                       }}
                       MAD
+                    </td>
+                  </tr>
+                  <tr v-if="facture.type === 'Facture RG'" style="border: none">
+                    <td style="text-align: left; border: none">
+                      <strong>Garantie:</strong>
+                    </td>
+                    <td colspan="3" style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td id="totalAmount" style="text-align: right; border: 1px solid">
+                      {{
+                        (facture.facture_article.reduce((total, item) => {
+                          return total + item.qte * item.article.prix_ht * 1.2
+                        }, 0) *
+                          facture.extra) /
+                        100
+                      }}
+                      MAD
+                    </td>
+                  </tr>
+                  <tr v-if="facture.type === 'Facture avec Avance'" style="border: none">
+                    <td style="text-align: left; border: none">
+                      <strong>Avance:</strong>
+                    </td>
+                    <td colspan="3" style="border: none"></td>
+                    <td style="border: none"></td>
+                    <td id="totalAmount" style="text-align: right; border: 1px solid">
+                      {{ facture.extra }} MAD
                     </td>
                   </tr>
                   <tr style="border: none">
@@ -256,9 +179,42 @@ const Valide = async () => {
                     </td>
                     <td colspan="3" style="border: none"></td>
                     <td style="border: none"></td>
-                    <td id="totalAmount" style="text-align: right; border: 1px solid">
+                    <td
+                      v-if="facture.type === 'Facture RG'"
+                      id="totalAmount"
+                      style="text-align: right; border: 1px solid"
+                    >
                       {{
-                        articles.reduce((total, item) => {
+                        facture.facture_article.reduce((total, item) => {
+                          return total + item.qte * item.article.prix_ht * 1.2
+                        }, 0) -
+                        (facture.facture_article.reduce((total, item) => {
+                          return total + item.qte * item.article.prix_ht * 1.2
+                        }, 0) *
+                          facture.extra) /
+                          100
+                      }}
+                      MAD
+                    </td>
+                    <td
+                      v-if="facture.type === 'Facture avec Avance'"
+                      id="totalAmount"
+                      style="text-align: right; border: 1px solid"
+                    >
+                      {{
+                        facture.facture_article.reduce((total, item) => {
+                          return total + item.qte * item.article.prix_ht * 1.2
+                        }, 0) - facture.extra
+                      }}
+                      MAD
+                    </td>
+                    <td
+                      v-if="facture.type === 'client'"
+                      id="totalAmount"
+                      style="text-align: right; border: 1px solid"
+                    >
+                      {{
+                        facture.facture_article.reduce((total, item) => {
                           return total + item.qte * item.article.prix_ht * 1.2
                         }, 0)
                       }}
@@ -280,14 +236,14 @@ const Valide = async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="items in facture_attachement" :key="items.id">
+                  <tr v-for="items in facture.facture_attachement" :key="items.id">
                     <td>{{ items.composent.label }}</td>
-                    <td
-                      v-if="items.composent.type === 'file'"
-                    >
-                      <a :href="`${uploadsUrl}storage/`+items.value" style="max-width: 200px;color: white">{{
-                        items.value
-                      }}</a>
+                    <td v-if="items.composent.type === 'file'">
+                      <a
+                        :href="`${uploadsUrl}storage/` + items.value"
+                        style="max-width: 200px; color: white"
+                        >File</a
+                      >
                     </td>
                     <td v-else style="max-width: 200px">{{ items.value }}</td>
                   </tr>
@@ -301,10 +257,6 @@ const Valide = async () => {
                 </div>
               </div>
               <div class="col-md-12 p-2 mt-1">
-                <p>Arret du present bon de commande toutes taxes comprises a la somme de :</p>
-                <p class="fw-bold">
-                  {{ totalInWords }}
-                </p>
                 <p class="fs-6">*Disponibilité :</p>
                 <p class="fs-6">*Facture devra etre accompagnée d'une copie du BC :</p>
                 <p class="fs-6">
@@ -324,11 +276,15 @@ const Valide = async () => {
       </div>
 
       <div class="col-xl-3 col-md-4 col-12 invoice-actions">
-        <div class="card card-border-shadow-primary mb-4">
+        <div
+          v-if="facture.status !== 'approved' && facture.status !== 'rejected'"
+          class="card card-border-shadow-primary mb-4"
+        >
           <div class="card-body">
             <button
+              data-bs-toggle="modal"
+              data-bs-target="#valid-modal"
               class="btn btn-label-success d-grid w-100 mb-2 waves-effect d-flex"
-              @click="Valide()"
             >
               <i class="ti ti-check me-2"></i> Valider la facture
             </button>
@@ -344,12 +300,6 @@ const Valide = async () => {
 
         <div class="card card-border-shadow-primary mb-4">
           <div class="card-body">
-            <button
-              class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex"
-              @click="downloadAllAttachments"
-            >
-              <i class="ti ti-download me-2"></i> Telecharger les attachements
-            </button>
             <button
               class="btn btn-label-primary d-grid w-100 mb-2 waves-effect d-flex"
               target="_blank"
@@ -380,6 +330,8 @@ const Valide = async () => {
 
     <UpdateFacture :id="updateModal" />
     <RejectModal :id="rejectModal" />
+    <ValidModal :id="validModal" :articles="facture.facture_article" />
+    <AvoirModal :id="facture.id" :articles="facture.facture_article" />
   </div>
 </template>
 

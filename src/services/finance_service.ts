@@ -55,9 +55,25 @@ async function update(req) {
     }
 }
 
-async function ValidStatus(id) {
+async function ValidStatus(id, req) {
     try {
-        const response = await api().put('facture/validStatus/'+id);
+        const response = await api().post('facture/validStatus/'+id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+            return response.data;
+        } else {
+
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
+async function ValidAvoir(id, req) {
+    try {
+        const response = await api().post('facture/validAvoir/'+id, req);
         if (response.status == 200) {
             console.log(response.data);
             return response.data;
@@ -212,6 +228,55 @@ async function insertFactureAttachement(req) {
     }
 }
 
+async function getById(id) {
+    try {
+        const FinanceStore = useFinanceStore();
+        const response = await api().get('facture/get/' + id);
+        if (response.status == 200) {
+            FinanceStore.setFacture(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
+async function insertCheque(req) {
+    try {
+        const response = await api().post('cheque/', req);
+        if (response.status == 200) {
+            console.log(response.data);
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+
+    }
+}
+
+// const getProjects = async () => {
+//     try {
+//         const response = await api().get('/projects/get');
+//         const sharedStore = useSharedStore();
+//         sharedStore.setProjects(response.data.projects);
+//     } catch (error) {
+//         return Promise.reject(error);
+//     }
+// };
+
+const getCarnets = async () => {
+    try {
+        const response = await api().get('/compte-carnet/');
+        const FinanceStore = useFinanceStore();
+        FinanceStore.setCarnets(response.data.carnets);
+    }  catch (error) {
+        return Promise.reject(error);
+      }
+};
+
 
 export default {
     get,
@@ -227,4 +292,8 @@ export default {
     insertFactureAttachement,
     ValidStatus,
     RejectStatus,
+    getById,
+    ValidAvoir,
+    insertCheque,
+    getCarnets
 }

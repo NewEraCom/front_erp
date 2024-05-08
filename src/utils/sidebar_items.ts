@@ -631,12 +631,26 @@ const FinanceMenu = [
         path: 'FnCheque'
     },
     {
+        id: 2,
+        name: 'Effet',
+        route: '/fn/effet',
+        icon: 'ti ti-report-money',
+        path: 'FnEffet'
+    },
+    {
         id: 3,
         name: 'Caution',
         route: '/fn/Caution',
         icon: 'ti ti-coins',
         path: 'FnCaution'
-    }
+    },
+    {
+        id: 4,
+        name: 'Facture Client',
+        route: '/fn/facture/client',
+        icon: 'ti ti-files',
+        path: 'FnFactureClient'
+    },
 ];
 
 const DOMenu = [

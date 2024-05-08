@@ -7,7 +7,10 @@ export const useFinanceStore = defineStore('FinanceStore', {
         stats: null,
         caution: null,
         cheque: null,
-
+        carnets: {
+            data: null,
+            loading: false,
+        },
        
         item: null,
         ItemId: null,
@@ -16,6 +19,7 @@ export const useFinanceStore = defineStore('FinanceStore', {
         print_facture: null,
         print_facture_attachement: null,
         print_facture_composant: null,
+        selectedFacture: null,
 
         comment: 'comment',
         objet:'objet',
@@ -64,6 +68,9 @@ export const useFinanceStore = defineStore('FinanceStore', {
         setAttachementFacture(data) {
             this.facture_attachement = data.facture_attachement;
             this.stats = data.stats;
+        },
+        setCarnets(data) {
+            this.carnets.data = data;
         },
     }
 });

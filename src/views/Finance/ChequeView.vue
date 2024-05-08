@@ -5,18 +5,29 @@ import { CardOne } from '@/ui'
 import { ChequeTable } from './components'
 import { financeService } from '@/services';
 import { useFinanceStore } from '@/store';
+import AddChequeModal from './components/AddChequeModal.vue';
 
 const FinanceStore = useFinanceStore();
 
-
-
-const stats = ref(true)
+const stats = ref(computed(() => FinanceStore.stats));
 
 const cheque = ref(computed(() => FinanceStore.cheque))
+
+console.log("Cheque", cheque)
 
 onMounted(async () => {
   await financeService.getCheque()
 })
+
+const statsObject = computed(() => {
+  const statsArray = FinanceStore.stats;
+  let tempStatsObject = {};
+  for (let stat of statsArray) {
+    tempStatsObject[stat.type] = stat.total;
+  }
+  return tempStatsObject;
+})
+
 </script>
 
 <template>
@@ -100,14 +111,21 @@ onMounted(async () => {
                   <h5 class="fw-bold mb-1">Cheque</h5>
                   <small class="fw-bold mb-1 text-muted">Liste des Cheque de l'entreprise</small>
                 </div>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCheque">
+                                <i class="ti ti-square-rounded-plus-filled me-2"></i>
+                                Ajouter un Cheque
+                            </button>
               </div>
             </div>
             <div v-if="cheque != null" class="card-body border-top pt-4">
-              <ChequeTable :cheques="cheque" />
+              <ChequeTable :cheques="cheque.filter(
+                    (item: any) => item.type === 'cheque'
+                )" />
             </div>
           </div>
         </div>
       </div>
     </div>
+    <AddChequeModal />
   </div>
 </template>

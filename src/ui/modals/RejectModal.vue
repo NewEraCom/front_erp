@@ -8,8 +8,8 @@ const props = defineProps({
   id: String
 })
 
-const FinanceStore = useFinanceStore()
-const facture = ref(computed(() => FinanceStore.print_facture))
+const financeStore = useFinanceStore()
+const facture = ref(computed(() => financeStore.facture))
 
 const formData = ref({
   id : props.id,
@@ -43,8 +43,8 @@ const Refuse = async () => {
       <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
         Fermer
       </button>
-      <button class="btn btn-success me-0" data-bs-dismiss="modal" @click="Refuse()">
-        <span>Oui, Valider</span>
+      <button class="btn btn-danger me-0" data-bs-dismiss="modal" @click="Refuse()">
+        <span>Refuser</span>
       </button>
     </div>
   </Modal>

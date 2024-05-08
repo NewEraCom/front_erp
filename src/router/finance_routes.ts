@@ -11,9 +11,10 @@ export const financeRoutes = [
         }
     },
     {
-        path: '/fn/facture/details',
+        path: '/fn/facture/details/:id',
         name: 'FnFactureDetails',
         component: () => import('../views/Finance/components/PreviewFacture.vue'),
+        props : true,
         meta: {
             title: 'Finance Details',
             role : [helpers.roles.FINANCE]
@@ -38,6 +39,25 @@ export const financeRoutes = [
             title: 'Cheque',
             role : [helpers.roles.FINANCE]
 
+        }
+    },
+    {
+        path: '/fn/effet',
+        name: 'FnEffet',
+        component: () => import('../views/Finance/EffetView.vue'),
+        meta: {
+            title: 'effet',
+            role : [helpers.roles.FINANCE]
+
+        }
+    },
+    {
+        path: '/fn/facture/client',
+        name: 'FnFactureClient',
+        component: () => import('../views/Finance/InvoiceClientView.vue'),
+        meta: {
+            title: 'Finance',
+            role : [helpers.roles.FINANCE]
         }
     },
 ];

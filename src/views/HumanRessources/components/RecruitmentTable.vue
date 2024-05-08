@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
 import { useSharedStore } from '@/store';
-import { c } from 'vite/dist/node/types.d-FdqQ54oU';
+// import { c } from 'vite/dist/node/types.d-FdqQ54oU';
 
 const props = defineProps({
     recruitments: {

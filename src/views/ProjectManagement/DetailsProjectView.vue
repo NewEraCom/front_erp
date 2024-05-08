@@ -24,8 +24,6 @@ import {
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
 
-const composants = ref(computed(() => pmStore.composants))
-
 const props = defineProps<{
     id: string;
 }>();
@@ -540,7 +538,7 @@ watch(item, () => {
                 textButton="Oui, Supprimer" :action="() => pmService.deleteDemande()"
                 message="Demande supprimée avec succès" />
             <InvoiceModal :composants="project.facture_composante" :id="project.id" :articles="project.pre_project.articles.filter(
-                    (item: any) => item.category === 'Achats' && item.status === 1
+                    (item: any) => item.category === 'Achats' && item.status === 1 
                 )" />
         </div>
 

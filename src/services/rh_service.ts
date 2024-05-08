@@ -780,6 +780,20 @@ async function DeleteDocIntern(id) {
     }
 }
 
+async function insertAttachement(id, req) {
+    try {
+        const response = await api().post('dmnd/insertAttachement/'+id, req);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            console.log(response.data);
+            rhStore.demande = response.data.demande;
+        }
+    } catch (error) {
+        console.log(error);
+        return Promise.reject(error);
+    }
+}
+
 
 export default {
     getEmployees,
@@ -827,5 +841,6 @@ export default {
     getInternById,
     UploadDocIntern,
     DeleteDocIntern,
-    updateWorker
+    updateWorker,
+    insertAttachement
 };

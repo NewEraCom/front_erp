@@ -18,6 +18,9 @@ export const useSharedStore = defineStore('ShareStore', {
             stats: null,
             loading: false,
         },
+        tiers: {
+            data: null,
+        },
         soustraitants: {
             data: null,
             stats: null,
@@ -113,6 +116,9 @@ export const useSharedStore = defineStore('ShareStore', {
                 inactif: data.filter((item: any) => item.is_active === 0).length,
             };
             this.fournisseurs.loading = true;
+        },
+        setTiers(data: any) {
+            this.tiers.data = data;
         },
         clearFournisseurs() {
             this.fournisseurs.data = null;

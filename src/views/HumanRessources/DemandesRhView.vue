@@ -4,7 +4,7 @@ import { CardOne, CardOneSkeleton } from '@/ui';
 import { rhService } from '@/services';
 import { useRhStore } from '@/store';
 import { DemandeRhTable, AddDemandeRhModal } from './components';
-import { Validate, DeleteDocModal, DemandeRhDetailsModal } from './components/modals';
+import { Validate, DeleteDocModal, DemandeRhDetailsModal, AddattachmentModal } from './components/modals';
 import { useToast } from 'vue-toastification';
 
 const toast = useToast();
@@ -132,6 +132,7 @@ const DeleteDmnd = async () => {
     <DeleteDocModal id="delete-modal" :isLoading="isLoading" :method="DeleteDmnd" :itemid="rhStore.ItemId"
       title="Supprimer Cette demande" message="Êtes-vous sûr de supprimer cet demande ?" />
     <DemandeRhDetailsModal />
+    <AddattachmentModal :id="rhStore.ItemId"/>
   </div>
 </template>
 

@@ -33,7 +33,7 @@ const submit = async () => {
             };
 
             return fieldPayload;
-        })
+        }) 
     };
 
     await pmService.createFactureComposant(payload)

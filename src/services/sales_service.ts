@@ -165,6 +165,7 @@ const ValidateTableComperatif = async (id, data) => {
   }
 };
 
+
 export default {
   getPurchaseOrders,
   getBonDeCommande,
@@ -179,5 +180,5 @@ export default {
   getBonDeCommandeById,
   insertTableComperatif,
   getCaisseOperation,
-  ValidateTableComperatif
+  ValidateTableComperatif,
 };

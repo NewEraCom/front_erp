@@ -2,9 +2,9 @@
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import { formater } from '@/utils';
-import router from '@/router';
 
 const props = defineProps({
+
     factures: {
         type: Array,
         required: true,
@@ -12,22 +12,15 @@ const props = defineProps({
 });
 
 const headers = [
-    { text: 'Numero', value: 'numero', type: 'text' },
     { text: 'Type', value: 'type', type: 'text' },
-    { text: 'Date de paiement', value: 'date_paiement', type: 'date' },
+    // { text: 'Bon de Commande', value: 'num',isComplex: true, type: 'bon_commandes' },
     { text: 'Project',  value: 'code',isComplex: true, type: 'project'},
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
-    {
-        icon: 'ti ti-printer', class: 'btn btn-primary btn-sm', onClick: (item: any) => {
-            router.push({ name: 'FnFactureDetails', params: { id: item.id } });
-        }
-    },
+    
 ];
-
-
 
 
 const filteredData = ref(props.factures);

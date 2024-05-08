@@ -4,6 +4,8 @@ import NewPurchaseOrderModal from './NewPurchaseOrderModal.vue';
 import NewServiceModal from './NewServiceModal.vue';
 import InvoiceModal from './InvoiceModal.vue';
 import RejectModal from './RejectModal.vue';
+import ValidModal from './ValidModal.vue';
+import AvoirModal from './AvoirModal.vue';
 
 export {
     LogoutModal,
@@ -12,4 +14,6 @@ export {
     NewServiceModal,
     InvoiceModal,
     RejectModal,
+    ValidModal,
+    AvoirModal,
 };

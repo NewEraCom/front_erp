@@ -73,14 +73,17 @@ export const useSalesStore = defineStore('SalesStore', {
             this.selectedBonDeCommande = null;
         },
         setInvoices(data: any) {
-            this.invoices.data = data;
-            this.invoices.stats = {
-                total: data.length,
-                pending: data.filter((p: any) => p.status === 'pending').length,
-                ongoing: data.filter((p: any) => p.status === 'on going').length,
-                completed: data.filter((p: any) => p.status === 'done').length,
-            };
+            if (data && Array.isArray(data)) {
+                this.invoices.data = data;
+                this.invoices.stats = {
+                    total: data.length,
+                    pending: data.filter((p: any) => p.status === 'pending').length,
+                    ongoing: data.filter((p: any) => p.status === 'on going').length,
+                    completed: data.filter((p: any) => p.status === 'done').length,
+                };
+            } 
         },
+        
         clearInvoices() {
             this.invoices.data = null;
             this.invoices.stats = null;

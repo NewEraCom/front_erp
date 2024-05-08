@@ -45,7 +45,8 @@ export const useRhStore = defineStore('RhStore', {
         ItemId: null,
         Item: null,
 
-        salaryAdvanceSelected: null
+        salaryAdvanceSelected: null,
+        demande : null,
     }),
     actions: {
         setEmployees(data: any) {

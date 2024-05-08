@@ -218,6 +218,26 @@ const getSoustraitantById = async (id) => {
     }
 };
 
+// const getProjects = async () => {
+//     try {
+//         const response = await api().get('/projects/get');
+//         const sharedStore = useSharedStore();
+//         sharedStore.setProjects(response.data.projects);
+//     } catch (error) {
+//         return Promise.reject(error);
+//     }
+// };
+
+const getTiers = async () => {
+    try {
+        const response = await api().get('/tiers/getSoustraitant');
+        const sharedStore = useSharedStore();
+        sharedStore.setTiers(response.data.tiers);
+    }  catch (error) {
+        return Promise.reject(error);
+      }
+};
+
 
 export default {
     createEvent,
@@ -236,5 +256,6 @@ export default {
     deleteRhRequest,
     updateSousTraitants,
     getFournisseur,
-    getSoustraitantById
+    getSoustraitantById,
+    getTiers
 };
