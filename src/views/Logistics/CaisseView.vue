@@ -42,7 +42,7 @@ watch(caisse, () => {
 
 const Validate = async () => {
     isLoading.value = true;
-    await logisticsService.validateCaisse(logisticsStore.selectedItem.id).then(() => {
+    await logisticsService.validateCaisse(logisticsStore.selectedItem).then(() => {
         isLoading.value = false;
         toast.success('Validé avec succès');
         $('#validate-caisse-modal').modal('hide');

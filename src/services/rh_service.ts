@@ -295,6 +295,26 @@ async function Confirmation(id, req) {
                 rhStore.leaves.data.splice(dmndIndex, 1, response.data.conge);
             }
 
+            // await getLeaves();
+
+            // return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+async function ConfirmationResponsable(id, req) {
+    try {
+
+        const rhStore = useRhStore();
+        const response = await api().post('conge/valide-respo/' + id, req);
+        if (response.status == 200) {
+            console.log(response.data);
+            const dmndIndex = rhStore.leaves.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                rhStore.leaves.data.splice(dmndIndex, 1, response.data.conge);
+            }
+
             await getLeaves();
 
             // return response.data;
@@ -889,5 +909,6 @@ export default {
     downloadFile,
     updateAttachement,
     importPointage,
-    AffecterEmpProjet
+    AffecterEmpProjet,
+    ConfirmationResponsable
 };

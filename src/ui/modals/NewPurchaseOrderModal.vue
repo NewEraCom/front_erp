@@ -186,7 +186,7 @@ const checkArticles = (articles) => {
                                             </option>
                                         </select>
                                         <small class="text-muted" v-if="formData.service[item]">
-                                            Item : {{ formData.service[item]?.items.designation }}
+                                            Item : {{ formData.service[item]?.items?.designation }}
                                         </small>
                                     </div>
                                     <div class="col-md-3 col-12 mb-md-0 mb-3">
@@ -235,7 +235,7 @@ const checkArticles = (articles) => {
                                         <input id="qteInput" v-model="formData.unites[item]" type="text"
                                             class="form-control" placeholder="M2" />
                                     </div>
-                                    <div class="col-md-4 col-12 mb-md-0 mb-3">
+                                    <!-- <div class="col-md-4 col-12 mb-md-0 mb-3">
                                         <p class="mb-2 repeater-title">Item</p>
                                         <select v-model="formData.mainItem[item]" class="form-select item-details mb-1"
                                             @change="changeValue(formData.mainItem[item], item)">
@@ -246,7 +246,7 @@ const checkArticles = (articles) => {
                                                 {{ item.designation }}
                                             </option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div
                                     class="d-flex flex-column align-items-center justify-content-between border-start p-2">

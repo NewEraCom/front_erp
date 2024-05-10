@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { DataTable } from '@/ui';
-import { formater, helpers } from '@/utils';
+import { formater } from '@/utils';
 import router from '@/router';
 
 const props = defineProps({
@@ -54,7 +54,7 @@ const itemPerPage = ref(15);
 
 const filter = () => {
     filteredData.value = props.purchaseOrders.filter((item: any) => {
-        const combinedFields = `${item.created_by.employee.first_name} ${item.created_by.employee.last_name} ${item.project.code} ${item.n_order}`.toLowerCase();
+        const combinedFields = `${item.created_by.employee.first_name} ${item.created_by.employee.last_name} ${item.project.code} ${item.n_order} ${item.purchase_article.map(articleObj => articleObj.article?.article).join(', ')}`.toLowerCase();
         const searchWords = searchQuery.value.toLowerCase().split(' ');
         return searchWords.every(word => combinedFields.includes(word)) &&
             (statusQuery.value === '-' || item.status === statusQuery.value) && (!startQuery.value || formater.startOfDay(item.created_at) >= formater.startOfDay(startQuery.value)) &&
@@ -62,9 +62,7 @@ const filter = () => {
     });
 
 };
-const downloadFile = () => {
-    helpers.ExportData();
-};
+
 </script>
 <template>
     <div>
@@ -104,7 +102,7 @@ const downloadFile = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" @click="downloadFile">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ExportPurchase">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

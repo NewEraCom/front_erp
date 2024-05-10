@@ -114,9 +114,13 @@ const getTransport = async () => {
 };
 async function validateCaisse(id: number) {
     try {
+        const logisticsStore = useLogisticsStore();
         const response = await api().post('logistics/caisse/validate/' + id);
         if (response.status == 200) {
-            await getOperationCaisse();
+            const dmndIndex = logisticsStore.opertationCaisse.data.findIndex((item) => item.id === id);
+            if (dmndIndex !== -1) {
+                logisticsStore.opertationCaisse.data.splice(dmndIndex, 1, response.data.caisse);
+            }
             return response.data;
         }
     } catch (error) {
@@ -468,6 +472,18 @@ const deleteVehicule = async (id:any) => {
         return Promise.reject(error);
     }
 };
+const addArticle = async (data:any) => {
+    try {
+        const response = await api().post('/logistics/stock/add-article', data);
+        const logisticsStore = useLogisticsStore();
+        if (response.status == 200) {
+            
+            logisticsStore.stock.data.push(response.data.article);
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 
 export default {
@@ -510,7 +526,8 @@ export default {
     entretienVehicule,
     removeEntretien,
     removeHistoriqueVehicule,
-    deleteVehicule
+    deleteVehicule,
+    addArticle
 };
 
 

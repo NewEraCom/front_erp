@@ -6,6 +6,9 @@ import { useRhStore } from '@/store';
 import { LeavesTable, AddNewLeaveModal } from './components';
 import { DeleteDocModal, Validate, LeaveDetailsModal } from './components/modals';
 import { helpers } from '@/utils';
+import { useToast } from 'vue-toastification';
+
+const toast = useToast();
 const rhStore = useRhStore();
 const isLoading = ref(false);
 const leaves = ref(rhStore.leaves);
@@ -32,27 +35,30 @@ watch(() => rhStore.leaves, (newValue) => {
 
 const ValidateConge = async () => {
   isLoading.value = true;
-
   const formData = new FormData();
   formData.append('status', 'approved');
   await rhService.Confirmation(rhStore.ItemId, formData).then(() => {
     isLoading.value = false;
+      toast.success('Congé validé avec succès');
     $('#validate-modal').modal('hide');
-
-  });
-  // console.log($('#validateInput').val());
+  }).catch((error) => {
+        console.error('Error during action execution', error);
+        toast.error('Conge n\'est pas encore validé par le responsable');
+    });
 };
+
 const RejectConge = async () => {
   isLoading.value = true;
-
   const formData = new FormData();
   formData.append('status', 'disapproved');
   await rhService.Confirmation(rhStore.ItemId, formData).then(() => {
     isLoading.value = false;
+      toast.success('Congé Rejeter avec succès');
     $('#reject-modal').modal('hide');
-
-  });
-  // console.log($('#validateInput').val());
+  }).catch((error) => {
+        console.error('Error during action execution', error);
+        toast.error('Erreur lors de la réjection du congé');
+    });
 };
 const DeleteLeave = async () => {
   isLoading.value = true;

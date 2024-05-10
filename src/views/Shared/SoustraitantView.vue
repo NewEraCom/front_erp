@@ -8,7 +8,8 @@ import {
     AddSoustraitantModal
 } from './components';
 import { Validate } from '../HumanRessources/components/modals';
-
+import { helpers } from '@/utils';
+const role = localStorage.getItem('role');
 
 const sharedStore = useSharedStore();
 const isLoading = ref(false);
@@ -81,7 +82,7 @@ const validateTier = async () => {
                                 <h5 class="fw-bold mb-1">Liste des sous-traitants</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des Sous-traitants</small>
                             </div>
-                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSoustraitant">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSoustraitant" v-if="role == helpers.roles.SALES">
                                 <i class="ti ti-square-rounded-plus-filled me-2"></i>
                                 Ajouter un sous-traitant
                             </button>

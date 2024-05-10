@@ -103,13 +103,6 @@ const CFMenu = [
         path: 'OutOfStockProject'
     },
     {
-        id: 6,
-        name: 'Sous-traitants',
-        route: '/soustraitant',
-        icon: 'ti ti-forklift',
-        path: 'Soustraitant'
-    },
-    {
         id: 7,
         name: 'Demande de caisse',
         route: '/project/caisse-request',
@@ -337,7 +330,7 @@ const LogisticsMenu = [
     },
     {
         id: 5,
-        name: 'Caisse',
+        name: 'Decaissement',
         route: '/caisse',
         icon: 'ti ti-cash',
         path: 'Caisse'
@@ -809,12 +802,26 @@ const BDMenu = [
         path: 'FnCaution'
     },
 
+    // {
+    //     id: 7,
+    //     name: 'Demande de caisse',
+    //     route: '/project/caisse-request',
+    //     icon: 'ti ti-transfer-out',
+    //     path: 'CaisseRequest'
+    // },
     {
-        id: 7,
-        name: 'Demande de caisse',
-        route: '/project/caisse-request',
-        icon: 'ti ti-transfer-out',
-        path: 'CaisseRequest'
+        id: 9,
+        name: 'Caisse Operation',
+        route: '/caisse',
+        icon: 'ti ti-coins',
+        path: 'CaisseBudget'
+    },
+    {
+        id: 9,
+        name: 'Budget de caisse',
+        route: '/caisse-budget',
+        icon: 'ti ti-coins',
+        path: 'CaisseBudget'
     },
     {
         id: 6,

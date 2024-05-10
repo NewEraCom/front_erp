@@ -17,7 +17,7 @@ const fournisseurs = ref(computed(() => sharedStore.fournisseurs.data));
 const article = ref(salesStore.article);
 
 onMounted(async () => {
-    await sharedService.getFournisseur();
+    await sharedService.getTier();
     console.log(fournisseurs.value);
     // fournisseurs.value = sharedStore.fournisseurs.data;
     if (article.value === null) {

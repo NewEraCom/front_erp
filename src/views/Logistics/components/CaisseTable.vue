@@ -26,24 +26,27 @@ const actionsConfig = [
             $('#detailsOperation').modal('show');
         }
     },
-    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
 ];
 
-if ([ helpers.roles.DS ,helpers.roles.DO ].includes(localStorage.getItem('role'))) {
+if ([ helpers.roles.DS , helpers.roles.LOGISTICS].includes(localStorage.getItem('role'))) {
     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         showValidationModal(item);
-    } });
+    } },
+    { icon: 'ti ti-trash-filled', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    );
 }
 const showValidationModal = (item: any) => {
-    logisticsStore.setSelectedItem(item);
-
+    logisticsStore.setSelectedItem(item.id);
+    console.log(item.id);
+    
     $('#validate-caisse-modal').modal('show');
 
 };
 
 
 const deleteItem = (item: any) => {
-    logisticsStore.setDetailsOperationCaisse(item);
+    logisticsStore.setDetailsOperationCaisse(item.id);
+    console.log(item.id);
     $('#deleteModal').modal('show');
 };
 

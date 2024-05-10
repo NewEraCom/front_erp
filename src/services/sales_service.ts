@@ -73,7 +73,7 @@ const insertFacturesClient = async (data:any) => {
   try {
     const response = await api().post('/facture/client/insert',data);
     const salesStore = useSalesStore();
-    salesStore.invoices.data.push(response.data.factures);
+    // salesStore.invoices.data.push(response.data.factures);
   } catch (error) {
     return Promise.reject(error);
   }

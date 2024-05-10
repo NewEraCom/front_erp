@@ -227,18 +227,18 @@ const getFileUrl = (attachment) => {
 
                                         </div>
                                         <h6 class="mb-1 fw-bold text-dark">
-                                            Matricule ICE : {{ soustraitant.num_ice ?? 'N/A' }}
+                                            Matricule Regularite fiscale : {{ soustraitant.num_rf ?? 'N/A' }}
                                         </h6>
 
-                                        <div v-if="soustraitant.copy_ice != null" class="card mt-4 border shadow-none">
+                                        <div v-if="soustraitant.copy_rf != null" class="card mt-4 border shadow-none">
                                             <div class="card-body p-2">
-                                                <a :href="getFileUrl(soustraitant.copy_ice)" target="_blank"
+                                                <a :href="getFileUrl(soustraitant.copy_rf)" target="_blank"
                                                     class="d-flex align-items-center">
                                                     <div class="p-1 rounded bg-label-info">
                                                         <i class="ti ti-file-download text-info ps-3 pe-3"></i>
                                                     </div>
                                                     <small class="ms-3">
-                                                        Télécharger la copie ICE
+                                                        Télécharger la copie du Regularite fiscale
                                                     </small>
                                                 </a>
                                             </div>
@@ -247,7 +247,7 @@ const getFileUrl = (attachment) => {
                                             <div class="card-body p-2 d-flex align-items-center">
                                                 <p class="text-center m-1 text-muted">
                                                     <i class="ti ti-file me-2"></i>
-                                                    Aucun copie ICE trouvé
+                                                    Aucun copie Regularite fiscale trouvé
                                                 </p>
                                             </div>
                                         </div>
@@ -265,7 +265,7 @@ const getFileUrl = (attachment) => {
 
                                         </div>
                                         <h6 class="mb-1 fw-bold text-dark">
-                                            Attestation de régularité fiscale
+                                            Attestation ICE :{{ soustraitant.num_ice ?? 'N/A' }}
                                         </h6>
 
                                         <div v-if="soustraitant.copy_ice != null" class="card mt-4 border shadow-none">

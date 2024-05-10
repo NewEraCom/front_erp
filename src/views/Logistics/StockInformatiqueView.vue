@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardTwo, CardTwoSkeleton } from '@/ui';
 import { useLogisticsStore } from '@/store';
 import { logisticsService } from '@/services';
-import { StockTable } from './components';
+import { StockTable , AddArticleModal} from './components';
 
 const logisticsStore = useLogisticsStore();
 
@@ -45,6 +45,10 @@ onUnmounted(() => {
                                 <h5 class="fw-bold mb-1">Liste des articles</h5>
                                 <small class="fw-bold mb-1 text-muted">Liste des articles en stock</small>
                             </div>
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addArticle">
+                                <i class="ti ti-plus me-2"></i>
+                                Ajouter un Article
+                            </button>
                         </div>
                         <div v-if="stock != null" class="card-body border-top pt-4">
                             <StockTable :stock="stock" />
@@ -64,5 +68,6 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
+        <AddArticleModal type="informatique"/>
     </div>
 </template>

@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { DataTable } from '@/ui';
 import router from '@/router';
 import { usePMStore } from '@/store';
-import { helpers } from '@/utils';
 
 const pmStore = usePMStore();
 
@@ -61,10 +60,7 @@ const filter = () => {
             (statusQuery.value === '-' || item.status == statusQuery.value);
     });
 };
-const downloadFile = () => {
-    helpers.ExportData();
-    
-};
+
 </script>
 <template>
     <div>
@@ -91,7 +87,7 @@ const downloadFile = () => {
                             <option value="60">60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success" @click="downloadFile">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ExportPurchase">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

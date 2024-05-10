@@ -77,6 +77,15 @@ const getSoustraitant = async () => {
         return Promise.reject(error);
     }
 };
+const getTier = async () => {
+    try {
+        const response = await api().get('/tiers/getAll');
+        const sharedStore = useSharedStore();
+        sharedStore.setFournisseurs(response.data.fournisseur);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 const getProjects = async () => {
     try {
@@ -155,10 +164,11 @@ async function updateSousTraitants(id, req) {
             const sharedStore = useSharedStore();
 
             console.log(response.data);
-            const Soustraitant = sharedStore.soustraitants.data.find((item) => item.id === id);
-            if (Soustraitant) {
-                Object.assign(Soustraitant, response.data.tier);
-            }
+            // const Soustraitant = sharedStore.soustraitants.data.find((item) => item.id === id);
+            // if (Soustraitant) {
+            //     Object.assign(Soustraitant, response.data.tier);
+            // }
+            sharedStore.Soustraitant = response.data.tier;
             console.log(response.data);
         }
     } catch (error) {
@@ -315,7 +325,7 @@ async function addCaisseSiege(data) {
       const response = await api().post('logistics/caisse/validate-budget/'+id,data);
       if (response.status == 200) {
         // sharedStore.setBudgetSiege(response.data.caisses) ;
-        const budget = sharedStore.budgetSiege.find((item) => item.id === id);
+        const budget = sharedStore.budgetSiege.data.find((item) => item.id === id);
             if (budget) {
                 Object.assign(budget, response.data.caisse);
             }
@@ -368,5 +378,6 @@ export default {
     getCaisseSiege,
     addCaisseSiege,
     ValidateCaisseProject,
-    validateTier
+    validateTier,
+    getTier
 };

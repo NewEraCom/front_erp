@@ -80,7 +80,9 @@ export const sharedRoutes = [
         component: () => import('@/views/Shared/FournisseursView.vue'),
         meta: {
             title: 'Fournisseur',
-            requiresAuth: true
+            requiresAuth: true,
+            role: [helpers.roles.DG,helpers.roles.DO,helpers.roles.DS,helpers.roles.SALES]
+
         },
     },
     {
@@ -89,7 +91,9 @@ export const sharedRoutes = [
         component: () => import('@/views/Shared/SoustraitantView.vue'),
         meta: {
             title: 'Sous-traitant',
-            requiresAuth: true
+            requiresAuth: true,
+            role: [helpers.roles.DG,helpers.roles.DO,helpers.roles.DS,helpers.roles.SALES]
+
         },
     },
     {
@@ -97,8 +101,9 @@ export const sharedRoutes = [
         name: 'ProfileSoustraitant',
         component: () => import('@/views/Shared/ProfilSousTraitantView.vue'),
         meta: {
-            title: 'Sous-traitant',
-            requiresAuth: true
+            title: 'Profil Sous-traitant',
+            requiresAuth: true,
+            role: [helpers.roles.DG,helpers.roles.DO,helpers.roles.DS,helpers.roles.SALES]
         },
         props:true,
     },

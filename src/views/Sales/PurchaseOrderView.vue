@@ -3,7 +3,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { pmService, salesService, sharedService } from '@/services';
 import { usePMStore, useSalesStore, useSharedStore } from '@/store';
 import { CardTwo, CardTwoSkeleton,NewPurchaseOrderModal } from '@/ui';
-import { PurchaseOrderTable } from './components';
+import { ExportModal, PurchaseOrderTable } from './components';
 
 const salesStore = useSalesStore();
 const sharedStore = useSharedStore();
@@ -98,5 +98,6 @@ onUnmounted(() => {
         <NewPurchaseOrderModal v-if="articles" :id="50" :articles="articles.filter(
                     (item: any) => item.category === 'Achats' && item.status === 1
                 )"  />
+        <ExportModal />
     </div>
 </template>

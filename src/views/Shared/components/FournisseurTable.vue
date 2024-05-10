@@ -23,7 +23,7 @@ const headers = [
 const actionsConfig = [
    
 ];
-if([helpers.roles.DS,helpers.roles.DO,helpers.roles.SALES].includes(role)){
+if([helpers.roles.DG,helpers.roles.DS,helpers.roles.SALES].includes(role)){
     actionsConfig.push(
         {
             icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => validateItem(item)

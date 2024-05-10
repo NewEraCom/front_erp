@@ -132,7 +132,7 @@ export const logisticsRoutes = [
         meta: {
             title: 'Caisse',
             requiresAuth: true,
-            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS,helpers.roles.DO]
+            // role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS,helpers.roles.DO]
         },
     },
     {

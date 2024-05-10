@@ -19,6 +19,8 @@ const formData = ref({
   article_id:0,
   livraison_id: 0
 });
+console.log(logisticStore.livraison_id);
+
 const handleFileChange = (e, type) => {
   formData.value[type] = e.target.files[0];
 };

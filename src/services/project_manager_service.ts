@@ -537,6 +537,19 @@ const insertArticles = async (data) => {
     return Promise.reject(error);
   }
 };
+const PurchaseOrdreExport = async (data: any) => {
+  try {
+      const response = await api().post('/purchase/export', data, { responseType: 'blob' });
+      if (response.status === 200) {
+
+          return response.data;
+      }
+      throw new Error('failed with status: ' + response.status);
+  } catch (error) {
+      console.error(error);
+      return error;
+  }
+};
 
 
 
@@ -578,4 +591,5 @@ export default {
   importFromFile,
   EditProject,
   insertArticles,
+  PurchaseOrdreExport
 };

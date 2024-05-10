@@ -14,7 +14,7 @@ watch(sharedStore.selectedCaisse, (newValue: any) => {
 }, { deep: true });
 </script>
 <template>
-    <Modal id="detailsCaisseModal" title="Détails de la demande" size="modal-lg">
+    <Modal id="detailsCaisseModal" title="Détails de la demande" size="modal-xl">
         <div class="modal-body">
             <div v-if="caisse_project" class="row">
                 <div class="col-12">
@@ -25,6 +25,9 @@ watch(sharedStore.selectedCaisse, (newValue: any) => {
                                         <th class="fw-bold text-center">Mois</th>
                                         <th class="fw-bold text-center">Montant</th>
                                         <th class="fw-bold text-center">Crée Par</th>
+                                        <th class="fw-bold text-center">Validation DO</th>
+                                        <th class="fw-bold text-center">Validation DS</th>
+                                        <th class="fw-bold text-center">Validation DG</th>
                                         <th class="fw-bold text-center">Status</th>
                                     </tr>
                                 </thead>
@@ -42,6 +45,21 @@ watch(sharedStore.selectedCaisse, (newValue: any) => {
 
                                         <td class="text-center">
                                             {{ item.created_by.employee.first_name + " " + item.created_by.employee.last_name }}
+                                        </td>
+                                        <td class="text-center">
+                                                <small class="fw-bold" :class="helpers.returnBadge(String(item.validation_DO))[0]">{{
+                                                    helpers.returnBadge(String(item.validation_DO))[1] }}
+                                                </small>
+                                        </td>
+                                        <td class="text-center">
+                                                <small class="fw-bold" :class="helpers.returnBadge(String(item.validation_DS))[0]">{{
+                                                    helpers.returnBadge(String(item.validation_DS))[1] }}
+                                                </small>
+                                        </td>
+                                        <td class="text-center">
+                                                <small class="fw-bold" :class="helpers.returnBadge(String(item.validation_DG))[0]">{{
+                                                    helpers.returnBadge(String(item.validation_DG))[1] }}
+                                                </small>
                                         </td>
                                         <td class="text-center">
                                                 <small class="fw-bold" :class="helpers.returnBadge(String(item.status))[0]">{{

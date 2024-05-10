@@ -17,6 +17,7 @@ const formData = ref({
     date_end: null,
     attachement: null,
     created_at: null,
+    validation_responsable: null,
 });
 
 watch(() => rhStore.Item, () => {
@@ -31,31 +32,14 @@ watch(() => rhStore.Item, () => {
         formData.value.date_end = rhStore.Item.date_end;
         formData.value.attachement = rhStore.Item.attachements;
         formData.value.created_at = rhStore.Item.created_at;
+        formData.value.validation_responsable = rhStore.Item.validation_responsable;
+        console.log(formData.value.validation_responsable);
+        
     }
 });
 const getFileUrl = (attachment) => {
     return helpers.baseUrl() + `uploads/employe/${attachment}`;
 };
-
-// const submit = async () => {
-//     isLoading.value = true;
-//     if (formData.value.employee_id === '-' || formData.value.employee === null || formData.value.avance === null || 
-//     formData.value.deduction === null || formData.value.date_start === null || formData.value.status === null || 
-//     formData.value.approval_rh === null ) {
-//         isLoading.value = false;
-//         return;
-//     }
-//     const data = { status: 1,};
-//     await rhService.validateAvavnce(rhStore.salaryAdvanceSelected.id,data).then(() => {
-//         console.log('Employee added');
-//         rhStore.salaryAdvanceSelected = null;
-//         $('#showSalaryAdvance').modal('hide');
-//     }).catch((error) => {
-//         console.error('Error during action execution', error);
-//     }).finally(() => {
-//         isLoading.value = false;
-//     });
-// };
 
 
 </script>
@@ -130,13 +114,21 @@ const getFileUrl = (attachment) => {
                 </div>
 
 
-
+                <div class="col-sm-12">
+                    <div class="mb-3">
+                        <label for="date_start" class="form-label">Validation du Responsable</label>
+                        <span class="d-flex fw-bold align-items-center badge badge-pill" style=" height: 40px;"
+                            :class="helpers.returnBadge(String(formData.validation_responsable))[0]">
+                            {{ helpers.returnBadge(String(formData.validation_responsable))[1] }}
+                        </span>
+                    </div>
+                </div>
                 <div class="col-sm-12">
                     <div class="mb-3">
                         <label for="date_start" class="form-label">Status</label>
                         <span class="d-flex fw-bold align-items-center badge badge-pill" style=" height: 40px;"
-                            :class="helpers.returnBadge(String(formData.status))[0]">
-                            {{ helpers.returnBadge(String(formData.status))[1] }}
+                            :class="helpers.returnBadge(String(formData.validation_responsable))[0]">
+                            {{ helpers.returnBadge(String(formData.validation_responsable))[1] }}
                         </span>
                     </div>
                 </div>

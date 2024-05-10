@@ -29,44 +29,43 @@ const formData = ref({
     type: 'Achats',
 });
 const getTotalAchats = (achats) => {
-  let total = 0;
-  achats.forEach(achat => {
-    let prix_fournisseur_choisi = 0;
-    switch (achat.fournisseur_choisi) {
-      case 1:
-        prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_1);
-        break;
-      case 2:
-        prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_2);
-        break;
-      case 3:
-        prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_3);
-        break;
-    }
-    total += prix_fournisseur_choisi * achat.quantity;
-  });
-  return formData.value.total = total;
+    let total = 0;  
+    achats.forEach(achat => {
+        let prix_fournisseur_choisi = 0;
+        if (achat.fournisseur_choisi === achat.fournisseur1_id) {
+            prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_1);
+        } else if (achat.fournisseur_choisi === achat.fournisseur2_id) {
+            prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_2);
+        } else if (achat.fournisseur_choisi === achat.fournisseur3_id) {
+            prix_fournisseur_choisi = parseFloat(achat.prix_fournisseur_3);
+        }
+        total += prix_fournisseur_choisi * achat.quantity;
+    });
+    return formData.value.total = total;
 };
 if (purchase.value){
     getTotalAchats(purchase.value.achats);
-
 }
 const handleFileChange = (e, type) => {
     formData.value[type] = e.target.files[0];
 };
 
 const submit = async () => {
-   console.log(formData.value);
+//    console.log(formData.value);
     isLoading.value = true;
     
     try {
         formData.value.selectedbc = formData.value.selectedbc.key; 
         await salesService.insertFacturesClient(formData.value);
         toast.success('Facture ajoutée avec succès');
+        console.log(formData.value);
+        
         isLoading.value = false;
         
     } catch (error) {
         toast.error('Erreur lors de l\'ajout de la facture');
+        console.log(error);
+        
         isLoading.value = false;
     }
    

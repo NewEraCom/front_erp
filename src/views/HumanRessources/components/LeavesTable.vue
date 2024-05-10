@@ -22,19 +22,26 @@ const headers = [
     { text: 'Date de début', value: 'date_start', type: 'date' },
     { text: 'Date de fin', value: 'date_end', type: 'date' },
     { text: 'Date de demande', value: 'created_at', type: 'datetime' },
+    { text: 'Validation Responsable', value: 'validation_responsable', type: 'badge' },
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 
 const actionsConfig = [
     { icon: 'ti ti-eye', class: 'btn btn-primary btn-sm', onClick: (item: any) => detailsItem(item) },
     
+    
 ];
-if( [helpers.roles.DG , helpers.roles.DS ,helpers.roles.DO,helpers.roles.BDM ,helpers.roles.RH ].includes(localStorage.getItem('role'))){
+if( [helpers.roles.DG ,helpers.roles.RH ].includes(localStorage.getItem('role'))){
     actionsConfig.push({ icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => {
         showValidationModal(item);
     } },
     { icon: 'ti ti-ban', class: 'btn btn-warning btn-sm', onClick: (item: any) => RejectItem(item) },
     { icon: 'ti ti-trash', class: 'btn btn-danger btn-sm', onClick: (item: any) => deleteItem(item) },
+    );
+}else{
+    actionsConfig.push(
+    { icon: 'ti ti-check', class: 'btn btn-success btn-sm', onClick: (item: any) => showValidationModal(item) },
+    { icon: 'ti ti-x', class: 'btn btn-danger btn-sm', onClick: (item: any) => RejectItem(item) },
     );
 }
 

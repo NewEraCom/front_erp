@@ -29,6 +29,7 @@ import AddCarHistoryModal from './AddCarHistoryModal.vue';
 import DetailsVehiculeTable from './DetailsVehiculeTable.vue';
 import VehiculeEntretienTable from './VehiculeEntretienTable.vue';
 import AddEntretienVehiculeModal from './AddEntretienVehiculeModal.vue';
+import AddArticleModal from './AddArticleModal.vue';
 export {
     StockTable,
     LouerTable,
@@ -60,5 +61,6 @@ export {
     AddCarHistoryModal,
     DetailsVehiculeTable,
     VehiculeEntretienTable,
-    AddEntretienVehiculeModal
+    AddEntretienVehiculeModal,
+    AddArticleModal
 };

@@ -17,7 +17,7 @@ const fournisseurs = ref(computed(() => sharedStore.fournisseurs.data));
 const selectedFournisseurIds = ref({});
 
 onMounted(async () => {
-  await sharedService.getFournisseur();
+  await sharedService.getTier();
 
   await salesService.getPurchaseOrderById(Number(props.id));
 });
@@ -35,10 +35,8 @@ const submit = async () => {
 
   await salesService.ValidateTableComperatif(props.id, selectedFournisseurIds.value).then((res) => {
     isLoading.value = false;
-    if (res.status === 200) {
 
       router.push({ name: 'PurchaseOrderDetails', params: { id: props.id } });
-    }
   });
 };
 

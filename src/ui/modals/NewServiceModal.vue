@@ -91,6 +91,7 @@ const submit = async () => {
         articleHors: JSON.stringify(formData.value.articleHors),
         qtyHors: JSON.stringify(formData.value.qtyHors),
         unites: JSON.stringify(formData.value.unites),
+        commentaire : formData.value.remark
     }).then(() => {
         isLoading.value = false;
         $('#newService').modal('hide');
@@ -105,7 +106,7 @@ const submit = async () => {
         <form @submit.prevent="submit">
             <div class="modal-body">
                 <div class="row">
-                    <div v-if="soustraitants != null" class="col-12 mb-2">
+                    <!-- <div v-if="soustraitants != null" class="col-12 mb-2">
                         <CustomSelect v-model="formData.selectedSoustrait" placeholder="Choisir un sous-traitant"
                             label="Sous-traitant" :data="soustraitants
             .filter((item) => item.is_active == 1)
@@ -113,7 +114,7 @@ const submit = async () => {
                 key: item.id,
                 value: item.raison_social
             }))" />
-                    </div>
+                    </div> -->
                     <div v-for="item in formData.items" :key="item" class="col-12">
                         <div class="repeater-wrapper pt-0 pt-md-4">
                             <div class="d-flex border rounded position-relative pe-0">

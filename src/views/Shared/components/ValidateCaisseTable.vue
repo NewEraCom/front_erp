@@ -18,6 +18,10 @@ const headers = [
     { text: 'Montant Total des caisses', value: 'total_amount', type: 'text' },
     { text: 'Mois', value: 'mois', type: 'text' },
     // { text: 'Créer par', isComplex: true, type: 'created_by' },
+    { text: 'Validation DO', value: 'validation_DO', type: 'badge' },
+    { text: 'Validation DS', value: 'validation_DS', type: 'badge' },
+    { text: 'Validation DG', value: 'validation_DG', type: 'badge' },
+
     { text: 'Status', value: 'status', type: 'badge' },
 ];
 

@@ -121,6 +121,8 @@ const returnBadge = (item: any): any[] => {
       return ['badge bg-label-info', 'En cours'];
     case 'on road':
       return ['badge bg-label-primary', 'En route'];
+    case 'completed':
+        return ['badge bg-label-success', 'Completée'];
     case 'done':
       return ['badge bg-label-success', 'Traitée'];
     case 'need validation':

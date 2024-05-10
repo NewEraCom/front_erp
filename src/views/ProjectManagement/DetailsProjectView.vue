@@ -26,6 +26,7 @@ import {
     EditProjectModal,
     NewProjectArticlesModal
 } from './components';
+import { ExportModal } from '../Sales/components';
 
 const pmStore = usePMStore();
 const sharedStore = useSharedStore();
@@ -682,6 +683,7 @@ watch(item, () => {
             <EditProjectModal :project="project" />
             <NewProjectArticlesModal :pre_project_id="project.pre_project.id"/>
             <EditBudgetProjectModal  :id="project.id" :old-budget="project.budget"/>
+            <ExportModal />
         </div>
               <!-- <div v-if="showModal">
                 Input your bUDGET AND ARTICLES FIRST

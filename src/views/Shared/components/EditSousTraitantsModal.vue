@@ -31,7 +31,8 @@ let copie_ice = '';
 let num_cnss = ref('');
 let copie_cnss = '';
 let livraison = ref('');
-
+let num_rf = ref('');
+let copie_rf = '';
 const handleRCChange = (event) => {
     copie_rc = event.target.files[0];
 };
@@ -40,6 +41,9 @@ const handleCNSSChange = (event) => {
 };
 const handleICEChange = (event) => {
     copie_ice = event.target.files[0];
+};
+const handleRFChange = (event) => {
+    copie_rf = event.target.files[0];
 };
 
 
@@ -61,6 +65,7 @@ const handleICEChange = (event) => {
         num_cnss.value = props.soustraitant.num_cnss;
         num_ice.value = props.soustraitant.num_ice;
         num_rc.value = props.soustraitant.num_rc;
+        num_rf.value = props.soustraitant.num_rf;
         livraison.value = props.soustraitant.livraison;
     }
 // });
@@ -90,10 +95,12 @@ const submit = async () => {
     formData.append('num_ice', num_ice.value);
     formData.append('num_cnss', num_cnss.value);
     formData.append('num_rc', num_rc.value);
+    formData.append('num_rf', num_rf.value);
     formData.append('livraison', livraison.value);
     formData.append('copy_cnss', copie_cnss);
     formData.append('copy_ice', copie_ice);
     formData.append('copy_rc', copie_rc);
+    formData.append('copy_rf', copie_rf);
 
     
        await sharedService.updateSousTraitants(props.soustraitant.id, formData)
@@ -119,7 +126,7 @@ const resetFormFields = () => {
             
             <div class="modal-body">
                 <div class="row" v-if="soustraitant != null">
-                    {{ soustraitant.adresse }}
+                    
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="nom" class="form-label">Nom </label>
@@ -131,7 +138,7 @@ const resetFormFields = () => {
                                 type="text"
                                 tabindex="0"
                                 autofocus
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -148,7 +155,7 @@ const resetFormFields = () => {
                                 placeholder="Entre le numéro de téléphone"
                                 type="text"
                                 tabindex="0"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -162,7 +169,7 @@ const resetFormFields = () => {
                                 placeholder="Entre le numéro de téléphone"
                                 type="text"
                                 tabindex="0"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -175,7 +182,7 @@ const resetFormFields = () => {
                                 class="form-control"
                                 placeholder="Entre le numéro de téléphone"
                                 type="text"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -189,7 +196,7 @@ const resetFormFields = () => {
                                 placeholder="Entrez le numero de tel"
                                 type="email"
                                 tabindex="0"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -203,7 +210,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="raison_social"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -217,7 +224,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="adresse"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -231,7 +238,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="ville"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -245,7 +252,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="fix"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -270,7 +277,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="custom_paiement"
-                                required
+                                
                                 max="12"
                             />
                         </div>
@@ -285,7 +292,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="d_paiement"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -300,7 +307,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="email"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -315,7 +322,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="num_cnss"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -339,7 +346,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="num_ice"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -363,7 +370,7 @@ const resetFormFields = () => {
                                 tabindex="0"
                                 id="nameEx"
                                 v-model="num_rc"
-                                required
+                                
                             />
                         </div>
                     </div>
@@ -377,19 +384,47 @@ const resetFormFields = () => {
                             @change="handleRCChange"
                         />
                     </div>
-                </div>
-                <div class="col-sm-6">
+                    <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Livraison</label>
+                            <label for="nameEx" class="form-label">Numero RF</label>
                             <input
                                 class="form-control"
                                 placeholder="Entre l'adresse e-mail"
                                 type="text"
                                 tabindex="0"
                                 id="nameEx"
-                                v-model="livraison"
-                                required
+                                v-model="num_rf"
+                                
                             />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="copie_cnss" class="form-label">Copie RF</label>
+                        <input
+                            type="file"
+                            class="form-control"
+                            id="copie_cnss"
+                            name="copie_cnss"
+                            @change="handleRFChange"
+                        />
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="nameEx" class="form-label">Livraison</label>
+                            <select name="" id="" class="form-select" v-model="livraison">
+                                <option value="1">Oui</option>
+                                <option value="0">Non</option>
+                            </select>
+                            <!-- <input
+                                class="form-control"
+                                placeholder="Entre l'adresse e-mail"
+                                type="text"
+                                tabindex="0"
+                                id="nameEx"
+                                v-model="livraison"
+                                
+                            /> -->
                         </div>
                     </div>
             </div>
