@@ -8,7 +8,7 @@ import { ExportModal, PurchaseOrderTable } from './components';
 const salesStore = useSalesStore();
 const sharedStore = useSharedStore();
 const pmStore = usePMStore();
-const SiegeId = 50;
+const SiegeId = 54;
 const stats = ref(computed(() => salesStore.purchaseOrders.stats));
 const purchaseOrders = ref(computed(() => salesStore.purchaseOrders.data));
 const articles = ref(computed(() => pmStore.borderaux));
