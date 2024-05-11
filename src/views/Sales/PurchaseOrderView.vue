@@ -95,7 +95,7 @@ onUnmounted(() => {
                 </div>
             </div>
         </div>
-        <NewPurchaseOrderModal v-if="articles" :id="50" :articles="articles.filter(
+        <NewPurchaseOrderModal v-if="articles" :id="54" :articles="articles.filter(
                     (item: any) => item.category === 'Achats' && item.status === 1
                 )"  />
         <ExportModal />
