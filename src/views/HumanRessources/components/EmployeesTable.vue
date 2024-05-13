@@ -55,10 +55,7 @@ const filter = () => {
     });
 };
 
-const downloadFile = () => {
-    helpers.ExportData();
-    
-};
+
 </script>
 
 <template>
@@ -93,7 +90,7 @@ const downloadFile = () => {
                             <option :value=60>60</option>
                         </select>
                     </div>
-                    <button class="btn btn-success"  @click="downloadFile">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ExportEmploye">
                         <i class="ti ti-file-type-csv me-2"></i>
                         Exporter
                     </button>

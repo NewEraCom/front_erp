@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 import { CardOne } from '@/ui';
-import { AddNewEmployeeModal } from './components/modals';
+import { AddNewEmployeeModal, ExportModalEmploye } from './components/modals';
 import { DeleteModal, CardOneSkeleton } from '@/ui';
 import { EmployeesTable } from './components';
 import { rhService } from '@/services';
@@ -108,6 +108,7 @@ watch(employees, () => {
     <AddNewEmployeeModal />
     <DeleteModal title="Supprimer un employé" text="Voulez-vous vraiment supprimer cet employé ?"
       textButton="Oui, Supprimer" :action="() => rhService.deleteEmployee()" message="Employé supprimé avec succès" />
+    <ExportModalEmploye />
   </div>
 </template>
 

@@ -80,7 +80,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="nom" v-model="formData.last_name" class="form-control"
-                                placeholder="Entrez le nom" type="text" tabindex="0" autofocus required />
+                                placeholder="Entrez le nom" type="text" tabindex="0" autofocus  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -89,7 +89,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="prenom" v-model="formData.first_name" class="form-control"
-                                placeholder="Entrez le prenom" type="text" tabindex="0" required />
+                                placeholder="Entrez le prenom" type="text" tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -98,7 +98,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="poste" v-model="formData.poste" class="form-control" placeholder="Entre le poste"
-                                type="text" tabindex="0" required />
+                                type="text" tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -107,7 +107,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="matricule" v-model="formData.matricule" class="form-control" placeholder="Entre le matricule"
-                                type="text" tabindex="0" required />
+                                type="text" tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -116,7 +116,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="departement" v-model="formData.departement" class="form-control"
-                                placeholder="Entre le département" type="text" tabindex="0" required />
+                                placeholder="Entre le département" type="text" tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -124,7 +124,7 @@ const submit = async () => {
                             <label for="city" class="form-label">Ville <span class="text-danger">*</span>
                             </label>
                             <input id="city" v-model="formData.ville" class="form-control" placeholder="Entre la ville"
-                                type="text" tabindex="0" required />
+                                type="text" tabindex="0"  />
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@ const submit = async () => {
                             <label for="adresse" class="form-label">Adresse <span class="text-danger">*</span>
                             </label>
                             <input id="adresse" v-model="formData.adresse" class="form-control"
-                                placeholder="Entre l'adresse" type="text" tabindex="0" required />
+                                placeholder="Entre l'adresse" type="text" tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -141,7 +141,7 @@ const submit = async () => {
                             <label for="sexe" class="form-label">Sexe
                                 <span class="text-danger">*</span>
                             </label>
-                            <select id="sexe" v-model="formData.sexe" class="form-select" required>
+                            <select id="sexe" v-model="formData.sexe" class="form-select" >
                                 <option value="-">Selectionner le sexe</option>
                                 <option value="Homme">Homme</option>
                                 <option value="Femme">Femme</option>
@@ -158,7 +158,7 @@ const submit = async () => {
                             </label>
                             <input id="phone_no" v-model="formData.phone_no" class="form-control"
                                 placeholder="Entre le numéro de téléphone" type="tel" maxlength="10" minlength="10"
-                                tabindex="0" required />
+                                tabindex="0"  />
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -178,7 +178,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="email" v-model="formData.email" class="form-control"
-                                placeholder="Entrez l'adresse e-mail" type="email" tabindex="0" required />
+                                placeholder="Entrez l'adresse e-mail" type="email" tabindex="0"  />
                         </div>
                     </div>
 
@@ -188,7 +188,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="cin" v-model="formData.cin" class="form-control"
-                                placeholder="Entre le numéro CIN" type="text" tabindex="0" required />
+                                placeholder="Entre le numéro CIN" type="text" tabindex="0"  />
                         </div>
                     </div>
 
@@ -198,7 +198,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="birthdate" v-model="formData.birthdate" class="form-control"
-                                placeholder="date de naissance" type="date" tabindex="0" required />
+                                placeholder="date de naissance" type="date" tabindex="0"  />
                         </div>
                     </div>
 
@@ -209,7 +209,7 @@ const submit = async () => {
                             </label>
 
                             <select id="situation_familiale" v-model="formData.situation_familiale" class="form-select"
-                                required>
+                                >
                                 <option value="-">Selectionner la situation qui vous convienne</option>
                                 <option value="Celibataire">Celibataire</option>
                                 <option value="Marié">Marié</option>
@@ -223,7 +223,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="children" v-model="formData.children" class="form-control"
-                                placeholder="Entre le nombre d'enfants" type="number" tabindex="0" required />
+                                placeholder="Entre le nombre d'enfants" type="number" tabindex="0"  />
                         </div>
                     </div>
 

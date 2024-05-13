@@ -7,6 +7,7 @@ import { LeavesTable, AddNewLeaveModal } from './components';
 import { DeleteDocModal, Validate, LeaveDetailsModal } from './components/modals';
 import { helpers } from '@/utils';
 import { useToast } from 'vue-toastification';
+import ImportLeaveModal from './components/modals/ImportLeaveModal.vue';
 
 const toast = useToast();
 const rhStore = useRhStore();
@@ -119,6 +120,11 @@ const DeleteLeave = async () => {
                 <h5 class="fw-bold mb-1">Liste des congés</h5>
                 <small class="fw-bold mb-1 text-muted">Liste des congés demandés par les employés</small>
               </div>
+              <button class="btn btn-success me-2" data-bs-toggle="modal"
+                                    data-bs-target="#importLeave">
+                                    <i class="ti ti-download me-2"></i>
+                                    Importer
+                                </button>
               <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addNewLeave" v-if="role == helpers.roles.RH">
                 <i class="ti ti-square-rounded-plus-filled me-2"></i>
                 Ajouter un congé
@@ -150,6 +156,7 @@ const DeleteLeave = async () => {
     <DeleteDocModal id="delete-leave" :isLoading="isLoading" :method="DeleteLeave" :itemid="rhStore.ItemId"
       title="Supprimer Ce conge" message="Êtes-vous sûr de supprimer ce conge ?" />
     <LeaveDetailsModal />
+    <ImportLeaveModal />
   </div>
 </template>
 

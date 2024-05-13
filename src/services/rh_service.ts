@@ -857,6 +857,29 @@ const AffecterEmpProjet = async (id,data: any) => {
         console.log(error);
     }
 };
+const EmployeExport = async (data: any) => {
+    try {
+        const response = await api().post('rh/export',data, { responseType: 'blob' });
+        if (response.status === 200) {
+  
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+const importLeave = async (data: any) => {
+    try {
+        const response = await api().post('conge/import', data);
+        if (response.status === 200) {
+            const rhStore = useRhStore();
+            rhStore.pushLeave(response.data.leaves);
+            return;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 
 export default {
@@ -910,5 +933,7 @@ export default {
     updateAttachement,
     importPointage,
     AffecterEmpProjet,
-    ConfirmationResponsable
+    ConfirmationResponsable,
+    EmployeExport,
+    importLeave
 };
