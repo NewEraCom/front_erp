@@ -90,21 +90,21 @@ const resetFormFields = () => {
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Nom</label>
                                     <input class="form-control" placeholder="Entrez le numéro de l'offre" type="text"
-                                        tabindex="0" id="nameEx"   required v-model="nom" />
+                                        tabindex="0" id="nameEx"    v-model="nom" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Prenom</label>
                                     <input class="form-control" placeholder="Entrez le nom de client" type="text"
-                                        tabindex="0" id="nameEx"  required v-model="prenom" />
+                                        tabindex="0" id="nameEx"   v-model="prenom" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Tel</label>
                                     <input class="form-control" placeholder="Entre " type="text"
-                                        tabindex="0" id="nameEx"  required v-model="tel" />
+                                        tabindex="0" id="nameEx"   v-model="tel" />
                                 </div>
                             </div>
                             
@@ -112,34 +112,34 @@ const resetFormFields = () => {
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Cin</label>
                                     <input class="form-control" placeholder="" type="text"
-                                        tabindex="0" id="nameEx"  required v-model="cin" />
+                                        tabindex="0" id="nameEx"   v-model="cin" />
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Adresse mail</label>
                                     <input class="form-control" placeholder="Entre les qualifications demandé" type="email"
-                                        tabindex="0" id="nameEx"  required v-model="email" />
+                                        tabindex="0" id="nameEx"   v-model="email" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Diplome</label>
                                     <input class="form-control" placeholder="Entre les qualifications demandé" type="text"
-                                        tabindex="0" id="nameEx"  required v-model="diplome" />
+                                        tabindex="0" id="nameEx"   v-model="diplome" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Poste</label>
                                     <input class="form-control" placeholder="Entre les qualifications demandé" type="text"
-                                        tabindex="0" id="nameEx"  required v-model="poste" />
+                                        tabindex="0" id="nameEx"   v-model="poste" />
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Status</label>
-                                    <select name="" id="" class="form-select" required v-model="status">
+                                    <select name="" id="" class="form-select"  v-model="status">
                                 <option value="1">Actif</option>
                                 <option value="0">Inactif</option>
                             </select>
@@ -154,7 +154,7 @@ const resetFormFields = () => {
                                 <div class="mb-3">
                                     <label for="nameEx" class="form-label">Adresse </label>
                                     <input class="form-control" placeholder="Entre les qualifications demandé" type="text"
-                                        tabindex="0" id="nameEx"  required v-model="adresse" />
+                                        tabindex="0" id="nameEx"   v-model="adresse" />
                                 </div>
                             </div>
                             

@@ -95,14 +95,14 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-3">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Ville <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Ville </label>
                             <input class="form-control" placeholder="Entre la ville de stagiaire" type="text"
                                 tabindex="0" id="nameEx" v-model="formData.city"  />
                         </div>
                     </div>
                     <div class="col-sm-9">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Adresse <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Adresse </label>
                             <input class="form-control" placeholder="Entre l'adresse de stagiaire" type="text"
                                 tabindex="0" id="nameEx" v-model="formData.adresse"  />
                         </div>
@@ -124,7 +124,7 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Poste <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Poste </label>
                             <input class="form-control" placeholder="Entre le poste" type="text" tabindex="0"
                                 v-model="formData.poste"  />
                         </div>
@@ -133,8 +133,7 @@ const submit = async () => {
 
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Date de naissance <span
-                                    class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Date de naissance </label>
                             <input class="form-control" placeholder="" type="date" tabindex="0" id="nameEx"
                                 v-model="formData.birthdate"  />
                         </div>
@@ -166,7 +165,7 @@ const submit = async () => {
                     </div>
                     <div class="col-sm-6">
                         <div class="mb-3">
-                            <label for="nameEx" class="form-label">Diplôme <span class="text-danger">*</span></label>
+                            <label for="nameEx" class="form-label">Diplôme </label>
                             <input class="form-control" placeholder="Entre le poste" type="text" tabindex="0"
                                 v-model="formData.diplome"  />
                         </div>

@@ -78,6 +78,15 @@ const submit = async () => {
                                 placeholder="Entrez le prenom" type="text" tabindex="0" required />
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="mb-3">
+                            <label for="departement" class="form-label">Matricule
+                                <span class="text-danger">*</span>
+                            </label>
+                            <input id="departement" v-model="formData.matricule" class="form-control"
+                                placeholder="Entre le matricule" type="number" tabindex="0" required />
+                        </div>
+                    </div>
                     <div class="col-sm-12">
                         <div class="mb-3">
                             <label for="phone_no" class="form-label">Numéro de téléphone
@@ -122,7 +131,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="copie_cin" ref="cin_copie" class="form-control" placeholder="Choisir le fichier"
-                                type="file" tabindex="0" name="copie_cin" required
+                                type="file" tabindex="0" name="copie_cin" 
                                 @change="e => handleFileChange(e, 'cin')" />
                         </div>
                     </div>
@@ -182,7 +191,7 @@ const submit = async () => {
                                 <span class="text-danger">*</span>
                             </label>
                             <input id="birthdate" v-model="formData.birthdate" class="form-control"
-                                placeholder="date de naissance" type="date" tabindex="0" required />
+                                placeholder="date de naissance" type="date" tabindex="0"  />
                         </div>
                     </div>
 
