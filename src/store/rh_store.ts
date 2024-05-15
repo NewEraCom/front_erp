@@ -121,7 +121,7 @@ export const useRhStore = defineStore('RhStore', {
                 total: data.length,
                 actif: data.filter((e: any) => e.status === '1').length,
                 inactif: data.filter((e: any) => e.status === '0').length,
-                potentialHiring: data.filter((e: any) => e.status === '1' && e.potentiel === '1').length,
+                potentialHiring: data.filter((e: any) => e.potentiel === '1').length,
             };
         },
         setLeaves(data: any) {

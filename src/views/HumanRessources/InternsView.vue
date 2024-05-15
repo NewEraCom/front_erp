@@ -64,7 +64,7 @@ const RemovePotfunc = async () => {
           icon="ti-users-group" card-color="card-border-shadow-success" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">
-        <CardOne title="Total Stagiaires Inactif" :count="String(interns.stats.total)" color="bg-label-danger"
+        <CardOne title="Total Stagiaires Inactif" :count="String(interns.stats.inactif)" color="bg-label-danger"
           icon="ti-users-group" card-color="card-border-shadow-danger" />
       </div>
       <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-3 col-xxl-3">

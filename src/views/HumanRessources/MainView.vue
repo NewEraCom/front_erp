@@ -29,6 +29,9 @@ onUnmounted(() => {
 </script>
 <template>
   <div class="flex-grow-1 container-fluid mt-3">
+    <!-- <div style="height: 800px;">
+    <whereby-embed style="height: 800px;" room="https://neweracom.whereby.com/a23cc19c-e9a0-45c3-9360-81ffe8a51986" />
+  </div> -->
     <h5 class="py-3 mb-4 fw-medium">Dashboard</h5>
     <RHStatsCard v-if="stats != null && demandeRh != null" :stats="stats" :pending="demandeRh.pending" />
     <div v-else class="row g-3">

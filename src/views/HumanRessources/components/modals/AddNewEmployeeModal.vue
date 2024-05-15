@@ -139,7 +139,7 @@ const submit = async () => {
                         <div class="mb-3">
                             <label for="rib" class="form-label">Numéro de RIB</label>
                             <input id="rib" v-model="formData.rib" class="form-control"
-                                placeholder="Entrer le numero de rib" type="number" tabindex="0" />
+                                placeholder="Entrer le numero de rib" type="text" tabindex="0" />
                         </div>
                     </div>
                     <div class="col-sm-6">
