@@ -570,7 +570,8 @@ watch(item, () => {
                                         </button>
                                         <button data-bs-target="#new-articles" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium"
-                                            v-if="project.status =='pending'">
+                                           >
+                                           <!-- v-if="project.status =='pending'" -->
                                             <i class="ti ti-square-rounded-plus me-2"></i> Nouveau article
                                         </button>
                                     </div>

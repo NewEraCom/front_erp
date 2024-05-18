@@ -91,8 +91,24 @@ const filter = () => {
     });
 
 };
-const downloadFile = () => {
-    helpers.ExportData();
+const downloadFile = async() => {
+    
+await rhService.CongeExport()
+            .then((res) => {
+                let blob;
+                if (res instanceof Blob) {
+                    blob = res;
+                } else {
+                    blob = new Blob([res]);
+                }
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'Conge.xlsx';
+                link.click();
+            })
+            .catch(() => {
+               
+            });
 };
 </script>
 <template>

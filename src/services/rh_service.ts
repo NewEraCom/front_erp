@@ -881,6 +881,18 @@ const importLeave = async (data: any) => {
     }
 };
 
+const CongeExport = async () => {
+    try {
+        const response = await api().get('conge/export', { responseType: 'blob' });
+        if (response.status === 200) {
+  
+            return response.data;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
 export default {
     getEmployees,
@@ -935,5 +947,6 @@ export default {
     AffecterEmpProjet,
     ConfirmationResponsable,
     EmployeExport,
-    importLeave
+    importLeave,
+    CongeExport
 };
