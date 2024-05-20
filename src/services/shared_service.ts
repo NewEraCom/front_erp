@@ -231,7 +231,7 @@ const getSoustraitantById = async (id) => {
 
 const addLeave = async (data: any) => {
     try {
-        const response = await api().post('rh/conge/request', data);
+        const response = await api().post('demande-externe/conge', data);
         return response;
     } catch (error) {
         return Promise.reject(error);
