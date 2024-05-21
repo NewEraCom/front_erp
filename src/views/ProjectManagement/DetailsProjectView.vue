@@ -527,12 +527,13 @@ watch(item, () => {
                             <div class="d-flex border-bottom align-items-center">
                                 <h5 class="card-header fw-bold">Achats & Services</h5>
                                 <div class="dropdown ms-auto me-3">
-                                    <button v-if="role === 'Chef de projet'" id="salesByCountry" class="btn p-0"
+                                    <!-- v-if="role === 'Chef de projet'"  -->
+                                    <button id="demande" class="btn p-0"
                                         type="button" data-bs-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
                                         <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
                                     </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="demande"
                                         style="">
                                         <button data-bs-target="#newPurchaseOrder" data-bs-toggle="modal"
                                             class="dropdown-item fw-medium">
