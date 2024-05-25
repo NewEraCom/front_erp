@@ -224,7 +224,7 @@ const validation = async () => {
                       <div class="timeline-header border-bottom mb-3">
                         <h6 class="mb-0">{{ historique.title }}</h6>
                         <span class="text-muted" v-if="historique.is_valid == 1">
-                          {{ formater.date(historique.created_at) }}
+                          {{ formater.date(historique.updated_at) }}
                         </span>
                       </div>
                       <div class="mb-2">

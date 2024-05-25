@@ -22,6 +22,7 @@ const formData = ref({
 
     project_id: props.projectId,
     itemsCaisse: [],
+    file: null,
 });
 const pmStore = usePMStore();
 
@@ -37,7 +38,7 @@ let itemsCaisse = ref(caisseProject.value.length !== 0 ? [] : [
     { designation: 'Indemnité de transport', montant: 0 },
     { designation: 'Panier', montant: 0 },
 ]);
-
+let file = ref('');
 const initialLength = itemsCaisse.value.length;
 
 const addCaisseItem = () => {
@@ -57,6 +58,7 @@ const isLoading = ref(false);
 
 const submit = async () => {
     formData.value.itemsCaisse = itemsCaisse.value;
+    formData.value.file = file.value;
     isLoading.value = true;
     console.log(formData.value);
 
@@ -110,6 +112,14 @@ const submit = async () => {
                         </div>
                     </div>
                 </div>
+                
+                <div class="col-sm-12 p-2">
+                                <div class="mb-3">
+                                    <label for="nameEx" class="form-label">Justif des budgets : <span class="text-danger">*</span> </label>
+                                    <input type="file" class="form-control" @change="file = $event.target.files[0]"
+                           placeholder="Designation" required>
+                                </div>
+                            </div>
                 <div class="row pt-2">
                     <div class="col-sm-12 float-end">
                         <button type="button" class="btn btn-label-dark btn-sm" @click="addCaisseItem">

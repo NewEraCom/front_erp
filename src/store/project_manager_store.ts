@@ -26,6 +26,7 @@ export const usePMStore = defineStore('PMStore', {
         projects: null,
         selectedItem: null,
         caisse_project: null,
+        all_caisse: null,
         caisse_project_sum: 0,
     }),
     actions: {

@@ -3,11 +3,12 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import { CardOne, CardCaisse, CardOneSkeleton, DeleteModal } from '@/ui';
 import { CaisseTable, NewOperationModal, DetailsCaisseOperation } from './components';
 import { watch } from 'vue';
-import { useLogisticsStore } from '@/store';
-import { logisticsService } from '@/services';
+import { useLogisticsStore, useSharedStore } from '@/store';
+import { logisticsService, sharedService } from '@/services';
 import { formater } from '@/utils';
 import { ValidateCaisse } from './components';
 import { useToast } from 'vue-toastification';
+const sharedStore = useSharedStore();
 
 const toast = useToast();
 const logisticsStore = useLogisticsStore();
@@ -15,6 +16,8 @@ const isLoading = ref(false);
 const caisse = ref(computed(() => logisticsStore.opertationCaisse.data));
 const stats = ref(computed(() => logisticsStore.opertationCaisse.stats));
 const stats_analyse = ref(computed(() => logisticsStore.caisse.stats));
+const projects = ref(computed(() => sharedStore.projects.data));
+
 
 let data = ref({
     caisse: null,
@@ -25,6 +28,7 @@ let data = ref({
 onMounted(async () => {
     await logisticsService.getOperationCaisse('logistics');
     await logisticsService.getCaisse();
+    await sharedService.getProjects();
     data.value.caisse = caisse.value;
     data.value.stats = stats.value;
     data.value.stats_analyse = stats_analyse.value;
@@ -113,7 +117,7 @@ const Validate = async () => {
                 </div>
             </div>
         </div>
-        <NewOperationModal />
+        <NewOperationModal :projects="projects" />
         <DetailsCaisseOperation />
         <DeleteModal title="Supprimer un opération" text="Voulez-vous vraiment supprimer cette opération ?"
             textButton="Oui, Supprimer" :action="() => logisticsService.deleteCaisseOperation()" />

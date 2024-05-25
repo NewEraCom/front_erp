@@ -30,6 +30,7 @@ import ValidatePreProject from './ValidatePreProject.vue';
 import DetailsPreProjectSkeleton from './DetailsPreProjectSkeleton.vue';
 import SuivieTable from './SuivieTable.vue';
 import PointageTable from './PointageTable.vue';
+import CaisseTable from './CaisseTable.vue';
 
 import PreProjectDashTable from './PreProjectDashTable.vue';
 import CautionDashTable from './CautionDashTable.vue';
@@ -65,6 +66,7 @@ export {
     PreProjectDashTable,
     CautionDashTable,
     ProjectDash,
-    PointageTable
+    PointageTable,
+    CaisseTable
 
 };

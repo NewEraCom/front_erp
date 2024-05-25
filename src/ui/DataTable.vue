@@ -276,7 +276,7 @@ const getFileUrl = (attachment) => {
                                     </button>
                                 </span>
                                 <span v-if="header.type === 'attachement'">
-                                    <small v-if="item[header.value] == '-'">Aucun Attachement</small>
+                                    <small v-if="item[header.value] == '-' || item[header.value] == null">Aucun Attachement</small>
                                     <a v-else class="btn btn-label-primary btn-sm" target="_blank"
                                         :href="getFileUrl(item[header.value])">
                                         <i class="ti ti-download me-2"></i> Télécharger l'attachement

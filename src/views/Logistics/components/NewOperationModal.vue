@@ -1,62 +1,130 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue';
+import { Modal, CustomSelect } from '@/ui';
 import { logisticsService } from '@/services';
-import { Modal } from '@/ui';
 import { useToast } from 'vue-toastification';
 const toast = useToast();
 
 const isLoading = ref(false);
 
+const props = defineProps({
+    projects: {
+        type: Array,
+        required: true,
+    },
+    
+});
+
+let montantMax = ref();
 const formData = ref({
-    emetteur: null,
+    project_id: '-',
     montant: null,
-    operation: 'entree',
-    type: 'cash',
+    recepteur: JSON.parse(localStorage.getItem('user')).employee.id,
     remark: null,
     date_operation: Date(),
+    operation: 'sortie',
+    type: 'cash',
+    item: '-'
 });
 
 const submit = async () => {
+    if (formData.value.project_id == '-') {
+        toast.error('Veuillez choisir un project');
+        return;
+    }
+
     isLoading.value = true;
-    await logisticsService.newCaisseOperation(formData.value, 'caisse').then(() => {
+
+    formData.value.project_id = formData.value.project_id.key;
+    if (formData.value.montant > montantMax.value) {
+        toast.error('Le montant demandé est supérieur au montant disponible');
         isLoading.value = false;
-        $('#newOperation').modal('hide');
-        toast.success('Opération ajoutée avec succès');
+        return;
+        
+    }
+    await logisticsService.newCaisseOperation(formData.value, 'chef').then(() => {
+        isLoading.value = false;
+        $('#newDemandeCaisse').modal('hide');
+        toast.success('Demande de caisse ajoutée avec succès');
+
+        formData.value = {
+            project_id: '-',
+            montant: null,
+            recepteur: JSON.parse(localStorage.getItem('user')).employee.id,
+            remark: null,
+            date_operation: Date(),
+            operation: 'sortie',
+            type: 'cash',
+            item: '-'
+        };
+
     }).catch(() => {
         isLoading.value = false;
     });
-
 };
+const updateMontant =() =>{
+    const selectedItem = props.projects
+            .filter((item) => item.id == formData.value.project_id.key)[0]
+            .caisse.find((caisse) => caisse.id == formData.value.item);
+        if (selectedItem) {
+            montantMax.value = selectedItem.montant;  // replace `montant` with the actual property name in your `caisse` object
+            console.log(montantMax.value);
+            
+        }
+    };
 </script>
 
 <template>
-    <Modal id="newOperation" title="Nouvelle opération" size="lg">
+    <Modal id="newOperation" title="Demande de caisse" size="modal-md">
         <form @submit.prevent="submit">
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-12 mb-3">
-                        <label for="user" class="mb-2">Emetteur <span class="text-danger">*</span></label>
-                        <input type="text" id="user" class="form-control" v-model="formData.emetteur"
-                            placeholder="Entrer le nom de l'emetteur" required />
+                    <div v-if="projects != null" class="col-12 mb-3">
+                        <CustomSelect v-model="formData.project_id" placeholder="Choisir un project" label="Project"
+                            :data="projects.map((item) => ({ key: item.id, value: item.code }))" />
                     </div>
-                    <div class="col-12 mb-3">
-                        <label for="montant" class="mb-2">Montant <span class="text-danger">*</span></label>
-                        <input type="number" id="montant" class="form-control" v-model="formData.montant"
-                            placeholder="Entrer le montant reçu" required />
+                    <div v-if="formData.project_id != '-'" class="mb-3">
+                        <label for="itm" class="mb-2">Item <span class="text-danger">*</span> </label>
+                        <select name="" id="" class="form-select" v-model="formData.item" @change="updateMontant">
+                            <option value="-">Choisir un item</option>
+                            <option
+                                v-for="itm in projects.filter((item) => item.id == formData.project_id.key)[0].caisse"
+                                :key="itm.id" :value="itm.id">
+                                {{ itm.designation }}
+                            </option>
+                        </select>
                     </div>
+
                     <div class="col-12 mb-3">
-                        <label for="description" class="mb-2">Description <span class="text-danger">*</span></label>
-                        <textarea name="description" id="description" v-model="formData.remark" class="form-control"
-                            placeholder="Entrer une note"></textarea>
+                        <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
+                        <input type="number" class="form-control" id="montant" v-model="formData.montant"
+                            placeholder="Entre le montant demande" required  :disabled="montantMax === 0" />
+                            <!-- :max="montantMax" -->
+                            <small class="text-muted" v-if="montantMax">
+                                Montant Max : {{ montantMax}} MAD
+                            </small>
+                            <small class="text-danger" v-if="montantMax == 0">
+                                Cette caisse est consomée entiérement
+                            </small>
+                    </div>
+                    <div class="col-12">
+                        <textarea v-model="formData.remark" class="form-control" rows="2" placeholder="Remarque...">
+                                </textarea>
                     </div>
                 </div>
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-label-outline-dark" data-bs-dismiss="modal">
+                    Fermer
+                </button>
                 <button type="submit" class="btn btn-primary" :disabled="isLoading">
-                    <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status"
-                        aria-hidden="true"></span>
-                    <span v-else>Ajouter</span>
+                    <span v-if="isLoading" class="d-flex align-items-center">
+                        <div class="spinner-border spinner-border-sm text-white" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </span>
+                    <span v-else>Envoyer</span>
                 </button>
             </div>
         </form>

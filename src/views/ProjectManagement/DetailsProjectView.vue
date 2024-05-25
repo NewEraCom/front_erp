@@ -23,6 +23,7 @@ import {
     SuivieTable,
     SuivieModal,
     PointageTable,
+    CaisseTable,
     EditProjectModal,
     NewProjectArticlesModal
 } from './components';
@@ -44,6 +45,7 @@ const ShowButtonCaisse = computed(() => {
     });
 const item = ref(computed(() => pmStore.project));
 const caisseProject = ref(computed(() => pmStore.caisse_project));
+const suivicaisseProject = ref(computed(() => pmStore.all_caisse));
 const soustraitants = ref(computed(() => sharedStore.fournisseurs));
 
 const project = ref(null);
@@ -51,36 +53,14 @@ const project = ref(null);
 const selectedArticle = ref(computed(() => pmStore.selectedArticle));
 const role = localStorage.getItem('role');
 const caisse_sum = ref(computed(() => pmStore.caisse_project_sum));
-// const showModal = ref(true);
-// const frenchMonths = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 
-// const getMonthNumberFromFrenchMonth = (frenchMonth) => {
-//     return frenchMonths.indexOf(frenchMonth.toLowerCase());
-// };
-
-// const isCaisseInsertedForCurrentMonth = () => {
-//     const today = new Date();
-//     return caisseProject.value.some(caisse => {
-//         const caisseMonthNumber = getMonthNumberFromFrenchMonth(caisse.mois);
-//         const caisseDate = new Date(today.getFullYear(), caisseMonthNumber);
-//         return caisseDate.getMonth() === today.getMonth() && caisseDate.getFullYear() === today.getFullYear();
-//     });
-// };
 
 onMounted(async () => {
     await pmService.getProjectById(props.id);
     await sharedService.getSoustraitant();
-    // const today = new Date();
-    // const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    // console.log(+today === +firstDayOfMonth);
-    // console.log(isCaisseInsertedForCurrentMonth());
-    // console.log(project.value.pre_project.articles.length === 0 || project.value.facture_composante.length === 0);  // Should log true if either `articles` or `facture_composant` is not inserted
-    // if (+today === +firstDayOfMonth && 
-    //     !isCaisseInsertedForCurrentMonth() && 
-    //     (project.value.pre_project.articles.length === 0 || project.value.facture_composante.length === 0)) {
-    //     showModal.value = true;
-    // }
-    // console.log(showModal.value);
+    console.log(suivicaisseProject.value);
+    
+    
 });
 
 onUnmounted(() => {
@@ -237,8 +217,9 @@ watch(item, () => {
                                     {{ caisse_sum }}<small class="fw-bold"> MAD</small>
                                 </h4>
                             </div>
-                            <button class="btn btn-sm btn-primary" data-bs-target="#caisseProject"
-                                data-bs-toggle="modal" v-if="ShowButtonCaisse">
+                            <!-- v-if="ShowButtonCaisse" -->
+                            <button class="btn btn-sm btn-primary" v-if="ShowButtonCaisse" data-bs-target="#caisseProject"
+                                data-bs-toggle="modal" >
                                 <i class="ti ti-plus"></i>
                                 Budget de caisse
                             </button>
@@ -296,6 +277,12 @@ watch(item, () => {
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
                                     data-bs-target="#pointage" aria-controls="productions" aria-selected="true">
                                     Pointage des employés
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                    data-bs-target="#caisse" aria-controls="productions" aria-selected="true">
+                                   Suivi de caisse
                                 </button>
                             </li>
                         </ul>
@@ -655,6 +642,29 @@ watch(item, () => {
                             </div>
                             <div class="card-body">
                                 <PointageTable :items="project.pointage" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="caisse" class="tab-pane fade text-start" role="tabpanel">
+                        <div class="card card-border-shadow-primary">
+                            <div class="d-flex border-bottom align-items-center">
+                                <h5 class="card-header fw-bold">Suivi de pointage</h5>
+                                <div  class="dropdown ms-auto me-3">
+                                    <button id="salesByCountry" class="btn p-0" type="button" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <i class="ti ti-dots-vertical ti-sm text-dark fw-bold"></i>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesByCountry"
+                                        style="">
+                                        <button data-bs-target="#import-pointage" data-bs-toggle="modal"
+                                            class="dropdown-item fw-medium">
+                                            <i class="ti ti-file-plus me-2"></i> Importer le pointages des employés
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <CaisseTable :items="suivicaisseProject" />
                             </div>
                         </div>
                     </div>

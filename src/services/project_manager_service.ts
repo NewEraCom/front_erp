@@ -114,6 +114,7 @@ const getProjectById = async (id: string) => {
       PMStore.setProject(response.data.project);
       PMStore.setCaisseProject(response.data.caisse);
       PMStore.caisse_project_sum = response.data.caisse_sum;
+      PMStore.all_caisse = response.data.all_caisse;
     }
   } catch (error) {
     return Promise.reject(error);

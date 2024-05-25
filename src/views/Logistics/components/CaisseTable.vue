@@ -14,6 +14,7 @@ const logisticsStore = useLogisticsStore();
 const headers = [
     { text: 'Récepteur/Émetteur', value: 'recepteur', type: 'caisse' },
     { text: 'Montant', value: 'montant', type: 'currency' },
+    { text: 'Item', value: 'item', type: 'item' },
     { text: 'Type d\'opération', value: 'operation', type: 'badge' },
     { text: 'Date d\'opération', value: 'date_operation', type: 'date' },
     { text: 'Status', value: 'status', type: 'badge' },

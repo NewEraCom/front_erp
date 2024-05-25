@@ -36,12 +36,12 @@ const submit = async () => {
     isLoading.value = true;
 
     formData.value.project_id = formData.value.project_id.key;
-    if (formData.value.montant > montantMax.value) {
-        toast.error('Le montant demandé est supérieur au montant disponible');
-        isLoading.value = false;
-        return;
+    // if (formData.value.montant > montantMax.value) {
+    //     toast.error('Le montant demandé est supérieur au montant disponible');
+    //     isLoading.value = false;
+    //     return;
         
-    }
+    // }
     await logisticsService.newCaisseOperation(formData.value, 'chef').then(() => {
         isLoading.value = false;
         $('#newDemandeCaisse').modal('hide');
@@ -98,7 +98,8 @@ const updateMontant =() =>{
                     <div class="col-12 mb-3">
                         <label for="montant" class="mb-2">Montant<span class="text-danger fw-bold">*</span></label>
                         <input type="number" class="form-control" id="montant" v-model="formData.montant"
-                            placeholder="Entre le montant demande" required :max="montantMax" :disabled="montantMax === 0" />
+                            placeholder="Entre le montant demande" required  :disabled="montantMax === 0" />
+                            <!-- :max="montantMax" -->
                             <small class="text-muted" v-if="montantMax">
                                 Montant Max : {{ montantMax}} MAD
                             </small>
