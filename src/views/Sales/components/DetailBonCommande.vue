@@ -1,4 +1,4 @@
-<script setup>
+<!-- <script setup>
 import { onMounted, ref, computed, onUnmounted } from 'vue';
 import { useSalesStore } from '@/store';
 import { salesService } from '@/services';
@@ -369,4 +369,43 @@ thead > tr > th {
 #footer {
   margin-top: auto !important;
 }
-</style>
+</style> -->
+
+
+<script setup>
+import { onMounted, ref, computed } from 'vue';
+import { useSalesStore } from '@/store';
+import { salesService } from '@/services';
+import { helpers } from '@/utils';
+const loading = ref(false);
+
+const props = defineProps({
+  id: Number
+});
+const salesStore = useSalesStore();
+const order = ref(computed(() => salesStore.selectedBonDeCommande));
+const file = ref();
+
+onMounted(async () => {
+  await salesService.getBonDeCommandeById(props.id);
+  file.value = helpers.baseUrl() + 'bdc/' + order.value;
+  loading.value = true;
+});
+</script>
+
+
+<template>
+  <div class="flex-grow-1 container-fluid mt-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <h5 class="py-3 mb-4 fw-medium text-muted">
+        Dashboard / <span class="text-dark">Bon de commande</span>
+      </h5>
+    </div>
+    <div class="row" v-if="file">
+      <div class="col-12 mt-4">
+        <iframe :src="file" width="100%" height="1200vh" style="border: none;">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</template>

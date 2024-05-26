@@ -54,7 +54,7 @@ const getBonDeCommandeById = async (id: number) => {
   try {
     const response = await api().get('/logistics/bon-commande/details/' + id);
     const salesStore = useSalesStore();
-    salesStore.setOneBonDeCommande(response.data.bonCommande);
+    salesStore.setOneBonDeCommande(response.data.filename);
   } catch (error) {
     return Promise.reject(error);
   }
