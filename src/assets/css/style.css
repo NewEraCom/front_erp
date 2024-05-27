@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Urbanist';
+    src: url('../fonts/Urbanist Medium.ttf') format('truetype'); /* Legacy iOS */
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+    font-family: 'Urbanist', sans-serif;
+
+}
