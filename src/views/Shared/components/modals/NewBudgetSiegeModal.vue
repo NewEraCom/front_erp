@@ -13,6 +13,7 @@ const formData = ref({
     montant: null,
     designation: null,
     mois: '-',
+    file: null,
 });
 
 const submit = async () => {
@@ -73,6 +74,13 @@ const submit = async () => {
                         <textarea v-model="formData.designation" class="form-control" rows="2" placeholder="Remarque...">
                                 </textarea>
                     </div>
+                    <div class="col-sm-12 p-2">
+                                <div class="mb-3">
+                                    <label for="nameEx" class="form-label">Justif des budgets : <span class="text-danger">*</span> </label>
+                                    <input type="file" class="form-control" @change="formData.file = $event.target.files[0]"
+                           placeholder="Designation" required>
+                                </div>
+                            </div>
                 </div>
             </div>
 
