@@ -86,7 +86,7 @@ const RejectCaisse = async () => {
                 Ajouter un Budget
               </button>
             </div>
-            <div v-if="budget != null" class="card-body border-top pt-4">
+            <div v-if="budget != null" class="card-body border-top pt-4 overflow-auto">
               <BudgetTable :budget="budget" />
             </div>
            
