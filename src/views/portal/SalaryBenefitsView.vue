@@ -125,7 +125,7 @@ const env = import.meta.env.VITE_UPLOADS_URL;
 }
 
 .hearder-border {
-    border: 15px solid #0B4B71;
+    border: 15px solid #39465C;
     border-radius: 50%;
     display: flex;
     justify-content: center;

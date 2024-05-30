@@ -22,7 +22,7 @@ const env = import.meta.env.VITE_UPLOADS_URL;
                             <div class="user-profile-container text-center">
                                 <img :src="env + 'uploads/pictures/' + employee.user.profile_picture" width="120px"
                                     height="120px" alt="user image"
-                                    class="d-block  ms-0 ms-auto ps-auto me-auto rounded-circle user-profile-img"
+                                    class="d-block ms-0 ms-auto ps-auto me-auto rounded user-profile-img"
                                     style="object-fit: cover;">
                                 <button class="edit-button" data-bs-toggle="offcanvas" data-bs-target="#uploadCanva">
                                     <i class="ti ti-edit-circle"></i>
@@ -30,7 +30,7 @@ const env = import.meta.env.VITE_UPLOADS_URL;
                                 <UploadAvatarCanva />
                             </div>
                             <div class="text-center mt-4">
-                                <h4 class="text-primary fw-bold mb-2 mt-3 fw-medium">Bonjour, {{ employee.first_name }}
+                                <h4 class="text-dark fw-bold mb-2 mt-3 fw-medium">Bonjour, {{ employee.first_name }}
                                 </h4>
                                 <p class="text-dark w-sm-80 app-academy-xl-100 mb-1 fw-medium">
                                     {{ employee.poste }} chez NewEraCom
@@ -54,12 +54,10 @@ const env = import.meta.env.VITE_UPLOADS_URL;
 <style>
 .user-profile-container {
     position: relative;
-
 }
 
 .user-profile-img {
     display: block;
-
 }
 
 .edit-button {
@@ -70,13 +68,13 @@ const env = import.meta.env.VITE_UPLOADS_URL;
     border: none;
     /* Remove default button border */
     padding: 5px 10px;
-    background-color: #0B4B71;
+    background-color: #39465C;
     color: white;
     border-radius: 5px;
 }
 
 .edit-button:hover {
-    background-color: #0B4B71;
+    background-color: #39465C;
     color: white;
     cursor: pointer;
     transition: 0.3s;
@@ -84,6 +82,5 @@ const env = import.meta.env.VITE_UPLOADS_URL;
 
 .edit-button i {
     font-size: 14px;
-    /* Adjust icon size if needed */
 }
 </style>

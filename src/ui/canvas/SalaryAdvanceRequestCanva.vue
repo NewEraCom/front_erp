@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const isLoading = ref(false);
+const formData = ref({
+    amount: '',
+    deduction: '',
+    message: '',
+});
+
 </script>
 
 <template>
@@ -14,17 +23,17 @@
                 <div class="row">
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="duration" class="form-label">Montant de l'avance <span
+                            <label for="amount" class="form-label">Montant de l'avance <span
                                     class="text-danger">*</span> </label>
-                            <input type="number" class="form-control" id="duration" placeholder="Entrez le montant"
-                                required>
+                            <input type="number" class="form-control" id="amount" v-model="formData.amount"
+                                placeholder="Entrez le montant" required>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="mb-3">
-                            <label for="duration" class="form-label">Montant de déduction par mois <span
+                            <label for="deduction" class="form-label">Montant de déduction par mois <span
                                     class="text-danger">*</span> </label>
-                            <input type="number" class="form-control" id="duration"
+                            <input type="number" class="form-control" id="deduction" v-model="formData.deduction"
                                 placeholder="Entrez le montant de déduction" required>
                         </div>
                     </div>
@@ -32,12 +41,13 @@
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
                             <textarea class="form-control" id="message" rows="5" placeholder="Message"
-                                required></textarea>
+                                v-model="formData.message"></textarea>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="alert alert-warning" role="alert">
-                            Votre demande d'avance sur salaire doit être approuvée par votre superviseur.
+                            Votre demande d'avance sur salaire doit être approuvée par votre superviseur avant d'être
+                            traitée par le service des ressources humaines.
                         </div>
                     </div>
                 </div>
@@ -45,7 +55,11 @@
                     <div class="col-12 d-flex justify-content-end">
                         <button type="button" class="btn close-button btn-label-outline-dark"
                             data-bs-dismiss="offcanvas">Annuler</button>
-                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status"
+                                aria-hidden="true"></span>
+                            <span v-else>Se connecter</span>
+                        </button>
                     </div>
                 </div>
             </form>

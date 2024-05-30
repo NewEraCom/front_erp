@@ -85,6 +85,27 @@ watch(() => formData.value.type, (value) => {
         minDate.value = (todayWeek).toISOString().split('T')[0];
     }
 });
+
+watch(
+    () => [formData.value.start_date, formData.value.duration],
+    ([newStartDate, newDuration]) => {
+        if (newStartDate && newDuration) {
+            const startDate = new Date(newStartDate);
+            let daysAdded = 0;
+            const sliceDays = parseInt(newDuration) - 1;
+            while (daysAdded < sliceDays) {
+                startDate.setDate(startDate.getDate() + 1); // Move to the next day
+                // Check if the day is not a Saturday (6) or Sunday (0)
+                if (startDate.getDay() !== 0 && startDate.getDay() !== 6) {
+                    daysAdded++;
+                }
+            }
+
+            formData.value.end_date = startDate.toISOString().split('T')[0];
+        }
+    }
+);
+
 </script>
 
 <template>
@@ -129,7 +150,7 @@ watch(() => formData.value.type, (value) => {
                             <label for="dateFin" class="form-label">Date de fin <span class="text-danger">*</span>
                                 <small class="text-danger">(Dernier jour inclus)</small> </label>
                             <input type="date" class="form-control" id="dateFin" :min="minDateEnd"
-                                v-model="formData.end_date" required>
+                                v-model="formData.end_date" disabled required>
                         </div>
                     </div>
 
@@ -142,7 +163,7 @@ watch(() => formData.value.type, (value) => {
                         </div>
                     </div>
                     <div class="col-12" v-if="formData.type != 'maladie'">
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-warning" role="alert">
                             <p>Votre demande doit être soumise au moins une semaine à l'avance pour être validée.</p>
                         </div>
                     </div>

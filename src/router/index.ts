@@ -24,6 +24,14 @@ const router = createRouter({
       },
       children: [...portalRoutes]
     },
+    {
+      path: '/faq',
+      name: 'FAQ',
+      component: () => import('@/views/LayoutView.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
     ...errorRoutes
   ]
 })

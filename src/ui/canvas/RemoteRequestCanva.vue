@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { portalService } from '@/services';
 import { push } from 'notivue';
 import { helpers } from '@/utils';
@@ -64,6 +64,27 @@ const clearForm = () => {
     };
 };
 
+watch(
+    () => [formData.value.start_date, formData.value.duration],
+    ([newStartDate, newDuration]) => {
+        if (newStartDate && newDuration) {
+            const startDate = new Date(newStartDate);
+            let daysAdded = 0;
+            const sliceDays = parseInt(newDuration) - 1;
+            while (daysAdded < sliceDays) {
+                startDate.setDate(startDate.getDate() + 1); // Move to the next day
+                // Check if the day is not a Saturday (6) or Sunday (0)
+                if (startDate.getDay() !== 0 && startDate.getDay() !== 6) {
+                    daysAdded++;
+                }
+            }
+
+            formData.value.end_date = startDate.toISOString().split('T')[0];
+        }
+    }
+);
+
+
 </script>
 <template>
 
@@ -99,7 +120,7 @@ const clearForm = () => {
                             <label for="end_date" class="form-label">Date de fin <span class="text-danger">*</span>
                                 <small class="text-danger">(Le dérnier jour inclus)</small></label>
                             <input type="date" class="form-control" id="end_date" v-model="formData.end_date"
-                                :min="minDate" required>
+                                :min="minDate" disabled required>
                         </div>
                     </div>
                     <div class="col-12">
@@ -110,7 +131,7 @@ const clearForm = () => {
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="alert alert-danger" role="alert">
+                        <div class="alert alert-warning" role="alert">
                             <p>Votre demande doit être soumise au moins une semaine à l'avance pour être validée.</p>
                         </div>
                     </div>

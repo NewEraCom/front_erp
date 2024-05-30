@@ -123,7 +123,7 @@ onBeforeUnmount(() => {
 
 <style>
 .btn-menu {
-    color: #0B4B71 !important;
+    color: black !important;
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem 1rem;
@@ -145,7 +145,7 @@ onBeforeUnmount(() => {
     height: 60px;
     border: none;
     border-radius: 50%;
-    background-color: #0B4B71;
+    background-color: #016862;
     color: white;
     font-size: 24px;
     cursor: pointer;
@@ -158,7 +158,7 @@ onBeforeUnmount(() => {
 
 .floating-btn:hover,
 .menu a:hover {
-    background-color: #0056b3;
+    background-color: #018982;
 }
 
 .menu {

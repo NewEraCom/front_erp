@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import { TheTopBarPortal, FloatingButton, HelpButton } from '../ui';
-import { Notivue, Notification } from 'notivue'
-
+import { Notivue, Notification } from 'notivue';
 
 </script>
-
 <template>
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">
@@ -50,7 +48,7 @@ import { Notivue, Notification } from 'notivue'
 }
 
 .nav-primray {
-    background-color: #0B4B71 !important;
+    background-color: #39465C !important;
     color: white;
     height: 80px;
 }
@@ -86,7 +84,7 @@ import { Notivue, Notification } from 'notivue'
 }
 
 .bg-primary {
-    background-color: #0B4B71 !important;
+    background-color: #39465C !important;
     color: white;
     height: 80px;
 }

@@ -24,9 +24,10 @@ defineProps({
 <style scoped>
 .btn {
     height: 50px !important;
+    color: #1e1e1e !important;
 }
 
 .btn:hover {
-    border: 1px solid #0B4B71 !important;
+    border: 1px solid #1e1e1e !important;
 }
 </style>

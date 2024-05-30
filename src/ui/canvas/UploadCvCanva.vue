@@ -17,10 +17,6 @@ const file = ref(null);
 const onFileChange = (event) => {
     file.value = event.target.files[0];
     if (file.value) {
-        if (!file.value.type.startsWith('image/')) {
-            errorMessage.value = 'Please select an image file.';
-            return;
-        }
         if (file.value.size > 5 * 1024 * 1024) {
             errorMessage.value = 'File size should be less than 5MB.';
             return;
@@ -43,10 +39,6 @@ const onDrop = (event) => {
     const droppedFile = event.dataTransfer.files[0];
     file.value = droppedFile;
     if (file.value) {
-        if (!file.value.type.startsWith('image/')) {
-            errorMessage.value = 'Please select an image file.';
-            return;
-        }
         if (file.value.size > 5 * 1024 * 1024) {
             errorMessage.value = 'File size should be less than 5MB.';
             return;
@@ -95,10 +87,9 @@ const submit = async () => {
 
 </script>
 <template>
-    <div class="offcanvas offcanvas-end off-canva-width" tabindex="-1" id="uploadCanva"
-        aria-labelledby="offcanvasEndLabel">
+    <div class="offcanvas offcanvas-end off-canva-width" tabindex="-1" id="cvCanva" aria-labelledby="offcanvasEndLabel">
         <div class="offcanvas-header">
-            <h5 id="offcanvasEndLabel" class="offcanvas-title">Modifier votre photo de profil
+            <h5 id="offcanvasEndLabel" class="offcanvas-title">Modifier vore CV (Curriculum Vitae)
             </h5>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
@@ -109,13 +100,13 @@ const submit = async () => {
                         <div class="upload-container">
 
                             <div v-if="previewUrl" class="preview rounded">
-                                <img :src="previewUrl" alt="Photo Preview" />
+                                <embed :src="previewUrl" type="application/pdf" alt="Photo Preview" />
                                 <span class="cancel-icon rounded" @click="cancelPreview">✖️</span>
                             </div>
                             <div v-else class="drop-area" @dragover.prevent="onDragOver" @dragleave="onDragLeave"
                                 @drop.prevent="onDrop" :class="{ 'drag-over': isDragOver }">
                                 <input type="file" id="file-input" @change="onFileChange" ref="fileInput"
-                                    accept="image/*" hidden />
+                                    accept=".pdf, .doc, .docx" required hidden />
                                 <label for="file-input" class="drop-label">
                                     <i class="ti ti-photo-up size-56"></i>
                                     <p class="mt-3">Faites glisser et déposez n'importe quel fichier ici</p>

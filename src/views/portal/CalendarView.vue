@@ -71,7 +71,7 @@ const specialHours = {
             </div>
             <vue-cal style="height: 700px" active-view="month" :disable-views="['years', 'year']" :min-date="minDate"
                 :special-hours="specialHours" locale="fr" :time-from="8 * 60" :time-to="19 * 60" :time-step="30"
-                events-on-month-view="short" :events="events">
+                events-on-month-view="short" :events="events" hide-weekends hide-now-line hide-now-line-on-month-view>
             </vue-cal>
         </div>
     </div>
@@ -103,7 +103,7 @@ const specialHours = {
 }
 
 .vuecal__menu {
-    background-color: #0b4b71 !important;
+    background-color: #39465C !important;
     color: white;
 }
 

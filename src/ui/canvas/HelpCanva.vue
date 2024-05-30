@@ -16,6 +16,7 @@ import { ContactSupportModal } from '@/ui'
                 class="btn btn-full btn-white btn-lg shadow-none border mb-3 text-start" type="button"
                 data-bs-toggle="modal" data-bs-target="#leaveRequestHelp">
                 <div class="d-flex justify-content-between align-items-center me-auto">
+                    <i class="ti ti-help-hexagon me-3"></i>
                     <small>
                         <strong>{{ item.text }}</strong>
                     </small>
@@ -24,17 +25,18 @@ import { ContactSupportModal } from '@/ui'
                     <i class="ti ti-chevron-right m-auto"></i>
                 </div>
             </button>
-            <button class="btn btn-full btn-white btn-lg shadow-none border mb-3 text-start" type="button"
-                data-bs-toggle="modal" data-bs-target="#contactSupport">
+            <router-link :to="{ name: 'FAQ' }" class="btn btn-full btn-white btn-lg shadow-none border mb-3 text-start"
+                type="button" data-bs-toggle="modal" data-bs-target="#contactSupport">
                 <div class="d-flex justify-content-between align-items-center me-auto">
+                    <i class="ti ti-help-hexagon me-3"></i>
                     <small>
-                        <strong>Si vous avez besoin d'aide supplémentaire, contactez le support</strong>
+                        <strong>Si vous avez besoin d'aide supplémentaire, verifiez notre FAQ</strong>
                     </small>
                 </div>
-                <div class="text-primary">
+                <div class="text-icon">
                     <i class="ti ti-chevron-right m-auto"></i>
                 </div>
-            </button>
+            </router-link>
         </div>
         <ContactSupportModal />
     </div>
@@ -42,9 +44,15 @@ import { ContactSupportModal } from '@/ui'
 <style>
 .btn-full {
     width: 100% !important;
+    color: #39465C !important;
+}
+
+.text-icon {
+    color: #39465C !important;
 }
 
 .btn-full:hover {
-    border: 1px solid #0B4B71 !important;
+    border: 1px solid #39465C !important;
+    color: #39465C !important;
 }
 </style>

@@ -2,79 +2,77 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useHrStore } from '@/stores'
 import { portalService } from '@/services'
-import { LoaderView } from '@/ui';
-const hrStore = useHrStore();
+import { LoaderView } from '@/ui'
+import router from '@/router';
+const hrStore = useHrStore()
 
-const employees = ref(computed(() => hrStore.employees));
-const filteredEmployees = ref(null);
+const employees = ref(computed(() => hrStore.employees))
+const filteredEmployees = ref(null)
 
-const env = import.meta.env.VITE_UPLOADS_URL;
+const env = import.meta.env.VITE_UPLOADS_URL
 
 onMounted(async () => {
-  await portalService.getEmployees();
-  filteredEmployees.value = employees.value;
-});
+  await portalService.getEmployees()
+  filteredEmployees.value = employees.value
+})
 
 onUnmounted(() => {
-  hrStore.clearEmployees();
-});
+  hrStore.clearEmployees()
+})
 
-
-const searchQuery = ref('');
-const currentPage = ref(1);
-const pageSize = ref(10);
-
+const searchQuery = ref('')
+const currentPage = ref(1)
+const pageSize = ref(10)
 
 const filter = () => {
   filteredEmployees.value = employees.value.filter((item) => {
-    const combinedFields = `${item.first_name} ${item.last_name} ${item.poste}`.toLowerCase();
-    const searchWords = searchQuery.value.toLowerCase().split(' ');
-    return searchWords.every(word => combinedFields.includes(word));
-  });
-};
+    const combinedFields = `${item.first_name} ${item.last_name} ${item.poste}`.toLowerCase()
+    const searchWords = searchQuery.value.toLowerCase().split(' ')
+    return searchWords.every((word) => combinedFields.includes(word))
+  })
+}
 
 const pageCount = computed(() => {
-  let data = null;
+  let data = null
   if (filteredEmployees.value) {
-    data = Math.ceil(filteredEmployees.value.length / pageSize.value);
+    data = Math.ceil(filteredEmployees.value.length / pageSize.value)
   }
-  return data;
-});
+  return data
+})
 
 const paginatedItems = computed(() => {
-  let data = [];
-  const start = (currentPage.value - 1) * pageSize.value;
-  const end = start + pageSize.value;
+  let data = []
+  const start = (currentPage.value - 1) * pageSize.value
+  const end = start + pageSize.value
   if (filteredEmployees.value) {
-    data = filteredEmployees.value.slice(start, end);
+    data = filteredEmployees.value.slice(start, end)
   }
-  return data;
-});
+  return data
+})
 
 const pages = computed(() => {
-  let pages = [];
+  let pages = []
   for (let i = 1; i <= pageCount.value; i++) {
-    pages.push(i);
+    pages.push(i)
   }
-  return pages;
-});
+  return pages
+})
 
 function nextPage() {
   if (currentPage.value < pageCount.value) {
-    currentPage.value++;
+    currentPage.value++
   }
 }
 
 function prevPage() {
   if (currentPage.value > 1) {
-    currentPage.value--;
+    currentPage.value--
   }
 }
 
 function changePage(page) {
-  currentPage.value = page;
+  currentPage.value = page
 }
-
 </script>
 
 <template>
@@ -124,7 +122,7 @@ function changePage(page) {
         <div class="col-12">
           <div class="card">
             <div class="card-body text-center">
-              <img src="@/assets/img/user-not-found.jpeg" width="200px" alt="">
+              <img src="@/assets/img/user-not-found.jpeg" width="200px" alt="" />
               <h5 class="mt-3">Aucun résultat trouvé</h5>
               <p class="text-muted">Essayez de rechercher avec un autre mot clé</p>
             </div>
@@ -145,10 +143,8 @@ function changePage(page) {
         <i class="ti ti-chevron-right"></i>
       </button>
     </div>
-
   </div>
   <LoaderView v-else />
-
 </template>
 
 <style></style>

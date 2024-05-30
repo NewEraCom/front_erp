@@ -8,6 +8,11 @@ import '/src/assets/js/pages-auth.js';
 import { ref } from 'vue';
 import { helpers } from '@/utils';
 import { authService } from '@/services';
+import Pusher from 'pusher-js';
+import { Notivue, Notification } from 'notivue';
+import { push } from 'notivue';
+
+
 
 const passwordType = ref(['ti-eye', 'password']);
 const isLoading = ref(false);
@@ -24,22 +29,32 @@ const togglePwd = () => {
 
 const submit = async () => {
     isLoading.value = true;
-    try {
-        const response: any = await authService.login(formData.value);
-        if (response.status != 200) {
-            isError.value = [true, response.data.message];
-        }
-    } catch (err) {
-        isError.value = [true, 'une erreur inattendue est apparue'];
-    } finally {
-        isLoading.value = false;
-    }
+    await authService.login(formData.value);
 };
+
+
+
+const pusher = new Pusher('99987f5a5ff0ff97c5c4', {
+    cluster: "eu",
+});
+
+const channel = pusher.subscribe('my-channel');
+
+channel.bind('my-event', (data: any) => {
+    console.log('Received my-event with data: ', data);
+    push.success({
+        title: data,
+        message: 'Votre demande de congé a été soumise avec succès.'
+    });
+});
 
 </script>
 
 <template>
     <div class="container-xxl">
+        <Notivue v-slot="item">
+            <Notification :item="item" />
+        </Notivue>
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-4">
                 <div class="card">

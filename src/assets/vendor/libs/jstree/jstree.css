@@ -186,7 +186,7 @@
 }
 
 .vakata-context li > a.vakata-context-parent {
-  background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==");
+  background-image: url('data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==');
   background-position: right center;
   background-repeat: no-repeat;
 }
@@ -274,7 +274,7 @@
 }
 
 .vakata-context-rtl li > a.vakata-context-parent {
-  background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAINjI+AC7rWHIsPtmoxLAA7");
+  background-image: url('data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAINjI+AC7rWHIsPtmoxLAA7');
   background-position: left center;
   background-repeat: no-repeat;
 }
@@ -355,7 +355,9 @@
 .jstree-default .jstree-anchor,
 .jstree-default .jstree-animated,
 .jstree-default .jstree-wholerow {
-  transition: background-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    box-shadow 0.15s;
 }
 
 .jstree-default .jstree-hovered {
@@ -427,14 +429,17 @@
   background: transparent;
 }
 
-.jstree-default.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
+.jstree-default.jstree-checkbox-no-clicked
+  > .jstree-wholerow-ul
+  .jstree-wholerow-clicked.jstree-wholerow-hovered {
   background: #e7f4f9;
 }
 
 .jstree-default > .jstree-striped {
   min-width: 100%;
   display: inline-block;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==") left top repeat;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==')
+    left top repeat;
 }
 
 .jstree-default > .jstree-wholerow-ul .jstree-hovered,
@@ -494,7 +499,7 @@
 
 .jstree-default .jstree-node,
 .jstree-default .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default .jstree-node {
@@ -588,7 +593,7 @@
 }
 
 .jstree-default.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -629,15 +634,15 @@
 }
 
 .jstree-default > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default .jstree-file {
-  background: url("32px.png") -100px -68px no-repeat;
+  background: url('32px.png') -100px -68px no-repeat;
 }
 
 .jstree-default .jstree-folder {
-  background: url("32px.png") -260px -4px no-repeat;
+  background: url('32px.png') -260px -4px no-repeat;
 }
 
 .jstree-default > .jstree-container-ul > .jstree-node {
@@ -652,7 +657,7 @@
 
 #jstree-dnd.jstree-default .jstree-ok,
 #jstree-dnd.jstree-default .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -683,7 +688,7 @@
 }
 
 .jstree-default.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
 }
 
 .jstree-default.jstree-rtl .jstree-last {
@@ -724,7 +729,7 @@
 
 .jstree-default-small .jstree-node,
 .jstree-default-small .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default-small .jstree-node {
@@ -818,7 +823,7 @@
 }
 
 .jstree-default-small.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -859,15 +864,15 @@
 }
 
 .jstree-default-small > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default-small .jstree-file {
-  background: url("32px.png") -103px -71px no-repeat;
+  background: url('32px.png') -103px -71px no-repeat;
 }
 
 .jstree-default-small .jstree-folder {
-  background: url("32px.png") -263px -7px no-repeat;
+  background: url('32px.png') -263px -7px no-repeat;
 }
 
 .jstree-default-small > .jstree-container-ul > .jstree-node {
@@ -882,7 +887,7 @@
 
 #jstree-dnd.jstree-default-small .jstree-ok,
 #jstree-dnd.jstree-default-small .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -913,7 +918,7 @@
 }
 
 .jstree-default-small.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-small.jstree-rtl .jstree-last {
@@ -954,7 +959,7 @@
 
 .jstree-default-large .jstree-node,
 .jstree-default-large .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default-large .jstree-node {
@@ -1048,7 +1053,7 @@
 }
 
 .jstree-default-large.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -1089,15 +1094,15 @@
 }
 
 .jstree-default-large > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default-large .jstree-file {
-  background: url("32px.png") -96px -64px no-repeat;
+  background: url('32px.png') -96px -64px no-repeat;
 }
 
 .jstree-default-large .jstree-folder {
-  background: url("32px.png") -256px 0px no-repeat;
+  background: url('32px.png') -256px 0px no-repeat;
 }
 
 .jstree-default-large > .jstree-container-ul > .jstree-node {
@@ -1112,7 +1117,7 @@
 
 #jstree-dnd.jstree-default-large .jstree-ok,
 #jstree-dnd.jstree-default-large .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -1143,7 +1148,7 @@
 }
 
 .jstree-default-large.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-large.jstree-rtl .jstree-last {
@@ -1163,12 +1168,12 @@
     height: 40px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-ok {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-position: 0 -200px;
     background-size: 120px 240px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-er {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-position: -40px -200px;
     background-size: 120px 240px;
   }
@@ -1187,7 +1192,7 @@
     */
   }
   .jstree-default-responsive .jstree-icon {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
   }
   .jstree-default-responsive .jstree-node,
   .jstree-default-responsive .jstree-leaf > .jstree-ocl {
@@ -1291,7 +1296,7 @@
   .jstree-default-responsive .jstree-node > .jstree-ocl,
   .jstree-default-responsive .jstree-themeicon,
   .jstree-default-responsive .jstree-checkbox {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-size: 120px 240px;
   }
   .jstree-default-responsive .jstree-node {
@@ -1313,11 +1318,11 @@
     background-position: 0 0;
   }
   .jstree-default-responsive .jstree-file {
-    background: url("40px.png") 0 -160px no-repeat;
+    background: url('40px.png') 0 -160px no-repeat;
     background-size: 120px 240px;
   }
   .jstree-default-responsive .jstree-folder {
-    background: url("40px.png") -40px -40px no-repeat;
+    background: url('40px.png') -40px -40px no-repeat;
     background-size: 120px 240px;
   }
   .jstree-default-responsive > .jstree-container-ul > .jstree-node {
@@ -1513,7 +1518,7 @@
 }
 
 .vakata-context li > a.vakata-context-parent {
-  background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==");
+  background-image: url('data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAIORI4JlrqN1oMSnmmZDQUAOw==');
   background-position: right center;
   background-repeat: no-repeat;
 }
@@ -1601,7 +1606,7 @@
 }
 
 .vakata-context-rtl li > a.vakata-context-parent {
-  background-image: url("data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAINjI+AC7rWHIsPtmoxLAA7");
+  background-image: url('data:image/gif;base64,R0lGODlhCwAHAIAAACgoKP///yH5BAEAAAEALAAAAAALAAcAAAINjI+AC7rWHIsPtmoxLAA7');
   background-position: left center;
   background-repeat: no-repeat;
 }
@@ -1682,7 +1687,9 @@
 .jstree-default-dark .jstree-anchor,
 .jstree-default-dark .jstree-animated,
 .jstree-default-dark .jstree-wholerow {
-  transition: background-color 0.15s, box-shadow 0.15s;
+  transition:
+    background-color 0.15s,
+    box-shadow 0.15s;
 }
 
 .jstree-default-dark .jstree-hovered {
@@ -1754,14 +1761,17 @@
   background: transparent;
 }
 
-.jstree-default-dark.jstree-checkbox-no-clicked > .jstree-wholerow-ul .jstree-wholerow-clicked.jstree-wholerow-hovered {
+.jstree-default-dark.jstree-checkbox-no-clicked
+  > .jstree-wholerow-ul
+  .jstree-wholerow-clicked.jstree-wholerow-hovered {
   background: #555;
 }
 
 .jstree-default-dark > .jstree-striped {
   min-width: 100%;
   display: inline-block;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==") left top repeat;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAkCAMAAAB/qqA+AAAABlBMVEUAAAAAAAClZ7nPAAAAAnRSTlMNAMM9s3UAAAAXSURBVHjajcEBAQAAAIKg/H/aCQZ70AUBjAATb6YPDgAAAABJRU5ErkJggg==')
+    left top repeat;
 }
 
 .jstree-default-dark > .jstree-wholerow-ul .jstree-hovered,
@@ -1821,7 +1831,7 @@
 
 .jstree-default-dark .jstree-node,
 .jstree-default-dark .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default-dark .jstree-node {
@@ -1915,7 +1925,7 @@
 }
 
 .jstree-default-dark.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -1956,15 +1966,15 @@
 }
 
 .jstree-default-dark > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default-dark .jstree-file {
-  background: url("32px.png") -100px -68px no-repeat;
+  background: url('32px.png') -100px -68px no-repeat;
 }
 
 .jstree-default-dark .jstree-folder {
-  background: url("32px.png") -260px -4px no-repeat;
+  background: url('32px.png') -260px -4px no-repeat;
 }
 
 .jstree-default-dark > .jstree-container-ul > .jstree-node {
@@ -1979,7 +1989,7 @@
 
 #jstree-dnd.jstree-default-dark .jstree-ok,
 #jstree-dnd.jstree-default-dark .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -2010,7 +2020,7 @@
 }
 
 .jstree-default-dark.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark.jstree-rtl .jstree-last {
@@ -2051,7 +2061,7 @@
 
 .jstree-default-dark-small .jstree-node,
 .jstree-default-dark-small .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default-dark-small .jstree-node {
@@ -2145,7 +2155,7 @@
 }
 
 .jstree-default-dark-small.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -2186,15 +2196,15 @@
 }
 
 .jstree-default-dark-small > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default-dark-small .jstree-file {
-  background: url("32px.png") -103px -71px no-repeat;
+  background: url('32px.png') -103px -71px no-repeat;
 }
 
 .jstree-default-dark-small .jstree-folder {
-  background: url("32px.png") -263px -7px no-repeat;
+  background: url('32px.png') -263px -7px no-repeat;
 }
 
 .jstree-default-dark-small > .jstree-container-ul > .jstree-node {
@@ -2209,7 +2219,7 @@
 
 #jstree-dnd.jstree-default-dark-small .jstree-ok,
 #jstree-dnd.jstree-default-dark-small .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -2240,7 +2250,7 @@
 }
 
 .jstree-default-dark-small.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark-small.jstree-rtl .jstree-last {
@@ -2281,7 +2291,7 @@
 
 .jstree-default-dark-large .jstree-node,
 .jstree-default-dark-large .jstree-icon {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
 }
 
 .jstree-default-dark-large .jstree-node {
@@ -2375,7 +2385,7 @@
 }
 
 .jstree-default-dark-large.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
   background-position: 100% 1px;
   background-repeat: repeat-y;
 }
@@ -2416,15 +2426,15 @@
 }
 
 .jstree-default-dark-large > .jstree-container-ul .jstree-loading > .jstree-ocl {
-  background: url("throbber.gif") center center no-repeat;
+  background: url('throbber.gif') center center no-repeat;
 }
 
 .jstree-default-dark-large .jstree-file {
-  background: url("32px.png") -96px -64px no-repeat;
+  background: url('32px.png') -96px -64px no-repeat;
 }
 
 .jstree-default-dark-large .jstree-folder {
-  background: url("32px.png") -256px 0px no-repeat;
+  background: url('32px.png') -256px 0px no-repeat;
 }
 
 .jstree-default-dark-large > .jstree-container-ul > .jstree-node {
@@ -2439,7 +2449,7 @@
 
 #jstree-dnd.jstree-default-dark-large .jstree-ok,
 #jstree-dnd.jstree-default-dark-large .jstree-er {
-  background-image: url("32px.png");
+  background-image: url('32px.png');
   background-repeat: no-repeat;
   background-color: transparent;
 }
@@ -2470,7 +2480,7 @@
 }
 
 .jstree-default-dark-large.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAAAdHRvEkCwcAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark-large.jstree-rtl .jstree-last {
@@ -2490,12 +2500,12 @@
     height: 40px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-ok {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-position: 0 -200px;
     background-size: 120px 240px;
   }
   #jstree-dnd.jstree-dnd-responsive > .jstree-er {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-position: -40px -200px;
     background-size: 120px 240px;
   }
@@ -2514,7 +2524,7 @@
     */
   }
   .jstree-default-dark-responsive .jstree-icon {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
   }
   .jstree-default-dark-responsive .jstree-node,
   .jstree-default-dark-responsive .jstree-leaf > .jstree-ocl {
@@ -2574,7 +2584,9 @@
     background-position: -40px -80px;
   }
   .jstree-default-dark-responsive.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox,
-  .jstree-default-dark-responsive.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox:hover,
+  .jstree-default-dark-responsive.jstree-checkbox-selection
+    .jstree-clicked
+    > .jstree-checkbox:hover,
   .jstree-default-dark-responsive .jstree-checked > .jstree-checkbox,
   .jstree-default-dark-responsive .jstree-checked > .jstree-checkbox:hover {
     background-position: 0 -80px;
@@ -2618,7 +2630,7 @@
   .jstree-default-dark-responsive .jstree-node > .jstree-ocl,
   .jstree-default-dark-responsive .jstree-themeicon,
   .jstree-default-dark-responsive .jstree-checkbox {
-    background-image: url("40px.png");
+    background-image: url('40px.png');
     background-size: 120px 240px;
   }
   .jstree-default-dark-responsive .jstree-node {
@@ -2640,11 +2652,11 @@
     background-position: 0 0;
   }
   .jstree-default-dark-responsive .jstree-file {
-    background: url("40px.png") 0 -160px no-repeat;
+    background: url('40px.png') 0 -160px no-repeat;
     background-size: 120px 240px;
   }
   .jstree-default-dark-responsive .jstree-folder {
-    background: url("40px.png") -40px -40px no-repeat;
+    background: url('40px.png') -40px -40px no-repeat;
     background-size: 120px 240px;
   }
   .jstree-default-dark-responsive > .jstree-container-ul > .jstree-node {
@@ -2686,7 +2698,7 @@
 }
 
 .jstree-default-dark.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAACAQMAAAB49I5GAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMOBgAAGAAJMwQHdQAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark.jstree-rtl .jstree-last {
@@ -2694,7 +2706,7 @@
 }
 
 .jstree-default-dark-small.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAACAQMAAABv1h6PAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjAAMHBgAAiABBI4gz9AAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark-small.jstree-rtl .jstree-last {
@@ -2702,7 +2714,7 @@
 }
 
 .jstree-default-dark-large.jstree-rtl .jstree-node {
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==");
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAACAQMAAAAD0EyKAAAABlBMVEUAAACZmZl+9SADAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjgIIGBgABCgCBvVLXcAAAAABJRU5ErkJggg==');
 }
 
 .jstree-default-dark-large.jstree-rtl .jstree-last {
@@ -2820,7 +2832,7 @@
   color: #ff9f43;
 }
 .light-style .jstree .jstree-container-ul .jstree-icon.ti-file {
-  color: #0b4b71;
+  color: #39465c;
 }
 .light-style .vakata-context.jstree-contextmenu {
   background: #fff;
@@ -2854,7 +2866,7 @@
   color: #ff9f43;
 }
 .dark-style .jstree .jstree-container-ul .jstree-icon.ti-file {
-  color: #0b4b71;
+  color: #39465c;
 }
 .dark-style .vakata-context.jstree-contextmenu {
   background: #fff;

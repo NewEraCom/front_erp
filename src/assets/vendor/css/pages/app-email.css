@@ -50,7 +50,7 @@
   margin-bottom: 0;
 }
 .app-email .app-email-sidebar .email-filters .email-filter-folders li.active {
-  border-color: #0b4b71;
+  border-color: #39465c;
 }
 .app-email .app-email-sidebar .email-filters li {
   padding: 0.4375rem 1.5rem;
@@ -228,7 +228,7 @@
   top: -2rem;
   border-radius: 0.25rem;
   z-index: -1;
-  content: "";
+  content: '';
 }
 .app-email .app-email-view .app-email-view-content .email-card-last:after {
   position: absolute;
@@ -238,9 +238,10 @@
   top: -1rem;
   border-radius: 0.25rem;
   z-index: -1;
-  content: "";
+  content: '';
 }
-.app-email .app-email-view .app-email-view-content .email-card-last.hide-pseudo:before, .app-email .app-email-view .app-email-view-content .email-card-last.hide-pseudo:after {
+.app-email .app-email-view .app-email-view-content .email-card-last.hide-pseudo:before,
+.app-email .app-email-view .app-email-view-content .email-card-last.hide-pseudo:after {
   display: none !important;
 }
 @media (min-width: 1199px) {
@@ -306,7 +307,11 @@
 .light-style .app-email .email-list li.email-list-item .email-list-item-actions li {
   box-shadow: none;
 }
-.light-style .app-email .email-list li.email-list-item[data-starred=true] .email-list-item-bookmark {
+.light-style
+  .app-email
+  .email-list
+  li.email-list-item[data-starred='true']
+  .email-list-item-bookmark {
   color: #ff9f43;
 }
 .light-style .app-email .app-email-view .email-card-last:before {
@@ -343,7 +348,11 @@
 .dark-style .app-email .email-list li.email-list-item .email-list-item-actions li {
   box-shadow: none;
 }
-.dark-style .app-email .email-list li.email-list-item[data-starred=true] .email-list-item-bookmark {
+.dark-style
+  .app-email
+  .email-list
+  li.email-list-item[data-starred='true']
+  .email-list-item-bookmark {
   color: #ff9f43;
 }
 .dark-style .app-email .app-email-view .email-card-last:before {
@@ -355,45 +364,45 @@
   box-shadow: 0 0.25rem 1.25rem rgba(15, 20, 34, 0.4);
 }
 
-[dir=rtl] .app-email .app-emails-list .emails-list-header .dropdown-menu-end {
+[dir='rtl'] .app-email .app-emails-list .emails-list-header .dropdown-menu-end {
   right: auto !important;
   left: 0 !important;
 }
-[dir=rtl] .app-email .app-email-sidebar {
+[dir='rtl'] .app-email .app-email-sidebar {
   right: calc(-16.25rem - 1.2rem);
   left: auto;
 }
-[dir=rtl] .app-email .app-email-sidebar.show {
+[dir='rtl'] .app-email .app-email-sidebar.show {
   right: 0;
   left: auto;
 }
-[dir=rtl] .app-email .app-email-sidebar .email-filters li {
+[dir='rtl'] .app-email .app-email-sidebar .email-filters li {
   border-left: 0;
   border-right: 2px solid transparent;
 }
-[dir=rtl] .app-email .app-email-compose .modal-dialog {
+[dir='rtl'] .app-email .app-email-compose .modal-dialog {
   left: 0;
   right: auto;
 }
-[dir=rtl] .app-email .app-email-view {
+[dir='rtl'] .app-email .app-email-view {
   right: auto;
   left: -100%;
 }
-[dir=rtl] .app-email .app-email-view.show {
+[dir='rtl'] .app-email .app-email-view.show {
   right: auto;
   left: -1px;
 }
-[dir=rtl] .app-email .app-email-view .app-email-view-header .ti-chevron-right,
-[dir=rtl] .app-email .app-email-view .app-email-view-header .ti-chevron-left {
+[dir='rtl'] .app-email .app-email-view .app-email-view-header .ti-chevron-right,
+[dir='rtl'] .app-email .app-email-view .app-email-view-header .ti-chevron-left {
   transform: rotate(180deg);
 }
 @media (min-width: 1199px) {
-  [dir=rtl] .email-list li .email-list-item-meta {
+  [dir='rtl'] .email-list li .email-list-item-meta {
     text-align: left;
   }
 }
 @media (max-width: 576px) {
-  [dir=rtl] .app-emails-list .email-list li .email-list-item-user {
+  [dir='rtl'] .app-emails-list .email-list li .email-list-item-user {
     margin-left: 1rem;
   }
 }

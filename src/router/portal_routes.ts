@@ -90,5 +90,15 @@ export const portalRoutes = [
       title: 'Calendrier',
       role: role
     }
+  },
+  {
+    path: '/portal/who-is-who/:id',
+    name: 'EmployeeDetails',
+    component: () => import('@/views/portal/EmployeeProfileView.vue'),
+    props: true,
+    meta: {
+      title: "Profil de l'employé",
+      role: role
+    }
   }
 ]

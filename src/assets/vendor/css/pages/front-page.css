@@ -21,7 +21,7 @@
   }
 }
 
-.card[class*=card-hover-border-] {
+.card[class*='card-hover-border-'] {
   transition: all 0.2s ease-in-out;
 }
 
@@ -31,13 +31,13 @@
   z-index: 1;
 }
 .section-title::after {
-  content: "";
+  content: '';
   position: absolute;
   height: 100%;
   width: 120%;
   inset-inline-start: -12%;
   bottom: 0;
-  background: url("../../../img/front-pages/icons/section-title-icon.png") no-repeat left bottom;
+  background: url('../../../img/front-pages/icons/section-title-icon.png') no-repeat left bottom;
   background-size: contain;
   z-index: -1;
 }
@@ -56,7 +56,7 @@ nav.layout-navbar {
   z-index: 999 !important;
 }
 nav.layout-navbar::after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   height: 100%;
@@ -159,7 +159,7 @@ nav.layout-navbar.navbar-active::after {
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .active > .nav-link,
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.show,
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active {
-  color: #0b4b71 !important;
+  color: #39465c !important;
 }
 @media (max-width: 991.98px) {
   .light-style .layout-navbar .navbar.landing-navbar .landing-nav-menu {
@@ -185,7 +185,7 @@ nav.layout-navbar.navbar-active::after {
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .active > .nav-link,
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.show,
 .dark-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link.active {
-  color: #0b4b71 !important;
+  color: #39465c !important;
 }
 @media (max-width: 991.98px) {
   .dark-style .layout-navbar .navbar.landing-navbar .landing-nav-menu {
@@ -202,7 +202,7 @@ nav.layout-navbar.navbar-active::after {
 }
 
 @media (min-width: 992px) {
-  [dir=rtl] .navbar.landing-navbar .navbar-nav .nav-item.mega-dropdown > .dropdown-menu {
+  [dir='rtl'] .navbar.landing-navbar .navbar-nav .nav-item.mega-dropdown > .dropdown-menu {
     transform: translateX(50%);
   }
 }
@@ -257,7 +257,7 @@ nav.layout-navbar.navbar-active::after {
   color: #fff;
 }
 .light-style .landing-footer .footer-top {
-  background-image: url("../../../img/front-pages/backgrounds/footer-bg-light.png");
+  background-image: url('../../../img/front-pages/backgrounds/footer-bg-light.png');
 }
 .light-style .landing-footer .footer-bottom {
   background-color: #282c3e;
@@ -271,7 +271,7 @@ nav.layout-navbar.navbar-active::after {
   color: #cfd3ec;
 }
 .dark-style .landing-footer .footer-top {
-  background-image: url("../../../img/front-pages/backgrounds/footer-bg-dark.png");
+  background-image: url('../../../img/front-pages/backgrounds/footer-bg-dark.png');
 }
 .dark-style .landing-footer .footer-bottom {
   background-color: #171925;

@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 import { LoaderView } from '@/ui';
 import { useAuthStore } from '@/stores';
-
+import { UploadCvCanva } from '@/ui';
 const store = useAuthStore();
 
 const employee = ref(computed(() => store.getUser));
@@ -25,10 +25,11 @@ const env = import.meta.env.VITE_UPLOADS_URL;
             <div class="col-12 d-flex align-items-center" v-if="employee">
                 <h6 class="m-0">Votre Curriculum Vitae</h6>
                 <button class="btn btn-outline-primary btn-sm ms-auto" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#uploadCv" aria-controls="offcanvasEnd" v-if="employee.cv != null">
+                    data-bs-target="#cvCanva" aria-controls="offcanvasEnd" v-if="employee.cv != null">
                     <i class="ti ti-pencil me-2"></i>
                     Modifier
                 </button>
+                <UploadCvCanva />
             </div>
             <div class="col-12 mt-4" v-if="employee && employee.cv">
                 <iframe :src="env + 'uploads/cv/' + employee.cv" width="100%" height="1000vh" style="border: none;">

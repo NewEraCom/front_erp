@@ -4,6 +4,7 @@ import LeaveRequestCanva from './LeaveRequestCanva.vue'
 import RemoteRequestCanva from './RemoteRequestCanva.vue'
 import AbsenceRequestCanva from './AbsenceRequestCanva.vue'
 import SalaryAdvanceRequestCanva from './SalaryAdvanceRequestCanva.vue'
+import UploadCvCanva from './UploadCvCanva.vue'
 
 export {
   UploadAvatarCanva,
@@ -11,5 +12,6 @@ export {
   LeaveRequestCanva,
   RemoteRequestCanva,
   AbsenceRequestCanva,
-  SalaryAdvanceRequestCanva
+  SalaryAdvanceRequestCanva,
+  UploadCvCanva
 }
