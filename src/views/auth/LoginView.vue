@@ -5,23 +5,16 @@ import '/src/assets/js/pages-auth.js';
 </script>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 import { helpers } from '@/utils';
 import { authService } from '@/services';
-import Pusher from 'pusher-js';
-import { Notivue, Notification } from 'notivue';
-import { push } from 'notivue';
-
 
 
 const passwordType = ref(['ti-eye', 'password']);
 const isLoading = ref(false);
 const isError = ref([false, '']);
 
-const formData = ref({
-    email: '',
-    password: ''
-});
+const formData = ref({ password: '', email: '', });
 
 const togglePwd = () => {
     passwordType.value = helpers.togglePassword(passwordType.value);
@@ -29,32 +22,24 @@ const togglePwd = () => {
 
 const submit = async () => {
     isLoading.value = true;
-    await authService.login(formData.value);
+    const res: any = await authService.login(formData.value);
+    if (res.success == false) {
+        isError.value = [true, res.message];
+        isLoading.value = false;
+    }
+
 };
 
-
-
-const pusher = new Pusher('99987f5a5ff0ff97c5c4', {
-    cluster: "eu",
+onUnmounted(() => {
+    isLoading.value = false;
+    isError.value = [false, ''];
 });
 
-const channel = pusher.subscribe('my-channel');
-
-channel.bind('my-event', (data: any) => {
-    console.log('Received my-event with data: ', data);
-    push.success({
-        title: data,
-        message: 'Votre demande de congé a été soumise avec succès.'
-    });
-});
 
 </script>
 
 <template>
     <div class="container-xxl">
-        <Notivue v-slot="item">
-            <Notification :item="item" />
-        </Notivue>
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner py-4">
                 <div class="card">

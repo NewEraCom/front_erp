@@ -20,9 +20,9 @@ const env = import.meta.env.VITE_UPLOADS_URL;
                     <div class="user-profile-header d-flex flex-column flex-sm-row ms-auto-end mb-4">
                         <div class="flex-shrink-0 mt-n4 mx-sm-0 ms-auto me-auto border-none">
                             <div class="user-profile-container text-center">
-                                <img :src="env + 'uploads/pictures/' + employee.user.profile_picture" width="120px"
+                                <img :src="env + 'uploads/pictures/' + employee.profile_picture" width="120px"
                                     height="120px" alt="user image"
-                                    class="d-block ms-0 ms-auto ps-auto me-auto rounded user-profile-img"
+                                    class="d-block ms-0 ms-auto ps-auto me-auto rounded-circle user-profile-img"
                                     style="object-fit: cover;">
                                 <button class="edit-button" data-bs-toggle="offcanvas" data-bs-target="#uploadCanva">
                                     <i class="ti ti-edit-circle"></i>

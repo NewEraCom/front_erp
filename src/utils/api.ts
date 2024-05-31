@@ -1,24 +1,21 @@
 import router from '@/router'
 import axios, { AxiosError } from 'axios'
+import Cookies from 'js-cookie'
 
 axios.defaults.headers.common['Content-Type'] = 'multipart/form-data'
 
-export const api = (
-  baseURL = import.meta.env.VITE_API_URL,
-  token = localStorage.getItem('token')
-) => {
+export const api = (baseURL = import.meta.env.VITE_API_URL) => {
   const instance = axios.create({
     baseURL: baseURL,
     headers: {
       'Content-Type': 'multipart/form-data',
-      Authorization: `Bearer ${token}`,
       Accept: 'application/json'
     }
   })
 
-  instance.interceptors.request.use((config: any) => {
+  instance.interceptors.request.use((config) => {
     // Ensure the latest token is always used
-    const updatedToken = localStorage.getItem('token')
+    const updatedToken = Cookies.get('token')
     if (updatedToken) {
       config.headers.Authorization = `Bearer ${updatedToken}`
     }
@@ -26,18 +23,11 @@ export const api = (
   })
 
   instance.interceptors.response.use(
-    (response: any) => response,
+    (response) => response,
     async (error: AxiosError) => {
-      if (error.response && error.response.status === 401) {
-        try {
-          localStorage.clear()
-          router.push('/')
-          return
-        } catch (refreshError) {
-          router.push('/login')
-          return Promise.reject(refreshError)
-        }
-      }
+      localStorage.clear()
+      Cookies.remove('token')
+      router.push({ name: 'Login' })
       return Promise.reject(error)
     }
   )

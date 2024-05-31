@@ -7,12 +7,10 @@ export const useAuthStore = defineStore('AuthStore', {
     role: null as string | null
   }),
   actions: {
-    login(user: any, token: string, role: string) {
+    login(user: any, role: string) {
       this.user = user
-      this.token = token
       this.role = role
       localStorage.setItem('user', JSON.stringify(user))
-      localStorage.setItem('token', token)
       localStorage.setItem('role', role)
     },
     logout() {
@@ -23,11 +21,9 @@ export const useAuthStore = defineStore('AuthStore', {
     },
     initializeStore() {
       const user = JSON.parse(localStorage.getItem('user'))
-      const token = localStorage.getItem('token')
       const role = localStorage.getItem('role')
-      if (user && token) {
+      if (user) {
         this.user = user
-        this.token = token
         this.role = role
       }
     },
@@ -39,7 +35,6 @@ export const useAuthStore = defineStore('AuthStore', {
     }
   },
   getters: {
-    isAuthenticated: (state) => !!state.token,
     getUser: (state) => state.user,
     getRole: (state) => state.role
   }

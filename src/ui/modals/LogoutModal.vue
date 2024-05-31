@@ -1,10 +1,16 @@
 <script setup lang="ts">
+import router from '@/router';
+import { authService } from '@/services';
+import { helpers } from '@/utils';
 import { ref } from 'vue';
 
 const isLoading = ref(false);
 
 const handleLogout = async () => {
-
+    const res: any = await authService.logout();
+    if (res.success) {
+        router.push({ name: 'Login' })
+    }
 };
 
 </script>

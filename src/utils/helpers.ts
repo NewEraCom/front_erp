@@ -4,8 +4,8 @@ const togglePassword = (value: string[]): string[] => {
 
 const initialHomePage = (role: string) => {
   switch (role) {
-    case 'Employee':
-      return '/portal/dashboard'
+    case 'employee':
+      return 'DashboardPortal'
     default:
       return '/login'
   }
@@ -18,6 +18,13 @@ const closeCanva = () => {
   })
 }
 
+const closeModal = () => {
+  const buttons = document.querySelectorAll('.dismiss-close')
+  buttons.forEach(function (button: any) {
+    button.click()
+  })
+}
+/* 
 import SGM from '@/assets/img/brands/sgm.png'
 import CIH from '@/assets/img/brands/cih.jpeg'
 import Other from '@/assets/img/brands/other.png'
@@ -64,7 +71,7 @@ function bankName(bank: string) {
     default:
       return [NoLogo, bank]
   }
-}
+} */
 
 const checkIfEmpty = (value: string) => {
   if (value === null || value === undefined || value === '') {
@@ -77,6 +84,6 @@ export const helpers = {
   togglePassword,
   initialHomePage,
   closeCanva,
-  bankName,
-  checkIfEmpty
+  checkIfEmpty,
+  closeModal
 }

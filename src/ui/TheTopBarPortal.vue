@@ -29,7 +29,7 @@ const env = import.meta.env.VITE_UPLOADS_URL;
                                 }}</small>
                         </div>
                         <div class="avatar avatar-online border rounded-circle" v-if="employee">
-                            <img :src="env + 'uploads/pictures/' + employee.user.profile_picture" class="rounded-circle"
+                            <img :src="env + 'uploads/pictures/' + employee.profile_picture" class="rounded-circle"
                                 style="object-fit: cover; height: 100%" />
                         </div>
                     </a>

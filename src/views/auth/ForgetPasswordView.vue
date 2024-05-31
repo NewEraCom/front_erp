@@ -2,6 +2,7 @@
 import '/src/assets/vendor/css/pages/page-auth.css';
 import '/src/assets/vendor/libs/@form-validation/umd/styles/index.min.css';
 import '/src/assets/js/pages-auth.js';
+import { authService } from '@/services';
 </script>
 
 <script setup lang="ts">
@@ -9,12 +10,22 @@ import { ref } from 'vue';
 
 const isLoading = ref(false);
 const isError = ref([false, '']);
+const isSuccess = ref(false);
 const formData = ref({
     email: ''
 });
 
 const submit = async () => {
     isLoading.value = true;
+    const res: any = await authService.forgotPassword(formData.value.email);
+    if (res.success == false) {
+        isError.value = [true, res.message];
+        isLoading.value = false;
+    } else {
+        isSuccess.value = true;
+        isLoading.value = false;
+    }
+
 };
 </script>
 
@@ -25,7 +36,7 @@ const submit = async () => {
                 <div class="card">
                     <div class="card-body">
                         <div class="app-brand justify-content-center mb-4 mt-2">
-                            <img src="/src/assets/img/Logo_bg.png" alt="logo" class="logo" />
+                            <img src="/src/assets/img/Logo_bg.png" alt="logo" class="logo-img" />
                         </div>
                         <h4 class="mb-1 pt-2">Mot de passe oublié 🔒</h4>
                         <p class="mb-4">
@@ -34,6 +45,10 @@ const submit = async () => {
                         <form @submit.prevent="submit">
                             <div v-if="isError[0] == true" class="alert alert-danger" role="alert">
                                 {{ isError[1] }}
+                            </div>
+                            <div v-if="isSuccess == true" class="alert alert-success" role="alert">
+                                Votre demande de réinitialisation de mot de passe a été effectuée avec succès. verifiez
+                                votre boite mail
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Adresse e-mail</label>
@@ -63,7 +78,7 @@ const submit = async () => {
 </template>
 
 <style scoped>
-.logo {
-    width: 86%;
+.logo-img {
+    width: 86% !important;
 }
 </style>
