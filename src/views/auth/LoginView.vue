@@ -29,12 +29,10 @@ const submit = async () => {
     }
 
 };
-
 onUnmounted(() => {
     isLoading.value = false;
     isError.value = [false, ''];
 });
-
 
 </script>
 
