@@ -33,7 +33,6 @@ onUnmounted(() => {
     isLoading.value = false;
     isError.value = [false, ''];
 });
-
 </script>
 
 <template>
