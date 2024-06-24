@@ -626,6 +626,13 @@ const SupportMenu = [
         path: 'CaisseBudget'
     },
     {
+        id: 9,
+        name: 'Demande de congé',
+        route: '/leave-request',
+        icon: 'ti ti-plane-inflight',
+        path: 'LeaveRequest'
+    },
+    {
         id: 6,
         name: 'Validation des caisse',
         route: '/validation/caisse',
