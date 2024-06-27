@@ -61,7 +61,16 @@ export const logisticsRoutes = [
             role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
         },
     },
-
+    {
+        path: '/products',
+        name: 'Products',
+        component: () => import('@/views/Logistics/ProductsList.vue'),
+        meta: {
+            title: 'Products',
+            requiresAuth: true,
+            role: [helpers.roles.LOGISTICS, helpers.roles.SALES, helpers.roles.DS]
+        },
+    },
     {
         path: '/parc-gsm/details/:id',
         name: 'DetailsParcGSM',

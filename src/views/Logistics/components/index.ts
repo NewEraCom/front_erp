@@ -30,7 +30,9 @@ import DetailsVehiculeTable from './DetailsVehiculeTable.vue';
 import VehiculeEntretienTable from './VehiculeEntretienTable.vue';
 import AddEntretienVehiculeModal from './AddEntretienVehiculeModal.vue';
 import AddArticleModal from './AddArticleModal.vue';
+import ProductsList from '../ProductsList.vue';
 export {
+    ProductsList,
     StockTable,
     LouerTable,
     ParcGsmTable,

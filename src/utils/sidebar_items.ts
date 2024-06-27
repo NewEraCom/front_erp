@@ -393,6 +393,12 @@ const LogisticsMenu = [
                 route: '/fournitures',
                 path: 'Fournitures'
             },
+            {
+                id: 4,
+                name: 'Products',
+                route: '/products',
+                path: 'Products'
+            },
         ]
     },
     {
